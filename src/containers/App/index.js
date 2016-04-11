@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
-/* global styles for app */
+// global styles for app
 import './styles/app.scss';
-
-import { Footer } from 'components/Footer';
 
 export class App extends Component {
   static propTypes = {
@@ -12,10 +10,13 @@ export class App extends Component {
 
   render() {
     return (
-      <section>
+      <div id="content">
         {this.props.children}
-        <Footer />
-      </section>
+        <footer className="text-center copyright">
+          <p>Copyright © 2014-2015 小鹿美美，All Rights Reserved</p>
+          <p> 沪ICP备15013901号-1</p>
+        </footer>
+      </div>
     );
   }
 }

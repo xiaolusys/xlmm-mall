@@ -1,22 +1,15 @@
-const Koa = require('koa');
-const logger = require('koa-logger');
-const sendfile = require('koa-sendfile');
-const router = require('koa-router')();
-const path = require('path');
+const http = require('http');
+const express = require('express');
+const morgan = require('morgan');
 const webpack = require('webpack');
-const webpackDev = require('koa-webpack-dev-middleware');
-const webpackHot = require('koa-webpack-hot-middleware');
+const webpackDev = require('webpack-dev-middleware');
+const webpackHot = require('webpack-hot-middleware');
 const webpackConfig = require('./webpack/common.config');
-const config = require('./config');
+// const config = require('./config');
 
 const compiler = webpack(webpackConfig);
-const app = new Koa();
+const app = express();
 
-router.get('/', async(ctx) => {
-  await sendfile(ctx, path.join(__dirname, '/index.html'));
-});
-
-app.use(logger());
 app.use(webpackDev(compiler, {
   noInfo: true,
   publicPath: webpackConfig.output.publicPath,
@@ -26,6 +19,13 @@ app.use(webpackHot(compiler, {
   path: '/__webpack_hmr',
   heartbeat: 10 * 1000,
 }));
-app.use(router.routes());
+app.use(morgan('short'));
+app.use(express.static(__dirname + '/'));
+app.get(/.*/, function root(req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
 
-app.listen(7070);
+const server = http.createServer(app);
+server.listen(process.env.PORT || 7070, function onListen() {
+  console.log(' --> Server started: http://localhost:%d', server.address().port);
+});

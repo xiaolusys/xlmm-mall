@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Header } from 'components/Header';
 
-export class Home extends Component {
+export class FaqCategory extends Component {
   static propTypes = {
     children: React.PropTypes.any,
   };
@@ -21,7 +21,7 @@ export class Home extends Component {
   render() {
     return (
       <section>
-        <Header title="小鹿美美" leftIcon="icon-angle-up" rightIcon="" />
+        <Header title="常见问题" leftIcon="icon-angle-left" rightIcon="icon-angle-up" />
         {this.props.children}
       </section>
     );

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-/* containers */
+// containers
 import { App } from 'containers/App';
 import { Home } from 'containers/Home';
-import { FaqCategory, FaqList } from 'containers/Faq';
+import { FaqCategory } from 'containers/FaqCategory';
+import { FaqList } from 'containers/FaqList';
 
 export default (
   <Route path="/" component={App}>
