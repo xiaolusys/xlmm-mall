@@ -39,7 +39,7 @@ export class FaqCategory extends Component {
         <Header title="常见问题" leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
         <div className="has-header content">
         {isLoading ? <span>loading...</span> : children}
-        <ul className="faq-list container">
+        <ul className="faq-list">
           {
             data.map((item, index) => {
               return (

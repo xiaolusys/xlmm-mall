@@ -1,6 +1,5 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { apiMiddleware } from 'redux-api-middleware';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
@@ -10,7 +9,7 @@ export default function configStore(state) {
     predicate: () =>
       process.env.NODE_ENV === 'development',
   });
-  const middleware = applyMiddleware(thunkMiddleware, logger, apiMiddleware);
+  const middleware = applyMiddleware(thunkMiddleware, logger);
   const store = middleware(createStore)(rootReducer, state);
 
   if (module.hot) {
