@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const webpackDev = require('webpack-dev-middleware');
 const webpackHot = require('webpack-hot-middleware');
 const webpackConfig = require('./webpack/common.config');
+const mocks = require('./mocks');
 // const config = require('./config');
 
 const compiler = webpack(webpackConfig);
@@ -21,7 +22,8 @@ app.use(webpackHot(compiler, {
 }));
 app.use(morgan('short'));
 app.use(express.static(__dirname + '/'));
-app.get(/.*/, function root(req, res) {
+app.use(mocks());
+app.get('/', function root(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
