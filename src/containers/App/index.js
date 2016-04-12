@@ -10,7 +10,7 @@ export class App extends Component {
 
   render() {
     return (
-      <div id="content">
+      <div>
         {this.props.children}
         <footer className="text-center copyright">
           <p>Copyright © 2014-2015 小鹿美美，All Rights Reserved</p>

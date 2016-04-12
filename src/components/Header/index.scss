@@ -4,10 +4,9 @@ $bar-height: 44px !default;
 $bar-border: #dadada !default;
 $bar-bg: #fff !default;
 .bar {
-  display: flex;
-  position: absolute;
-  right: 0;
-  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: $z-index-bar;
   padding: $bar-padding-portrait;
   width: 100%;

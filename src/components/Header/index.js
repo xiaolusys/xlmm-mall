@@ -57,7 +57,7 @@ export class Header extends Component {
       ['active']: this.state.leftBtnActive,
     });
     const rightBtnCls = classnames({
-      ['icon-btn ' + props.leftIcon + ' icon-yellow']: 1,
+      ['icon-btn ' + props.rightIcon + ' icon-yellow']: 1,
       ['active']: this.state.rightBtnActive,
     });
 

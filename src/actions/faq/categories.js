@@ -1,4 +1,37 @@
-import fetch from 'isomorphic-fetch';
+import * as actionTypes from '../actionTypes';
+import * as constants from 'constants';
+import axios from 'axios';
 
-export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+function request() {
+  return {
+    type: actionTypes.REQUEST,
+  };
+}
+
+function success(data) {
+  return {
+    type: actionTypes.SUCCESS,
+    payload: data,
+  };
+}
+
+function failure(data) {
+  return {
+    type: actionTypes.FAILURE,
+    payload: data,
+    error: true,
+  };
+}
+
+export function fetchCategories() {
+  return (dispatch) => {
+    dispatch(request());
+    return axios.get(constants.baseEndpoint + 'faqs')
+      .then((resp) => {
+        dispatch(success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(failure(resp.data));
+      });
+  };
+}
