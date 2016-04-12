@@ -23,6 +23,12 @@ $bar-border: #dadada !default;
   float: left;
 }
 
+.clearfix {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
 .copyright {
   font-size: 10px;
 }
@@ -94,4 +100,3 @@ $bar-border: #dadada !default;
     background-repeat: no-repeat;
   }
 }
-
