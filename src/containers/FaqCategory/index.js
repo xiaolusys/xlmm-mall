@@ -43,7 +43,7 @@ export class FaqCategory extends Component {
           {
             data.map((item, index) => {
               return (
-                <li className="bottom-border row no-margin">
+                <li className="bottom-border row no-margin" key={index}>
                   <a href={'faq/list/' + item.id} >
                   <img className="col-xs-4" src={item.icon_url} />
                   <div className="col-xs-8">
