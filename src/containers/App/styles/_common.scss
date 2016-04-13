@@ -1,4 +1,9 @@
 $bar-border: #dadada !default;
+$gloabl-bg: #f3f3f4 !default;
+body {
+  background-color: $gloabl-bg !important;
+}
+
 .hide {
   display: none;
 }
@@ -33,14 +38,6 @@ $bar-border: #dadada !default;
   margin: 0px !important;
 }
 
-.bottom-border {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  &.grey {
-    border-bottom-color: #dadada;
-  }
-}
-
 .padding-right-sm {
   padding-right: 8px;
 }
@@ -61,6 +58,7 @@ $bar-border: #dadada !default;
 .font-xxs {
   font-size: 10px;
 }
+
 .font-xs {
   font-size: 12px;
 }
@@ -99,3 +97,4 @@ $bar-border: #dadada !default;
     background-repeat: no-repeat;
   }
 }
+
