@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/faq/categories';
 import { Header } from 'components/Header';
+import { Footer } from 'components/Footer';
 
 import './index.scss';
 
@@ -56,6 +57,7 @@ export class FaqCategory extends Component {
             })
           }
         </ul>
+        <Footer/>
         </div>
       </div>
     );
