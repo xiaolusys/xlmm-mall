@@ -9,8 +9,8 @@ import './index.scss';
 
 @connect(
   state => ({
-    data: state.faqCategories.data,
-    isLoading: state.faqCategories.isLoading,
+    data: state.categories.data,
+    isLoading: state.categories.isLoading,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
