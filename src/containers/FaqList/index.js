@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Header } from 'components/Header';
-import _ from 'underscore';
+import { Footer } from 'components/Footer';
 
-export class List extends Component {
+export class FaqList extends Component {
   static propTypes = {
 
   };
@@ -22,9 +22,10 @@ export class List extends Component {
   render() {
     const props = this.props;
     return (
-      <section>
-        <Header title="小鹿美美" leftIcon="icon-angle-left" rightIcon="" />
-      </section>
+      <div>
+        <Header title="物流问题" leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
+        <Footer />
+      </div>
     );
   }
 }
