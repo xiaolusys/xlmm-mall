@@ -5,7 +5,6 @@ export function categories(state = {
   data: [],
   error: false,
 }, action = null) {
-  console.log(action);
   switch (action.type) {
     case actionTypes.REQUEST:
       return Object.assign({}, state, { isLoading: true, error: false });

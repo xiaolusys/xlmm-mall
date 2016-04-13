@@ -26,6 +26,8 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.1",
     "babel-preset-stage-0": "^6.3.13",
+    "bootstrap-loader": "^1.0.5",
+    "bootstrap-sass": "^3.3.6",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "co-fs": "^1.2.0",

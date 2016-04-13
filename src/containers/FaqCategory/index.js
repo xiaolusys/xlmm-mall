@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/faq/categories';
 import { Header } from 'components/Header';
+import { Footer } from 'components/Footer';
 
 import './index.scss';
 
@@ -39,11 +40,11 @@ export class FaqCategory extends Component {
         <Header title="常见问题" leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
         <div className="has-header content">
         {isLoading ? <span>loading...</span> : children}
-        <ul className="faq-list container">
+        <ul className="faq-list">
           {
             data.map((item, index) => {
               return (
-                <li className="bottom-border row no-margin">
+                <li className="bottom-border row no-margin" key={index}>
                   <a href={'faq/list/' + item.id} >
                   <img className="col-xs-4" src={item.icon_url} />
                   <div className="col-xs-8">
@@ -56,6 +57,7 @@ export class FaqCategory extends Component {
             })
           }
         </ul>
+        <Footer/>
         </div>
       </div>
     );
