@@ -1,0 +1,12 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [{
+    "id": 2,
+    "main_category": 1,
+    "detail_category": 2,
+    "question": "支持几天退货？",
+    "answer": "qwe"
+  }]
+}

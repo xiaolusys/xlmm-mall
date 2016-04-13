@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from 'components/Header';
+import { Footer } from 'components/Footer';
 
 export class Home extends Component {
   static propTypes = {
@@ -10,20 +11,14 @@ export class Home extends Component {
     super(props);
   }
 
-  rightBtnClick = () => {
-
-  };
-
-  leftBtnClick = () => {
-
-  };
-
   render() {
+    const props = this.props;
     return (
-      <section>
-        <Header title="小鹿美美" leftIcon="icon-angle-up" rightIcon="" />
+      <div>
+        <Header title="小鹿美美" leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
         {this.props.children}
-      </section>
+        <Footer />
+      </div>
     );
   }
 }
