@@ -1,5 +1,10 @@
 import * as actionTypes from 'actions/actionTypes';
-import { initState } from 'constants';
+
+const initState = {
+  isLoading: false,
+  data: [],
+  error: false,
+};
 
 const createReducer = function(name) {
   return (state = initState, action = null) => {
