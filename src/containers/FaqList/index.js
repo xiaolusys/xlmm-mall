@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import _ from 'underscore';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import * as actionCreators from 'actions/faq/questions';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import QuestionItem from './QuestionItem';
 
 import './index.scss';
 
@@ -32,6 +34,9 @@ export class FaqList extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      open: false,
+    };
   }
 
   componentWillMount() {
@@ -40,32 +45,27 @@ export class FaqList extends Component {
   }
 
   onItemClick = (e) => {
+    this.setState({ open: !this.state.open });
     e.preventDefault();
   };
 
   render() {
     const { data } = this.props;
-    const questions = data.results;
+    const props = this.props;
+    const questions = data.results || [];
+    const btnCls = classnames({
+      ['col-xs-1 icon-balck']: 1,
+      ['icon-angle-down']: !this.state.open,
+      ['icon-angle-up']: this.state.open,
+    });
     return (
       <div>
-        <Header title="" leftIcon="icon-angle-left" leftBtnClick={ null } />
+        <Header title={props.params.categoryName} leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
         <div className="has-header content">
           <ul className="questions-list">
-          <If condition={_.isArray(questions)}>
-          {
-            questions.map((item, index) => {
-              return (
-                <li className="row" key={index}>
-                  <div>
-                    <p className="col-xs-11 font-md">{item.question}</p>
-                    <i className="col-xs-1 icon-angle-down icon-balck"></i>
-                  </div>
-                  <p className="collapse">{item.answer}</p>
-                </li>
-              );
-            })
-          }
-          </If>
+            {questions.map((item, index) => {
+              return <QuestionItem key={index} data={item} />;
+            })}
           </ul>
           <Footer />
         </div>
