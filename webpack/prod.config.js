@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ReplacePlugin = require('replace-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -27,6 +28,16 @@ module.exports = {
     new ExtractTextPlugin('bundle.css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
+    new ReplacePlugin({
+      // skip: process.env.NODE_ENV === 'development',
+      entry: 'index.html',
+      hash: '[hash]',
+      output: 'dist/index.html',
+      data: {
+        css: '<link type="text/css" rel="stylesheet" href="./bundle.css?' + Date.now() + '">',
+        js: '<script src="./bundle.js?' + Date.now() + '"></script>',
+      },
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
