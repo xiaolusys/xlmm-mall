@@ -9,8 +9,8 @@ import './index.scss';
 
 @connect(
   state => ({
-    data: state.faqCategories.data,
-    isLoading: state.faqCategories.isLoading,
+    data: state.categories.data,
+    isLoading: state.categories.isLoading,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -28,7 +28,7 @@ export class FaqCategory extends Component {
     super(props);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchCategories();
   }
 
@@ -45,7 +45,7 @@ export class FaqCategory extends Component {
             data.map((item, index) => {
               return (
                 <li className="bottom-border row no-margin" key={index}>
-                  <a href={'faq/list/' + item.id} >
+                  <a href={'#/faq/list/' + item.id + '/' + encodeURIComponent(item.category_name)} >
                   <img className="col-xs-4" src={item.icon_url} />
                   <div className="col-xs-8">
                     <p className="font-lg font-black">{item.category_name}</p>

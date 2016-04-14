@@ -9,10 +9,9 @@ import { FaqList } from 'containers/FaqList';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={Home} />
-    <Route path="faq" component={FaqCategory}>
-      <Route path="list" component={FaqList} />
-    </Route>
+    <IndexRoute component={FaqCategory} />
+    <Route path="faq" component={FaqCategory} />
+    <Route path="faq/list/:categoryId/:categoryName" component={FaqList} />
     <Route status={404} path="*" component={Home} />
   </Route>
 );
