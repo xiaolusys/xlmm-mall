@@ -12,7 +12,6 @@ module.exports = function() {
       resp.type('application/json');
       resp.json(JSON.parse(jsonFile));
       console.log(' --> Request mock: ', req.path);
-      console.log(' --> Rsponse mock: ', JSON.parse(jsonFile))
     }
     next();
   };
