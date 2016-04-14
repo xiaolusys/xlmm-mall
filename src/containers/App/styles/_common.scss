@@ -1,6 +1,10 @@
 $bar-border: #dadada !default;
 $gloabl-bg: #f3f3f4 !default;
 body {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #333;
   background-color: $gloabl-bg !important;
 }
 
@@ -98,7 +102,6 @@ body {
   }
 }
 
-
 .top-border {
   border-top: 1px solid $bar-border;
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
@@ -109,3 +112,4 @@ body {
     background-repeat: no-repeat;
   }
 }
+
