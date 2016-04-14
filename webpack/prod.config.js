@@ -29,7 +29,7 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new ReplacePlugin({
-      // skip: process.env.NODE_ENV === 'development',
+      skip: process.env.NODE_ENV === 'development',
       entry: 'index.html',
       hash: '[hash]',
       output: 'dist/index.html',
