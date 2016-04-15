@@ -25,7 +25,7 @@ app.use(webpackHot(compiler, {
 }));
 app.use(morgan('short'));
 app.use(express.static(__dirname + '/'));
-// if API is ready, proxy to api server. else use mock data. 
+// if API is ready, proxy to api server. else use mock data.
 app.use(mocks());
 app.use('/rest', proxy(url.parse('http://' + config.apiHost + ':' + config.apiPort)));
 app.get('/', function root(req, res) {
