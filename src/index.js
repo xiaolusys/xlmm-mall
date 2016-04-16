@@ -6,7 +6,7 @@ import { createHashHistory } from 'history';
 import configStore from './store/configStore';
 import routes from './routes';
 
-const history = useRouterHistory()({ queryKey: false });
+const history = useRouterHistory(createHashHistory)({ queryKey: false });
 const store = configStore();
 
 ReactDOM.render(
