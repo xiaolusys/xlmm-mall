@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, hashHistory } from 'react-router';
+import { Router, useRouterHistory } from 'react-router';
+import { createHashHistory } from 'history';
 import configStore from './store/configStore';
 import routes from './routes';
 
+const history = useRouterHistory()({ queryKey: false });
 const store = configStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hashHistory} routes={routes} />
+    <Router history={history} routes={routes} />
   </Provider>,
   document.querySelector('#container')
 );
