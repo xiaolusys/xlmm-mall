@@ -11,12 +11,15 @@ export class Home extends Component {
     super(props);
   }
 
+  onMenuBtnClick(e) {
+    console.log(e);
+  }
+
   render() {
     const props = this.props;
     return (
       <div>
-        <Header title="小鹿美美" leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
-        {this.props.children}
+        <Header title="小鹿美美" leftIcon="icon-bars" leftBtnClick={this.onMenuBtnClick} />
         <Footer />
       </div>
     );
