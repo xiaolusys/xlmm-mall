@@ -9,7 +9,7 @@ import { Login } from 'containers/Login';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={FaqCategory} />
+    <IndexRoute component={Home} />
     <Route path="login" component={Login} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
