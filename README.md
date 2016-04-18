@@ -22,8 +22,8 @@
 - [mocha](https://github.com/mochajs/mocha)
 
 ## Sublime Text Setup
-1. Install package controll [https://packagecontrol.io/installation](https://packagecontrol.io/installation)
-2. Install Below Plugins
+### 1. Install package controll [https://packagecontrol.io/installation](https://packagecontrol.io/installation)
+### 2. Install Below Plugins
 ```
 Babel
 Babel Snippets
@@ -32,7 +32,7 @@ SublimeLinter
 SublimeLinter-eslint
 HTML-CSS-JS Prettify
 ``` 
-3. Plugins Setup
+### 3. Plugins Setup
 ```
 a. HTML-CSS-JS Prettify Setup
 Preference -> Package Settings -> HTML/CSS/JS Prettify -> Set Prettify Preference
@@ -45,7 +45,6 @@ Tools -> SublimeLinter -> Debug Mode
 c. JS Syntax Setup
 View -> Syntax -> Open all with current extension as ... -> Babel -> JavaScript(Babel)
 ```
-
 ## Installation
 ```
 $ git clone ssh://git@dev.huyi.so:10022/xiaolumm/xlmm-mall.git
