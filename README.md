@@ -33,7 +33,7 @@ SublimeLinter-eslint
 HTML-CSS-JS Prettify
 ``` 
 ### 3. Plugins Setup
-```
+```text
 a. HTML-CSS-JS Prettify Setup
 Preference -> Package Settings -> HTML/CSS/JS Prettify -> Set Prettify Preference
 set 'indent_size' as 2,
@@ -46,7 +46,7 @@ c. JS Syntax Setup
 View -> Syntax -> Open all with current extension as ... -> Babel -> JavaScript(Babel)
 ```
 ## Installation
-```
+```shell
 $ git clone ssh://git@dev.huyi.so:10022/xiaolumm/xlmm-mall.git
 $ cd xlmm-mall
 $ npm install babel-eslint -g
