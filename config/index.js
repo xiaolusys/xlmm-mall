@@ -1,10 +1,12 @@
 module.exports = {
   production: {
-    apiHost: 'http://',
+    apiHost: 'm.xiaolumeimei.com',
+    apiPort: 80,
     port: 7070,
   },
   staging: {
-    apiHost: 'http://',
+    apiHost: 'staging.xiaolumeimei.com',
+    apiPort: 80,
     port: 7070,
   },
 };

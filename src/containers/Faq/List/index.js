@@ -17,7 +17,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export class FaqList extends Component {
+export default class FaqList extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     data: React.PropTypes.any,
@@ -28,12 +28,13 @@ export class FaqList extends Component {
     params: React.PropTypes.object,
   };
 
-  static defaultProps = {
+  static contextTypes = {
+    router: React.PropTypes.object,
+  };
 
-  }
-
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    context.router;
     this.state = {
       open: false,
     };
@@ -41,7 +42,7 @@ export class FaqList extends Component {
 
   componentWillMount() {
     const { params } = this.props;
-    this.props.fetchQuestions(params.categoryId);
+    this.props.fetchQuestions(params.id);
   }
 
   onItemClick = (e) => {
@@ -60,7 +61,7 @@ export class FaqList extends Component {
     });
     return (
       <div>
-        <Header title={props.params.categoryName} leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
+        <Header title={props.params.name} leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
           <ul className="questions-list">
             {questions.map((item, index) => {

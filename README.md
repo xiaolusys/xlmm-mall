@@ -2,6 +2,7 @@
 ## Table of Contents
 
 - [About](#about)
+- [Sublime Text Setup](#about)
 - [Installation](#installation)
 - [Development](#development)
 - [Build](#build--buildproduction)
@@ -10,6 +11,7 @@
 - [React](https://github.com/facebook/react)
 - [Redux](https://github.com/gaearon/redux)
 - [React Router](https://github.com/rackt/react-router)
+- [axios](https://github.com/mzabriskie/axios)
 - [Bootstrap-loader](https://github.com/shakacode/bootstrap-loader) (configurable with .bootstraprc)
 - Sass modules ([sass-loader](https://github.com/jtangelder/sass-loader) [css-loader](https://github.com/webpack/css-loader) [style-loader](https://github.com/webpack/style-loader))
 - [react transform](https://github.com/gaearon/react-transform)
@@ -19,10 +21,36 @@
 - [karma](https://github.com/karma-runner/karma)
 - [mocha](https://github.com/mochajs/mocha)
 
-## Installation
+## Sublime Text Setup
+### 1. Install package controll [https://packagecontrol.io/installation](https://packagecontrol.io/installation)
+### 2. Install Below Plugins
 ```
+Babel
+Babel Snippets
+Sass
+SublimeLinter
+SublimeLinter-eslint
+HTML-CSS-JS Prettify
+``` 
+### 3. Plugins Setup
+```text
+a. HTML-CSS-JS Prettify Setup
+Preference -> Package Settings -> HTML/CSS/JS Prettify -> Set Prettify Preference
+set 'indent_size' as 2,
+set 'e4x' as true, 
+
+b. SublimeLinter Setup
+Tools -> SublimeLinter -> Debug Mode
+
+c. JS Syntax Setup
+View -> Syntax -> Open all with current extension as ... -> Babel -> JavaScript(Babel)
+```
+## Installation
+```shell
 $ git clone ssh://git@dev.huyi.so:10022/xiaolumm/xlmm-mall.git
 $ cd xlmm-mall
+$ npm install babel-eslint -g
+$ npm install eslint -g
 $ npm install
 ```
 

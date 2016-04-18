@@ -29,14 +29,119 @@
 @function icon-char($filename) {
   $char: "";
 
-  @if $filename == angle-down {
+  @if $filename == ali-pay {
     $char: "\E001";
   }
-  @if $filename == angle-left {
+  @if $filename == angle-down {
     $char: "\E002";
   }
-  @if $filename == angle-up {
+  @if $filename == angle-left {
     $char: "\E003";
+  }
+  @if $filename == angle-right {
+    $char: "\E004";
+  }
+  @if $filename == angle-up {
+    $char: "\E005";
+  }
+  @if $filename == bag {
+    $char: "\E006";
+  }
+  @if $filename == bars {
+    $char: "\E007";
+  }
+  @if $filename == cart {
+    $char: "\E008";
+  }
+  @if $filename == cny {
+    $char: "\E009";
+  }
+  @if $filename == copy-link {
+    $char: "\E00A";
+  }
+  @if $filename == coupon {
+    $char: "\E00B";
+  }
+  @if $filename == database {
+    $char: "\E00C";
+  }
+  @if $filename == do-not-bleach {
+    $char: "\E00D";
+  }
+  @if $filename == do-not-dry-clean {
+    $char: "\E00E";
+  }
+  @if $filename == do-not-iron {
+    $char: "\E00F";
+  }
+  @if $filename == faq {
+    $char: "\E010";
+  }
+  @if $filename == headset {
+    $char: "\E011";
+  }
+  @if $filename == home {
+    $char: "\E012";
+  }
+  @if $filename == location-gps {
+    $char: "\E013";
+  }
+  @if $filename == mail-open {
+    $char: "\E014";
+  }
+  @if $filename == new {
+    $char: "\E015";
+  }
+  @if $filename == order-o {
+    $char: "\E016";
+  }
+  @if $filename == order-square {
+    $char: "\E017";
+  }
+  @if $filename == order {
+    $char: "\E018";
+  }
+  @if $filename == pay-qq {
+    $char: "\E019";
+  }
+  @if $filename == pay-wechat {
+    $char: "\E01A";
+  }
+  @if $filename == pay-weibo {
+    $char: "\E01B";
+  }
+  @if $filename == seven-o {
+    $char: "\E01C";
+  }
+  @if $filename == share-qq {
+    $char: "\E01D";
+  }
+  @if $filename == share-qzone {
+    $char: "\E01E";
+  }
+  @if $filename == share-wechat-o {
+    $char: "\E01F";
+  }
+  @if $filename == share-wechat-snapshot {
+    $char: "\E020";
+  }
+  @if $filename == share-wechat {
+    $char: "\E021";
+  }
+  @if $filename == share-weibo {
+    $char: "\E022";
+  }
+  @if $filename == share {
+    $char: "\E023";
+  }
+  @if $filename == truck {
+    $char: "\E024";
+  }
+  @if $filename == wallet {
+    $char: "\E025";
+  }
+  @if $filename == warm {
+    $char: "\E026";
   }
 
   @return $char;
@@ -53,12 +158,117 @@
   }
 }
 
+.icon-ali-pay {
+  @include icon(ali-pay);
+}
 .icon-angle-down {
   @include icon(angle-down);
 }
 .icon-angle-left {
   @include icon(angle-left);
 }
+.icon-angle-right {
+  @include icon(angle-right);
+}
 .icon-angle-up {
   @include icon(angle-up);
+}
+.icon-bag {
+  @include icon(bag);
+}
+.icon-bars {
+  @include icon(bars);
+}
+.icon-cart {
+  @include icon(cart);
+}
+.icon-cny {
+  @include icon(cny);
+}
+.icon-copy-link {
+  @include icon(copy-link);
+}
+.icon-coupon {
+  @include icon(coupon);
+}
+.icon-database {
+  @include icon(database);
+}
+.icon-do-not-bleach {
+  @include icon(do-not-bleach);
+}
+.icon-do-not-dry-clean {
+  @include icon(do-not-dry-clean);
+}
+.icon-do-not-iron {
+  @include icon(do-not-iron);
+}
+.icon-faq {
+  @include icon(faq);
+}
+.icon-headset {
+  @include icon(headset);
+}
+.icon-home {
+  @include icon(home);
+}
+.icon-location-gps {
+  @include icon(location-gps);
+}
+.icon-mail-open {
+  @include icon(mail-open);
+}
+.icon-new {
+  @include icon(new);
+}
+.icon-order-o {
+  @include icon(order-o);
+}
+.icon-order-square {
+  @include icon(order-square);
+}
+.icon-order {
+  @include icon(order);
+}
+.icon-pay-qq {
+  @include icon(pay-qq);
+}
+.icon-pay-wechat {
+  @include icon(pay-wechat);
+}
+.icon-pay-weibo {
+  @include icon(pay-weibo);
+}
+.icon-seven-o {
+  @include icon(seven-o);
+}
+.icon-share-qq {
+  @include icon(share-qq);
+}
+.icon-share-qzone {
+  @include icon(share-qzone);
+}
+.icon-share-wechat-o {
+  @include icon(share-wechat-o);
+}
+.icon-share-wechat-snapshot {
+  @include icon(share-wechat-snapshot);
+}
+.icon-share-wechat {
+  @include icon(share-wechat);
+}
+.icon-share-weibo {
+  @include icon(share-weibo);
+}
+.icon-share {
+  @include icon(share);
+}
+.icon-truck {
+  @include icon(truck);
+}
+.icon-wallet {
+  @include icon(wallet);
+}
+.icon-warm {
+  @include icon(warm);
 }
