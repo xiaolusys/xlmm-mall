@@ -1,0 +1,17 @@
+.button {
+  background-color: transparent;
+  border: 1px solid #f5a623;
+  border-radius: 16px;
+  &.button-stable {
+    color: #f5a623;
+  }
+  &.button-light {
+    color: #f5a623;
+    background-color: #fff;
+  }
+  &.button-energized {
+    color: #fff;
+    background-color: #f5a623;
+  }
+}
+

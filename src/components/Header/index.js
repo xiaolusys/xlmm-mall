@@ -38,7 +38,7 @@ export class Header extends Component {
       self.setState({ rightBtnActive: false });
     }, 100);
     e.preventDefault();
-  };
+  }
 
   onLeftBtnClick = (e) => {
     const self = this;
@@ -48,7 +48,7 @@ export class Header extends Component {
       self.setState({ leftBtnActive: false });
     }, 100);
     e.preventDefault();
-  };
+  }
 
   render() {
     const props = this.props;
