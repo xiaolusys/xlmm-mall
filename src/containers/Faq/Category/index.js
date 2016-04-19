@@ -14,7 +14,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export class FaqCategory extends Component {
+export default class FaqCategory extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     data: React.PropTypes.array,
@@ -24,8 +24,13 @@ export class FaqCategory extends Component {
     fetchCategories: React.PropTypes.func,
   };
 
-  constructor(props) {
+  static contextTypes = {
+    router: React.PropTypes.object,
+  };
+
+  constructor(props, context) {
     super(props);
+    context.router;
   }
 
   componentWillMount() {
@@ -37,7 +42,7 @@ export class FaqCategory extends Component {
     const { children, data, isLoading, error } = this.props;
     return (
       <div>
-        <Header title="常见问题" leftIcon="icon-angle-left" leftBtnClick={props.history.goBack} />
+        <Header title="常见问题" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
         {isLoading ? <span>loading...</span> : children}
         <ul className="faq-list">
@@ -45,7 +50,7 @@ export class FaqCategory extends Component {
             data.map((item, index) => {
               return (
                 <li className="bottom-border row no-margin" key={index}>
-                  <a href={'#/faq/list/' + item.id} >
+                  <a href={'#/faq/list/' + item.id + '/' + encodeURIComponent(item.category_name)} >
                   <img className="col-xs-4" src={item.icon_url} />
                   <div className="col-xs-8">
                     <p className="font-lg font-black">{item.category_name}</p>
