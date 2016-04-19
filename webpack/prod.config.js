@@ -39,7 +39,7 @@ module.exports = {
       },
     }),
     new webpack.ProvidePlugin({
-      Promise: 'es6-promise',
+      Promise: 'exports?global.Promise!es6-promise',
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
