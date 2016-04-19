@@ -9,10 +9,20 @@ export class Input extends Component {
     type: React.PropTypes.string.isRequired,
     placeholder: React.PropTypes.string,
     onChange: React.PropTypes.func,
+    onValid: React.PropTypes.func,
+    onInvalid: React.PropTypes.func,
+    reuqired: React.PropTypes.bool,
+    minLength: React.PropTypes.number,
+    maxLength: React.PropTypes.number,
+    validator: React.PropTypes.func,
+    isPhone: React.PropTypes.bool,
+    isEMail: React.PropTypes.bool,
   };
 
   static defaultProps = {
     onChange: _.noop,
+    onValid: _.noop,
+    validator: _.noop,
   }
 
   constructor(props) {
@@ -22,12 +32,15 @@ export class Input extends Component {
   state = {
     iconActive: false,
     showPassword: false,
+    valid: true,
   }
 
   onInput = (e) => {
+    const value = e.target.value;
+
     this.setState({
       iconActive: true,
-      value: e.target.value,
+      value: value,
     });
     e.preventDefault();
   }
@@ -42,6 +55,19 @@ export class Input extends Component {
       value: '',
       iconActive: false,
     });
+  }
+
+  checkRules = (value) => {
+    const validData = {
+      reuqired: this.state.reuqired && value.length > 0,
+      minLength: this.state.minLength && this.state.minLength >= value.length,
+      maxLength: this.state.maxLength && this.state.maxLength >= value.length,
+      phone: this.state.isPhone && /^0?1[3|4|5|7|8][0-9]\d{8}$/.test(value),
+      email: this.state.type === 'email' && /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(value),
+      number: this.state.type === 'number' && parseFloat(value),
+      regex: this.state.regex && _.isRegExp() && this.state.regex.test(),
+    };
+    const valid = validData.reuqired && validData.minLength;
   }
 
   render() {

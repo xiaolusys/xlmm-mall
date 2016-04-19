@@ -29,7 +29,7 @@
 @function icon-char($filename) {
   $char: "";
 
-  @if $filename == ali-pay {
+  @if $filename == alipay-square {
     $char: "\E001";
   }
   @if $filename == angle-down {
@@ -101,46 +101,46 @@
   @if $filename == order {
     $char: "\E018";
   }
-  @if $filename == pay-qq {
+  @if $filename == qq-square {
     $char: "\E019";
   }
-  @if $filename == pay-wechat {
+  @if $filename == qq {
     $char: "\E01A";
   }
-  @if $filename == pay-weibo {
+  @if $filename == qzone {
     $char: "\E01B";
   }
   @if $filename == seven-o {
     $char: "\E01C";
   }
-  @if $filename == share-qq {
+  @if $filename == share {
     $char: "\E01D";
   }
-  @if $filename == share-qzone {
+  @if $filename == truck {
     $char: "\E01E";
   }
-  @if $filename == share-wechat-o {
+  @if $filename == wallet {
     $char: "\E01F";
   }
-  @if $filename == share-wechat-snapshot {
+  @if $filename == warm {
     $char: "\E020";
   }
-  @if $filename == share-wechat {
+  @if $filename == wechat-o {
     $char: "\E021";
   }
-  @if $filename == share-weibo {
+  @if $filename == wechat-snapshot {
     $char: "\E022";
   }
-  @if $filename == share {
+  @if $filename == wechat-square {
     $char: "\E023";
   }
-  @if $filename == truck {
+  @if $filename == wechat {
     $char: "\E024";
   }
-  @if $filename == wallet {
+  @if $filename == weibo-square {
     $char: "\E025";
   }
-  @if $filename == warm {
+  @if $filename == weibo {
     $char: "\E026";
   }
 
@@ -158,8 +158,8 @@
   }
 }
 
-.icon-ali-pay {
-  @include icon(ali-pay);
+.icon-alipay-square {
+  @include icon(alipay-square);
 }
 .icon-angle-down {
   @include icon(angle-down);
@@ -230,35 +230,17 @@
 .icon-order {
   @include icon(order);
 }
-.icon-pay-qq {
-  @include icon(pay-qq);
+.icon-qq-square {
+  @include icon(qq-square);
 }
-.icon-pay-wechat {
-  @include icon(pay-wechat);
+.icon-qq {
+  @include icon(qq);
 }
-.icon-pay-weibo {
-  @include icon(pay-weibo);
+.icon-qzone {
+  @include icon(qzone);
 }
 .icon-seven-o {
   @include icon(seven-o);
-}
-.icon-share-qq {
-  @include icon(share-qq);
-}
-.icon-share-qzone {
-  @include icon(share-qzone);
-}
-.icon-share-wechat-o {
-  @include icon(share-wechat-o);
-}
-.icon-share-wechat-snapshot {
-  @include icon(share-wechat-snapshot);
-}
-.icon-share-wechat {
-  @include icon(share-wechat);
-}
-.icon-share-weibo {
-  @include icon(share-weibo);
 }
 .icon-share {
   @include icon(share);
@@ -271,4 +253,22 @@
 }
 .icon-warm {
   @include icon(warm);
+}
+.icon-wechat-o {
+  @include icon(wechat-o);
+}
+.icon-wechat-snapshot {
+  @include icon(wechat-snapshot);
+}
+.icon-wechat-square {
+  @include icon(wechat-square);
+}
+.icon-wechat {
+  @include icon(wechat);
+}
+.icon-weibo-square {
+  @include icon(weibo-square);
+}
+.icon-weibo {
+  @include icon(weibo);
 }
