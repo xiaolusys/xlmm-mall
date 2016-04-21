@@ -20,8 +20,8 @@ import './index.scss';
 export default class FaqList extends Component {
   static propTypes = {
     children: React.PropTypes.array,
-    data: React.PropTypes.any,
     dispatch: React.PropTypes.func,
+    data: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
     fetchQuestions: React.PropTypes.func,
@@ -41,6 +41,7 @@ export default class FaqList extends Component {
   }
 
   componentWillMount() {
+    console.log('FAQ componentWillMount');
     const { params } = this.props;
     this.props.fetchQuestions(params.id);
   }
