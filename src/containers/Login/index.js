@@ -9,6 +9,8 @@ import { Footer } from 'components/Footer';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 
+import './index.scss';
+
 @connect(
   state => ({
     data: state.login.data,
@@ -112,7 +114,7 @@ export class Login extends Component {
           <Input type="number" placeholder="请输入手机号" regex={/^0?1[3|4|5|7|8][0-9]\d{8}$/} onChange={this.onUsernameChange} />
           <Input type="password" placeholder="请输入登录密码" onChange={this.onPasswordChange} />
           <div className="row no-margin">
-            <a className="pull-right margin-top-xs" href="/#/password/reset" >忘记密码？</a>
+            <a className="pull-right margin-right-xxs margin-top-xs dark-blue text-underliner" href="/#/password/reset" >忘记密码</a>
           </div>
           <div className="row no-margin">
             <button className={loginBtnCls} type="button" onClick={this.onLoginBtnClick}>登录</button>
@@ -120,13 +122,15 @@ export class Login extends Component {
           <div className="row no-margin">
             <button className={registerBtnCls} type="button" onClick={this.onRegisterClick}>注册</button>
           </div>
-          <div className="row no-margin text-center">
-            <p className="margin-top-md">第三方登录</p>
-          </div>
+          <p className="row no-margin text-center">
+            <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
+            <span className="col-xs-4 margin-top-lg grey">第三方登录</span>
+            <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
+          </p>
           <div className="row no-margin">
-            <div className="col-xs-8 col-xs-offset-2 text-center">
-              <i className="col-xs-6 icon-wechat icon-2x"></i>
-              <i className="col-xs-6 icon-weibo icon-2x"></i>
+            <div className="col-xs-8 col-xs-offset-2 text-center margin-top-sm">
+              <i className="col-xs-6 icon-wechat icon-3x icon-green"></i>
+              <i className="col-xs-6 icon-weibo icon-3x icon-green"></i>
             </div>
           </div>
           <Footer />
