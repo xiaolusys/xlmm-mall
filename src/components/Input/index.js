@@ -11,17 +11,13 @@ export class Input extends Component {
     onChange: React.PropTypes.func,
     onValid: React.PropTypes.func,
     onInvalid: React.PropTypes.func,
-    reuqired: React.PropTypes.bool,
-    minLength: React.PropTypes.number,
-    maxLength: React.PropTypes.number,
-    validator: React.PropTypes.func,
-    isPhone: React.PropTypes.bool,
-    isEMail: React.PropTypes.bool,
+    rules: React.PropTypes.object,
   };
 
   static defaultProps = {
     onChange: _.noop,
     onValid: _.noop,
+    onInvalid: _.noop,
     validator: _.noop,
   }
 
@@ -37,7 +33,7 @@ export class Input extends Component {
 
   onInput = (e) => {
     const value = e.target.value;
-
+    this.checkRules(value);
     this.setState({
       iconActive: true,
       value: value,
@@ -58,26 +54,28 @@ export class Input extends Component {
   }
 
   checkRules = (value) => {
-    const validData = {
-      reuqired: this.state.reuqired && value.length > 0,
-      minLength: this.state.minLength && this.state.minLength >= value.length,
-      maxLength: this.state.maxLength && this.state.maxLength >= value.length,
-      phone: this.state.isPhone && /^0?1[3|4|5|7|8][0-9]\d{8}$/.test(value),
-      email: this.state.type === 'email' && /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(value),
-      number: this.state.type === 'number' && parseFloat(value),
-      regex: this.state.regex && _.isRegExp() && this.state.regex.test(),
-    };
-    const valid = validData.reuqired && validData.minLength;
+    const valid = true;
+    this.setState({ valid: valid });
+    if (valid) {
+      this.props.onValid();
+      return;
+    }
+    this.props.onInvalid();
   }
 
   render() {
     const { type, placeholder, onChange } = this.props;
+    const inputBoxCls = classnames({
+      ['input-box row no-margin bottom-border']: 1,
+      ['valid']: this.state.valid,
+      ['invalid']: !this.state.valid,
+    });
     const clearBtnCls = classnames({
       ['fa fa-close']: 1,
       ['hide']: !this.state.iconActive,
     });
     return (
-      <div className="input-box row no-margin bottom-border">
+      <div className={inputBoxCls}>
       <input className="col-xs-10 float-left" type={type} value={this.state.value} placeholder={placeholder} onInput={this.onInput} onChange={this.onChange}/>
       <div className="col-xs-2 text-center">
         <i className={clearBtnCls} onClick={this.onClearClick}></i>

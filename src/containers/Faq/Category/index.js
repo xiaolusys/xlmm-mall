@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import _ from 'underscore';
 import * as actionCreators from 'actions/faq/categories';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
@@ -17,7 +18,7 @@ import './index.scss';
 export default class FaqCategory extends Component {
   static propTypes = {
     children: React.PropTypes.array,
-    data: React.PropTypes.array,
+    data: React.PropTypes.any,
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
@@ -39,7 +40,11 @@ export default class FaqCategory extends Component {
 
   render() {
     const props = this.props;
-    const { children, data, isLoading, error } = this.props;
+    const { children, isLoading, error } = this.props;
+    let { data } = this.props;
+    if (!_.isArray(data)) {
+      data = [];
+    }
     return (
       <div>
         <Header title="常见问题" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
