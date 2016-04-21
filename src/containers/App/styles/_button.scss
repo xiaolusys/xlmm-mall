@@ -17,5 +17,12 @@
   &.pressed {
     opacity: .3;
   }
+  &.button-sm {
+    padding: 2px 8px;
+  }
+}
+
+button[disabled] {
+  opacity: .7;
 }
 

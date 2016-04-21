@@ -9,6 +9,7 @@ export class Input extends Component {
     type: React.PropTypes.string.isRequired,
     placeholder: React.PropTypes.string,
     onChange: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
     onValid: React.PropTypes.func,
     onInvalid: React.PropTypes.func,
     rules: React.PropTypes.object,
@@ -16,6 +17,7 @@ export class Input extends Component {
 
   static defaultProps = {
     onChange: _.noop,
+    onBlur: _.noop,
     onValid: _.noop,
     onInvalid: _.noop,
     validator: _.noop,
@@ -46,6 +48,11 @@ export class Input extends Component {
     e.preventDefault();
   }
 
+  onBlur = (e) => {
+    this.props.onBlur(e.target.value);
+    e.preventDefault();
+  }
+
   onClearClick = (e) => {
     this.setState({
       value: '',
@@ -71,12 +78,12 @@ export class Input extends Component {
       ['invalid']: !this.state.valid,
     });
     const clearBtnCls = classnames({
-      ['fa fa-close']: 1,
+      ['icon-close-o icon-grey']: 1,
       ['hide']: !this.state.iconActive,
     });
     return (
       <div className={inputBoxCls}>
-      <input className="col-xs-10 float-left" type={type} value={this.state.value} placeholder={placeholder} onInput={this.onInput} onChange={this.onChange}/>
+      <input className="col-xs-10 float-left" type={type} value={this.state.value} placeholder={placeholder} onInput={this.onInput} onChange={this.onChange} onBlur={this.onBlur}/>
       <div className="col-xs-2 text-center">
         <i className={clearBtnCls} onClick={this.onClearClick}></i>
       </div>
