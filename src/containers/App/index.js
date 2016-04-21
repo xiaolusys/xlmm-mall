@@ -13,11 +13,7 @@ export class App extends Component {
   render() {
     return (
       <div>
-        <ReactCSSTransitionGroup component="section" transitionName="slide" transitionEnterTimeout={800} transitionLeaveTimeout={500}>
-          {React.cloneElement(this.props.children, {
-            key: this.props.location.pathname,
-          })}
-        </ReactCSSTransitionGroup>
+        {this.props.children}
       </div>
     );
   }
