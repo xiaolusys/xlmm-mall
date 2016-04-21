@@ -38,6 +38,9 @@ module.exports = {
         js: '<script src="./bundle.js?' + Date.now() + '"></script>',
       },
     }),
+    new webpack.ProvidePlugin({
+      Promise: 'exports?global.Promise!es6-promise',
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,

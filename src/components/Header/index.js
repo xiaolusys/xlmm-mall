@@ -26,39 +26,39 @@ export class Header extends Component {
   }
 
   state = {
-    leftBtnActive: false,
-    rightBtnActive: false,
+    leftBtnPressed: false,
+    rightBtnPressed: false,
   }
 
   onRightBtnClick = (e) => {
     const self = this;
-    this.setState({ rightBtnActive: this.state.rightBtnActive ? false : true });
+    this.setState({ rightBtnPressed: this.state.rightBtnPressed ? false : true });
     this.props.rightBtnClick(e);
     _.delay(() => {
-      self.setState({ rightBtnActive: false });
-    }, 100);
+      self.setState({ rightBtnPressed: false });
+    }, 50);
     e.preventDefault();
-  };
+  }
 
   onLeftBtnClick = (e) => {
     const self = this;
-    this.setState({ leftBtnActive: true });
+    this.setState({ leftBtnPressed: true });
     this.props.leftBtnClick(e);
     _.delay(() => {
-      self.setState({ leftBtnActive: false });
-    }, 100);
+      self.setState({ leftBtnPressed: false });
+    }, 50);
     e.preventDefault();
-  };
+  }
 
   render() {
     const props = this.props;
     const leftBtnCls = classnames({
       ['icon-btn ' + props.leftIcon + ' icon-yellow']: 1,
-      ['active']: this.state.leftBtnActive,
+      ['pressed']: this.state.leftBtnPressed,
     });
     const rightBtnCls = classnames({
       ['icon-btn ' + props.rightIcon + ' icon-yellow']: 1,
-      ['active']: this.state.rightBtnActive,
+      ['pressed']: this.state.rightBtnPressed,
     });
 
     return (

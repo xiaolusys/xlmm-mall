@@ -42,12 +42,12 @@ body {
   margin: 0px !important;
 }
 
-.padding-right-sm {
-  padding-right: 8px;
+.no-padding {
+  padding: 0px !important;
 }
 
-.padding-left-sm {
-  padding-left: 8px;
+.text-underliner {
+  text-decoration: underline;
 }
 
 .content {
@@ -59,6 +59,38 @@ body {
   top: 44px;
 }
 
+.bottom-border {
+  border-bottom: 1px solid $bar-border;
+  @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+    border: none;
+    background-image: linear-gradient(0deg, $bar-border, $bar-border 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+  }
+}
+
+.top-border {
+  border-top: 1px solid $bar-border;
+  @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+    border: none;
+    background-image: linear-gradient(0deg, $bar-border, $bar-border 50%, transparent 50%);
+    background-top: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+  }
+}
+
+// font color
+.font-grey {
+  color: #626262;
+}
+
+.font-black {
+  color: #26262e;
+}
+
+// font size
 .font-xxs {
   font-size: 10px;
 }
@@ -83,33 +115,171 @@ body {
   font-size: 20px;
 }
 
-.font-grey {
-  color: #626262;
+// padding right
+.padding-right-xxs {
+  padding-right: 8px;
 }
 
-.font-black {
-  color: #26262e;
+.padding-right-xs {
+  padding-right: 16px;
 }
 
-.bottom-border {
-  border-bottom: 1px solid $bar-border;
-  @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-    border: none;
-    background-image: linear-gradient(0deg, $bar-border, $bar-border 50%, transparent 50%);
-    background-position: bottom;
-    background-size: 100% 1px;
-    background-repeat: no-repeat;
-  }
+.padding-right-sm {
+  padding-right: 32px;
 }
 
-.top-border {
-  border-top: 1px solid $bar-border;
-  @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-    border: none;
-    background-image: linear-gradient(0deg, $bar-border, $bar-border 50%, transparent 50%);
-    background-top: bottom;
-    background-size: 100% 1px;
-    background-repeat: no-repeat;
-  }
+.padding-right-md {
+  padding-right: 48px;
+}
+
+.padding-right-lg {
+  padding-right: 64px;
+}
+
+// padding left
+.padding-left-xxs {
+  padding-left: 8px;
+}
+
+.padding-left-xs {
+  padding-left: 16px;
+}
+
+.padding-left-sm {
+  padding-left: 32px;
+}
+
+.padding-left-md {
+  padding-left: 48px;
+}
+
+.padding-left-lg {
+  padding-left: 64px;
+}
+
+// padding top
+.padding-top-xxs {
+  padding-top: 8px;
+}
+
+.padding-top-xs {
+  padding-top: 16px;
+}
+
+.padding-top-sm {
+  padding-top: 32px;
+}
+
+.padding-top-md {
+  padding-top: 48px;
+}
+
+.padding-top-lg {
+  padding-top: 64px;
+}
+
+// padding bottom
+.padding-bottom-xxs {
+  padding-bottom: 8px;
+}
+
+.padding-bottom-xs {
+  padding-bottom: 16px;
+}
+
+.padding-bottom-sm {
+  padding-bottom: 32px;
+}
+
+.padding-bottom-md {
+  padding-bottom: 48px;
+}
+
+.padding-bottom-lg {
+  padding-bottom: 64px;
+}
+
+// margin right
+.margin-right-xxs {
+  margin-right: 8px;
+}
+
+.margin-right-xs {
+  margin-right: 16px;
+}
+
+.margin-right-sm {
+  margin-right: 32px;
+}
+
+.margin-right-md {
+  margin-right: 48px;
+}
+
+.margin-right-lg {
+  margin-right: 64px;
+}
+
+// margin left
+.margin-left-xxs {
+  margin-left: 8px;
+}
+
+.margin-left-xs {
+  margin-left: 16px;
+}
+
+.margin-left-sm {
+  margin-left: 32px;
+}
+
+.margin-left-md {
+  margin-left: 48px;
+}
+
+.margin-left-lg {
+  margin-left: 64px;
+}
+
+// margin top
+.margin-top-xxs {
+  margin-top: 8px;
+}
+
+.margin-top-xs {
+  margin-top: 16px;
+}
+
+.margin-top-sm {
+  margin-top: 32px;
+}
+
+.margin-top-md {
+  margin-top: 48px;
+}
+
+.margin-top-lg {
+  margin-top: 64px;
+}
+
+// margin bottom
+.margin-bottom-xxs {
+  margin-bottom: 8px;
+}
+
+.margin-bottom-xs {
+  margin-bottom: 16px;
+}
+
+.margin-bottom-sm {
+  margin-bottom: 32px;
+}
+
+.margin-bottom-md {
+  margin-bottom: 48px;
+}
+
+.margin-bottom-lg {
+  margin-bottom: 64px;
 }
 

@@ -363,3 +363,12 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
 }
+/**
+ * Remove number input’s spin box
+ */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
