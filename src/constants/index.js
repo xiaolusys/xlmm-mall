@@ -1,1 +1,1 @@
-export const baseEndpoint = '/rest/v1/';
+export const baseEndpoint = '/rest/v2/';

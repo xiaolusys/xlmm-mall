@@ -22,7 +22,6 @@ import './index.scss';
 )
 export class Login extends Component {
   static propTypes = {
-
     dispatch: React.PropTypes.func,
     data: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
@@ -51,25 +50,13 @@ export class Login extends Component {
     if (!nextProps.success) {
       return;
     }
-    switch (nextProps.data.code) {
+    switch (nextProps.data.rcode) {
       case 0:
+        Toast.show(nextProps.data.msg);
         query.next ? router.push(query.next) : router.push('/');
         break;
-      case 1:
-        break;
-      case 2:
-        Toast.show('密码错误');
-        break;
-      case 3:
-        Toast.show('没有注册');
-        break;
-      case 4:
-        Toast.show('账号异常');
-        break;
-      case 6:
-        Toast.show('系统异常');
-        break;
       default:
+        Toast.show(nextProps.data.msg);
         break;
     }
   }
