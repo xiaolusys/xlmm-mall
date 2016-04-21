@@ -1,0 +1,12 @@
+.user-info-list {
+  > li {
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    p,
+    i {
+      margin: 8px 0px;
+    }
+  }
+}

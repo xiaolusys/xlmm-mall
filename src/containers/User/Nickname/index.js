@@ -15,7 +15,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export class BindCellNumber extends Component {
+export default class UserNickname extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     data: React.PropTypes.any,
@@ -34,9 +34,9 @@ export class BindCellNumber extends Component {
     context.router;
   }
 
-  componentWillMount() {
-    this.props.fetchUsers();
-  }
+  // componentWillMount() {
+  //   this.props.fetchUsers();
+  // }
 
   render() {
     const props = this.props;
@@ -47,10 +47,9 @@ export class BindCellNumber extends Component {
     }
     return (
       <div>
-        <Header title="手机绑定" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
-        <div className="has-header content">
+        <Header title="修改昵称" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Input/>
         <Footer/>
-        </div>
       </div>
     );
   }

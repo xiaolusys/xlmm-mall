@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'actions/user/users';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Input } from 'components/Input';
 
 import './index.scss';
 
@@ -14,7 +15,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export class ChangeNick extends Component {
+export default class UserPhone extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     data: React.PropTypes.any,
@@ -33,9 +34,9 @@ export class ChangeNick extends Component {
     context.router;
   }
 
-  // componentWillMount() {
-  //   this.props.fetchUsers();
-  // }
+  componentWillMount() {
+    this.props.fetchUsers();
+  }
 
   render() {
     const props = this.props;
@@ -46,9 +47,12 @@ export class ChangeNick extends Component {
     }
     return (
       <div>
-        <Header title="个人信息" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Header title="手机绑定" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <div className="has-header content">
+        <Input/>
         <Footer/>
         </div>
+      </div>
     );
   }
 }

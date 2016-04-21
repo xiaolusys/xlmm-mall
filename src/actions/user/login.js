@@ -1,7 +1,6 @@
 import * as constants from 'constants';
 import axios from 'axios';
 import createAction from '../createAction';
-import { push } from 'redux-router';
 import qs from 'qs';
 
 export const name = 'LOGIN';
