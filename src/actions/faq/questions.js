@@ -8,7 +8,7 @@ export const fetchQuestions = (categoryId) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'faqs/get_question', { params: { main_category: categoryId } })
+    return axios.get(constants.baseEndpointV1 + 'faqs/get_question', { params: { main_category: categoryId } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
