@@ -17,9 +17,10 @@
   font-style: normal;
   font-variant: normal;
   font-weight: normal;
-  // speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+  speak: none; // only necessary if not using the private unicode range (firstGlyph option)
   text-decoration: none;
   text-transform: none;
+  vertical-align: top;
 }
 
 %icon {
@@ -62,89 +63,98 @@
   @if $filename == copy-link {
     $char: "\E00B";
   }
-  @if $filename == coupon {
+  @if $filename == coupon-o {
     $char: "\E00C";
   }
-  @if $filename == database {
+  @if $filename == coupon {
     $char: "\E00D";
   }
-  @if $filename == do-not-bleach {
+  @if $filename == database {
     $char: "\E00E";
   }
-  @if $filename == do-not-dry-clean {
+  @if $filename == do-not-bleach {
     $char: "\E00F";
   }
-  @if $filename == do-not-iron {
+  @if $filename == do-not-dry-clean {
     $char: "\E010";
   }
-  @if $filename == faq {
+  @if $filename == do-not-iron {
     $char: "\E011";
   }
-  @if $filename == headset {
+  @if $filename == faq {
     $char: "\E012";
   }
-  @if $filename == home {
+  @if $filename == headset {
     $char: "\E013";
   }
-  @if $filename == location-gps {
+  @if $filename == home {
     $char: "\E014";
   }
-  @if $filename == mail-open {
+  @if $filename == location-gps {
     $char: "\E015";
   }
-  @if $filename == new {
+  @if $filename == mail-open {
     $char: "\E016";
   }
-  @if $filename == order-o {
+  @if $filename == new {
     $char: "\E017";
   }
-  @if $filename == order-square {
+  @if $filename == order-o {
     $char: "\E018";
   }
-  @if $filename == order {
+  @if $filename == order-square {
     $char: "\E019";
   }
-  @if $filename == qq-square {
+  @if $filename == order {
     $char: "\E01A";
   }
-  @if $filename == qq {
+  @if $filename == qq-square {
     $char: "\E01B";
   }
-  @if $filename == qzone {
+  @if $filename == qq {
     $char: "\E01C";
   }
-  @if $filename == seven-o {
+  @if $filename == qzone {
     $char: "\E01D";
   }
-  @if $filename == share {
+  @if $filename == seven-o {
     $char: "\E01E";
   }
-  @if $filename == truck {
+  @if $filename == share {
     $char: "\E01F";
   }
-  @if $filename == wallet {
+  @if $filename == truck {
     $char: "\E020";
   }
-  @if $filename == warm {
+  @if $filename == wallet-open {
     $char: "\E021";
   }
-  @if $filename == wechat-o {
+  @if $filename == wallet {
     $char: "\E022";
   }
-  @if $filename == wechat-snapshot {
+  @if $filename == warm {
     $char: "\E023";
   }
-  @if $filename == wechat-square {
+  @if $filename == wechat-o {
     $char: "\E024";
   }
-  @if $filename == wechat {
+  @if $filename == wechat-snapshot {
     $char: "\E025";
   }
-  @if $filename == weibo-square {
+  @if $filename == wechat-square {
     $char: "\E026";
   }
-  @if $filename == weibo {
+  @if $filename == wechat {
     $char: "\E027";
+  }
+  @if $filename == weibo-square {
+    $char: "\E028";
+  }
+  @if $filename == weibo {
+    $char: "\E029";
+  }
+  @if $filename == xiaolu {
+    $char: "\E02A";
   }
 
   @return $char;
@@ -193,6 +203,9 @@
 }
 .icon-copy-link {
   @include icon(copy-link);
+}
+.icon-coupon-o {
+  @include icon(coupon-o);
 }
 .icon-coupon {
   @include icon(coupon);
@@ -254,6 +267,9 @@
 .icon-truck {
   @include icon(truck);
 }
+.icon-wallet-open {
+  @include icon(wallet-open);
+}
 .icon-wallet {
   @include icon(wallet);
 }
@@ -277,4 +293,7 @@
 }
 .icon-weibo {
   @include icon(weibo);
+}
+.icon-xiaolu {
+  @include icon(xiaolu);
 }

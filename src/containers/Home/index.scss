@@ -1,0 +1,25 @@
+.menu-active {
+  .home-container {
+    left: 284px;
+  }
+  .bar-header {
+    left: 284px;
+  }
+}
+
+.bar-header {
+  box-sizing: border-box;
+  transition: all 300ms;
+}
+
+.home-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  box-shadow: -4px 0 16px darken(#26262e, 1%);
+  transition: all 300ms;
+}
+
