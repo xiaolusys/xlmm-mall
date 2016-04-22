@@ -72,7 +72,7 @@ export default class Login extends Component {
 
   onRegisterClick = (e) => {
     this.setState({ loginBtnPressed: true });
-    this.context.router.push('/register');
+    this.context.router.push('/user/register');
     e.preventDefault();
   }
 
@@ -101,7 +101,7 @@ export default class Login extends Component {
           <Input type="number" placeholder="请输入手机号" regex={/^0?1[3|4|5|7|8][0-9]\d{8}$/} onChange={this.onUsernameChange} />
           <Input type="password" placeholder="请输入登录密码" onChange={this.onPasswordChange} />
           <div className="row no-margin">
-            <a className="pull-right margin-right-xxs margin-top-xs dark-blue text-underliner" href="/#/password/reset" >忘记密码</a>
+            <a className="pull-right margin-right-xxs margin-top-xs dark-blue text-underliner" href="/#/user/password/reset" >忘记密码</a>
           </div>
           <div className="row no-margin">
             <button className={loginBtnCls} type="button" onClick={this.onLoginBtnClick}>登录</button>
