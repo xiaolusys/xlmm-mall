@@ -20,7 +20,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export class Login extends Component {
+export default class Login extends Component {
   static propTypes = {
     dispatch: React.PropTypes.func,
     data: React.PropTypes.any,
