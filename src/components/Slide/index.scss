@@ -32,19 +32,18 @@
       }
     }
   }
-}
-
-.avatar {
-  margin-top: 56px;
-  margin-bottom: 32px;
-  width: 60px;
-  height: 60px;
-  border: 1px solid #fdcb0e;
-  border-radius: 60px;
-  .icon-avatar {
-    position: absolute;
-    top: 58px;
-    left: 24px;
+  .avatar {
+    margin-top: 56px;
+    margin-bottom: 32px;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #fdcb0e;
+    border-radius: 60px;
+    .icon-avatar {
+      position: absolute;
+      top: 58px;
+      left: 24px;
+    }
   }
 }
 

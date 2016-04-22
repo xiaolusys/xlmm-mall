@@ -2,6 +2,7 @@ build:
   image: node
   commands:
     - npm install
+    - npm run fontawesome
     - npm run build:production
 cache:
   mount:
