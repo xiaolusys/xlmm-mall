@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="194px" height="165px" viewBox="0 0 194 165" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7 (28169) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M14.58395,0 C6.5087,0 0,6.5175 0,14.5588235 C0,22.5855882 6.5281,29.1176471 14.58395,29.1176471 L179.41605,29.1176471 C187.4913,29.1176471 194,22.6001471 194,14.5588235 C194,6.53691176 187.4719,0 179.41605,0 L14.58395,0 L14.58395,0 Z" id="path-1"></path>
+        <path d="M14.58395,135.882353 C6.5087,135.882353 0,142.399853 0,150.441176 C0,158.467941 6.5281,165 14.58395,165 L179.41605,165 C187.4913,165 194,158.4825 194,150.441176 C194,142.419265 187.4719,135.882353 179.41605,135.882353 L14.58395,135.882353 L14.58395,135.882353 Z" id="path-3"></path>
+        <path d="M14.58395,67.9411765 C6.5087,67.9411765 0,74.4635294 0,82.5 C0,90.5219118 6.5281,97.0588235 14.58395,97.0588235 L179.41605,97.0588235 C187.4913,97.0588235 194,90.5413235 194,82.5 C194,74.4780882 187.4719,67.9411765 179.41605,67.9411765 L14.58395,67.9411765 L14.58395,67.9411765 Z" id="path-5"></path>
+    </defs>
+    <g id="导航栏" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="主页主菜单" transform="translate(-3.000000, -18.000000)">
+            <g id="Group" transform="translate(3.000000, 18.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Clip-2" fill="#26262E" xlink:href="#path-1"></use>
+                <mask id="mask-4" fill="white">
+                    <use xlink:href="#path-3"></use>
+                </mask>
+                <use id="Clip-5" fill="#26262E" xlink:href="#path-3"></use>
+                <mask id="mask-6" fill="white">
+                    <use xlink:href="#path-5"></use>
+                </mask>
+                <use id="Clip-8" fill="#26262E" xlink:href="#path-5"></use>
+            </g>
+        </g>
+    </g>
+</svg>
