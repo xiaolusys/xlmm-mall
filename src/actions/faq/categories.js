@@ -8,7 +8,7 @@ export const fetchCategories = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'faqs')
+    return axios.get(constants.baseEndpointV1 + 'faqs')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
