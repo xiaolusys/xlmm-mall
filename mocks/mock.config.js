@@ -1,8 +1,11 @@
 module.exports = {
-  // '/rest/v1/faqs': {
+  // '/rest/v2/faqs': {
   //   GET: 'data/faqs.get.json',
   // },
-  // '/rest/v1/faqs/get_question': {
+  // '/rest/v2/faqs/get_question': {
   //   GET: 'data/questions.get.json',
   // },
+  '/rest/v1/users/profile': {
+    GET: 'data/profile.get.json',
+  },
 };

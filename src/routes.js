@@ -5,7 +5,7 @@ import { Route, IndexRoute } from 'react-router';
 import { App } from 'containers/App';
 import { Home } from 'containers/Home';
 import { FaqCategory, FaqList } from 'containers/Faq';
-import { Login, Register, ResetPassword } from 'containers/User';
+import { Login, Register, ResetPassword, UserProfile } from 'containers/User';
 
 export default (
   <Route path="/" component={App}>
@@ -15,6 +15,7 @@ export default (
     <Route path="/user/password/reset" component={ResetPassword} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
+    <Route path="user/profile" component={UserProfile}/>
     <Route status={404} path="*" component={Home} />
   </Route>
 );

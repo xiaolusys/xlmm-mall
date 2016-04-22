@@ -1,0 +1,18 @@
+.user-info-list {
+  > li {
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    p,
+    i {
+      margin: 8px 0px;
+    }
+  }
+  .avatar {
+    height: 36px;
+    width: 36px;
+    border: 1px solid #dadada;
+    border-radius: 28px;
+  }
+}
