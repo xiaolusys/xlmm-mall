@@ -1,3 +1,1 @@
-export UserInfo from './Info';
-export UserNickname from './Nickname';
-export UserPhone from './Phone';
+export UserProfile from './Profile';

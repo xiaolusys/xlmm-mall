@@ -7,7 +7,7 @@ import { Home } from 'containers/Home';
 import { FaqCategory, FaqList } from 'containers/Faq';
 import { Login } from 'containers/Login';
 import { Register } from 'containers/Register';
-import { UserInfo, UserNickname, UserPhone } from 'containers/User';
+import { UserProfile } from 'containers/User';
 
 
 export default (
@@ -17,9 +17,7 @@ export default (
     <Route path="register" component={Register} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
-    <Route path="user" component={UserInfo}/>
-    <Route path="user/nick" component={UserNickname}/>
-    <Route path="user/phone" component={UserPhone}/>
+    <Route path="user/profile" component={UserProfile}/>
     <Route status={404} path="*" component={Home} />
   </Route>
 );

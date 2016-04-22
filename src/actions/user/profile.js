@@ -2,13 +2,13 @@ import * as constants from 'constants';
 import axios from 'axios';
 import createAction from '../createAction';
 
-export const name = 'USERS';
+export const name = 'PROFILE';
 
-export const fetchUsers = () => {
+export const fetchProfile = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'users')
+    return axios.get(constants.baseEndpointV1 + 'users/profile')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
