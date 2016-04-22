@@ -5,3 +5,5 @@ dist
 npm-debug.log
 *.css
 /logs
+src/containers/App/styles/_icons.scss
+src/containers/App/styles/fonts/xlmm-font-awesome.*
