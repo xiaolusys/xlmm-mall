@@ -66,7 +66,7 @@ export default class Phone extends Component {
     if (nextProps.success) {
       Toast.show(nextProps.data.msg);
     }
-    if (nextProps.success && nextProps.data.rcode === 0 && this.state.setPassword) {
+    if (nextProps.success && nextProps.data.rcode === 0 && this.state.bindPhone) {
       this.context.router.push('/user/profile');
     }
   }
