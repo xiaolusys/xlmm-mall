@@ -49,13 +49,12 @@ export default class Profile extends Component {
     const logoutBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
     });
-    console.log(data);
 
     return (
       <div>
         <Header title="个人信息" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
-        {isLoading ? <span>loading...</span> : children}
+          {isLoading ? <span>loading...</span> : children}
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
               <a className="font-black">
@@ -74,14 +73,14 @@ export default class Profile extends Component {
               </a>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black">
+              <a className="font-black" href="/#/user/profile/nickname">
                 <p className="col-xs-4">账户昵称</p>
                 <p className="col-xs-7 text-right">{data.nick}</p>
                 <i className="col-xs-1 icon-angle-right"></i>
               </a>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black">
+              <a className="font-black" href="/#/user/profile/phone">
                 <p className="col-xs-4">绑定手机</p>
                 <p className="col-xs-7 text-right">{data.mobile}</p>
                 <i className="col-xs-1 icon-angle-right"></i>
@@ -122,11 +121,11 @@ export default class Profile extends Component {
                 <i className="col-xs-1 icon-angle-right"></i>
               </a>
             </li>
-        </ul>
-        <div className="row no-margin">
-            <button className={logoutBtnCls} type="button" onClick={this.onLogoutBtnClick}>退出</button>
-        </div>
-        <Footer/>
+          </ul>
+          <div className="row no-margin">
+              <button className={logoutBtnCls} type="button" onClick={this.onLogoutBtnClick}>退出</button>
+          </div>
+          <Footer/>
         </div>
       </div>
     );
