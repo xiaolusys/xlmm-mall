@@ -81,7 +81,7 @@ export default class Profile extends Component {
               </a>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black">
+              <a className="font-black" href="/#/user/profile/phone">
                 <p className="col-xs-4">绑定手机</p>
                 <p className="col-xs-7 text-right">{data.mobile}</p>
                 <i className="col-xs-1 icon-angle-right"></i>

@@ -5,7 +5,7 @@ import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
 import * as loginAction from 'actions/user/login';
-import * as verifyCodeAction from 'actions/user/verifyCode';
+import * as passwordAction from 'actions/user/password';
 
 
 const rootReducer = combineReducers({
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   questions: createReducer(questionsAction.name),
   profile: createReducer(profileAction.name),
   login: createReducer(loginAction.name),
-  verifyCode: createReducer(verifyCodeAction.name),
+  password: createReducer(passwordAction.name),
 });
 
 export default rootReducer;

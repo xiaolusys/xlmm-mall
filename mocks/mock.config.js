@@ -8,4 +8,10 @@ module.exports = {
   '/rest/v1/users/profile': {
     GET: 'data/profile.get.json',
   },
+  '/rest/v1/users/send_code': {
+    GET: 'data/send_code.get.json',
+  },
+  '/rest/v1/users/verify': {
+    GET: 'data/verify.get.json',
+  },
 };
