@@ -11,14 +11,6 @@ import { Toast } from 'components/Toast';
 
 import './index.scss';
 
-const bindPhoneAction = {
-  '/user/profile/phone': {
-    title: '手机绑定',
-    nextBtnTitle: '提交',
-    requestAction: 'bind',
-  },
-};
-
 @connect(
   state => ({
     data: state.password.data,
@@ -59,7 +51,7 @@ export default class Phone extends Component {
   }
 
   componentWillMount() {
-    this.setState({ action: bindPhoneAction[this.props.location.pathname] });
+    this.setState({ action: { requestAction: 'bind' } });
   }
 
   componentWillReceiveProps(nextProps) {
