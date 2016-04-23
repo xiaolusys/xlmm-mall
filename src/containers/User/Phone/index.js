@@ -108,10 +108,6 @@ export default class Phone extends Component {
     });
   }
 
-  onVerifyCodeBlur = (e) => {
-
-  }
-
   render() {
     const props = this.props;
     const { children, data, isLoading, error } = this.props;
@@ -127,15 +123,15 @@ export default class Phone extends Component {
       <div>
         <Header title="手机绑定" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
-        <Input type="number" placeholder={'请输入手机号码'} onChange={this.onPhoneChange} />
-        <div className="row no-margin password-box bottom-border">
+          <Input type="number" placeholder={'请输入手机号码'} onChange={this.onPhoneChange} />
+          <div className="row no-margin password-box bottom-border">
             <input className="col-xs-8" type="number" placeholder="请输入验证码" onChange={this.onVerifyCodeChange} />
             <button className={getVerifyCodeBtnCls} type="button" onClick={this.onGetVerifyCodeBtnClick} disabled={this.state.getVerifyCodeBtnDsiabled}>获取验证码</button>
-        </div>
-        <div className="row no-margin">
+          </div>
+          <div className="row no-margin">
             <button className={bindPhoneBtnCls} type="button" onClick={this.onBubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>
-        </div>
-        <Footer/>
+          </div>
+          <Footer/>
         </div>
       </div>
     );
