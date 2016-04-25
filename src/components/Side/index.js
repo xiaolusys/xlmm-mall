@@ -15,7 +15,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export class Slide extends Component {
+export class Side extends Component {
   static propTypes = {
     profile: React.PropTypes.object,
     fetchProfile: React.PropTypes.func,
