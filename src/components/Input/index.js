@@ -7,6 +7,7 @@ import './index.scss';
 export class Input extends Component {
   static propTypes = {
     type: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     onChange: React.PropTypes.func,
     onBlur: React.PropTypes.func,
@@ -31,6 +32,7 @@ export class Input extends Component {
     iconActive: false,
     showPassword: false,
     valid: true,
+    value: this.props.value,
   }
 
   onInput = (e) => {
