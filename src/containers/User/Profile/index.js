@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Route, RouteHandler } from 'react';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/user/profile';
@@ -58,67 +59,77 @@ export default class Profile extends Component {
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
               <a className="font-black">
-                <p className="col-xs-4">头像</p>
+                <p className="col-xs-6 text-left">头像</p>
                 <If condition={data.thumbnail}>
-                <div className="col-xs-7 text-right">
+                <p className="col-xs-6 text-right img-show">
                   <img className="avatar" src={data.thumbnail}/>
-                </div>
+                  <i className="icon-angle-right"></i>
+                </p>
                 </If>
                 <If condition={!data.thumbnail}>
-                  <div className="col-xs-7 text-right">
+                  <div className="col-xs-6 text-right">
                     <i className="icon-xiaolu icon-2x"></i>
+                    <i className="icon-angle-right"></i>
                   </div>
                 </If>
-                <i className="col-xs-1 icon-angle-right"></i>
               </a>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black" href="/#/user/profile/nickname">
-                <p className="col-xs-4">账户昵称</p>
-                <p className="col-xs-7 text-right">{data.nick}</p>
-                <i className="col-xs-1 icon-angle-right"></i>
+              <a className="font-black" href="/#/user/nickname" >
+                <p className="col-xs-6 text-left">账户昵称</p>
+                <p className="col-xs-6 text-right">
+                  <span>{data.nick}</span>
+                  <i className="icon-angle-right"></i>
+                </p>
               </a>
             </li>
             <li className="bottom-border row no-margin">
               <a className="font-black" href="/#/user/profile/phone">
-                <p className="col-xs-4">绑定手机</p>
-                <p className="col-xs-7 text-right">{data.mobile}</p>
-                <i className="col-xs-1 icon-angle-right"></i>
+                <p className="col-xs-6 text-left">绑定手机</p>
+                <p className="col-xs-6 text-right">
+                  <span>{data.mobile}</span>
+                  <i className="icon-angle-right"></i>
+                </p>
+              </a>
+            </li>
+            <li className="bottom-border row no-margin">
+              <a className="font-black" href="/#/user/password/set">
+                <p className="col-xs-6 text-left">修改密码</p>
+                <p className="col-xs-6 text-right">
+                  <i className="icon-angle-right"></i>
+                </p>
               </a>
             </li>
             <li className="bottom-border row no-margin">
               <a className="font-black">
-                <p className="col-xs-4">修改密码</p>
-                <p className="col-xs-7 text-right"></p>
-                <i className="col-xs-1 icon-angle-right"></i>
+                <p className="col-xs-6 text-left">第三方账户绑定</p>
+                <p className="col-xs-6 text-right">
+                  <i className="icon-angle-right"></i>
+                </p>
               </a>
             </li>
             <li className="bottom-border row no-margin">
               <a className="font-black">
-                <p className="col-xs-4">第三方账户绑定</p>
-                <p className="col-xs-7 text-right"></p>
-                <i className="col-xs-1 icon-angle-right"></i>
-              </a>
-            </li>
-            <li className="bottom-border row no-margin">
-              <a className="font-black">
-                <p className="col-xs-4">地址管理</p>
-                <p className="col-xs-7 text-right"></p>
-                <i className="col-xs-1 icon-angle-right"></i>
+                <p className="col-xs-6 text-left">地址管理</p>
+                <p className="col-xs-6 text-right">
+                  <i className="icon-angle-right"></i>
+                </p>
               </a>
             </li>
             <li className="bottom-border row no-margin margin-top-xs">
               <a className="font-black">
-                <p className="col-xs-4">设置</p>
-                <p className="col-xs-7 text-right"></p>
-                <i className="col-xs-1 icon-angle-right"></i>
+                <p className="col-xs-6 text-left">设置</p>
+                <p className="col-xs-6 text-right">
+                  <i className="icon-angle-right"></i>
+                </p>
               </a>
             </li>
             <li className="bottom-border row no-margin margin-top-xs">
               <a className="font-black">
-                <p className="col-xs-4">关于小鹿美美</p>
-                <p className="col-xs-7 text-right"></p>
-                <i className="col-xs-1 icon-angle-right"></i>
+                <p className="col-xs-6 text-left">关于小鹿美美</p>
+                <p className="col-xs-6 text-right">
+                  <i className="icon-angle-right no-padding"></i>
+                </p>
               </a>
             </li>
           </ul>

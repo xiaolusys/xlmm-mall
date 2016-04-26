@@ -3,10 +3,14 @@
     background-color: #fff;
     display: block;
     width: 100%;
-    padding: 8px;
+    padding: 8px 0px;
     p,
     i {
       margin: 8px 0px;
+      line-height: 26px;
+    }
+    .icon-angle-right {
+      margin-left: 10px !important;
     }
   }
   .avatar {
@@ -15,6 +19,10 @@
     height: 36px;
     width: 36px;
     border: 1px solid #dadada;
-    border-radius: 28px;
+    border-radius: 36px;
+  }
+  .img-show {
+    line-height: 36px;
+    margin: 0;
   }
 }
