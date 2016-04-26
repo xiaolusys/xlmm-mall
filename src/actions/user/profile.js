@@ -19,7 +19,7 @@ export const fetchProfile = () => {
   };
 };
 
-export const saveProfile = (profile) => {
+export const saveNickname = (profile) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());

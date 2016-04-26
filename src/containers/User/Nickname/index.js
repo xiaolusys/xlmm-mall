@@ -27,7 +27,7 @@ export default class Nickname extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
-    saveProfile: React.PropTypes.func,
+    saveNickname: React.PropTypes.func,
     fetchProfile: React.PropTypes.func,
   };
 
@@ -60,13 +60,13 @@ export default class Nickname extends Component {
   }
 
   onBubmitBtnClick = (e) => {
-    const { profile } = this.state;
-    if (!profile.nick) {
+    const { nickname } = this.state;
+    if (!nickname) {
       return;
     }
     this.setState({ changeNickname: true });
     this.setState({ submitBtnPressed: true });
-    this.props.saveProfile(this.state.profile);
+    this.props.saveNickname(this.state.profile);
     _.delay(() => {
       this.setState({ submitBtnPressed: false });
     }, 300);
@@ -77,7 +77,7 @@ export default class Nickname extends Component {
     profile.nick = value;
     this.setState({
       submitBtnDisabled: false,
-      profile: profile,
+      nickname: profile.nick,
     });
   }
 
