@@ -9,8 +9,6 @@ import { Input } from 'components/Input';
 import * as actionCreators from 'actions/user/profile';
 import { Toast } from 'components/Toast';
 
-import './index.scss';
-
 @connect(
   state => ({
     profile: state.profile.data,
@@ -60,24 +58,22 @@ export default class Nickname extends Component {
   }
 
   onBubmitBtnClick = (e) => {
-    const { nickname } = this.state;
-    if (!nickname) {
+    const profile = this.props.profile;
+    if (!this.state.nickname) {
       return;
     }
     this.setState({ changeNickname: true });
     this.setState({ submitBtnPressed: true });
-    this.props.saveNickname(this.state.profile);
+    this.props.saveNickname(profile.id, this.state.nickname);
     _.delay(() => {
       this.setState({ submitBtnPressed: false });
     }, 300);
   }
 
   onNicknameChange = (value) => {
-    const profile = this.props.profile;
-    profile.nick = value;
     this.setState({
       submitBtnDisabled: false,
-      nickname: profile.nick,
+      nickname: value,
     });
   }
 

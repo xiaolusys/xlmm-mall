@@ -19,11 +19,11 @@ export const fetchProfile = () => {
   };
 };
 
-export const saveNickname = (profile) => {
+export const saveNickname = (id, nickname) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.patch(constants.baseEndpointV1 + 'users/' + profile.id, qs.stringify({ nick: profile.nick }))
+    return axios.patch(constants.baseEndpointV1 + 'users/' + id, qs.stringify({ nick: nickname }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

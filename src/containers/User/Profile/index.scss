@@ -4,6 +4,13 @@
     display: block;
     width: 100%;
     padding: 8px 0px;
+    > a:hover,
+    a:active,
+    a:focus,
+    a:visited {
+      color: #26262e;
+      text-decoration: none;
+    }
     p,
     i {
       margin: 8px 0px;
