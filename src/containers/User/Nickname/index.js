@@ -84,7 +84,6 @@ export default class Nickname extends Component {
   render() {
     const props = this.props;
     const { children, profile, isLoading, error } = this.props;
-    console.log(profile.nick);
     const bindPhoneBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
       ['pressed']: this.state.submitBtnPressed,

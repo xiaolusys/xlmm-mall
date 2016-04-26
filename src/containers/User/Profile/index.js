@@ -1,4 +1,4 @@
-import React, { Component, Route, RouteHandler } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
