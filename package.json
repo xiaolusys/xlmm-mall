@@ -84,11 +84,12 @@
     "replace-webpack-plugin": "^0.1.2"
   },
   "dependencies": {
-    "jquery": "^2.2.0",
     "axios": "latest",
     "es6-promise": "^2.0.1",
-    "react": "^0.14.6",
+    "jquery": "^2.2.0",
     "jsx-control-statements": "^3.1.1",
+    "react": "^0.14.6",
+    "react-lazy-load": "^3.0.10",
     "react-redux": "^4.0.6",
     "react-router": "^2.0.0",
     "redux": "^3.4.0",
