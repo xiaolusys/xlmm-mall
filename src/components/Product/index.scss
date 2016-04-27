@@ -1,0 +1,28 @@
+.product {
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #fff;
+  .product-picture {
+    min-height: 198px;
+    background: url("./images/placeholder-vertical.png") center center no-repeat;
+    > div > img {
+      display: block;
+      width: 100%;
+    }
+  }
+  .product-info {
+    padding: 8px;
+    margin-bottom: 8px;
+    > p {
+      height: 22px;
+      line-height: 22px;
+      margin: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .font-grey {
+    color: #a0a0a0 !important;
+  }
+}
+

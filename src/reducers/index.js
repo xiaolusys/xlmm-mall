@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   login: createReducer(loginAction.name),
   password: createReducer(passwordAction.name),
   poster: createReducer(posterAction.name),
-  product: createReducer(profileAction.name),
+  product: createReducer(productAction.name),
   activity: createReducer(activityAction.name),
 });
 
