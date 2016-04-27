@@ -13,6 +13,8 @@ import { Toast } from 'components/Toast';
   state => ({
     profile: state.profile.data,
     isLoading: state.profile.isLoading,
+    error: state.profile.error,
+    success: state.profile.success,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -49,10 +51,12 @@ export default class Nickname extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success) {
-      Toast.show(nextProps.profile.msg);
+    if (nextProps.success && nextProps.profile.info) {
+      Toast.show(nextProps.profile.info);
+    } else if (nextProps.error) {
+      Toast.show(nextProps.profile.detail);
     }
-    if (nextProps.success && nextProps.profile.rcode === 0 && this.state.bindPhone) {
+    if (nextProps.success && nextProps.profile.code === 0 && this.state.changeNickname) {
       this.context.router.push('/user/profile');
     }
   }
