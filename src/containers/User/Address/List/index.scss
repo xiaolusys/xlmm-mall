@@ -3,15 +3,26 @@
     background-color: #fff;
     display: block;
     width: 100%;
+    padding: 8px 0 8px 8px;
     > a:hover,
     a:active,
     a:focus,
     a:visited {
-      color: #26262e;
+      color: #9B9B9B;
       text-decoration: none;
     }
-    p {
-      line-height: 26px;
+    .sp-1 {
+      border: 1px solid #F5A623;
+      color: #F5A623;
+    }
+    .sp-2 {
+      color: #626262;
+    }
+    .sp-3 {
+      color: #9B9B9B;
+    }
+    i {
+      line-height: 32px;
     }
   }
 }

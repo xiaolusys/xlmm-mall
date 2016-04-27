@@ -62,13 +62,17 @@ export default class List extends Component {
                 return (
                   <li className="bottom-border row no-margin" key={index}>
                     <a className="font-black" href={ '/#/user/address/edit/' + addr.id }>
-                      <p className="col-xs-12">
-                        <span className="col-xs-4 text-left">{addr.receiver_name}</span>
-                        <span className="col-xs-8 text-left">{addr.receiver_mobile}</span>
-                      </p>
-                      <p className="col-xs-12">
-                        <span className="text-left">{addr.receiver_state + addr.receiver_city + addr.receiver_district + addr.receiver_address}</span>
-                      </p>
+                      <div className="col-xs-11">
+                        <p className="text-left font-sm no-margin">
+                        <If condition={ addr.default }>
+                          <span className="font-xxs margin-right-xs sp-1">默认地址</span>
+                        </If>
+                          <span className="sp-2">{addr.receiver_name}</span>
+                          <span className="margin-left-xs sp-2">{addr.receiver_mobile}</span>
+                        </p>
+                        <p className="font-xs text-left no-margin sp-3">{addr.receiver_state + addr.receiver_city + addr.receiver_district + addr.receiver_address}</p>
+                      </div>
+                      <i className="icon-angle-right"></i>
                     </a>
                   </li>
                 );
