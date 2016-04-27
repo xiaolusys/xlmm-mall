@@ -1,0 +1,17 @@
+.address-list {
+  > li {
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    > a:hover,
+    a:active,
+    a:focus,
+    a:visited {
+      color: #26262e;
+      text-decoration: none;
+    }
+    p {
+      line-height: 26px;
+    }
+  }
+}
