@@ -80,7 +80,7 @@ export default class List extends Component {
             }
           </ul>
           <div className="row no-margin">
-              <a className={bindPhoneBtnCls} href="/#/user/address/edit" disabled={false}>添加地址</a>
+              <a className={bindPhoneBtnCls} href="/#/user/address/edit/0" disabled={false}>添加地址</a>
           </div>
           <Footer/>
         </div>
