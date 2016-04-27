@@ -65,12 +65,12 @@ export default class List extends Component {
                       <div className="col-xs-11">
                         <p className="text-left font-sm no-margin">
                         <If condition={ addr.default }>
-                          <span className="font-xxs margin-right-xs sp-1">默认地址</span>
+                          <span className="font-xxs margin-right-xs address-mark">默认地址</span>
                         </If>
-                          <span className="sp-2">{addr.receiver_name}</span>
-                          <span className="margin-left-xs sp-2">{addr.receiver_mobile}</span>
+                          <span className="address-font-color">{addr.receiver_name}</span>
+                          <span className="margin-left-xs address-font-color">{addr.receiver_mobile}</span>
                         </p>
-                        <p className="font-xs text-left no-margin sp-3">{addr.receiver_state + addr.receiver_city + addr.receiver_district + addr.receiver_address}</p>
+                        <p className="font-xs text-left no-margin address-text">{addr.receiver_state + addr.receiver_city + addr.receiver_district + addr.receiver_address}</p>
                       </div>
                       <i className="icon-angle-right"></i>
                     </a>

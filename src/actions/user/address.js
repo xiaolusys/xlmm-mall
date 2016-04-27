@@ -25,7 +25,7 @@ export const deleteAddress = (id) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.patch(uri + 'address/' + id + '/delete_address')
+    return axios.post(uri + 'address/' + id + '/delete_address')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -39,7 +39,7 @@ export const changeDefautAddress = (id) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.patch(uri + 'address/' + id + '/change_default')
+    return axios.post(uri + 'address/' + id + '/change_default')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -63,25 +63,11 @@ export const createAddress = (address) => {
   };
 };
 
-export const getOneAddres = (id) => {
+export const updateAddress = (id, address) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(uri + 'address/get_one_addres', qs.stringify({ id: id }))
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp.data));
-      });
-  };
-};
-
-export const updateAddres = (id, address) => {
-  const action = createAction(name);
-  return (dispatch) => {
-    dispatch(action.request());
-    return axios.get(uri + 'address/' + id + '/update', qs.stringify({ address: address }))
+    return axios.post(uri + 'address/' + id + '/update', qs.stringify({ address: address }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
