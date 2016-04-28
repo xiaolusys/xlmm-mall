@@ -190,7 +190,9 @@ export class Home extends Component {
                 {posters.map((item, index) => {
                   return (
                     <div key={index} >
-                      <img src={item.pic_link} />
+                      <a href={item.item_link}>
+                        <img src={item.pic_link} />
+                      </a>
                     </div>
                   );
                 })}
