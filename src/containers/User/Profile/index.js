@@ -109,7 +109,7 @@ export default class Profile extends Component {
               </a>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black">
+              <a className="font-black" href="/#/user/address">
                 <p className="col-xs-6 text-left">地址管理</p>
                 <p className="col-xs-6 text-right">
                   <i className="icon-angle-right"></i>
