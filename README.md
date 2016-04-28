@@ -56,7 +56,7 @@ $ npm install
 
 ## Development
 ```
-$ npm start
+$ npm start -- --env=staging // --env=production
 ```
 Runs the project in development mode with hot-reloading of `src` folder.
 Open your browser at [http://localhost:7070](http://localhost:7070).

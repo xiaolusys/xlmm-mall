@@ -39,9 +39,7 @@ export class Product extends Component {
       <div className="col-xs-6 col-sm-3 col-md-2 no-padding" onClick={this.props.onItemClick}>
         <div className="product text-center">
           <div className="product-picture">
-            <LazyLoad throttle={200}>
-              <img className={imageCls} src={product.head_img} onError={this.onImageLoadError}/>
-            </LazyLoad>
+            <img className={imageCls} src={product.head_img} onError={this.onImageLoadError}/>
           </div>
           <div className="product-info">
           <p className="product-name">{product.name}</p>
