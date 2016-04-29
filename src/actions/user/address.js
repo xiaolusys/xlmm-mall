@@ -6,18 +6,30 @@ import qs from 'qs';
 export const name = 'ADDRESS';
 
 const uri = constants.baseEndpoint;
+const uriV1 = constants.baseEndpointV1;
 
-export const fetchAddress = () => {
+export const fetchAddress = (id) => {
   const action = createAction(name);
+  console.log('id:' + id);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(uri + 'address')
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp.data));
-      });
+    if (id) {
+      return axios.get(uri + 'address/' + id)
+        .then((resp) => {
+          dispatch(action.success(resp.data));
+        })
+        .catch((resp) => {
+          dispatch(action.failure(resp.data));
+        });
+    } else {
+      return axios.get(uri + 'address')
+        .then((resp) => {
+          dispatch(action.success(resp.data));
+        })
+        .catch((resp) => {
+          dispatch(action.failure(resp.data));
+        });
+    }
   };
 };
 
