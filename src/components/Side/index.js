@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
@@ -43,7 +44,7 @@ export class Side extends Component {
       <nav className="slide-menu">
         <div className="row no-margin">
           <div className="col-xs-6 col-xs-offset-3 text-center">
-            <a href="/#/user/profile">
+            <Link to="/user/profile">
             <div className="avatar">
               <If condition={profile.thumbnail} >
                 <img src={profile.thumbnail} />
@@ -52,7 +53,7 @@ export class Side extends Component {
                 <i className="icon-avatar icon-xiaolu icon-grey icon-3x"></i>
               </If>
             </div>
-            </a>
+            </Link>
             <p className="text-center">{profile.nick}</p>
           </div>
         </div>
@@ -81,49 +82,49 @@ export class Side extends Component {
         </div>
         <ul>
           <li>
-            <a>
+            <Link to="">
               <i className="icon-order-square icon-gold"></i>
               <span>待支付</span>
               <If condition={profile.waitpay_num}>
                 <span className="badge gold pull-right">{profile.waitpay_num}</span>
               </If>
-            </a>
+            </Link>
           </li>
           <li>
-            <a>
+            <Link to="">
               <i className="icon-truck icon-gold"></i>
               <span>待收货</span>
               <If condition={profile.waitgoods_num}>
                 <span className="badge gold pull-right">{profile.waitgoods_num}</span>
               </If>
-            </a>
+            </Link>
           </li>
           <li>
-            <a>
+            <Link to="">
               <i className="icon-cny icon-gold"></i>
               <span>退换货</span>
               <If condition={profile.refunds_num}>
                 <span className="badge gold pull-right">{profile.refunds_num}</span>
               </If>
-            </a>
+            </Link>
           </li>
           <li className="bottom-border-black">
-            <a>
+            <Link to="">
               <i className="icon-order icon-gold"></i>
               <span>全部订单</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a>
+            <Link to="">
               <i className="icon-mail-open icon-gold"></i>
               <span>投诉建议</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/#/faq">
+            <Link to="/faq">
               <i className="icon-faq icon-gold"></i>
               <span>常见问题</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
