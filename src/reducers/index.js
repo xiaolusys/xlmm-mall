@@ -10,6 +10,7 @@ import * as loginAction from 'actions/user/login';
 import * as passwordAction from 'actions/user/password';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
+import * as orderAction from 'actions/order/order';
 
 
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   password: createReducer(passwordAction.name),
   portal: createReducer(portalAction.name),
   product: createReducer(productAction.name, successReducers.productSuccessReducer),
+  order: createReducer(orderAction.name),
 });
 
 export default rootReducer;
