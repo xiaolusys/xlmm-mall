@@ -9,8 +9,6 @@ import { Input } from 'components/Input';
 import * as actionCreators from 'actions/user/password';
 import { Toast } from 'components/Toast';
 
-import './index.scss';
-
 @connect(
   state => ({
     data: state.password.data,
