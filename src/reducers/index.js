@@ -11,7 +11,6 @@ import * as passwordAction from 'actions/user/password';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 import * as orderAction from 'actions/order/order';
-import * as activityAction from 'actions/home/activity';
 import * as provinceAction from 'actions/address/province';
 import * as cityAction from 'actions/address/city';
 import * as regionAction from 'actions/address/region';
@@ -27,7 +26,6 @@ const rootReducer = combineReducers({
   portal: createReducer(portalAction.name),
   product: createReducer(productAction.name, successReducers.productSuccessReducer),
   order: createReducer(orderAction.name),
-  activity: createReducer(activityAction.name),
   province: createReducer(provinceAction.name),
   city: createReducer(cityAction.name),
   region: createReducer(regionAction.name),

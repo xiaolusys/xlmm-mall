@@ -12,11 +12,16 @@ import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
 import { Switch } from 'components/Switch';
-import Input from './Input';
 
 import './index.scss';
 
 const actionCreators = _.extend(provinceAction, cityAction, regionAction, addressAction);
+const requestAction = {
+  delete: 'delete_address',
+  changeDefault: 'change_default',
+  create: 'create_address',
+  update: 'update',
+};
 
 @connect(
   state => ({
@@ -57,9 +62,9 @@ export default class Edit extends Component {
     fetchAddress: React.PropTypes.func,
     createAddress: React.PropTypes.func,
     updateAddress: React.PropTypes.func,
-    getProvinces: React.PropTypes.func,
-    getCities: React.PropTypes.func,
-    getRegions: React.PropTypes.func,
+    fetchProvinces: React.PropTypes.func,
+    fetchCities: React.PropTypes.func,
+    fetchRegions: React.PropTypes.func,
     address: React.PropTypes.any,
     province: React.PropTypes.any,
     city: React.PropTypes.any,
@@ -78,110 +83,101 @@ export default class Edit extends Component {
   state = {
     nextBtnDisabled: true,
     nextBtnPressed: false,
-    name: this.props.address.data.receiver_name,
-    phone: this.props.address.data.receiver_mobile,
-    addrProvince: this.props.address.data.receiver_state,
-    addrCity: this.props.address.data.receiver_city,
-    addrRegion: this.props.address.data.receiver_district,
-    addrDetail: this.props.address.data.receiver_address,
-    addrDefault: this.props.address.data.default,
+    address: this.props.address.data,
   }
 
   componentWillMount() {
-    this.props.getProvinces();
-    const paramId = this.props.params.id;
-    console.log('marams.id:' + paramId);
-    if (paramId === '0') {
-      this.setState({
-        action: {
-          title: '新增收货地址',
-          type: 'add',
-        },
-      });
-    } else {
-      this.props.fetchAddress(paramId);
-      this.setState({
-        action: {
-          title: '修改收货地址',
-          type: 'edit',
-        },
-      });
+    const id = Number(this.props.params.id);
+    if (id !== 0) {
+      this.props.fetchAddress(id);
     }
+    this.props.fetchProvinces();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success) {
-      Toast.show(nextProps.data.msg);
-    }
-    if (nextProps.success && nextProps.data.rcode === 0 && this.state.setPassword) {
-      this.context.router.push('/user/address');
+    if (nextProps.address.success && _.isObject(nextProps.address.data) && _.isNumber(nextProps.address.data.code)) {
+      Toast.show(nextProps.address.data.info);
+    } else if (nextProps.address.success && _.isObject(nextProps.address.data) && !_.isNumber(nextProps.address.data.code)) {
+      this.setState({ address: nextProps.address.data });
     }
   }
 
-  onNameChange = (value) => {
-    this.setState({ name: value });
-  }
-  onPhoneChange = (value) => {
-    this.setState({ phone: value });
-  }
-  onProvinceChange = (e) => {
-    this.setState({ addrProvince: e.currentTarget.selectedOptions[0].label });
-    this.setState({ addrProvinceId: e.currentTarget.value });
-    this.props.getCities(e.currentTarget.value);
-    console.log(e);
-  }
-  onCityChange = (e) => {
-    this.setState({ addrCity: e.currentTarget.value });
-    this.setState({ addrCityId: e.currentTarget.id });
-    this.props.getRegions(e.currentTarget.value);
-  }
-  onRegionChange = (e) => {
-    this.setState({ addrRegion: e.currentTarget.value });
-    this.setState({ addrRegionId: e.currentTarget.id });
-  }
-  onDetailAddrChange = (value) => {
-    this.setState({ addrDetail: value });
-  }
-  onDefaulAddrChange = (e) => {
-    this.setState({ addrDefault: e.currentTarget.value });
-  }
-  onSaveBntClick = (e) => {
-    const { action } = this.state;
-    if (action.type === 'add') {
-      // this.props.createAddress(address);
-      this.context.router.push('/user/address');
-      console.log('actionType:' + action.type);
-    } else {
-      // this.props.updateAddress(id, address);
-      this.context.router.push('/user/address');
-      console.log('actionType:' + action.type);
+  onInpuChange = (e) => {
+    const value = e.currentTarget.value;
+    const inputName = e.currentTarget.name;
+    switch (inputName) {
+      case 'name':
+        this.setState({ address: _.extend({}, this.state.address, { receiver_name: value }) });
+        break;
+      case 'phone':
+        this.setState({ address: _.extend({}, this.state.address, { receiver_mobile: value }) });
+        break;
+      case 'address':
+        this.setState({ address: _.extend({}, this.state.address, { receiver_address: value }) });
+        break;
+      default:
+        break;
     }
+    e.preventDefault();
   }
+
+  onSelectChange = (e) => {
+    const value = e.currentTarget.value;
+    const selectName = e.currentTarget.name;
+    switch (selectName) {
+      case 'province':
+        this.setState({ province: _.extend({}, this.state.province, { receiver_state: value }) });
+        this.props.fetchCities(value);
+        break;
+      case 'city':
+        this.setState({ city: _.extend({}, this.state.city, { receiver_city: value }) });
+        this.props.fetchRegions(value);
+        break;
+      case 'region':
+        this.setState({ region: _.extend({}, this.state.region, { receiver_district: value }) });
+        break;
+      default:
+        break;
+    }
+    e.preventDefault();
+  }
+
+  onSwitchChange = (e) => {
+    e.preventDefault();
+  }
+
+  onSaveBntClick = (e) => {
+    const id = Number(this.props.params.id);
+    if (id === 0) {
+      this.props.updateAddress(null, requestAction.create, this.state.address);
+    } else {
+      this.props.updateAddress(id, requestAction.update, this.state.address);
+    }
+    e.preventDefault();
+  }
+
   renderProvince() {
     const { province, address } = this.props;
     if (!_.isArray(province.data)) {
       province.data = [];
     }
 
-    // let selected = 0;
-    // _.each(province.data, (item, index) => {
-    //   if (address.data.receiver_state && address.data.receiver_state.indexOf(item.name)) {
-    //     console.log(item.name);
-    //     selected = index;
-    //     return;
-    //   }
-    // });
+    let selected = 0;
+    _.each(province.data, (item, index) => {
+      if (address.data.receiver_state && address.data.receiver_state.indexOf(item.name) >= 0) {
+        selected = item.id;
+        return;
+      }
+    });
 
     return (
-      <select className="col-xs-4 no-padding" onChange={this.onProvinceChange}>
+      <select className="col-xs-4 no-padding" name="province" value={selected} onChange={this.onSelectChange}>
         <option value="选择省份" id="0">选择省份</option>
-        {
-          province.data.map((item, index) => {
-            return (
-              <option value={item.id} key={item.id}>{item.name}</option>
-            );
-          })
-        }
+        {province.data.map((item, index) => {
+          return (
+            <option value={item.id} key={item.id}>{item.name}</option>
+          );
+        })}
       </select>
     );
   }
@@ -191,8 +187,17 @@ export default class Edit extends Component {
     if (!_.isArray(city.data)) {
       city.data = [];
     }
+
+    let selected = 0;
+    _.each(city.data, (item, index) => {
+      if (address.data.receiver_state && address.data.receiver_state.indexOf(item.name) >= 0) {
+        selected = item.id;
+        return;
+      }
+    });
+
     return (
-      <select className="col-xs-4 no-padding" onChange={this.onCityChange}>
+      <select className="col-xs-4 no-padding" name="city" value={selected} onChange={this.onSelectChange}>
         <option value="选择城市" id="0">选择城市</option>
         {
           city.data.map((item, index) => {
@@ -210,8 +215,17 @@ export default class Edit extends Component {
     if (!_.isArray(region.data)) {
       region.data = [];
     }
+
+    let selected = 0;
+    _.each(region.data, (item, index) => {
+      if (address.data.receiver_state && address.data.receiver_state.indexOf(item.name) >= 0) {
+        selected = item.id;
+        return;
+      }
+    });
+
     return (
-      <select className="col-xs-4 no-padding" onChange={this.onRegionChange}>
+      <select className="col-xs-4 no-padding" name="region" value={selected} onChange={this.onSelectChange}>
         <option value="选择地区" id="0">选择地区</option>
         {
           region.data.map((item, index) => {
@@ -223,47 +237,42 @@ export default class Edit extends Component {
       </select>
     );
   }
+
   render() {
-    const { address } = this.props;
-    const { action } = this.state;
+    const { address } = this.state;
+    const id = Number(this.props.params.id);
     const saveBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
       ['pressed']: this.state.nextBtnPressed,
     });
     return (
       <div>
-        <Header title={action.title} leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Header title={id === 0 ? '新增收货地址' : '修改收货地址'} leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
         <div className="content has-header no-margin adddress-edit">
           <div className="row no-margin margin-top-xs bottom-border adddress-item">
             <span className="col-xs-4">收货人</span>
-            <Input type="text" placeholder="请输入收货人姓名" value={address.data.receiver_name} onChange={this.onNameChange} />
+            <input type="text" placeholder="请输入收货人姓名" name="name" value={address.receiver_name} onChange={this.onInpuChange} />
           </div>
           <div className="row no-margin  bottom-border adddress-item">
             <span className="col-xs-4">手机号</span>
-            <Input type="number" placeholder="请输入收货人手机号" value={address.data.receiver_mobile} onChange={this.onPhoneChange}/>
+            <input type="number" placeholder="请输入收货人手机号" name="phone" value={address.receiver_mobile} onChange={this.onInpuChange}/>
           </div>
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
             <span className="col-xs-4">所在地区</span>
             <div className="address-select col-xs-8 no-padding region-at">
-              {
-                this.renderProvince()
-              }
-              {
-                this.renderCity()
-              }
-              {
-                this.renderRegion()
-              }
+              {this.renderProvince()}
+              {this.renderCity()}
+              {this.renderRegion()}
             </div>
           </div>
           <div className="row no-margin bottom-border adddress-item">
             <span className="col-xs-4">详细地址</span>
-            <Input type="text" placeholder="请输入您的详细地址" value={address.data.receiver_address} onChange={this.onDetailAddressChange}/>
+            <input type="text" placeholder="请输入您的详细地址" name="address" value={address.receiver_address} onChange={this.onInpuChange}/>
           </div>
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
             <span className="col-xs-9">是否设为常用地址</span>
             <div className="col-xs-3">
-              <Switch defaultChecked={false} />
+              <Switch defaultChecked={address.default} />
             </div>
           </div>
           <div className="row no-margin">

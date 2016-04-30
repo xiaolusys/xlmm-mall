@@ -5,7 +5,7 @@ import qs from 'qs';
 
 export const name = 'CITY';
 
-export const getCities = (provinceId) => {
+export const fetchCities = (provinceId) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
