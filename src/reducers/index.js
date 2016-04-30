@@ -16,7 +16,6 @@ import * as provinceAction from 'actions/address/province';
 import * as cityAction from 'actions/address/city';
 import * as regionAction from 'actions/address/region';
 
-
 const rootReducer = combineReducers({
   form: formReducer,
   categories: createReducer(categoriesAction.name),
