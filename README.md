@@ -85,7 +85,8 @@ $ npm test
 ```
 
 ## Compontent Doc
-- [Carouel](/src/components/Carousel)
+- [Carousel](/src/components/Carousel)
 - [Checkbox](/src/components/Checkbox)
+- [Header](/src/components/Header)
 - [Switch](/src/components/Switch)
 
