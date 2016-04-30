@@ -83,3 +83,9 @@ $ npm run build:production
 ```
 $ npm test
 ```
+
+## Compontent Doc
+- [Carouel](/src/components/Carousel)
+- [Checkbox](/src/components/Checkbox)
+- [Switch](/src/components/Switch)
+
