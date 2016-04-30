@@ -36,10 +36,12 @@ export class Header extends Component {
     const { title, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed } = this.props;
     const leftBtnCls = classnames({
       ['icon-btn ' + leftIcon + ' icon-yellow']: 1,
+      ['no-icon']: leftText ? true : false,
       ['pressed']: leftBtnPressed,
     });
     const rightBtnCls = classnames({
       ['icon-btn ' + rightIcon + ' icon-yellow']: 1,
+      ['no-icon']: rightText ? true : false,
       ['pressed']: rightBtnPressed,
     });
     return (

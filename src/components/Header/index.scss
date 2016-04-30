@@ -55,6 +55,9 @@ $bar-bg: #fff !default;
     transition: opacity 0.1s;
     border-color: transparent;
     background: none;
+    &.no-icon{
+      font-size: 14px;
+    }
     &:last-child {
       position: absolute;
       top: 5px;
