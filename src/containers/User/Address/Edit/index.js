@@ -3,14 +3,15 @@ import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import * as provinceAction from 'actions/addressDB/province';
-import * as cityAction from 'actions/addressDB/city';
-import * as regionAction from 'actions/addressDB/region';
+import * as provinceAction from 'actions/address/province';
+import * as cityAction from 'actions/address/city';
+import * as regionAction from 'actions/address/region';
 import * as addressAction from 'actions/user/address';
 
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
+import { Switch } from 'components/Switch';
 import Input from './Input';
 
 import './index.scss';
@@ -260,9 +261,9 @@ export default class Edit extends Component {
             <Input type="text" placeholder="请输入您的详细地址" value={address.data.receiver_address} onChange={this.onDetailAddressChange}/>
           </div>
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
-            <span className="col-xs-10">是否设为常用地址</span>
-            <div className="switch" data-on="primary" data-off="info">
-              <input type="checkbox" checked />
+            <span className="col-xs-9">是否设为常用地址</span>
+            <div className="col-xs-3">
+              <Switch defaultChecked={false} />
             </div>
           </div>
           <div className="row no-margin">
