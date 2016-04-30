@@ -138,7 +138,7 @@ export default class Password extends Component {
     });
     return (
       <div>
-        <Header title={action.title} leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Header title={action.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content has-header">
           <Input type="number" placeholder="请输入手机号" onChange={this.onPhoneChange}/>
           <div className="row no-margin password-box bottom-border">

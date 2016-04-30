@@ -53,7 +53,7 @@ export default class Profile extends Component {
 
     return (
       <div>
-        <Header title="设置" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Header title="个人信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
           {isLoading ? <span>loading...</span> : children}
           <ul className="user-info-list">

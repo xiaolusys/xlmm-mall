@@ -19,7 +19,7 @@ export default class Logistics extends Component {
   render() {
     return (
       <div>
-        <Header title="物流信息" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Header title="物流信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content has-header">
             <Footer />
           </div>

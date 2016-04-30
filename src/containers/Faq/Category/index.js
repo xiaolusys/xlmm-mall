@@ -48,7 +48,7 @@ export default class FaqCategory extends Component {
     }
     return (
       <div>
-        <Header title="常见问题" leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Header title="常见问题" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
         {isLoading ? <span>loading...</span> : children}
         <ul className="faq-list">
