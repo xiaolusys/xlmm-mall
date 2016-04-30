@@ -143,6 +143,8 @@ export default class Edit extends Component {
   }
 
   onSwitchChange = (e) => {
+    const value = e.currentTarget.value;
+    this.setState({ region: _.extend({}, this.state.region, { default: value }) });
     e.preventDefault();
   }
 
@@ -247,7 +249,7 @@ export default class Edit extends Component {
     });
     return (
       <div>
-        <Header title={id === 0 ? '新增收货地址' : '修改收货地址'} leftIcon="icon-angle-left" leftBtnClick={this.context.router.goBack} />
+        <Header title={id === 0 ? '新增收货地址' : '修改收货地址'} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText={id === 0 ? '' : '删除'} onRightBtnClick={this.onDeleteClick} />
         <div className="content has-header no-margin adddress-edit">
           <div className="row no-margin margin-top-xs bottom-border adddress-item">
             <span className="col-xs-4">收货人</span>
@@ -272,7 +274,7 @@ export default class Edit extends Component {
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
             <span className="col-xs-9">是否设为常用地址</span>
             <div className="col-xs-3">
-              <Switch defaultChecked={address.default} />
+              <Switch defaultChecked={address.default} value={address.default} onChange={this.onSwitchChange}/>
             </div>
           </div>
           <div className="row no-margin">
