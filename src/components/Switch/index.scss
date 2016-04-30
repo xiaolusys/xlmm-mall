@@ -1,0 +1,117 @@
+$duration:.3s;
+$checked-color: #f5a623;
+$primary-color: #fff;
+.switch {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 44px;
+  height: 22px;
+  line-height: 20px;
+  vertical-align: middle;
+  border-radius: 20px 20px;
+  border: 1px solid $checked-color;
+  background-color: $primary-color;
+  cursor: pointer;
+  transition: all $duration cubic-bezier(0.35, 0, 0.25, 1);
+  &.switch-inner {
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    left: 24px;
+  }
+  &:after {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 2px;
+    top: 1px;
+    border-radius: 50% 50%;
+    background-color: #ffffff;
+    content: " ";
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    transform: scale(1);
+    transition: left $duration cubic-bezier(0.35, 0, 0.25, 1);
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+    animation-duration: $duration;
+    animation-name: amSwitchOff;
+  }
+  &:hover:after {
+    transform: scale(1.1);
+    animation-name: amSwitchOn;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px tint(#2db7f5, 80%);
+    outline: none;
+  }
+  &.switch-small {
+    height: 14px;
+    line-height: 12px;
+    width: 28px;
+    &:after {
+      width: 12px;
+      height: 12px;
+      top: 0;
+      left: 0;
+    }
+    .switch-checked:after {
+      left: 14px;
+    }
+  }
+  &.switch-checked {
+    border: 1px solid $checked-color;
+    background-color: $checked-color;
+    .switch-inner {
+      left: 6px;
+    }
+    &:after {
+      left: 22px;
+    }
+  }
+  &.switch-disabled {
+    cursor: no-drop;
+    background: $primary-color;
+    border-color: $primary-color;
+    &:after {
+      background: #9e9e9e;
+      animation-name: none;
+      cursor: no-drop;
+    }
+    &:hover:after {
+      transform: scale(1);
+      animation-name: none;
+    }
+  }
+  &.switch-label {
+    display: inline-block;
+    line-height: 20px;
+    font-size: 14px;
+    padding-left: 10px;
+    vertical-align: middle;
+    white-space: normal;
+    pointer-events: none;
+    user-select: text;
+  }
+}
+
+@keyframes amSwitchOn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes amSwitchOff {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
