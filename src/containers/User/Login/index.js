@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import _ from 'underscore';
 import classnames from 'classnames';
 import * as actionCreators from 'actions/user/login';
