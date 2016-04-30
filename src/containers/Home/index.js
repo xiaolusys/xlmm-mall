@@ -183,7 +183,7 @@ export class Home extends Component {
       <div className={mainCls}>
         <Side />
         <div className="home-container">
-          <Header title="小鹿美美" leftIcon="icon-bars" leftBtnClick={this.onMenuBtnClick} />
+          <Header title="小鹿美美" leftIcon="icon-bars" onLeftBtnClick={this.onMenuBtnClick} />
           <div className="content has-header">
             <div className="home-poster">
               <Carousel>
