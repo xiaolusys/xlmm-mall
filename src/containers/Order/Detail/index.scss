@@ -1,0 +1,44 @@
+.order-detail {
+  color: #626262;
+  .order-status {
+    background: #fff;
+    padding: 8px;
+  }
+  .receiver-info {
+    background: #fff;
+    padding: 8px;
+  }
+  .logistics-info {
+    padding: 8px;
+  }
+  .product-list {
+    background: #fff;
+    padding: 8px;
+    p {
+      margin-bottom: 0px;
+      padding: 8px;
+    }
+    img {
+      margin: 8px;
+      border: 1px solid #979797;
+      border-radius: 10px;
+      width: 60px;
+      overflow: hidden;
+      height: 60px;
+    }
+  }
+  .price-info {
+    margin-top: 16px;
+    background: #fff;
+    padding: 8px;
+    p {
+      margin: 10px 0px;
+    }
+  }
+  .font-yellow {
+    color: #f5b123;
+  }
+  .font-grey {
+    color: #9b9b9b;
+  }
+}
