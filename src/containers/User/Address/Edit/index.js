@@ -204,7 +204,7 @@ export default class Edit extends Component {
   }
 
   renderProvince() {
-    const { province, address } = this.props;
+    const { province } = this.props;
     if (!_.isArray(province.data)) {
       province.data = [];
     }
@@ -221,7 +221,7 @@ export default class Edit extends Component {
   }
 
   renderCity() {
-    const { city, address } = this.props;
+    const { city } = this.props;
     if (!_.isArray(city.data)) {
       city.data = [];
     }
@@ -239,7 +239,7 @@ export default class Edit extends Component {
   }
 
   renderRegion() {
-    const { district, address } = this.props;
+    const { district } = this.props;
     if (!_.isArray(district.data)) {
       district.data = [];
     }
