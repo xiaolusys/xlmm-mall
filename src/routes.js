@@ -6,8 +6,8 @@ import { App } from 'containers/App';
 import { Home } from 'containers/Home';
 import { FaqCategory, FaqList } from 'containers/Faq';
 import { Login, Password, UserProfile, UserPhone, Nickname } from 'containers/User';
-import { AddressList } from 'containers/User/Address';
 import { OrderList, OrderDetail, Logistics } from 'containers/Order';
+import { AddressList, EditAddress } from 'containers/User/Address';
 
 export default (
   <Route path="/" component={App}>
@@ -16,6 +16,7 @@ export default (
     <Route path="/user/profile/phone" component={UserPhone}/>
     <Route path="/user/nickname" component={Nickname} />
     <Route path="/user/address" component={AddressList} />
+    <Route path="/user/address/edit/:id" component={EditAddress} />
     <Route path="/user/login" component={Login} />
     <Route path="/user/register" component={Password} />
     <Route path="/user/password/reset" component={Password}/>
