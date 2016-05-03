@@ -58,23 +58,6 @@ export default class Profile extends Component {
           {isLoading ? <span>loading...</span> : children}
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
-              <a className="font-black">
-                <p className="col-xs-6 text-left">头像</p>
-                <If condition={data.thumbnail}>
-                <p className="col-xs-6 text-right img-show">
-                  <img className="avatar" src={data.thumbnail}/>
-                  <i className="icon-angle-right"></i>
-                </p>
-                </If>
-                <If condition={!data.thumbnail}>
-                  <div className="col-xs-6 text-right">
-                    <i className="icon-xiaolu icon-2x"></i>
-                    <i className="icon-angle-right"></i>
-                  </div>
-                </If>
-              </a>
-            </li>
-            <li className="bottom-border row no-margin">
               <a className="font-black" href="/#/user/nickname" >
                 <p className="col-xs-6 text-left">账户昵称</p>
                 <p className="col-xs-6 text-right">
@@ -108,7 +91,7 @@ export default class Profile extends Component {
                 </p>
               </a>
             </li>
-            <li className="bottom-border row no-margin">
+            <li className="bottom-border row no-margin margin-top-xs">
               <a className="font-black" href="/#/user/address">
                 <p className="col-xs-6 text-left">地址管理</p>
                 <p className="col-xs-6 text-right">
@@ -118,13 +101,13 @@ export default class Profile extends Component {
             </li>
             <li className="bottom-border row no-margin margin-top-xs">
               <a className="font-black">
-                <p className="col-xs-6 text-left">设置</p>
+                <p className="col-xs-6 text-left">清除缓存</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right no-padding"></i>
                 </p>
               </a>
             </li>
-            <li className="bottom-border row no-margin margin-top-xs">
+            <li className="bottom-border row no-margin">
               <a className="font-black">
                 <p className="col-xs-6 text-left">关于小鹿美美</p>
                 <p className="col-xs-6 text-right">

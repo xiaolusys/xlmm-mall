@@ -1,17 +1,35 @@
 import * as constants from 'constants';
 import axios from 'axios';
-import createAction from '../createAction';
 import qs from 'qs';
+import createAction from '../createAction';
+import * as provinceAction from 'actions/user/province';
 
 export const name = 'ADDRESS';
 
-const uri = constants.baseEndpoint;
+const action = createAction(name);
 
-export const fetchAddress = () => {
-  const action = createAction(name);
+export const fetchAddress = (id, isEdit = false) => {
+
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(uri + 'address')
+    return axios.get(constants.baseEndpoint + 'address' + (id ? '/' + id : ''))
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+        if (isEdit) {
+          dispatch(provinceAction.fetchProvinces(resp.data));
+        }
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp.data));
+      });
+  };
+};
+
+
+export const updateAddress = (id, requestAction, address) => {
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.post(constants.baseEndpoint + 'address' + (id ? '/' + id : '') + '/' + requestAction, qs.stringify(address))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -22,52 +40,9 @@ export const fetchAddress = () => {
 };
 
 export const deleteAddress = (id) => {
-  const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(uri + 'address/' + id + '/delete_address')
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp.data));
-      });
-  };
-};
-
-export const changeDefautAddress = (id) => {
-  const action = createAction(name);
-  return (dispatch) => {
-    dispatch(action.request());
-    return axios.post(uri + 'address/' + id + '/change_default')
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp.data));
-      });
-  };
-};
-
-export const createAddress = (address) => {
-  const action = createAction(name);
-  return (dispatch) => {
-    dispatch(action.request());
-    return axios.post(uri + 'address/create_address', qs.stringify({ address: address }))
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp.data));
-      });
-  };
-};
-
-export const updateAddress = (id, address) => {
-  const action = createAction(name);
-  return (dispatch) => {
-    dispatch(action.request());
-    return axios.post(uri + 'address/' + id + '/update', qs.stringify({ address: address }))
+    return axios.post(constants.baseEndpoint + 'address/' + id + '/delete_address')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
