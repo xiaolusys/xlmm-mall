@@ -3,10 +3,10 @@ import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import * as provinceAction from 'actions/address/province';
-import * as cityAction from 'actions/address/city';
-import * as regionAction from 'actions/address/region';
-import * as addressAction from 'actions/user/address';
+import * as addressAction from 'actions/user/address/address';
+import * as provinceAction from 'actions/user/address/province';
+import * as cityAction from 'actions/user/address/city';
+import * as districtAction from 'actions/user/address/district';
 
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
@@ -15,7 +15,7 @@ import { Switch } from 'components/Switch';
 
 import './index.scss';
 
-const actionCreators = _.extend(provinceAction, cityAction, regionAction, addressAction);
+const actionCreators = _.extend(provinceAction, cityAction, districtAction, addressAction);
 const requestAction = {
   delete: 'delete_address',
   changeDefault: 'change_default',
@@ -37,7 +37,7 @@ const requestAction = {
       error: state.city.error,
       success: state.city.success,
     },
-    region: {
+    district: {
       data: state.region.data.data,
       isLoading: state.region.isLoading,
       error: state.region.error,
@@ -64,11 +64,11 @@ export default class Edit extends Component {
     updateAddress: React.PropTypes.func,
     fetchProvinces: React.PropTypes.func,
     fetchCities: React.PropTypes.func,
-    fetchRegions: React.PropTypes.func,
+    fetchDistricts: React.PropTypes.func,
     address: React.PropTypes.any,
     province: React.PropTypes.any,
     city: React.PropTypes.any,
-    region: React.PropTypes.any,
+    district: React.PropTypes.any,
   };
 
   static contextTypes = {
@@ -95,11 +95,48 @@ export default class Edit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let selectedProvince = {};
+    let selectedCity = {};
+    let selectedRegion = {};
     if (nextProps.address.success && _.isObject(nextProps.address.data) && _.isNumber(nextProps.address.data.code)) {
       Toast.show(nextProps.address.data.info);
-    } else if (nextProps.address.success && _.isObject(nextProps.address.data) && !_.isNumber(nextProps.address.data.code)) {
-      this.setState({ address: nextProps.address.data });
     }
+
+    if (nextProps.province.success) {
+      _.each(nextProps.province.data, (item, index) => {
+        if (nextProps.address.data.receiver_state && nextProps.address.data.receiver_state.indexOf(item.name) >= 0) {
+          selectedProvince = { receiver_state: item.name, receiverStateId: item.id };
+        }
+      });
+    }
+
+    if (nextProps.city.success) {
+      _.each(nextProps.city.data, (item, index) => {
+        if (nextProps.address.data.receiver_city && nextProps.address.data.receiver_city.indexOf(item.name) >= 0) {
+          selectedCity = { receiver_city: item.name, receiverCityId: item.id };
+        }
+      });
+      if (!nextProps.region.isLoading && !nextProps.region.success && selectedCity.receiverCityId) {
+        this.props.fetchRegions(selectedCity.receiverCityId);
+      }
+    }
+
+    if (nextProps.region.success) {
+      _.each(nextProps.region.data, (item, index) => {
+        if (nextProps.address.data.receiver_district && nextProps.address.data.receiver_district.indexOf(item.name) >= 0) {
+          selectedRegion = { receiver_district: item.name, receiverDistrictId: item.id };
+        }
+      });
+    }
+
+    if (nextProps.address.success && nextProps.province.success && nextProps.city.success && nextProps.region.success) {
+      this.setState({ address: _.extend({}, this.state.address, nextProps.address.data, selectedProvince, selectedCity, selectedRegion) });
+    }
+
+  }
+
+  onDeleteClick = (e) => {
+    console.log('delete address');
   }
 
   onInpuChange = (e) => {
@@ -122,19 +159,20 @@ export default class Edit extends Component {
   }
 
   onSelectChange = (e) => {
-    const value = e.currentTarget.value;
+    const value = Number(e.currentTarget.value);
+    const label = e.currentTarget.selectedOptions[0].label;
     const selectName = e.currentTarget.name;
     switch (selectName) {
       case 'province':
-        this.setState({ province: _.extend({}, this.state.province, { receiver_state: value }) });
+        this.setState({ address: _.extend({}, this.state.address, { receiver_state: label, receiverStateId: value }) });
         this.props.fetchCities(value);
         break;
       case 'city':
-        this.setState({ city: _.extend({}, this.state.city, { receiver_city: value }) });
+        this.setState({ address: _.extend({}, this.state.address, { receiver_city: label, receiverCityId: value }) });
         this.props.fetchRegions(value);
         break;
       case 'region':
-        this.setState({ region: _.extend({}, this.state.region, { receiver_district: value }) });
+        this.setState({ address: _.extend({}, this.state.address, { receiver_district: label, receiverDistrictId: value }) });
         break;
       default:
         break;
@@ -142,10 +180,8 @@ export default class Edit extends Component {
     e.preventDefault();
   }
 
-  onSwitchChange = (e) => {
-    const value = e.currentTarget.value;
-    this.setState({ region: _.extend({}, this.state.region, { default: value }) });
-    e.preventDefault();
+  onSwitchChange = (value) => {
+    this.setState({ address: _.extend({}, this.state.address, { default: value }) });
   }
 
   onSaveBntClick = (e) => {
@@ -163,17 +199,8 @@ export default class Edit extends Component {
     if (!_.isArray(province.data)) {
       province.data = [];
     }
-
-    let selected = 0;
-    _.each(province.data, (item, index) => {
-      if (address.data.receiver_state && address.data.receiver_state.indexOf(item.name) >= 0) {
-        selected = item.id;
-        return;
-      }
-    });
-
     return (
-      <select className="col-xs-4 no-padding" name="province" value={selected} onChange={this.onSelectChange}>
+      <select className="col-xs-4 no-padding" name="province" value={this.state.address.receiverStateId} onChange={this.onSelectChange}>
         <option value="选择省份" id="0">选择省份</option>
         {province.data.map((item, index) => {
           return (
@@ -190,16 +217,8 @@ export default class Edit extends Component {
       city.data = [];
     }
 
-    let selected = 0;
-    _.each(city.data, (item, index) => {
-      if (address.data.receiver_state && address.data.receiver_state.indexOf(item.name) >= 0) {
-        selected = item.id;
-        return;
-      }
-    });
-
     return (
-      <select className="col-xs-4 no-padding" name="city" value={selected} onChange={this.onSelectChange}>
+      <select className="col-xs-4 no-padding" name="city" value={this.state.address.receiverCityId} onChange={this.onSelectChange}>
         <option value="选择城市" id="0">选择城市</option>
         {
           city.data.map((item, index) => {
@@ -218,16 +237,8 @@ export default class Edit extends Component {
       region.data = [];
     }
 
-    let selected = 0;
-    _.each(region.data, (item, index) => {
-      if (address.data.receiver_state && address.data.receiver_state.indexOf(item.name) >= 0) {
-        selected = item.id;
-        return;
-      }
-    });
-
     return (
-      <select className="col-xs-4 no-padding" name="region" value={selected} onChange={this.onSelectChange}>
+      <select className="col-xs-4 no-padding" name="region" value={this.state.address.receiverDistrictId} onChange={this.onSelectChange}>
         <option value="选择地区" id="0">选择地区</option>
         {
           region.data.map((item, index) => {
