@@ -3,9 +3,9 @@ import axios from 'axios';
 import createAction from '../createAction';
 import qs from 'qs';
 
-export const name = 'REGION';
+export const name = 'DISTRICT';
 
-export const fetchRegions = (cityId) => {
+export const fetchDistricts = (cityId) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());

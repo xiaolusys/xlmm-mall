@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import * as actionCreators from 'actions/user/address/address';
+import * as actionCreators from 'actions/user/address';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 

@@ -3,11 +3,10 @@ import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import * as addressAction from 'actions/user/address/address';
-import * as provinceAction from 'actions/user/address/province';
-import * as cityAction from 'actions/user/address/city';
-import * as districtAction from 'actions/user/address/district';
-
+import * as addressAction from 'actions/user/address';
+import * as provinceAction from 'actions/user/province';
+import * as cityAction from 'actions/user/city';
+import * as districtAction from 'actions/user/district';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
@@ -32,18 +31,24 @@ const requestAction = {
       success: state.province.success,
     },
     city: {
-      data: state.city.data.data,
+      data: state.city.data ? state.city.data.data : [],
       isLoading: state.city.isLoading,
       error: state.city.error,
       success: state.city.success,
     },
     district: {
-      data: state.region.data.data,
-      isLoading: state.region.isLoading,
-      error: state.region.error,
-      success: state.region.success,
+      data: state.district.data.data,
+      isLoading: state.district.isLoading,
+      error: state.district.error,
+      success: state.district.success,
     },
     address: {
+      data: state.address.data,
+      isLoading: state.address.isLoading,
+      error: state.address.error,
+      success: state.address.success,
+    },
+    deleteAddress: {
       data: state.address.data,
       isLoading: state.address.isLoading,
       error: state.address.error,
@@ -62,6 +67,7 @@ export default class Edit extends Component {
     fetchAddress: React.PropTypes.func,
     createAddress: React.PropTypes.func,
     updateAddress: React.PropTypes.func,
+    deleteAddress: React.PropTypes.func,
     fetchProvinces: React.PropTypes.func,
     fetchCities: React.PropTypes.func,
     fetchDistricts: React.PropTypes.func,
@@ -89,54 +95,57 @@ export default class Edit extends Component {
   componentWillMount() {
     const id = Number(this.props.params.id);
     if (id !== 0) {
-      this.props.fetchAddress(id);
+      this.props.fetchAddress(id, true);
+    } else {
+      this.props.fetchProvinces();
     }
-    this.props.fetchProvinces();
   }
 
   componentWillReceiveProps(nextProps) {
-    let selectedProvince = {};
     let selectedCity = {};
-    let selectedRegion = {};
+    let selectedProvince = {};
+    let selecteDistrict = {};
     if (nextProps.address.success && _.isObject(nextProps.address.data) && _.isNumber(nextProps.address.data.code)) {
       Toast.show(nextProps.address.data.info);
     }
 
     if (nextProps.province.success) {
+
       _.each(nextProps.province.data, (item, index) => {
+
         if (nextProps.address.data.receiver_state && nextProps.address.data.receiver_state.indexOf(item.name) >= 0) {
           selectedProvince = { receiver_state: item.name, receiverStateId: item.id };
         }
       });
+
     }
 
     if (nextProps.city.success) {
+
       _.each(nextProps.city.data, (item, index) => {
         if (nextProps.address.data.receiver_city && nextProps.address.data.receiver_city.indexOf(item.name) >= 0) {
           selectedCity = { receiver_city: item.name, receiverCityId: item.id };
         }
       });
-      if (!nextProps.region.isLoading && !nextProps.region.success && selectedCity.receiverCityId) {
-        this.props.fetchRegions(selectedCity.receiverCityId);
-      }
+
     }
 
-    if (nextProps.region.success) {
-      _.each(nextProps.region.data, (item, index) => {
+    if (nextProps.district.success) {
+
+      _.each(nextProps.district.data, (item, index) => {
         if (nextProps.address.data.receiver_district && nextProps.address.data.receiver_district.indexOf(item.name) >= 0) {
-          selectedRegion = { receiver_district: item.name, receiverDistrictId: item.id };
+          selecteDistrict = { receiver_district: item.name, receiverDistrictId: item.id };
         }
       });
     }
-
-    if (nextProps.address.success && nextProps.province.success && nextProps.city.success && nextProps.region.success) {
-      this.setState({ address: _.extend({}, this.state.address, nextProps.address.data, selectedProvince, selectedCity, selectedRegion) });
+    if (nextProps.address.success && nextProps.province.success && nextProps.city.success && nextProps.district.success) {
+      this.setState({ address: _.extend({}, this.state.address, nextProps.address.data, selectedProvince, selectedCity, selecteDistrict) });
     }
-
   }
 
   onDeleteClick = (e) => {
-    console.log('delete address');
+    this.props.deleteAddress(this.state.address.id);
+    console.log('delete success!');
   }
 
   onInpuChange = (e) => {
@@ -169,7 +178,7 @@ export default class Edit extends Component {
         break;
       case 'city':
         this.setState({ address: _.extend({}, this.state.address, { receiver_city: label, receiverCityId: value }) });
-        this.props.fetchRegions(value);
+        this.props.fetchDistricts(value);
         break;
       case 'region':
         this.setState({ address: _.extend({}, this.state.address, { receiver_district: label, receiverDistrictId: value }) });
@@ -220,33 +229,29 @@ export default class Edit extends Component {
     return (
       <select className="col-xs-4 no-padding" name="city" value={this.state.address.receiverCityId} onChange={this.onSelectChange}>
         <option value="选择城市" id="0">选择城市</option>
-        {
-          city.data.map((item, index) => {
+        {city.data.map((item, index) => {
             return (
               <option value={item.id} key={item.id} key={item.id}>{ item.name }</option>
             );
-          })
-        }
+          })}
       </select>
     );
   }
 
   renderRegion() {
-    const { region, address } = this.props;
-    if (!_.isArray(region.data)) {
-      region.data = [];
+    const { district, address } = this.props;
+    if (!_.isArray(district.data)) {
+      district.data = [];
     }
 
     return (
       <select className="col-xs-4 no-padding" name="region" value={this.state.address.receiverDistrictId} onChange={this.onSelectChange}>
         <option value="选择地区" id="0">选择地区</option>
-        {
-          region.data.map((item, index) => {
+        {district.data.map((item, index) => {
             return (
               <option value={item.id} key={item.id} key={item.id}>{item.name}</option>
             );
-          })
-        }
+          })}
       </select>
     );
   }
@@ -285,7 +290,7 @@ export default class Edit extends Component {
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
             <span className="col-xs-9">是否设为常用地址</span>
             <div className="col-xs-3">
-              <Switch defaultChecked={address.default} value={address.default} onChange={this.onSwitchChange}/>
+              <Switch checked={address.default} value={address.default} onChange={this.onSwitchChange}/>
             </div>
           </div>
           <div className="row no-margin">
