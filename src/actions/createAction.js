@@ -4,18 +4,18 @@ const createAction = (name) => {
   return {
     request: () => {
       return {
-        type: actionTypes.REQUEST + '_' + name,
+        type: name + '_' + actionTypes.REQUEST,
       };
     },
     success: (data) => {
       return {
-        type: actionTypes.SUCCESS + '_' + name,
+        type: name + '_' + actionTypes.SUCCESS,
         payload: data,
       };
     },
     failure: (data) => {
       return {
-        type: actionTypes.FAILURE + '_' + name,
+        type: name + '_' + actionTypes.FAILURE,
         payload: data,
         error: true,
       };
