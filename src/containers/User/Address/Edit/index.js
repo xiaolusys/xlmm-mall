@@ -102,6 +102,9 @@ export default class Edit extends Component {
     let selectedCity = {};
     let selectedProvince = {};
     let selecteDistrict = {};
+    if (nextProps.address.success && nextProps.address.data.code === 0) {
+      this.context.router.push('/user/address');
+    }
     if (nextProps.address.success && _.isObject(nextProps.address.data) && _.isNumber(nextProps.address.data.code)) {
       Toast.show(nextProps.address.data.info);
     }

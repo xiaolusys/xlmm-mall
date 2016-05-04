@@ -22,8 +22,8 @@ export default (
     <Route path="/user/password/reset" component={Password}/>
     <Route path="/user/password/set" component={Password}/>
     <Route path="/order/:type" component={OrderList}/>
-    <Route path="/order/detail" component={OrderDetail}/>
-    <Route path="/order/logistics" component={Logistics}/>
+    <Route path="/order/detail/:id" component={OrderDetail}/>
+    <Route path="/order/logistics/:id" component={Logistics}/>
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
     <Route status={404} path="*" component={Home} />
