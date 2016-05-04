@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import createReducer from './createReducer';
+import orderReducer from './orderReducer';
+
 import * as successReducers from './successReducers';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
@@ -26,7 +28,7 @@ const rootReducer = combineReducers({
   password: createReducer(passwordAction.name),
   portal: createReducer(portalAction.name),
   product: createReducer(productAction.name, successReducers.productSuccessReducer),
-  order: createReducer(orderAction.name),
+  order: orderReducer,
   logistics: createReducer(logisticsAction.name),
   province: createReducer(provinceAction.name),
   city: createReducer(cityAction.name),

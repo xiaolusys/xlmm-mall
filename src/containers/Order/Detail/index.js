@@ -16,10 +16,7 @@ const actionCreators = _.extend({}, orderAction);
 
 @connect(
   state => ({
-    order: {
-      data: state.order.data,
-      isLoading: state.order.isLoading,
-    },
+    order: state.order,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -81,8 +78,15 @@ export default class Detail extends Component {
     );
   }
 
+  renderBottomBar() {
+    return (
+      <div>
+      </div>
+    );
+  }
+
   render() {
-    const order = this.props.order.data;
+    const order = this.props.order.fetchOrder.data;
     return (
       <div>
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />

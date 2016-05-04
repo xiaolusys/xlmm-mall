@@ -7,11 +7,11 @@ import classnames from 'classnames';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
-import * as fetchOrderAction from 'actions/order/fetchOrder';
+import * as orderAction from 'actions/order/order';
 
 import './index.scss';
 
-const actionCreators = _.extend({}, fetchOrderAction);
+const actionCreators = _.extend({}, orderAction);
 const types = [{
   title: '全部订单',
   requestAction: '',
@@ -36,10 +36,7 @@ const displayTag = {
 
 @connect(
   state => ({
-    order: {
-      data: state.order.data,
-      isLoading: state.order.isLoading,
-    },
+    order: state.order,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -50,6 +47,7 @@ export default class List extends Component {
     order: React.PropTypes.any,
     fetchOrders: React.PropTypes.func,
     deleteOrder: React.PropTypes.func,
+    chargeOrder: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -75,21 +73,24 @@ export default class List extends Component {
 
   onBtnClick = (e) => {
     const requestAction = types[this.props.params.type].requestAction;
+    const { router } = this.context;
     const { pageIndex, pageSize } = this.state;
     const dataSet = e.currentTarget.dataset;
     switch (dataSet.action) {
       case displayTag['1'].action:
-        console.log(dataSet.orderid);
+        router.push('/order/pay/' + dataSet.id);
         break;
       case displayTag['2'].action:
+        // TODO: 提醒发货
         break;
       case displayTag['3'].action:
+        // TODO: 确认收货
         break;
       case displayTag['5'].action:
+        router.push('/order/refund/' + dataSet.id);
         break;
       case displayTag['7'].action:
         this.props.deleteOrder(dataSet.orderid);
-        this.props.fetchOrders(requestAction, (pageIndex === 0 ? pageIndex + 1 : pageIndex), pageSize);
         break;
       default:
         break;
@@ -133,12 +134,12 @@ export default class List extends Component {
 
   render() {
     const type = types[this.props.params.type];
-    const orders = this.props.order.data.results || [];
+    const orders = this.props.order.fetchOrder.data.results || [];
     return (
       <div>
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content has-header order-list">
-            <If condition={_.isEmpty(orders) && !this.props.order.isLoading}>
+            <If condition={_.isEmpty(orders) && !this.props.order.fetchOrder.isLoading}>
               <div className="text-center margin-top-xlg margin-bottom-lg">
                 <i className="icon-order-o icon-4x icon-grey"></i>
                 <p>您暂时还没有订单哦～快去看看吧</p>
