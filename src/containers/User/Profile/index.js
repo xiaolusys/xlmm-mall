@@ -3,8 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import * as profileAction from 'actions/user/profile';
-import * as logoutAction from 'actions/user/logout';
+import * as actionCreators from 'actions/user/profile';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
@@ -13,35 +12,24 @@ import classnames from 'classnames';
 
 import './index.scss';
 
-const actionCreators = _.extend(profileAction, logoutAction);
-
 @connect(
   state => ({
-    profile: {
-      data: state.profile.data,
-      isLoading: state.profile.isLoading,
-      error: state.profile.error,
-      success: state.profile.success,
-    },
-    logout: {
-      data: state.logout.data,
-      isLoading: state.logout.isLoading,
-      error: state.logout.error,
-      success: state.logout.success,
-    },
+    data: state.profile.data,
+    isLoading: state.profile.isLoading,
+    error: state.profile.error,
+    success: state.profile.success,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export default class Profile extends Component {
   static propTypes = {
     children: React.PropTypes.array,
-    profile: React.PropTypes.any,
+    data: React.PropTypes.any,
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
     fetchProfile: React.PropTypes.func,
     logout: React.PropTypes.any,
-    userLogout: React.PropTypes.func,
   }
 
   static contextTypes = {
@@ -58,22 +46,18 @@ export default class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    if (nextProps.logout.success && nextProps.logout.data.code === 0) {
-      Toast.show(nextProps.logout.data.result);
+    if (nextProps.success && nextProps.data.code === 0) {
       this.context.router.push('/user/login');
     }
   }
 
   onLogoutBtnClick = (e) => {
-    this.props.userLogout();
+    this.props.logout();
   }
 
   render() {
-    const props = this.props;
-    const { children, error } = this.props;
-    const profile = this.props.profile.data;
-    console.log(profile);
+    const { children, error, isLoading } = this.props;
+    const profile = this.props.data;
     const logoutBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
     });
@@ -82,7 +66,7 @@ export default class Profile extends Component {
       <div>
         <Header title="个人信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
-          {this.props.profile.isLoading ? <span>loading...</span> : children}
+          {isLoading ? <span>loading...</span> : children}
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
               <a className="font-black" href="/#/user/nickname" >

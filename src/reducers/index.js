@@ -6,7 +6,6 @@ import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
 import * as loginAction from 'actions/user/login';
-import * as logoutAction from 'actions/user/logout';
 import * as passwordAction from 'actions/user/password';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
@@ -24,7 +23,6 @@ const rootReducer = combineReducers({
   profile: createReducer(profileAction.name),
   address: createReducer(addressAction.name),
   login: createReducer(loginAction.name),
-  logout: createReducer(logoutAction.name),
   password: createReducer(passwordAction.name),
   portal: createReducer(portalAction.name),
   product: createReducer(productAction.name, successReducers.productSuccessReducer),
