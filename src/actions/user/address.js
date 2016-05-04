@@ -25,16 +25,12 @@ export const fetchAddress = (id, isEdit = false) => {
   };
 };
 
-
 export const updateAddress = (id, requestAction, address) => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpoint + 'address' + (id ? '/' + id : '') + '/' + requestAction, qs.stringify(address))
       .then((resp) => {
         dispatch(action.success(resp.data));
-        if (id && address.default) {
-          this.changeDefaultAddress(id);
-        }
       })
       .catch((resp) => {
         dispatch(action.failure(resp.data));
@@ -46,19 +42,6 @@ export const deleteAddress = (id) => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpoint + 'address/' + id + '/delete_address')
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp.data));
-      });
-  };
-};
-
-export const changeDefaultAddress = (id) => {
-  return (dispatch) => {
-    dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'address/' + id + '/change_default')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
