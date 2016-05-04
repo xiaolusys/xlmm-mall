@@ -49,7 +49,7 @@ export default class Logistics extends Component {
               <Timeline className="logistics-info">
               {logisticsInfo.map((item, index) => {
                 return (
-                  <TimelineItem headColor="grey" tailColor="grey">
+                  <TimelineItem key={index} headColor="grey" tailColor="grey">
                     <p className="font-grey">{item.time.replace('T', ' ')}</p>
                     <p className="font-sm">{item.content}</p>
                   </TimelineItem>
