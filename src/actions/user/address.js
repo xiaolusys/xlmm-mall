@@ -25,7 +25,6 @@ export const fetchAddress = (id, isEdit = false) => {
   };
 };
 
-
 export const updateAddress = (id, requestAction, address) => {
   return (dispatch) => {
     dispatch(action.request());

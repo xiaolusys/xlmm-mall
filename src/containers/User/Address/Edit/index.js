@@ -16,8 +16,6 @@ import './index.scss';
 
 const actionCreators = _.extend(provinceAction, cityAction, districtAction, addressAction);
 const requestAction = {
-  delete: 'delete_address',
-  changeDefault: 'change_default',
   create: 'create_address',
   update: 'update',
 };
@@ -65,7 +63,6 @@ export default class Edit extends Component {
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
     fetchAddress: React.PropTypes.func,
-    createAddress: React.PropTypes.func,
     updateAddress: React.PropTypes.func,
     deleteAddress: React.PropTypes.func,
     fetchProvinces: React.PropTypes.func,
@@ -105,8 +102,11 @@ export default class Edit extends Component {
     let selectedCity = {};
     let selectedProvince = {};
     let selecteDistrict = {};
-    if (nextProps.address.success && _.isObject(nextProps.address.data) && _.isNumber(nextProps.address.data.code)) {
-      Toast.show(nextProps.address.data.info);
+    if (nextProps.address.success && nextProps.address.data.code === 0) {
+      this.context.router.push('/user/address');
+    }
+    if (nextProps.address.success && _.isObject(nextProps.address.data) && (nextProps.address.data.code === 0)) {
+      Toast.show(nextProps.address.data.msg);
     }
 
     if (nextProps.province.success) {
@@ -145,7 +145,6 @@ export default class Edit extends Component {
 
   onDeleteClick = (e) => {
     this.props.deleteAddress(this.state.address.id);
-    console.log('delete success!');
   }
 
   onInpuChange = (e) => {
@@ -288,7 +287,7 @@ export default class Edit extends Component {
             <input type="text" placeholder="请输入您的详细地址" name="address" value={address.receiver_address} onChange={this.onInpuChange}/>
           </div>
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
-            <span className="col-xs-9">是否设为常用地址</span>
+            <span className="col-xs-9">是否设为默认地址</span>
             <div className="col-xs-3">
               <Switch checked={address.default} value={address.default} onChange={this.onSwitchChange}/>
             </div>

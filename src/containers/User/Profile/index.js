@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import _ from 'underscore';
 import * as actionCreators from 'actions/user/profile';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Toast } from 'components/Toast';
 import { If } from 'jsx-control-statements';
 import classnames from 'classnames';
 
@@ -14,6 +16,8 @@ import './index.scss';
   state => ({
     data: state.profile.data,
     isLoading: state.profile.isLoading,
+    error: state.profile.error,
+    success: state.profile.success,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -25,6 +29,7 @@ export default class Profile extends Component {
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
     fetchProfile: React.PropTypes.func,
+    logout: React.PropTypes.any,
   }
 
   static contextTypes = {
@@ -40,13 +45,19 @@ export default class Profile extends Component {
     this.props.fetchProfile();
   }
 
-  onLogoutBtnClick = (e) => {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.success && nextProps.data.code === 0) {
+      this.context.router.push('/user/login');
+    }
+  }
 
+  onLogoutBtnClick = (e) => {
+    this.props.logout();
   }
 
   render() {
-    const props = this.props;
-    const { children, data, isLoading, error } = this.props;
+    const { children, error, isLoading } = this.props;
+    const profile = this.props.data;
     const logoutBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
     });
@@ -61,7 +72,7 @@ export default class Profile extends Component {
               <a className="font-black" href="/#/user/nickname" >
                 <p className="col-xs-6 text-left">账户昵称</p>
                 <p className="col-xs-6 text-right">
-                  <span>{data.nick}</span>
+                  <span>{profile.nick}</span>
                   <i className="icon-angle-right"></i>
                 </p>
               </a>
@@ -70,7 +81,7 @@ export default class Profile extends Component {
               <a className="font-black" href="/#/user/profile/phone">
                 <p className="col-xs-6 text-left">绑定手机</p>
                 <p className="col-xs-6 text-right">
-                  <span>{data.mobile}</span>
+                  <span>{profile.mobile}</span>
                   <i className="icon-angle-right"></i>
                 </p>
               </a>

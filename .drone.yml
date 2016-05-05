@@ -18,8 +18,17 @@ publish:
     file: Dockerfile
     mirror: https://n5fb0zgg.mirror.aliyuncs.com
     when:
-      branch: master
+      branch: [staging,master]
 deploy:
+  ssh:
+    host: 
+      - staging.xiaolumm.com
+    when:
+      branch: staging
+    user: root
+    commands:
+      - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall
+      - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall cp -rf mall /data/mall
   ssh:
     host: 
       - staging.xiaolumm.com
