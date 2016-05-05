@@ -110,12 +110,12 @@ export default class Login extends Component {
           <div className="row no-margin">
             <button className={registerBtnCls} type="button" onClick={this.onRegisterClick}>注册</button>
           </div>
-          <p className="row no-margin text-center">
+          <p className="row no-margin text-center hide">
             <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
             <span className="col-xs-4 margin-top-lg grey">第三方登录</span>
             <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
           </p>
-          <div className="row no-margin">
+          <div className="row no-margin hide">
             <div className="col-xs-8 col-xs-offset-2 text-center margin-top-sm">
               <i className="col-xs-6 icon-wechat icon-3x icon-green"></i>
               <i className="col-xs-6 icon-weibo icon-3x icon-green"></i>
