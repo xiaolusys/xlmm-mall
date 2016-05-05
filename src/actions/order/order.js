@@ -56,7 +56,7 @@ export const chargeOrder = (id) => {
   const action = createAction(names.DELETE_ORDER);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'trades/' + id +'/charge')
+    return axios.post(constants.baseEndpoint + 'trades/' + id + '/charge')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
