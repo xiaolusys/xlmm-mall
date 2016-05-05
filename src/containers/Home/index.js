@@ -20,8 +20,9 @@ import './index.scss';
 const actionCreators = _.extend(portalAction, productAction);
 
 const requestAction = {
-  yesterday: 'promote_previous_paging',
-  today: 'promote_today_paging',
+  yesterday: 'yesterday',
+  today: '',
+  tomorrow: 'tomorrow',
 };
 const tabs = {
   yesterday: 0,
@@ -103,8 +104,13 @@ export class Home extends Component {
     });
   }
 
-  onItemClick = (productId, modelId) => {
-    console.log(productId);
+  onItemClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    if (dataSet.modelid) {
+      window.location.href = '/tongkuan.html?id=' + dataSet.modelid;
+      return;
+    }
+    window.location.href = '/pages/shangpinxq.html?id=' + dataSet.productid;
   }
 
   onTabItemClick = (e) => {
