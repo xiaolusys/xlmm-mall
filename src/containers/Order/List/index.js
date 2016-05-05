@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as utils from 'utils';
 import classnames from 'classnames';
-import moment from 'moment';
-import countdown from 'moment-countdown';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
