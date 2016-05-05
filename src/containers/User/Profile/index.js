@@ -94,7 +94,7 @@ export default class Profile extends Component {
                 </p>
               </a>
             </li>
-            <li className="bottom-border row no-margin">
+            <li className="bottom-border row no-margin hide">
               <a className="font-black">
                 <p className="col-xs-6 text-left">第三方账户绑定</p>
                 <p className="col-xs-6 text-right">
@@ -110,7 +110,7 @@ export default class Profile extends Component {
                 </p>
               </a>
             </li>
-            <li className="bottom-border row no-margin margin-top-xs">
+            <li className="bottom-border row no-margin margin-top-xs hide">
               <a className="font-black">
                 <p className="col-xs-6 text-left">清除缓存</p>
                 <p className="col-xs-6 text-right">
@@ -118,7 +118,7 @@ export default class Profile extends Component {
                 </p>
               </a>
             </li>
-            <li className="bottom-border row no-margin">
+            <li className="bottom-border row no-margin hide">
               <a className="font-black">
                 <p className="col-xs-6 text-left">关于小鹿美美</p>
                 <p className="col-xs-6 text-right">

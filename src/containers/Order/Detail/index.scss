@@ -13,7 +13,6 @@
   }
   .product-list {
     background: #fff;
-    padding: 8px;
     p {
       margin-bottom: 0px;
       padding: 8px;
@@ -30,7 +29,7 @@
   .price-info {
     margin-top: 16px;
     background: #fff;
-    padding: 8px;
+    padding: 4px 8px;
     p {
       margin: 10px 0px;
     }
@@ -40,5 +39,15 @@
   }
   .font-grey {
     color: #9b9b9b;
+  }
+  a {
+    color: #626262;
+    &:hover,
+    :active,
+    :focus,
+    :visited {
+      color: #626262;
+      text-decoration: none !important;
+    }
   }
 }
