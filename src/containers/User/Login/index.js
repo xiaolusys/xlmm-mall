@@ -54,7 +54,7 @@ export default class Login extends Component {
     switch (nextProps.data.rcode) {
       case 0:
         Toast.show(nextProps.data.msg);
-        query.next ? router.push(query.next) : router.push('/');
+        query.next ? router.replace(query.next) : router.replace('/');
         break;
       default:
         Toast.show(nextProps.data.msg);

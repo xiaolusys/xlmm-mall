@@ -1,1 +1,2 @@
-export detector from './detector';
+export checkAuth from './detector';
+export checkAuth from './checkAuth';
