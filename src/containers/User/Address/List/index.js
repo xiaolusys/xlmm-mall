@@ -73,7 +73,7 @@ export default class List extends Component {
                         </p>
                         <p className="font-xs text-left no-margin address-text">{addr.receiver_state + addr.receiver_city + addr.receiver_district + addr.receiver_address}</p>
                       </div>
-                      <i className="icon-angle-right"></i>
+                      <i className="icon-angle-right font-grey-light"></i>
                     </Link>
                   </li>
                 );
