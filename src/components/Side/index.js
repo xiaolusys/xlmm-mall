@@ -66,59 +66,63 @@ export class Side extends Component {
             </p>
           </div>
           <div className="col-xs-4">
-            <p>{profile.score || 0}</p>
-            <p>
-              <i className="icon-database"></i>
-              <span>积分</span>
-            </p>
+            <a href="pages/wodejifen.html?">
+              <p>{profile.score || 0}</p>
+              <p>
+                <i className="icon-database"></i>
+                <span>积分</span>
+              </p>
+            </a>
           </div>
           <div className="col-xs-4">
-            <p>{profile.coupon_num || 0}</p>
-            <p>
-              <i className="icon-coupon-o"></i>
-              <span>优惠券</span>
-            </p>
+            <a href="/pages/youhuiquan.html?">
+              <p>{profile.coupon_num || 0}</p>
+              <p>
+                <i className="icon-coupon-o"></i>
+                <span>优惠券</span>
+              </p>
+            </a>
           </div>
         </div>
         <ul>
           <li>
-            <Link to="/order/1">
+            <a href="/pages/daizhifu-dd.html?">
               <i className="icon-order-square icon-gold"></i>
               <span>待支付</span>
               <If condition={profile.waitpay_num}>
                 <span className="badge gold pull-right">{profile.waitpay_num}</span>
               </If>
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to="/order/2">
+            <a href="/pages/daishouhuo-dd.html?">
               <i className="icon-truck icon-gold"></i>
               <span>待收货</span>
               <If condition={profile.waitgoods_num}>
                 <span className="badge gold pull-right">{profile.waitgoods_num}</span>
               </If>
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to="/order/3">
+            <a href="/pages/wodetuihuo.html?">
               <i className="icon-cny icon-gold"></i>
               <span>退换货</span>
               <If condition={profile.refunds_num}>
                 <span className="badge gold pull-right">{profile.refunds_num}</span>
               </If>
-            </Link>
+            </a>
           </li>
           <li className="bottom-border-black">
-            <Link to="/order/0">
+            <a href="/pages/quanbu-dd.html?">
               <i className="icon-order icon-gold"></i>
               <span>全部订单</span>
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to="">
+            <a href="/pages/tousu.html?">
               <i className="icon-mail-open icon-gold"></i>
               <span>投诉建议</span>
-            </Link>
+            </a>
           </li>
           <li>
             <Link to="/faq">

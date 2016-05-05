@@ -30,14 +30,13 @@ const displayTag = {
   1: { tag: '立即支付', action: 'pay' }, // 1: 待付款
   2: { tag: '提醒发货', action: 'remind' }, // 2: 已付款
   3: { tag: '确认收货', action: 'confirm' }, // 3: 已发货
+  5: { tag: '退货退款', action: 'refund' }, // 3: 交易成功
+  7: { tag: '删除订单', action: 'delete' }, // 3: 交易关闭
 };
 
 @connect(
   state => ({
-    order: {
-      data: state.order.data,
-      isLoading: state.order.isLoading,
-    },
+    order: state.order,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -47,6 +46,8 @@ export default class List extends Component {
     params: React.PropTypes.any,
     order: React.PropTypes.any,
     fetchOrders: React.PropTypes.func,
+    deleteOrder: React.PropTypes.func,
+    chargeOrder: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -71,14 +72,25 @@ export default class List extends Component {
 
 
   onBtnClick = (e) => {
+    const requestAction = types[this.props.params.type].requestAction;
+    const { router } = this.context;
+    const { pageIndex, pageSize } = this.state;
     const dataSet = e.currentTarget.dataset;
     switch (dataSet.action) {
       case displayTag['1'].action:
-        console.log(dataSet.orderid);
+        router.push('/order/pay/' + dataSet.id);
         break;
       case displayTag['2'].action:
+        // TODO: 提醒发货
         break;
       case displayTag['3'].action:
+        // TODO: 确认收货
+        break;
+      case displayTag['5'].action:
+        router.push('/order/refund/' + dataSet.id);
+        break;
+      case displayTag['7'].action:
+        this.props.deleteOrder(dataSet.orderid);
         break;
       default:
         break;
@@ -122,11 +134,19 @@ export default class List extends Component {
 
   render() {
     const type = types[this.props.params.type];
-    const orders = this.props.order.data.results || [];
+    const orders = this.props.order.fetchOrder.data.results || [];
     return (
       <div>
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-          <div className="content has-header">
+          <div className="content has-header order-list">
+            <If condition={_.isEmpty(orders) && !this.props.order.fetchOrder.isLoading}>
+              <div className="text-center margin-top-xlg margin-bottom-lg">
+                <i className="icon-order-o icon-4x icon-grey"></i>
+                <p>您暂时还没有订单哦～快去看看吧</p>
+                <p className="font-grey font-xs margin-bottom-xs">再不抢购，宝贝就卖光啦～</p>
+                <Link className="button button-stable" to="/" >快去抢购</Link>
+              </div>
+            </If>
             { orders.map((item, index) => {
               return (
                 <div className="order-item" key={item.id}>
@@ -137,7 +157,7 @@ export default class List extends Component {
                     </p>
                     <div className="pull-right">
                       <span className="margin-right-xxs">{item.status_display}</span>
-                      <If condition={item.status === 1 || item.status === 1 || item.status === 3}>
+                      <If condition={item.status === 1 || item.status === 2 || item.status === 3 || item.status === 5 || item.status === 7}>
                         <button type="button" data-action={displayTag[item.status].action} data-orderid={item.id} onClick={this.onBtnClick}>{displayTag[item.status].tag}</button>
                       </If>
                     </div>
