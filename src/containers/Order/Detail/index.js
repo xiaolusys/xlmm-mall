@@ -46,18 +46,18 @@ export default class Detail extends Component {
       <div className="product-list">
         {products.map((product, index) => {
           return (
-            <div key={product.id} className="row no-margin">
+            <div key={product.id} className="row no-margin bottom-border">
               <div className="col-xs-3 no-padding">
                 <img src={product.pic_path} />
               </div>
               <div className="col-xs-9 no-padding">
                 <p className="row no-margin">
-                  <span className="col-xs-10 no-padding">{product.title}</span>
-                  <span className="col-xs-2 no-padding">{'￥' + product.payment}</span>
+                  <span>{product.title}</span>
+                  <span className="pull-right">{'￥' + product.payment}</span>
                 </p>
                 <p className="row no-margin font-grey">
-                  <span className="col-xs-10 no-padding">{'尺码：' + product.sku_name}</span>
-                  <span className="col-xs-2 no-padding">{'x' + product.num}</span>
+                  <span>{'尺码：' + product.sku_name}</span>
+                  <span className="pull-right">{'x' + product.num}</span>
                 </p>
               </div>
             </div>
@@ -68,13 +68,21 @@ export default class Detail extends Component {
   }
 
   renderLogistics() {
+    const order = this.props.order.fetchOrder.data;
+    const time = order.created || '';
+    const content = '订单创建成功';
     return (
+      <Link to={'/order/logistics/' + order.tid}>
       <Timeline className="logistics-info">
-        <TimelineItem headColor="yellow" tailColor="yellow">
-          <p></p>
-          <p>够傻几个佛我激动撒回复你度搜积分hi欧</p>
+        <TimelineItem className="row no-margin" headColor="yellow" tailColor="yellow">
+          <div className="col-xs-11 no-padding">
+          <p className="font-grey">{time.replace('T', ' ')}</p>
+          <p className="font-sm">{content}</p>
+          </div>
+          <i className="col-xs-1 no-padding margin-top-xs icon-angle-right icon-2x icon-grey pull-right"></i>
         </TimelineItem>
       </Timeline>
+      </Link>
     );
   }
 
@@ -100,16 +108,16 @@ export default class Detail extends Component {
               <div className="col-xs-2">
               </div>
               <div className="col-xs-10">
-                <p><span>{order.receiver_name}</span><span>{order.receiver_mobile}</span></p>
+                <p><span>{order.receiver_name}</span><span className="margin-left-xxs">{order.receiver_mobile}</span></p>
                 <p className="font-xs">{order.receiver_state + order.receiver_city + order.receiver_district + order.receiver_address}</p>
               </div>
             </div>
             {this.renderLogistics()}
             {this.renderProducts(order.orders)}
             <div className="price-info">
-              <p><span>商品金额</span><span className="pull-right">{'￥' + Number(order.payment).toFixed(2)}</span></p>
-              <p><span>优惠券</span><span className="pull-right">{'-￥' + Number(order.discount_fee).toFixed(2)}</span></p>
-              <p><span>运费</span><span className="pull-right">{'￥' + Number(order.post_fee).toFixed(2)}</span></p>
+              <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(order.payment).toFixed(2)}</span></p>
+              <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(order.discount_fee).toFixed(2)}</span></p>
+              <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(order.post_fee).toFixed(2)}</span></p>
             </div>
              <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(order.total_fee).toFixed(2)}</span></p>
             <Footer />
