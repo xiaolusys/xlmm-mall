@@ -4,4 +4,6 @@ export UserPhone from './Phone';
 export Password from './Password';
 export Profile from './Profile';
 export Nickname from './Nickname';
-export Address from './Address';
+export AddressList from './Address/List';
+export EditAddress from './Address/Edit';
+export Point from './Point';

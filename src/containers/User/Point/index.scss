@@ -1,0 +1,9 @@
+.point-container {
+  .my-point {
+  	background-color: white;
+    > p {
+      font-size: 50px;
+      color: #F5A623;
+    }
+  }
+}
