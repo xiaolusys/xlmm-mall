@@ -69,7 +69,7 @@ export default class Profile extends Component {
           {isLoading ? <span>loading...</span> : children}
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
-              <a className="font-black" href="/#/user/nickname" >
+              <a className="font-black" href="#/user/nickname" >
                 <p className="col-xs-6 text-left">账户昵称</p>
                 <p className="col-xs-6 text-right">
                   <span>{profile.nick}</span>
@@ -78,7 +78,7 @@ export default class Profile extends Component {
               </a>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black" href="/#/user/profile/phone">
+              <a className="font-black" href="#/user/profile/phone">
                 <p className="col-xs-6 text-left">绑定手机</p>
                 <p className="col-xs-6 text-right">
                   <span>{profile.mobile}</span>
@@ -87,7 +87,7 @@ export default class Profile extends Component {
               </a>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black" href="/#/user/password/set">
+              <a className="font-black" href="#/user/password/set">
                 <p className="col-xs-6 text-left">修改密码</p>
                 <p className="col-xs-6 text-right">
                   <i className="icon-angle-right"></i>
@@ -103,7 +103,7 @@ export default class Profile extends Component {
               </a>
             </li>
             <li className="bottom-border row no-margin margin-top-xs">
-              <a className="font-black" href="/#/user/address">
+              <a className="font-black" href="#/user/address">
                 <p className="col-xs-6 text-left">地址管理</p>
                 <p className="col-xs-6 text-right">
                   <i className="icon-angle-right"></i>
