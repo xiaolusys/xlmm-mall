@@ -8,7 +8,7 @@ module.exports = {
   entry: ['bootstrap-loader/extractStyles'],
 
   output: {
-    publicPath: 'dist/',
+    publicPath: '/mall/',
   },
 
   module: {
