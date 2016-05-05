@@ -66,13 +66,13 @@ export class Side extends Component {
             </p>
           </div>
           <div className="col-xs-4">
-            <Link to="/user/point">
+            <a href="/pages/wodejifen.html?">
               <p>{profile.score || 0}</p>
               <p>
                 <i className="icon-database"></i>
                 <span>积分</span>
               </p>
-            </Link>
+            </a>
           </div>
           <div className="col-xs-4">
             <a href="/pages/youhuiquan.html?">
