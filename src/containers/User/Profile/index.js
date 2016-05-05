@@ -73,7 +73,7 @@ export default class Profile extends Component {
                 <p className="col-xs-6 text-left">账户昵称</p>
                 <p className="col-xs-6 text-right">
                   <span>{profile.nick}</span>
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
               </Link>
             </li>
@@ -82,7 +82,7 @@ export default class Profile extends Component {
                 <p className="col-xs-6 text-left">绑定手机</p>
                 <p className="col-xs-6 text-right">
                   <span>{profile.mobile}</span>
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
               </Link>
             </li>
@@ -90,7 +90,7 @@ export default class Profile extends Component {
               <Link to="/user/password/set">
                 <p className="col-xs-6 text-left">修改密码</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
               </Link>
             </li>
@@ -98,7 +98,7 @@ export default class Profile extends Component {
               <Link to="">
                 <p className="col-xs-6 text-left">第三方账户绑定</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
               </Link>
             </li>
@@ -106,7 +106,7 @@ export default class Profile extends Component {
               <Link to="/user/address">
                 <p className="col-xs-6 text-left">地址管理</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
               </Link>
             </li>
@@ -114,7 +114,7 @@ export default class Profile extends Component {
               <Link to="">
                 <p className="col-xs-6 text-left">清除缓存</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right no-padding"></i>
+                  <i className="icon-angle-right font-grey-light no-padding"></i>
                 </p>
               </Link>
             </li>
@@ -122,7 +122,7 @@ export default class Profile extends Component {
               <Link to="">
                 <p className="col-xs-6 text-left">关于小鹿美美</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right no-padding"></i>
+                  <i className="icon-angle-right font-grey-light no-padding"></i>
                 </p>
               </Link>
             </li>
