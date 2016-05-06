@@ -15,6 +15,14 @@ import { Product } from 'components/Product';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 
+import logo from './images/logo.png';
+import today from './images/today.png';
+import todayActive from './images/today-active.png';
+import tomorrow from './images/tomorrow.png';
+import tomorrowActive from './images/tomorrow-active.png';
+import yesterday from './images/yesterday.png';
+import yesterdayActive from './images/yesterday-active.png';
+
 import './index.scss';
 
 const actionCreators = _.extend(portalAction, productAction);
@@ -152,30 +160,6 @@ export class Home extends Component {
     });
   }
 
-  styles = () => {
-    return {
-      mainCls: classnames({
-        ['menu-active']: this.state.menuActive,
-      }),
-      yesterdayTabCls: classnames({
-        ['icon-4x icon-yellow-light']: 1,
-        ['icon-tab-yesterday']: this.state.activeTab !== tabs.yesterday,
-        ['icon-tab-yesterday-active']: this.state.activeTab === tabs.yesterday,
-      }),
-      todayTabCls: classnames({
-        ['icon-4x icon-yellow-light']: 1,
-        ['icon-tab-today']: this.state.activeTab !== tabs.today,
-        ['icon-tab-today-active']: this.state.activeTab === tabs.today,
-
-      }),
-      tomorrowTabCls: classnames({
-        ['icon-4x icon-yellow-light']: 1,
-        ['icon-tab-tomorrow']: this.state.activeTab !== tabs.tomorrow,
-        ['icon-tab-tomorrow-active']: this.state.activeTab === tabs.tomorrow,
-      }),
-    };
-  }
-
   render() {
     const { portal, product, children } = this.props;
     const activities = portal.data.activitys || [];
@@ -183,13 +167,15 @@ export class Home extends Component {
     const posters = portal.data.posters || [];
     const products = product.data.results || [];
     const { activeTab } = this.state;
-    const { mainCls, yesterdayTabCls, todayTabCls, tomorrowTabCls } = this.styles();
+    const mainCls = classnames({
+      ['menu-active']: this.state.menuActive,
+    });
     return (
       <div className={mainCls}>
         <Side />
         <div className="slide-menu-mask" onClick={this.toggleMenuActive}></div>
         <div className="home-container">
-          <Header title="小鹿美美" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} />
+          <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} />
           <div className="content has-header">
             <div className="home-poster">
               {portal.isLoading ? <Loader/> : null}
@@ -212,7 +198,7 @@ export class Home extends Component {
                   return (
                     <li className="col-xs-6 no-padding" key={item.id}>
                       <a href={item.cat_link}>
-                        <img className="" src={item.cat_img} />
+                        <img src={item.cat_img} />
                       </a>
                     </li>
                   );
@@ -236,13 +222,13 @@ export class Home extends Component {
             <div className="home-tabs text-center bottom-border">
               <ul className="row no-margin">
                 <li id="yesterday" className="col-xs-4" onClick={this.onTabItemClick}>
-                  <i className={yesterdayTabCls}></i>
+                  <img src={activeTab === tabs.yesterday ? yesterdayActive : yesterday} />
                 </li>
                 <li id="today" className="col-xs-4" onClick={this.onTabItemClick}>
-                  <i className={todayTabCls}></i>
+                  <img src={activeTab === tabs.today ? todayActive : today} />
                 </li>
                 <li id="tomorrow" className="col-xs-4" onClick={this.onTabItemClick}>
-                  <i className={tomorrowTabCls}></i>
+                  <img src={activeTab === tabs.tomorrow ? tomorrowActive : tomorrow} />
                 </li>
               </ul>
             </div>

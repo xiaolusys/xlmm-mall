@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'underscore';
 import classnames from 'classnames';
+import { If } from 'jsx-control-statements';
 
 import './index.scss';
 
 export class Header extends Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
+    titleType: React.PropTypes.string,
     leftIcon: React.PropTypes.string,
     rightIcon: React.PropTypes.string,
     leftText: React.PropTypes.string,
@@ -33,7 +35,7 @@ export class Header extends Component {
   }
 
   render() {
-    const { title, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed } = this.props;
+    const { title, titleType, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed } = this.props;
     const leftBtnCls = classnames({
       ['icon-btn ' + leftIcon + ' icon-yellow']: 1,
       ['no-icon']: leftText ? true : false,
@@ -47,7 +49,14 @@ export class Header extends Component {
     return (
       <header className="bar bar-header">
         <button className={leftBtnCls} onClick={onLeftBtnClick}>{leftText}</button>
-        <p className="title">{title}</p>
+        <If condition={titleType === 'image'}>
+          <div className="text-center image-title">
+            <img src={title} />
+          </div>
+        </If>
+        <If condition={titleType !== 'image'}>
+          <p className="title">{title}</p>
+        </If>
         <button className={rightBtnCls} onClick={onRightBtnClick}>{rightText}</button>
       </header>
     );
