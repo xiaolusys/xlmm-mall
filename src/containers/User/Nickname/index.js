@@ -7,7 +7,6 @@ import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
-import { Loader } from 'components/Loader';
 import * as actionCreators from 'actions/user/profile';
 
 
@@ -94,7 +93,6 @@ export default class Nickname extends Component {
       <div>
         <Header title="修改昵称" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
-          {isLoading ? <Loader/> : null}
           <Input className="col-xs-8" type="text" placeholder={'设置个昵称（不超过20字）'} value={profile.nick} onChange={this.onNicknameChange}/>
           <p className="col-xs-12 margin-top-xs">4-20个字符，可有中英文、数字、“_”、“—”组成</p>
           <div className="row no-margin">
