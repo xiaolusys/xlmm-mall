@@ -26,10 +26,10 @@ export class Carousel extends Component {
     const self = this;
     let { swipeOptions } = this.props;
     swipeOptions = _.extend({}, swipeOptions, { transitionEnd: this.setActive });
-    // Must be delayed 300 ms, otherwise it will not correctly load component
+    // Must be delayed 600 ms, otherwise it will not correctly load component
     _.delay(() => {
       self.swipe = new Swipe(this.refs.slider, swipeOptions);
-    }, 300);
+    }, 600);
   }
 
   componentWillUnmount() {
