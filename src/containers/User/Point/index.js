@@ -58,24 +58,29 @@ export default class Point extends Component {
 
   render() {
     const { point, pointLog } = this.props;
-    const results = pointLog.data.results || [];
+    const logs = pointLog.data.results || [];
     return (
       <div>
         <Header title="我的积分" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="has-header content point-container">
-          <div className="row my-point padding-bottom-xxs">
-            <p className="text-center no-margin">{point.data.integral_value}</p>
+          <div className="row bonus-point padding-bottom-xxs">
+            <p className="text-center no-margin font-orange">{point.data.integral_value || 0}</p>
             <span className="col-xs-12 text-center">我的积分</span>
           </div>
-          <If condition={!_.isEmpty(results)}>
+          <If condition={!_.isEmpty(logs)}>
             <ul className="point-list">
-              {results.map((log, index) => {
+              {logs.map((log, index) => {
                 return (
                   <li className="row no-margin bottom-border">
                     <div className="col-xs-12 padding-top-xxs">
                       <p className="col-xs-12">{log.created}</p>
-                      <p className="col-xs-9">{log.order_info.detail}</p>
-                      <span className="col-xs-3">{log.log_value}</span>
+                      <p className="col-xs-8">{log.order_info.detail}</p>
+                      <If condition={log.log_value > 0}>
+                        <span className="col-xs-4 font-orange">+{log.log_value}分</span>
+                      </If>
+                      <If condition={log.log_value < 0}>
+                        <span className="col-xs-4">{log.log_value}分</span>
+                      </If>
                       <p className="col-xs-12">订单编号 {log.order_info.id}</p>
                     </div>
                   </li>
@@ -83,7 +88,7 @@ export default class Point extends Component {
               })}
             </ul>
           </If>
-          <If condition={_.isEmpty(results) || pointLog.isLoading}>
+          <If condition={_.isEmpty(logs) || pointLog.isLoading}>
             <div className="text-center padding-top-sm">
               <i className="icon-database icon-5x"/>
               <p>您暂时还没有积分纪录哦～</p>

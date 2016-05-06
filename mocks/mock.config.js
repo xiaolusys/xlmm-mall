@@ -17,7 +17,7 @@ module.exports = {
   // '/v1/integral/get_owner_integral': {
   //   GET: 'data/integral.get.json',
   // },
-  '/rest/v1/integrallog': {
-    GET: 'data/integralLog.get.json',
-  },
+  // '/rest/v1/integrallog': {
+  //   GET: 'data/integralLog.get.json',
+  // },
 };
