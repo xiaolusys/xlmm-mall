@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as actionCreators from 'actions/faq/categories';
 import { Header } from 'components/Header';
+import { Loader } from 'components/Loader';
 import { Footer } from 'components/Footer';
 
 import './index.scss';
@@ -50,25 +51,25 @@ export default class FaqCategory extends Component {
       <div>
         <Header title="常见问题" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
-        {isLoading ? <span>loading...</span> : children}
-        <ul className="faq-list">
-          {
-            data.map((item, index) => {
-              return (
-                <li className="bottom-border row no-margin" key={index}>
-                  <Link to={'/faq/list/' + item.id + '/' + encodeURIComponent(item.category_name)} >
-                  <img className="col-xs-4" src={item.icon_url} />
-                  <div className="col-xs-8">
-                    <p className="font-lg font-black">{item.category_name}</p>
-                    <p className="font-grey">{item.description}</p>
-                  </div>
-                  </Link>
-                </li>
-              );
-            })
-          }
-        </ul>
-        <Footer/>
+          {isLoading ? <Loader/> : null}
+          <ul className="faq-list">
+            {
+              data.map((item, index) => {
+                return (
+                  <li className="bottom-border row no-margin" key={index}>
+                    <Link to={'/faq/list/' + item.id + '/' + encodeURIComponent(item.category_name)} >
+                    <img className="col-xs-4" src={item.icon_url} />
+                    <div className="col-xs-8">
+                      <p className="font-lg font-black">{item.category_name}</p>
+                      <p className="font-grey">{item.description}</p>
+                    </div>
+                    </Link>
+                  </li>
+                );
+              })
+            }
+          </ul>
+          <Footer/>
         </div>
       </div>
     );
