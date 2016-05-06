@@ -67,34 +67,34 @@ body {
 }
 
 .bottom-border {
-  border-bottom: 1px solid $bar-border;
+  border-bottom: 0.5px solid $bar-border;
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     border: none;
     background-image: linear-gradient(0deg, $bar-border, $bar-border 50%, transparent 50%);
     background-position: bottom;
-    background-size: 100% 1px;
+    background-size: 100% 0.5px;
     background-repeat: no-repeat;
   }
 }
 
 .top-border {
-  border-top: 1px solid $bar-border;
+  border-top: 0.5px solid $bar-border;
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     border: none;
     background-image: linear-gradient(0deg, $bar-border, $bar-border 50%, transparent 50%);
     background-position: top;
-    background-size: 100% 1px;
+    background-size: 100% 0.5px;
     background-repeat: no-repeat;
   }
 }
 
 .right-border {
-  border-right: 1px solid $bar-border;
+  border-right: 0.5px solid $bar-border;
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     border: none;
     background-image: linear-gradient(0deg, $bar-border, $bar-border 50%, transparent 50%);
     background-position: right;
-    background-size: 100% 1px;
+    background-size: 100% 0.5px;
     background-repeat: no-repeat;
   }
 }
