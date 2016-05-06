@@ -1,6 +1,34 @@
 {
-  "count": 4,
+  "count": 2,
   "next": null,
   "previous": null,
-  "results": []
+  "results": [{
+    "id": 189349,
+    "integral_user": 12,
+    "mobile": "18801806068",
+    "order_info": {
+      "id": 80960001,
+      "detail": "购买订单完成奖励积分"
+    },
+    "log_value": 59,
+    "log_status": 1,
+    "log_type": 1,
+    "in_out": 1,
+    "created": "2015-12-31T11:54:32",
+    "modified": "2016-01-13T06:02:59"
+  }, {
+    "id": 193584,
+    "integral_user": 12,
+    "mobile": "18801806068",
+    "order_info": {
+      "id": 80960001,
+      "detail": "购买订单完成奖励积分"
+    },
+    "log_value": 38,
+    "log_status": 1,
+    "log_type": 1,
+    "in_out": 1,
+    "created": "2016-01-05T10:29:50",
+    "modified": "2016-01-21T06:03:44"
+  }]
 }
