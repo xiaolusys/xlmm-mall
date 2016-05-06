@@ -5,10 +5,14 @@
     input {
       height: 26px;
       line-height: 26px;
+      -webkit-appearance: none;
+      border: none;
     }
     > div {
       > select {
         font-size: 12px;
+        -webkit-appearance: none;
+        border: none;
       }
     }
     padding-top: 8px;
