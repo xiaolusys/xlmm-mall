@@ -14,10 +14,10 @@ module.exports = {
   // '/rest/v1/users/verify': {
   //   GET: 'data/verify.get.json',
   // },
-  '/rest/v1/integral': {
-    GET: 'data/integral.get.json',
-  },
-  '/rest/v1/integrallog': {
-    GET: 'data/integralLog.get.json',
-  },
+  // '/v1/integral/get_owner_integral': {
+  //   GET: 'data/integral.get.json',
+  // },
+  // '/rest/v1/integrallog': {
+  //   GET: 'data/integralLog.get.json',
+  // },
 };
