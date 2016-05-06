@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import $ from 'jquery';
 import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
@@ -18,7 +17,6 @@ import * as productAction from 'actions/home/product';
 import './index.scss';
 
 const actionCreators = _.extend(portalAction, productAction);
-
 const requestAction = {
   yesterday: 'yesterday',
   today: '',
@@ -76,6 +74,7 @@ export class Home extends Component {
 
   componentDidMount() {
     this.addScrollListener();
+    this.addTouchListener();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -95,13 +94,12 @@ export class Home extends Component {
 
   componentWillUnmount() {
     this.removeScrollListener();
+    this.removeTouchListener();
     this.setState({ pageIndex: 0 });
   }
 
   onMenuBtnClick = (e) => {
-    this.setState({
-      menuActive: this.state.menuActive ? false : true,
-    });
+    this.toggleMenuActive();
   }
 
   onItemClick = (e) => {
@@ -126,8 +124,8 @@ export class Home extends Component {
     const { pageSize, pageIndex, activeTab } = this.state;
     const { fetchProduct, product } = this.props;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    const documentHeight = $(document).height();
-    const windowHeight = $(window).height();
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
     if (scrollTop === documentHeight - windowHeight && !this.props.product.isLoading && this.state.hasMore) {
       switch (activeTab) {
         case tabs.yesterday:
@@ -145,12 +143,37 @@ export class Home extends Component {
     }
   }
 
+  onTouchMove = (e) => {
+    if (this.state.menuActive) {
+      this.toggleMenuActive();
+      e.preventDefault();
+    }
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
 
   removeScrollListener = () => {
     window.removeEventListener('scroll', this.onScroll);
+  }
+
+  addTouchListener = () => {
+    if ('ontouchstart' in window) {
+      document.addEventListener('touchmove', this.onTouchMove);
+    }
+  }
+
+  removeTouchListener = () => {
+    if ('ontouchstart' in window) {
+      document.removeEventListener('touchmove', this.onTouchMove);
+    }
+  }
+
+  toggleMenuActive = () => {
+    this.setState({
+      menuActive: this.state.menuActive ? false : true,
+    });
   }
 
   styles = () => {
