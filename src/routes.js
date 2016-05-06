@@ -6,7 +6,7 @@ import * as utils from 'utils';
 import { App } from 'containers/App';
 import { Home } from 'containers/Home';
 import { FaqCategory, FaqList } from 'containers/Faq';
-import { Login, Password, UserProfile, UserPhone, Nickname, AddressList, EditAddress, Point } from 'containers/User';
+import { Login, Password, UserProfile, UserPhone, Nickname, AddressList, EditAddress, Point, Coupon } from 'containers/User';
 import { OrderList, OrderDetail, Logistics } from 'containers/Order';
 
 export default (
@@ -22,6 +22,7 @@ export default (
     <Route path="/user/password/reset" component={Password}/>
     <Route path="/user/password/set" component={Password} onEnter={utils.checkAuth} />
     <Route path="/user/point" component={Point} onEnter={utils.checkAuth} />
+    <Route path="/user/coupon" component={Coupon} onEnter={utils.checkAuth} />
     <Route path="/order/:type" component={OrderList} onEnter={utils.checkAuth} />
     <Route path="/order/detail/:id" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
