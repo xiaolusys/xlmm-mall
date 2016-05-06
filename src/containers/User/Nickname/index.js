@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Input } from 'components/Input';
-import * as actionCreators from 'actions/user/profile';
 import { Toast } from 'components/Toast';
+import * as actionCreators from 'actions/user/profile';
+
 
 @connect(
   state => ({
