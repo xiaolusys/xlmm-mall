@@ -8,9 +8,9 @@
     "mobile": "18801806068",
     "order_info": {
       "id": 80960001,
-      "detail": "购买订单完成奖励积分"
+      "detail": "换取礼品"
     },
-    "log_value": 59,
+    "log_value": -100,
     "log_status": 1,
     "log_type": 1,
     "in_out": 1,
