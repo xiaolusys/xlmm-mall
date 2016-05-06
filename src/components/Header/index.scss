@@ -45,6 +45,20 @@ $bar-bg: #fff !default;
     font-weight: 500;
     line-height: 44px;
   }
+  > .image-title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    margin: 0 10px;
+    min-width: 30px;
+    height: 43px;
+    > img {
+      margin-top: 10px;
+      width: 100px;
+    }
+  }
   > .icon-btn {
     z-index: 1;
     padding: 0 8px;
@@ -56,7 +70,7 @@ $bar-bg: #fff !default;
     transition: opacity 0.1s;
     border-color: transparent;
     background: none;
-    &.no-icon{
+    &.no-icon {
       font-size: 14px;
     }
     &:last-child {
@@ -80,4 +94,3 @@ $bar-bg: #fff !default;
     background-image: none;
   }
 }
-

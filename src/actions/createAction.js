@@ -2,9 +2,10 @@ import * as actionTypes from './actionTypes';
 
 const createAction = (name) => {
   return {
-    request: () => {
+    request: (data) => {
       return {
         type: name + '_' + actionTypes.REQUEST,
+        payload: data || {},
       };
     },
     success: (data) => {
