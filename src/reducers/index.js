@@ -10,6 +10,7 @@ import * as profileAction from 'actions/user/profile';
 import * as loginAction from 'actions/user/login';
 import * as passwordAction from 'actions/user/password';
 import * as pointAction from 'actions/user/point';
+import * as pointLogAction from 'actions/user/pointLog';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 import * as orderAction from 'actions/order/order';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   login: createReducer(loginAction.name),
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
+  pointLog: createReducer(pointLogAction.name),
   portal: createReducer(portalAction.name),
   product: createReducer(productAction.name, successReducers.productSuccessReducer),
   order: orderReducer,
