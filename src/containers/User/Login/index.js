@@ -54,7 +54,7 @@ export default class Login extends Component {
     switch (nextProps.data.rcode) {
       case 0:
         Toast.show(nextProps.data.msg);
-        if (query.next.indexOf('http') >= 0) {
+        if (query.next && query.next.indexOf('http') >= 0) {
           window.location.href = query.next;
           return;
         }
