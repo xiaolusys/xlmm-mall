@@ -73,7 +73,7 @@ export default class Point extends Component {
             <ul className="point-list">
               {logs.map((log, index) => {
                 return (
-                  <li key={log.id} className="row no-margin padding-top-xxs bottom-border">
+                  <li key={log.id} className="row no-margin padding-top-xs bottom-border">
                     <div className="col-xs-12">
                       <p className="col-xs-12">{log.created.replace(/T/, ' ')}</p>
                       <p className="col-xs-8">{log.order_info.detail}</p>
