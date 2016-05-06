@@ -69,62 +69,62 @@ export default class Profile extends Component {
           {isLoading ? <span>loading...</span> : children}
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
-              <a className="font-black" href="#/user/nickname" >
+              <Link to="/user/nickname">
                 <p className="col-xs-6 text-left">账户昵称</p>
                 <p className="col-xs-6 text-right">
                   <span>{profile.nick}</span>
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
-              </a>
+              </Link>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black" href="#/user/profile/phone">
+              <Link to="/user/profile/phone">
                 <p className="col-xs-6 text-left">绑定手机</p>
                 <p className="col-xs-6 text-right">
                   <span>{profile.mobile}</span>
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
-              </a>
+              </Link>
             </li>
             <li className="bottom-border row no-margin">
-              <a className="font-black" href="#/user/password/set">
+              <Link to="/user/password/set">
                 <p className="col-xs-6 text-left">修改密码</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
-              </a>
+              </Link>
             </li>
             <li className="bottom-border row no-margin hide">
-              <a className="font-black">
+              <Link to="">
                 <p className="col-xs-6 text-left">第三方账户绑定</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
-              </a>
+              </Link>
             </li>
             <li className="bottom-border row no-margin margin-top-xs">
-              <a className="font-black" href="#/user/address">
+              <Link to="/user/address">
                 <p className="col-xs-6 text-left">地址管理</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right"></i>
+                  <i className="icon-angle-right font-grey-light"></i>
                 </p>
-              </a>
+              </Link>
             </li>
             <li className="bottom-border row no-margin margin-top-xs hide">
-              <a className="font-black">
+              <Link to="">
                 <p className="col-xs-6 text-left">清除缓存</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right no-padding"></i>
+                  <i className="icon-angle-right font-grey-light no-padding"></i>
                 </p>
-              </a>
+              </Link>
             </li>
             <li className="bottom-border row no-margin hide">
-              <a className="font-black">
+              <Link to="">
                 <p className="col-xs-6 text-left">关于小鹿美美</p>
                 <p className="col-xs-6 text-right">
-                  <i className="icon-angle-right no-padding"></i>
+                  <i className="icon-angle-right font-grey-light no-padding"></i>
                 </p>
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="row no-margin">

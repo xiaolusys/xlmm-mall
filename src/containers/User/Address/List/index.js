@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
@@ -61,7 +62,7 @@ export default class List extends Component {
               data.map((addr, index) => {
                 return (
                   <li className="bottom-border row no-margin" key={index}>
-                    <a className="font-black" href={ '/#/user/address/edit/' + addr.id }>
+                    <Link to={'/user/address/edit/' + addr.id}>
                       <div className="col-xs-11">
                         <p className="text-left font-sm no-margin">
                         <If condition={ addr.default }>
@@ -72,15 +73,15 @@ export default class List extends Component {
                         </p>
                         <p className="font-xs text-left no-margin address-text">{addr.receiver_state + addr.receiver_city + addr.receiver_district + addr.receiver_address}</p>
                       </div>
-                      <i className="icon-angle-right"></i>
-                    </a>
+                      <i className="icon-angle-right font-grey-light"></i>
+                    </Link>
                   </li>
                 );
               })
             }
           </ul>
           <div className="row no-margin">
-              <a className={bindPhoneBtnCls} href="/#/user/address/edit/0" disabled={false}>添加地址</a>
+              <Link className={bindPhoneBtnCls} to="/user/address/edit/0" disabled={false}>添加地址</Link>
           </div>
           <Footer/>
         </div>
