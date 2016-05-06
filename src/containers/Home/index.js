@@ -74,7 +74,6 @@ export class Home extends Component {
 
   componentDidMount() {
     this.addScrollListener();
-    this.addTouchListener();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -94,12 +93,7 @@ export class Home extends Component {
 
   componentWillUnmount() {
     this.removeScrollListener();
-    this.removeTouchListener();
     this.setState({ pageIndex: 0 });
-  }
-
-  onMenuBtnClick = (e) => {
-    this.toggleMenuActive();
   }
 
   onItemClick = (e) => {
@@ -143,31 +137,12 @@ export class Home extends Component {
     }
   }
 
-  onTouchMove = (e) => {
-    if (this.state.menuActive) {
-      this.toggleMenuActive();
-      e.preventDefault();
-    }
-  }
-
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
 
   removeScrollListener = () => {
     window.removeEventListener('scroll', this.onScroll);
-  }
-
-  addTouchListener = () => {
-    if ('ontouchstart' in window) {
-      document.addEventListener('touchmove', this.onTouchMove);
-    }
-  }
-
-  removeTouchListener = () => {
-    if ('ontouchstart' in window) {
-      document.removeEventListener('touchmove', this.onTouchMove);
-    }
   }
 
   toggleMenuActive = () => {
@@ -211,8 +186,9 @@ export class Home extends Component {
     return (
       <div className={mainCls}>
         <Side />
+        <div className="slide-menu-mask" onClick={this.toggleMenuActive}></div>
         <div className="home-container">
-          <Header title="小鹿美美" leftIcon="icon-bars" onLeftBtnClick={this.onMenuBtnClick} />
+          <Header title="小鹿美美" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} />
           <div className="content has-header">
             <div className="home-poster">
               <Carousel>
