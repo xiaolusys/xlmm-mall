@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
 import { Carousel } from 'components/Carousel';
+import { Loader } from 'components/Loader';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Side } from 'components/Side';
@@ -191,6 +192,7 @@ export class Home extends Component {
           <Header title="小鹿美美" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} />
           <div className="content has-header">
             <div className="home-poster">
+              {portal.isLoading ? <Loader/> : null}
               <Carousel>
                 {posters.map((item, index) => {
                   return (
@@ -204,6 +206,7 @@ export class Home extends Component {
               </Carousel>
             </div>
             <div className="home-categories">
+              {portal.isLoading ? <Loader/> : null}
               <ul>
                 {categories.map((item) => {
                   return (
@@ -217,6 +220,7 @@ export class Home extends Component {
               </ul>
             </div>
             <div className="home-activities">
+              {portal.isLoading ? <Loader/> : null}
               <ul className="row no-margin">
                 {activities.map((item, index) => {
                   return (
@@ -247,6 +251,7 @@ export class Home extends Component {
                 return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
               })}
             </div>
+            {product.isLoading ? <Loader/> : null}
             <Footer />
           </div>
         </div>

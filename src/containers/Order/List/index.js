@@ -140,6 +140,7 @@ export default class List extends Component {
       <div>
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content has-header order-list">
+          {this.props.order.fetchOrder.isLoading ? <Loader/> : null}
             <If condition={_.isEmpty(orders) && !this.props.order.fetchOrder.isLoading}>
               <div className="text-center margin-top-xlg margin-bottom-lg">
                 <i className="icon-order-o icon-4x icon-grey"></i>
