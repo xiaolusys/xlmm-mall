@@ -6,7 +6,6 @@ import _ from 'underscore';
 import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
-import { Hammer } from 'react-hammerjs';
 import { Carousel } from 'components/Carousel';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
@@ -146,6 +145,7 @@ export class Home extends Component {
 
   onTouchMove = (e) => {
     if (this.state.menuActive) {
+      this.toggleMenuActive();
       e.preventDefault();
     }
   }
