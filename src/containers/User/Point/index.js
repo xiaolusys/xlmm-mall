@@ -58,7 +58,7 @@ export default class Point extends Component {
 
   render() {
     const { point, pointLog } = this.props;
-    const results = pointLog.data.results || [];
+    const logs = pointLog.data.results || [];
     return (
       <div>
         <Header title="我的积分" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
@@ -67,11 +67,11 @@ export default class Point extends Component {
             <p className="text-center no-margin">{point.data.integral_value}</p>
             <span className="col-xs-12 text-center">我的积分</span>
           </div>
-          <If condition={!_.isEmpty(results)}>
+          <If condition={!_.isEmpty(logs)}>
             <ul className="point-list">
-              {results.map((log, index) => {
+              {logs.map((log, index) => {
                 return (
-                  <li className="row no-margin bottom-border">
+                  <li key={log.id} className="row no-margin bottom-border">
                     <div className="col-xs-12 padding-top-xxs">
                       <p className="col-xs-12">{log.created}</p>
                       <p className="col-xs-9">{log.order_info.detail}</p>
@@ -83,7 +83,7 @@ export default class Point extends Component {
               })}
             </ul>
           </If>
-          <If condition={_.isEmpty(results) || pointLog.isLoading}>
+          <If condition={_.isEmpty(logs) || pointLog.isLoading}>
             <div className="text-center padding-top-sm">
               <i className="icon-database icon-5x"/>
               <p>您暂时还没有积分纪录哦～</p>
