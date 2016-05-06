@@ -6,6 +6,7 @@ import _ from 'underscore';
 import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
+import { If } from 'jsx-control-statements';
 import { Carousel } from 'components/Carousel';
 import { Loader } from 'components/Loader';
 import { Header } from 'components/Header';
@@ -191,34 +192,38 @@ export class Home extends Component {
                 })}
               </Carousel>
             </div>
-            <div className="home-categories bottom-border">
-              {portal.isLoading ? <Loader/> : null}
-              <ul className="clearfix">
-                {categories.map((item) => {
-                  return (
-                    <li className="col-xs-6 no-padding" key={item.id}>
-                      <a href={item.cat_link}>
-                        <img src={item.cat_img} />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className="home-activities bottom-border">
-              {portal.isLoading ? <Loader/> : null}
-              <ul className="row no-margin">
-                {activities.map((item, index) => {
-                  return (
-                    <li key={item.id}>
-                      <a href={item.act_link}>
-                        <img className="col-xs-12 no-padding" src={item.act_img} />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <If condition={ portal.isLoading || !_.isEmpty(categories)}>
+              <div className="home-categories bottom-border">
+                {portal.isLoading ? <Loader/> : null}
+                <ul className="clearfix">
+                  {categories.map((item) => {
+                    return (
+                      <li className="col-xs-6 no-padding" key={item.id}>
+                        <a href={item.cat_link}>
+                          <img src={item.cat_img} />
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </If>
+            <If condition={ portal.isLoading || !_.isEmpty(activities)}>
+              <div className="home-activities bottom-border">
+                {portal.isLoading ? <Loader/> : null}
+                <ul className="row no-margin">
+                  {activities.map((item, index) => {
+                    return (
+                      <li key={item.id}>
+                        <a href={item.act_link}>
+                          <img className="col-xs-12 no-padding" src={item.act_img} />
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </If>
             <div className="home-tabs text-center bottom-border">
               <ul className="row no-margin">
                 <li id="yesterday" className="col-xs-4" onClick={this.onTabItemClick}>
