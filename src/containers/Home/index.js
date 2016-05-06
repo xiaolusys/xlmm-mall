@@ -205,28 +205,28 @@ export class Home extends Component {
                 })}
               </Carousel>
             </div>
-            <div className="home-categories">
+            <div className="home-categories bottom-border">
               {portal.isLoading ? <Loader/> : null}
-              <ul>
+              <ul className="clearfix">
                 {categories.map((item) => {
                   return (
-                    <li key={item.id}>
+                    <li className="col-xs-6 no-padding" key={item.id}>
                       <a href={item.cat_link}>
-                        <img className="col-xs-6" src={item.cat_img} />
+                        <img className="" src={item.cat_img} />
                       </a>
                     </li>
                   );
                 })}
               </ul>
             </div>
-            <div className="home-activities">
+            <div className="home-activities bottom-border">
               {portal.isLoading ? <Loader/> : null}
               <ul className="row no-margin">
                 {activities.map((item, index) => {
                   return (
                     <li key={item.id}>
                       <a href={item.act_link}>
-                        <img className="col-xs-12 no-padding bottom-border" src={item.act_img} />
+                        <img className="col-xs-12 no-padding" src={item.act_img} />
                       </a>
                     </li>
                   );
