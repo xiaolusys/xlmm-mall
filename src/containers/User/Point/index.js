@@ -76,14 +76,20 @@ export default class Point extends Component {
                   <li key={log.id} className="row no-margin padding-top-xs padding-bottom-xs bottom-border">
                     <div className="col-xs-12">
                       <p className="col-xs-12">{log.created.replace(/T/, ' ')}</p>
-                      <p className="col-xs-8">{log.order_info.detail}</p>
                       <If condition={log.log_value > 0}>
+                        <p className="col-xs-8">购物订单完成奖励积分</p>
                         <span className="col-xs-4 font-orange">+{log.log_value}分</span>
                       </If>
                       <If condition={log.log_value < 0}>
+                        <p className="col-xs-8">实物抵换</p>
                         <span className="col-xs-4">{log.log_value}分</span>
                       </If>
-                      <p className="col-xs-12">订单编号 {log.order_info.id}</p>
+                      <If condition={!_.isEmpty(log.order_info)}>
+                        <p className="col-xs-12">订单编号 {log.order_info.id}</p>
+                      </If>
+                      <If condition={_.isEmpty(log.order_info)}>
+                        <p className="col-xs-12 hide">订单编号 {log.order_info.id}</p>
+                      </If>
                     </div>
                   </li>
                 );
