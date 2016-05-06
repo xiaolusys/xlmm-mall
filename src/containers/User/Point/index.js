@@ -75,7 +75,7 @@ export default class Point extends Component {
                 return (
                   <li key={log.id} className="row no-margin bottom-border">
                     <div className="col-xs-12 padding-top-xxs">
-                      <p className="col-xs-12">{log.created}</p>
+                      <p className="col-xs-12">{log.created.replace(/T/, ' ')}</p>
                       <p className="col-xs-8">{log.order_info.detail}</p>
                       <If condition={log.log_value > 0}>
                         <span className="col-xs-4 font-orange">+{log.log_value}分</span>
