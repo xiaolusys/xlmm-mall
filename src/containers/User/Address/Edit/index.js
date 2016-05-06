@@ -11,6 +11,7 @@ import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
 import { Switch } from 'components/Switch';
+import { Loader } from 'components/Loader';
 
 import './index.scss';
 
@@ -257,6 +258,7 @@ export default class Edit extends Component {
 
   render() {
     const { address } = this.state;
+    const { province, city, district } = this.props;
     const id = Number(this.props.params.id);
     const saveBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
@@ -266,6 +268,7 @@ export default class Edit extends Component {
       <div>
         <Header title={id === 0 ? '新增收货地址' : '修改收货地址'} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText={id === 0 ? '' : '删除'} onRightBtnClick={this.onDeleteClick} />
         <div className="content has-header no-margin adddress-edit">
+          {province.isLoading || city.isLoading || district.isLoading ? <Loader/> : null}
           <div className="row no-margin margin-top-xs bottom-border adddress-item">
             <span className="col-xs-4">收货人</span>
             <input type="text" placeholder="请输入收货人姓名" name="name" value={address.receiver_name} onChange={this.onInpuChange} />

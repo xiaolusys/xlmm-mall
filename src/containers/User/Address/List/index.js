@@ -7,6 +7,7 @@ import _ from 'underscore';
 import * as actionCreators from 'actions/user/address';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Loader } from 'components/Loader';
 
 import './index.scss';
 
@@ -56,7 +57,7 @@ export default class List extends Component {
       <div>
         <Header title="收货地址" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
-          {isLoading ? <span>loading...</span> : children}
+          {isLoading ? <Loader/> : null}
           <ul className="address-list">
             {
               data.map((addr, index) => {

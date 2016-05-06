@@ -6,6 +6,7 @@ import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Loader } from 'components/Loader';
 import * as pointAction from 'actions/user/point';
 import * as pointLogAction from 'actions/user/pointLog';
 
@@ -63,6 +64,7 @@ export default class Point extends Component {
       <div>
         <Header title="我的积分" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="has-header content point-container">
+          {point.isLoading || pointLog.isLoading ? <Loader/> : null}
           <div className="row bonus-point padding-bottom-xxs">
             <p className="text-center no-margin font-orange">{point.data.integral_value || 0}</p>
             <span className="col-xs-12 text-center">我的积分</span>

@@ -7,6 +7,7 @@ import * as actionCreators from 'actions/user/profile';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
+import { Loader } from 'components/Loader';
 import { If } from 'jsx-control-statements';
 import classnames from 'classnames';
 
@@ -66,7 +67,7 @@ export default class Profile extends Component {
       <div>
         <Header title="个人信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
-          {isLoading ? <span>loading...</span> : children}
+          {isLoading ? <Loader/> : null}
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
               <Link to="/user/nickname">
