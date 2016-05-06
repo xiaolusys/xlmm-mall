@@ -39,12 +39,13 @@ export default class Logistics extends Component {
   }
 
   render() {
-    const { logistics } = this.props || {};
+    const { logistics, isLoading } = this.props || {};
     const logisticsInfo = logistics.data || [];
     return (
       <div>
         <Header title="物流信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content has-header">
+          {isLoading ? <Loader/> : null}
             <p className="logistics-item bottom-border"><span>快递公司</span><span className="pull-right">{logistics.name || logistics.message}</span></p>
             <p className="logistics-item bottom-border"><span>快递单号</span><span className="pull-right">{logistics.order || logistics.message}</span></p>
             <If condition={!_.isEmpty(logisticsInfo)}>

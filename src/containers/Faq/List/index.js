@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import * as actionCreators from 'actions/faq/questions';
 import { Header } from 'components/Header';
+import { Loader } from 'components/Loader';
 import { Footer } from 'components/Footer';
 import QuestionItem from './QuestionItem';
 
@@ -52,7 +53,7 @@ export default class FaqList extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, isLoading } = this.props;
     const props = this.props;
     const questions = data.results || [];
     const btnCls = classnames({
@@ -64,6 +65,7 @@ export default class FaqList extends Component {
       <div>
         <Header title={props.params.name} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="has-header content">
+        {isLoading ? <Loader/> : null}
           <ul className="questions-list">
             {questions.map((item, index) => {
               return <QuestionItem key={index} data={item} />;

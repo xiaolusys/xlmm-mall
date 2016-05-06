@@ -1,0 +1,63 @@
+$circleCount: 12;
+$animationDuration: 1.2s;
+.fading-circle {
+  margin: 0px auto;
+  width: 16px;
+  height: 40px;
+  position: relative;
+  > .circle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  > .circle:before {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 15%;
+    height: 15%;
+    background-color: #333;
+    border-radius: 100%;
+    animation: circleFadeDelay $animationDuration infinite ease-in-out both;
+  }
+  @for $i from 2 through $circleCount {
+    > .circle-#{$i} {
+      transform: rotate(360deg / $circleCount * ($i - 1));
+    }
+  }
+  @for $i from 2 through $circleCount {
+    > .circle-#{$i}:before {
+      animation-delay: - $animationDuration + $animationDuration / $circleCount * ($i - 1);
+    }
+  }
+}
+
+
+.fading-circle-small {
+  width: 18px;
+  height: 20px;
+}
+
+.fading-circle-large {
+  width: 16px;
+  height: 60px;
+}
+
+.fading-circle-yellow {
+  > .circle:before {
+    background-color: #f5a623;
+  }
+}
+
+@keyframes circleFadeDelay {
+  0%,
+  39%,
+  100% {
+    opacity: 0
+  }
+  40% {
+    opacity: 1
+  }
+}
