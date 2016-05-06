@@ -11,6 +11,7 @@ import * as loginAction from 'actions/user/login';
 import * as passwordAction from 'actions/user/password';
 import * as pointAction from 'actions/user/point';
 import * as pointLogAction from 'actions/user/pointLog';
+import * as couponAction from 'actions/user/coupon';
 import * as portalAction from 'actions/home/portal';
 import * as orderAction from 'actions/order/order';
 import * as logisticsAction from 'actions/order/logistics';
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
   pointLog: createReducer(pointLogAction.name),
+  coupon: createReducer(couponAction.name),
   portal: createReducer(portalAction.name),
   product: productReducer,
   order: orderReducer,
