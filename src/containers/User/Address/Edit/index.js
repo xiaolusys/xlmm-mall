@@ -257,7 +257,6 @@ export default class Edit extends Component {
 
   render() {
     const { address } = this.state;
-    const { province, city, district } = this.props;
     const id = Number(this.props.params.id);
     const saveBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
