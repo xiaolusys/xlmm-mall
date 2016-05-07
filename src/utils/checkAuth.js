@@ -7,7 +7,9 @@ export default function checkAuth(nextState, replace, next) {
       next();
     })
     .catch((resp) => {
-      replace(`/user/login?next=${nextState.location.pathname}`);
+      if (resp.status === 403) {
+        replace(`/user/login?next=${nextState.location.pathname}`);
+      }
       next();
     });
 
