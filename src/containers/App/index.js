@@ -16,10 +16,10 @@ export class App extends Component {
     const uFrom = utils.url.getQueryValue('ufrom');
 
     if (mmLinkId) {
-      window.document.cookie = 'mm_linkid=' + mmLinkId;
+      window.document.cookie = 'mm_linkid=' + mmLinkId + '; Path=/';
     }
     if (uFrom) {
-      window.document.cookie = 'ufrom=' + uFrom;
+      window.document.cookie = 'ufrom=' + uFrom + '; Path=/';
     }
   }
 
