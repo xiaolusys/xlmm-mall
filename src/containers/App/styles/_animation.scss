@@ -20,3 +20,23 @@
   transform: translate3d(100%, 0, 0);
 }
 
+.icon-spinner {
+  animation: icon-spinner 2s infinite linear;
+}
+
+.icon-spinner-reverse {
+  animation: icon-spinner 2s infinite linear reverse;
+}
+
+.icon-pulse {
+  animation: icon-spinner 1s infinite steps(8);
+}
+
+@keyframes icon-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
