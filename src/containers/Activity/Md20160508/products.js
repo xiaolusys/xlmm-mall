@@ -2,7 +2,7 @@ export default {
   banner: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/banner.png',
   coupon: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/coupon.png',
   footer: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/footer.png',
-  redpacket: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/header-5.png',
+  redpacket: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/redpacket.png',
   groups: [{
     products: [{
       name: '名媛气质沙滩裙',
