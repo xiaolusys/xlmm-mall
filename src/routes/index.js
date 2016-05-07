@@ -2,6 +2,9 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import * as utils from 'utils';
 
+// routes
+import activityRoutes from './activityRoutes';
+
 // containers
 import { App } from 'containers/App';
 import { Home } from 'containers/Home';
@@ -28,6 +31,7 @@ export default (
     <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
+    {activityRoutes}
     <Route status={404} path="*" component={Home} />
   </Route>
 );

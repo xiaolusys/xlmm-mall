@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Loader } from 'components/Loader';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as orderAction from 'actions/order/order';
 
@@ -47,19 +48,36 @@ export default class Detail extends Component {
         {products.map((product, index) => {
           return (
             <div key={product.id} className="row no-margin bottom-border">
-              <div className="col-xs-3 no-padding">
-                <img src={product.pic_path} />
-              </div>
-              <div className="col-xs-9 no-padding">
-                <p className="row no-margin">
-                  <span>{product.title}</span>
-                  <span className="pull-right">{'￥' + product.payment}</span>
-                </p>
-                <p className="row no-margin font-grey">
-                  <span>{'尺码：' + product.sku_name}</span>
-                  <span className="pull-right">{'x' + product.num}</span>
-                </p>
-              </div>
+              <If condition={product.status === 1}>
+                <div className="col-xs-3 no-padding">
+                  <img src={product.pic_path} />
+                </div>
+                <div className="col-xs-9 no-padding">
+                  <p className="row no-margin">
+                    <span>{product.title}</span>
+                    <span className="pull-right">{'￥' + product.payment}</span>
+                  </p>
+                  <p className="row no-margin font-grey">
+                    <span>{'尺码：' + product.sku_name}</span>
+                    <span className="pull-right">{'x' + product.num}</span>
+                  </p>
+                </div>
+              </If>
+              <If condition={product.status !== 1}>
+                <div className="col-xs-3 no-padding">
+                  <img src={product.pic_path} />
+                </div>
+                <div className="col-xs-9 no-padding">
+                  <p className="row no-margin">
+                    <span>{product.title}</span>
+                    <span className="pull-right">{'￥' + product.payment}</span>
+                  </p>
+                  <p className="row no-margin font-grey">
+                    <span>{'尺码：' + product.sku_name}</span>
+                    <span className="pull-right">{'x' + product.num}</span>
+                  </p>
+                </div>
+              </If>
             </div>
           );
         })}

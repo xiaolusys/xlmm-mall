@@ -20,6 +20,7 @@ import * as addressAction from 'actions/user/address';
 import * as provinceAction from 'actions/user/province';
 import * as cityAction from 'actions/user/city';
 import * as districtAction from 'actions/user/district';
+import * as couponAction from 'actions/user/coupon';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   province: createReducer(provinceAction.name),
   city: createReducer(cityAction.name),
   district: createReducer(districtAction.name),
+  coupon: createReducer(couponAction.name),
 });
 
 export default rootReducer;

@@ -7,6 +7,7 @@ import * as utils from 'utils';
 import classnames from 'classnames';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
+import { Loader } from 'components/Loader';
 import { Footer } from 'components/Footer';
 import * as orderAction from 'actions/order/order';
 
