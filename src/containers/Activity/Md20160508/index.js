@@ -70,7 +70,7 @@ export default class Md20160508 extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.success) {
-      if (nextProps.data.code === 4) {
+      if (nextProps.data.code === 0) {
         this.toggleRedpacketOpenedState();
       }
       Toast.show(nextProps.data.res);
