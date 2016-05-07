@@ -78,7 +78,7 @@ export default class Coupon extends Component {
     return (
       <div>
         <Header title="优惠劵" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
-        <div className="has-header content point-container">
+        <div className="content point-container">
           {isLoading ? <Loader/> : null}
           <If condition={!_.isEmpty(coupons)}>
             <ul className="coupon-list">

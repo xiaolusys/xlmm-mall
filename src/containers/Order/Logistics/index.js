@@ -44,7 +44,7 @@ export default class Logistics extends Component {
     return (
       <div>
         <Header title="物流信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-          <div className="content has-header">
+          <div className="content">
           {isLoading ? <Loader/> : null}
             <p className="logistics-item bottom-border"><span>快递公司</span><span className="pull-right">{logistics.name || logistics.message}</span></p>
             <p className="logistics-item bottom-border"><span>快递单号</span><span className="pull-right">{logistics.order || logistics.message}</span></p>

@@ -98,7 +98,7 @@ export default class Detail extends Component {
     return (
       <div>
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-          <div className="content has-header order-detail">
+          <div className="content order-detail">
           {this.props.order.fetchOrder.isLoading ? <Loader/> : null}
             <p className="order-status">
               <sapn>订单编号</sapn>

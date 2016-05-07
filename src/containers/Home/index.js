@@ -177,7 +177,7 @@ export class Home extends Component {
         <div className="slide-menu-mask" onClick={this.toggleMenuActive}></div>
         <div className="home-container">
           <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} />
-          <div className="content content-white-bg has-header">
+          <div className="content content-white-bg">
             <div className="home-poster">
               {portal.isLoading ? <Loader/> : null}
               <Carousel>

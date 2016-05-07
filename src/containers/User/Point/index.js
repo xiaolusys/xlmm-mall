@@ -63,7 +63,7 @@ export default class Point extends Component {
     return (
       <div>
         <Header title="我的积分" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
-        <div className="has-header content point-container">
+        <div className="content point-container">
           {point.isLoading || pointLog.isLoading ? <Loader/> : null}
           <div className="row bonus-point padding-bottom-xxs">
             <p className="text-center no-margin font-orange">{point.data.integral_value || 0}</p>

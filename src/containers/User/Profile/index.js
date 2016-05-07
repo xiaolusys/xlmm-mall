@@ -66,7 +66,7 @@ export default class Profile extends Component {
     return (
       <div>
         <Header title="个人信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="has-header content">
+        <div className="content">
           {isLoading ? <Loader/> : null}
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
