@@ -112,7 +112,7 @@ export default class Phone extends Component {
     return (
       <div>
         <Header title="手机绑定" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="has-header content">
+        <div className="content">
           <Input type="number" placeholder={'请输入手机号码'} onChange={this.onPhoneChange} />
           <div className="row no-margin password-box bottom-border">
             <input className="col-xs-8" type="number" placeholder="请输入验证码" onChange={this.onVerifyCodeChange} />

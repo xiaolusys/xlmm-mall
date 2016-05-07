@@ -64,7 +64,7 @@ export default class FaqList extends Component {
     return (
       <div>
         <Header title={props.params.name} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="has-header content">
+        <div className="content">
         {isLoading ? <Loader/> : null}
           <ul className="questions-list">
             {questions.map((item, index) => {
