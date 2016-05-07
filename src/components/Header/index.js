@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'underscore';
+import * as utils from 'utils';
 import classnames from 'classnames';
 import { If } from 'jsx-control-statements';
 
@@ -47,18 +48,23 @@ export class Header extends Component {
       ['pressed']: rightBtnPressed,
     });
     return (
-      <header className="bar bar-header">
-        <button className={leftBtnCls} onClick={onLeftBtnClick}>{leftText}</button>
-        <If condition={titleType === 'image'}>
-          <div className="text-center image-title">
-            <img src={title} />
-          </div>
+      <div>
+        <If condition={!utils.detector.isApp()}>
+          <header className="bar bar-header">
+            <button className={leftBtnCls} onClick={onLeftBtnClick}>{leftText}</button>
+            <If condition={titleType === 'image'}>
+              <div className="text-center image-title">
+                <img src={title} />
+              </div>
+            </If>
+            <If condition={titleType !== 'image'}>
+              <p className="title">{title}</p>
+            </If>
+            <button className={rightBtnCls} onClick={onRightBtnClick}>{rightText}</button>
+          </header>
+          <div className="has-header"></div>
         </If>
-        <If condition={titleType !== 'image'}>
-          <p className="title">{title}</p>
-        </If>
-        <button className={rightBtnCls} onClick={onRightBtnClick}>{rightText}</button>
-      </header>
+      </div>
     );
   }
 }

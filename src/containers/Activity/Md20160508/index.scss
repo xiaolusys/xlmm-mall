@@ -1,0 +1,11 @@
+.activity-md {
+  li {
+    display: block;
+  }
+  .activity-product {
+    > img {
+      max-width: 100%;
+      width: auto;
+    }
+  }
+}

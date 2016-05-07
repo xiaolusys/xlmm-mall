@@ -113,10 +113,10 @@ export class Side extends Component {
             </a>
           </li>
           <li className="bottom-border-black">
-            <a href="/pages/quanbu-dd.html?">
+            <Link to="/order/0">
               <i className="icon-order icon-gold"></i>
               <span>全部订单</span>
-            </a>
+            </Link>
           </li>
           <li>
             <a href="/pages/tousu.html?">
