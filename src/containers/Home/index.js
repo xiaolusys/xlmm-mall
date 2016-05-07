@@ -237,7 +237,7 @@ export class Home extends Component {
                 </li>
               </ul>
             </div>
-            <div className="home-products">
+            <div className="home-products clearfix">
               {products.map((item) => {
                 return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
               })}
