@@ -118,7 +118,6 @@ export default class Md20160508 extends Component {
   render() {
     const { images } = this.props;
     const data = this.props.data || {};
-    console.log(data);
     return (
       <div>
         <Header title="母亲节特惠" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
