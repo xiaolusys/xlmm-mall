@@ -215,7 +215,7 @@ export class Home extends Component {
                   {activities.map((item, index) => {
                     return (
                       <li key={item.id}>
-                        <a href={item.act_link}>
+                        <a href={item.extras.html.apply}>
                           <img className="col-xs-12 no-padding" src={item.act_img} />
                         </a>
                       </li>
