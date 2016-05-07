@@ -6,14 +6,10 @@ import _ from 'underscore';
 import * as utils from 'utils';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
-import productsGroups from './products';
+import activity from './products';
 
 import './index.scss';
 
-import banner from './images/banner.png';
-import coupon from './images/coupon.png';
-import footer from './images/footer.png';
-import redpacket from './images/redpacket.png';
 
 const setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {
@@ -126,17 +122,17 @@ export default class Md20160508 extends Component {
       <div>
         <Header title="母亲节特惠" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content content-white-bg activity-md">
-          <img className="col-md-4 col-md-offset-3 col-xs-12 no-padding" src={banner} />
-          <img className="col-md-2 col-md-offset-4 col-xs-10 col-xs-offset-1 no-padding margin-top-sm" src={coupon} onClick={this.onCouponClick} />
-          {productsGroups.map((group, index) => {
+          <img className="col-md-4 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
+          <img className="col-md-2 col-md-offset-4 col-xs-10 col-xs-offset-1 no-padding margin-top-sm" src={activity.coupon} onClick={this.onCouponClick} />
+          {activity.groups.map((group, index) => {
             return (
               <div key={index} className="margin-top-sm col-md-4 col-md-offset-3 ">
-                <img className="col-xs-6 col-xs-offset-3 no-padding margin-top-sm" src={require(`${images}${group.header}`)} />
+                <img className="col-xs-6 col-xs-offset-3 no-padding margin-top-sm" src={group.header} />
                 <ul>
                 {group.products.map((product, i) => {
                   return (
                     <li className="col-xs-6 activity-product" key={i} data-modelid={product.modleId} data-productid={product.productId} onClick={this.onProductClick}>
-                      <img src={require(`${images}${product.pic}`)} />
+                      <img src={product.pic} />
                     </li>
                   );
                 })}
@@ -144,11 +140,11 @@ export default class Md20160508 extends Component {
               </div>
             );
           })}
-          <img className="col-md-2 col-md-offset-4 col-xs-8 col-xs-offset-2 no-padding margin-top-md margin-bottom-sm" src={footer} />
+          <img className="col-md-2 col-md-offset-4 col-xs-8 col-xs-offset-2 no-padding margin-top-md margin-bottom-sm" src={activity.footer} />
           <If condition={this.state.redpacketOpened}>
             <div className="popup" onClick={this.toggleRedpacketOpenedState}>
               <div className="content">
-                <img className="col-xs-12 col-md-3 col-md-offset-4" src={redpacket} />
+                <img className="col-xs-12 col-md-3 col-md-offset-4" src={activity.redpacket} />
               </div>
               <div className="popup-overlay"></div>
             </div>
