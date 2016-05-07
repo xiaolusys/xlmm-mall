@@ -1,13 +1,15 @@
 .reseau-circle {
   position: relative;
   text-align: center;
+  margin: 0px auto;
+  max-width: 50px;
   > i {
     display: inline-block;
     font-size: 3em;
   }
   > .loader-bottom {
     position: absolute;
-    left: 42%;
+    right: 30%;
     top: 1%;
   }
   &.reseau-circle-small {
@@ -15,8 +17,7 @@
       font-size: 2em;
     }
     > .loader-bottom {
-      left: 44%;
-      top: 2%;
+      right: 38%;
     }
   }
   &.reseau-circle-large {
@@ -24,8 +25,7 @@
       font-size: 6em;
     }
     > .loader-bottom {
-      left: 31%;
-      top: 1%;
+      right: -15%;
     }
   }
   &.reseau-circle-yellow {
