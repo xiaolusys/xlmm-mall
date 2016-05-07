@@ -76,7 +76,7 @@ export default class Md20160508 extends Component {
       }
       Toast.show(nextProps.data.res);
     }
-    if (!nextProps.success) {
+    if (!nextProps.success && !nextProps.isLoading) {
       this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
     }
   }
