@@ -48,6 +48,7 @@ export default class Md20160508 extends Component {
     couponIds: React.PropTypes.string,
     data: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
+    location: React.PropTypes.object,
     fetchCoupon: React.PropTypes.func,
   };
   static contextTypes = {
@@ -74,6 +75,9 @@ export default class Md20160508 extends Component {
         this.toggleRedpacketOpenedState();
       }
       Toast.show(nextProps.data.res);
+    }
+    if (!nextProps.success) {
+      this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
     }
   }
 
