@@ -10,6 +10,12 @@ export class App extends Component {
     location: React.PropTypes.any,
   };
 
+  componentWillMount() {
+    const query = this.props.location.query;
+    window.document.cookie = 'mm_linkid=' + query.mm_linkid;
+    window.document.cookie = 'ufrom=' + query.ufrom;
+  }
+
   render() {
     return (
       <div>
