@@ -1,0 +1,34 @@
+.reseau-circle {
+  position: relative;
+  text-align: center;
+  > i {
+    display: inline-block;
+    font-size: 3em;
+  }
+  > .loader-bottom {
+    position: absolute;
+    left: 40%;
+    top: 1%;
+  }
+  &.reseau-circle-small {
+    > i {
+      font-size: 2em;
+    }
+    > .loader-bottom {
+      left: 44%;
+      top: 2%;
+    }
+  }
+  &.reseau-circle-large {
+    > i {
+      font-size: 6em;
+    }
+    > .loader-bottom {
+      left: 31%;
+      top: 1%;
+    }
+  }
+  &.reseau-circle-yellow {
+    color: #f5a623;
+  }
+}
