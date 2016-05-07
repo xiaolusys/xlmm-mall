@@ -20,7 +20,7 @@ export default class ReseauCircle extends Component {
     const { prefixCls, size, color } = this.props;
     return (
       <div className={`${prefixCls} ${prefixCls}-${size} ${prefixCls}-${color}`}>
-        <i className="icon-loader icon-spinner-reverse "></i>
+        <i className="icon-loader icon-spinner-reverse"></i>
         <i className="icon-loader-bottom loader-bottom"></i>
       </div>
     );
