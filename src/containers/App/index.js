@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import * as utils from 'utils';
 
 // global styles for app
 import './styles/app.scss';
@@ -11,12 +12,14 @@ export class App extends Component {
   };
 
   componentWillMount() {
-    const query = this.props.location.query;
-    if (query.mm_linkid) {
-      window.document.cookie = 'mm_linkid=' + query.mm_linkid;
+    const mmLinkId = utils.url.getQueryValue('mm_linkid') || '';
+    const uFrom = utils.url.getQueryValue('ufrom');
+
+    if (mmLinkId) {
+      window.document.cookie = 'mm_linkid=' + mmLinkId;
     }
-    if (query.ufrom) {
-      window.document.cookie = 'ufrom=' + query.ufrom;
+    if (uFrom) {
+      window.document.cookie = 'ufrom=' + uFrom;
     }
   }
 
