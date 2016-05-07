@@ -265,7 +265,7 @@ export default class Edit extends Component {
     return (
       <div>
         <Header title={id === 0 ? '新增收货地址' : '修改收货地址'} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText={id === 0 ? '' : '删除'} onRightBtnClick={this.onDeleteClick} />
-        <div className="content has-header no-margin adddress-edit">
+        <div className="content no-margin adddress-edit">
           <div className="row no-margin margin-top-xs bottom-border adddress-item">
             <span className="col-xs-4">收货人</span>
             <input type="text" placeholder="请输入收货人姓名" name="name" value={address.receiver_name} onChange={this.onInpuChange} />

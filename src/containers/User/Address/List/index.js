@@ -56,7 +56,7 @@ export default class List extends Component {
     return (
       <div>
         <Header title="收货地址" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="has-header content">
+        <div className="content">
           {isLoading ? <Loader/> : null}
           <ul className="address-list">
             {
