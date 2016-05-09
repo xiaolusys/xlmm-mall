@@ -129,7 +129,7 @@ export default class Login extends Component {
             </p>
             <div className="row no-margin">
               <div className="col-xs-8 col-xs-offset-2 text-center margin-top-sm">
-                <a href={ constants.baseEndpointV1 + 'users/weixin_login?next=' + encodeURIComponent(this.next()) }>
+                <a href={ constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next()) }>
                 <i className="icon-wechat icon-3x icon-green"></i>
                 </a>
               </div>
