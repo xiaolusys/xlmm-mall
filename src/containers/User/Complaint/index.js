@@ -44,7 +44,7 @@ export default class Complaint extends Component {
   state = {
     save: true,
     textareaContent: '',
-    textRange: '0/200',
+    textRange: '0/500',
   }
 
   componentWillMount() {
@@ -62,7 +62,7 @@ export default class Complaint extends Component {
 
   onTextareaChange = (e) => {
     const value = e.currentTarget.value;
-    const leftLength = 200 - value.length;
+    const leftLength = 500 - value.length;
     if (leftLength >= 0) {
       this.setState({
         textareaContent: value,
@@ -81,7 +81,6 @@ export default class Complaint extends Component {
     const bindPhoneBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
     });
-    console.log(this.state.save);
     return (
       <div>
         <Header title="投诉建议" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
