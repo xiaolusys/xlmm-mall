@@ -67,7 +67,7 @@ export default class Login extends Component {
   }
 
   onLoginBtnClick = (e) => {
-    const type = e.currentTarget.dataset.type;
+    const type = Number(e.currentTarget.dataset.type);
     switch (type) {
       case loginType.password:
         this.props.login(this.state.username, this.state.password);
