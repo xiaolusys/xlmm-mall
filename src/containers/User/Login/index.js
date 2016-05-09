@@ -56,7 +56,7 @@ export default class Login extends Component {
     switch (nextProps.data.rcode) {
       case 0:
         Toast.show(nextProps.data.msg);
-        window.location.href = this.next();
+        window.location.replace(this.next());
         break;
       default:
         Toast.show(nextProps.data.msg);
