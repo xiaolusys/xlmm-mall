@@ -9,7 +9,7 @@ class Detector {
   }
 
   isApp() {
-    return this.test('XLMM');
+    return this.test('xlmm');
   }
 
   isWechat() {
