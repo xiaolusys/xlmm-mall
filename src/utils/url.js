@@ -1,4 +1,5 @@
 class Url {
+
   getQueryValue(name) {
     const querys = window.location.search.substring(1).split('&');
     for (let i = 0; i < querys.length; i++) {
@@ -7,6 +8,11 @@ class Url {
         return decodeURIComponent(pair[1]);
       }
     }
+  }
+
+  getBaseUrl() {
+    const href = window.location.href;
+    return href.substring(0, href.indexOf('#') + 1);
   }
 }
 

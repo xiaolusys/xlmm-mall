@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import _ from 'underscore';
+import * as constants from 'constants';
+import * as utils from 'utils';
 import classnames from 'classnames';
 import * as actionCreators from 'actions/user/login';
 import { Header } from 'components/Header';
@@ -54,11 +56,7 @@ export default class Login extends Component {
     switch (nextProps.data.rcode) {
       case 0:
         Toast.show(nextProps.data.msg);
-        if (query.next && query.next.indexOf('http') >= 0) {
-          window.location.href = query.next;
-          return;
-        }
-        query.next ? router.replace(query.next) : router.replace('/');
+        window.location.href = this.next();
         break;
       default:
         Toast.show(nextProps.data.msg);
@@ -89,8 +87,17 @@ export default class Login extends Component {
     this.setState({ password: value });
   }
 
+  next = () => {
+    const { query } = this.props.location;
+    if (query.next && query.next.indexOf('http') >= 0) {
+      return query.next;
+    }
+    return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl();
+  }
+
   render() {
     const props = this.props;
+    const query = this.props.location.query;
     const loginBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
       ['pressed']: this.state.loginBtnPressed,
@@ -114,17 +121,20 @@ export default class Login extends Component {
           <div className="row no-margin">
             <button className={registerBtnCls} type="button" onClick={this.onRegisterClick}>注册</button>
           </div>
-          <p className="row no-margin text-center hide">
-            <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
-            <span className="col-xs-4 margin-top-lg grey">第三方登录</span>
-            <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
-          </p>
-          <div className="row no-margin hide">
-            <div className="col-xs-8 col-xs-offset-2 text-center margin-top-sm">
-              <i className="col-xs-6 icon-wechat icon-3x icon-green"></i>
-              <i className="col-xs-6 icon-weibo icon-3x icon-green"></i>
+          <If condition= {utils.detector.isWechat()}>
+            <p className="row no-margin text-center">
+              <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
+              <span className="col-xs-4 margin-top-lg grey">第三方登录</span>
+              <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
+            </p>
+            <div className="row no-margin">
+              <div className="col-xs-8 col-xs-offset-2 text-center margin-top-sm">
+                <a href={ constants.baseEndpointV1 + 'users/weixin_login?next=' + encodeURIComponent(this.next()) }>
+                <i className="icon-wechat icon-3x icon-green"></i>
+                </a>
+              </div>
             </div>
-          </div>
+          </If>
           <Footer />
         </div>
       </div>
