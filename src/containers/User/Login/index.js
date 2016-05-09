@@ -109,7 +109,7 @@ export default class Login extends Component {
     return (
       <div>
         <Header title="登录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="content">
+        <div className="content login">
           <Input type="number" placeholder="请输入手机号" regex={/^0?1[3|4|5|7|8][0-9]\d{8}$/} onChange={this.onUsernameChange} />
           <Input type="password" placeholder="请输入登录密码" onChange={this.onPasswordChange} />
           <div className="row no-margin">
