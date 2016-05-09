@@ -8,3 +8,4 @@ export AddressList from './Address/List';
 export EditAddress from './Address/Edit';
 export Point from './Point';
 export Coupon from './Coupon';
+export Complaint from './Complaint';

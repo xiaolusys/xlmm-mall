@@ -13,6 +13,7 @@ import * as pointAction from 'actions/user/point';
 import * as pointLogAction from 'actions/user/pointLog';
 import * as unexpiredCouponAction from 'actions/user/unexpiredCoupon';
 import * as expiredCouponAction from 'actions/user/expiredCoupon';
+import * as complaintAction from 'actions/user/complaint';
 import * as portalAction from 'actions/home/portal';
 import * as orderAction from 'actions/order/order';
 import * as logisticsAction from 'actions/order/logistics';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   pointLog: createReducer(pointLogAction.name),
   expiredCoupon: createReducer(expiredCouponAction.name),
   unexpiredCoupon: createReducer(unexpiredCouponAction.name),
+  complaint: createReducer(complaintAction.name),
   portal: createReducer(portalAction.name),
   product: productReducer,
   order: orderReducer,
