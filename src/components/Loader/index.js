@@ -1,2 +1,2 @@
-export FadingCircleLoader from './FadingCircle';
-export Loader from './ReseauCircle';
+export Loader from './FadingCircle';
+export ReseauCircleLoader from './ReseauCircle';

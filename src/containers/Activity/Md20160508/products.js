@@ -1,5 +1,5 @@
 export default {
-  banner: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/banner.png',
+  banner: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20150508/activtiy-banner.png',
   coupon: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/coupon.png',
   footer: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/footer.png',
   redpacket: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/20160508/redpacket.png',
