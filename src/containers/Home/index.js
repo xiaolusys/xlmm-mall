@@ -12,18 +12,13 @@ import { Carousel } from 'components/Carousel';
 import { Loader } from 'components/Loader';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Timer } from 'components/Timer';
 import { Side } from 'components/Side';
 import { Product } from 'components/Product';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 
 import logo from './images/logo.png';
-import today from './images/today.png';
-import todayActive from './images/today-active.png';
-import tomorrow from './images/tomorrow.png';
-import tomorrowActive from './images/tomorrow-active.png';
-import yesterday from './images/yesterday.png';
-import yesterdayActive from './images/yesterday-active.png';
 
 import './index.scss';
 
@@ -235,16 +230,24 @@ export class Home extends Component {
             <div className={'home-tabs text-center bottom-border ' + (sticky ? 'sticky' : '')}>
               <ul className="row no-margin">
                 <li id="yesterday" className={'col-xs-4' + (activeTab === tabs.yesterday ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <button type="button">昨日热卖</button>
+                  <div>昨日热卖</div>
                 </li>
                 <li id="today" className={'col-xs-4' + (activeTab === tabs.today ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <button type="button">今日特卖</button>
+                  <div>今日特卖</div>
                 </li>
                 <li id="tomorrow" className={'col-xs-4' + (activeTab === tabs.tomorrow ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <button type="button">明日新品</button>
+                  <div>明日新品</div>
                 </li>
               </ul>
             </div>
+            <If condition={product.data.downshelf_deadline}>
+            <div className="col-xs-12 text-center">
+              <p className="countdown">
+                <span className="font-grey-light margin-right-xxs">{'距本场' + (activeTab === tabs.tomorrow ? '开始' : '结束')}</span>
+                <Timer endDate={product.data.downshelf_deadline.replace('T', ' ')} />
+              </p>
+            </div>
+            </If>
             <div className="home-products clearfix">
               {products.map((item) => {
                 return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
