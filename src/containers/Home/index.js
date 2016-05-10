@@ -19,12 +19,6 @@ import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 
 import logo from './images/logo.png';
-import today from './images/today.png';
-import todayActive from './images/today-active.png';
-import tomorrow from './images/tomorrow.png';
-import tomorrowActive from './images/tomorrow-active.png';
-import yesterday from './images/yesterday.png';
-import yesterdayActive from './images/yesterday-active.png';
 
 import './index.scss';
 
