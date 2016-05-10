@@ -12,6 +12,7 @@ import { Carousel } from 'components/Carousel';
 import { Loader } from 'components/Loader';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Timer } from 'components/Timer';
 import { Side } from 'components/Side';
 import { Product } from 'components/Product';
 import * as portalAction from 'actions/home/portal';
@@ -245,6 +246,14 @@ export class Home extends Component {
                 </li>
               </ul>
             </div>
+            <If condition={product.data.downshelf_deadline}>
+            <div className="col-xs-12 text-center">
+              <p className="countdown">
+                <span className="font-grey-light margin-right-xxs">{'距本场' + (activeTab === tabs.tomorrow ? '开始' : '结束')}</span>
+                <Timer endDate={product.data.downshelf_deadline.replace('T', ' ')} />
+              </p>
+            </div>
+            </If>
             <div className="home-products clearfix">
               {products.map((item) => {
                 return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
