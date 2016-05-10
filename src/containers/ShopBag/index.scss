@@ -1,0 +1,29 @@
+.shop-bag {
+  .shop-bag-list {
+    &.shop-bag-list-white-bg {
+      background: #fff;
+    }
+    li {
+      > img {
+        padding: 8px;
+        border-radius: 16px;
+      }
+      > div {
+        padding: 8px 0px;
+        > p {
+          margin: 8px 0px !important;
+          button {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+    .cart-quantity {
+      margin-top: 6px;
+      > i,
+      span {
+        padding: 8px;
+      }
+    }
+  }
+}

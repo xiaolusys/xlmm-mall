@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import createReducer from './createReducer';
 import orderReducer from './orderReducer';
 import productReducer from './productReducer';
+import shopBagReducer from './shopBagReducer';
 
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   city: createReducer(cityAction.name),
   district: createReducer(districtAction.name),
   coupon: createReducer(couponAction.name),
+  shopBag: shopBagReducer,
 });
 
 export default rootReducer;

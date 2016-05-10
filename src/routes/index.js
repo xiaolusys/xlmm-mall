@@ -11,6 +11,7 @@ import { Home } from 'containers/Home';
 import { FaqCategory, FaqList } from 'containers/Faq';
 import { Login, Password, UserProfile, UserPhone, Nickname, AddressList, EditAddress, Point, Coupon } from 'containers/User';
 import { OrderList, OrderDetail, Logistics } from 'containers/Order';
+import { ShopBag } from 'containers/ShopBag';
 
 export default (
   <Route path="/" component={App}>
@@ -29,6 +30,7 @@ export default (
     <Route path="/order/:type" component={OrderList} onEnter={utils.checkAuth} />
     <Route path="/order/detail/:id" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
+    <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
     {activityRoutes}

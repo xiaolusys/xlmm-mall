@@ -8,6 +8,7 @@ import './index.scss';
 
 export class Header extends Component {
   static propTypes = {
+    prefixCls: React.PropTypes.string,
     title: React.PropTypes.string.isRequired,
     titleType: React.PropTypes.string,
     leftIcon: React.PropTypes.string,
@@ -22,6 +23,7 @@ export class Header extends Component {
   };
 
   static defaultProps = {
+    prefixCls: 'header-bar',
     title: '',
     leftIcon: '',
     rightIcon: '',
@@ -36,7 +38,7 @@ export class Header extends Component {
   }
 
   render() {
-    const { title, titleType, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed } = this.props;
+    const { prefixCls, title, titleType, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed } = this.props;
     const leftBtnCls = classnames({
       ['icon-btn ' + leftIcon + ' icon-yellow']: 1,
       ['no-icon']: leftText ? true : false,
@@ -48,7 +50,7 @@ export class Header extends Component {
       ['pressed']: rightBtnPressed,
     });
     return (
-      <div>
+      <div className={`${prefixCls}-wrapper`}>
         <If condition={!utils.detector.isApp()}>
           <header className="bar bar-header">
             <button className={leftBtnCls} onClick={onLeftBtnClick}>{leftText}</button>

@@ -18,7 +18,6 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-
 export default class List extends Component {
   static propTypes = {
     children: React.PropTypes.array,
