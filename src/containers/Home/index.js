@@ -8,7 +8,6 @@ import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
-import { StickyContainer, Sticky } from 'react-sticky';
 import { Carousel } from 'components/Carousel';
 import { Loader } from 'components/Loader';
 import { Header } from 'components/Header';
