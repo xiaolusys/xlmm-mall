@@ -9,7 +9,6 @@ import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
-import { Footer } from 'components/Footer';
 import * as orderAction from 'actions/order/order';
 
 import './index.scss';
@@ -172,7 +171,6 @@ export default class List extends Component {
                 </div>
               );
             })}
-            <Footer />
           </div>
       </div>
     );

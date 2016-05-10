@@ -4,7 +4,6 @@ import _ from 'underscore';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 import * as actionCreators from 'actions/user/profile';
@@ -98,7 +97,6 @@ export default class Nickname extends Component {
           <div className="row no-margin">
             <button className={bindPhoneBtnCls} type="button" onClick={this.onBubmitBtnClick} disabled={this.state.submitBtnDisabled}>保存</button>
           </div>
-          <Footer/>
         </div>
       </div>
     );

@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/user/password';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 
@@ -152,7 +151,6 @@ export default class Password extends Component {
           <div className="row no-margin">
             <button className={nextBtnCls} type="button" onClick={this.onNextBntClick} disabled={this.state.nextBtnPressed}>{action.nextBtnTitle}</button>
           </div>
-          <Footer />
         </div>
       </div>
     );

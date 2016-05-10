@@ -8,7 +8,6 @@ import * as actionCreators from 'actions/shopBag';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { BottomBar } from 'components/BottomBar';
-import { Footer } from 'components/Footer';
 
 import './index.scss';
 
@@ -146,7 +145,6 @@ export class ShopBag extends Component {
               })}
             </ul>
           </If>
-          <Footer/>
         </div>
         <If condition={!_.isEmpty(shopBag.data) && shopBag.success}>
           <BottomBar size="large">

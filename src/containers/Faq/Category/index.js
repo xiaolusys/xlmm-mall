@@ -6,7 +6,6 @@ import _ from 'underscore';
 import * as actionCreators from 'actions/faq/categories';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
-import { Footer } from 'components/Footer';
 
 import './index.scss';
 
@@ -69,7 +68,6 @@ export default class FaqCategory extends Component {
               })
             }
           </ul>
-          <Footer/>
         </div>
       </div>
     );
