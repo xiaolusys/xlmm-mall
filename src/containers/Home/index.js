@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
+import { StickyContainer, Sticky } from 'react-sticky';
 import { Carousel } from 'components/Carousel';
 import { Loader } from 'components/Loader';
 import { Header } from 'components/Header';
@@ -75,6 +76,7 @@ export class Home extends Component {
     pageIndex: 0,
     pageSize: 20,
     activeTab: tabs.today,
+    sticky: false,
   }
 
   componentWillMount() {
@@ -131,6 +133,7 @@ export class Home extends Component {
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
+    const tabsOffsetTop = utils.dom.offsetTop('.home-tabs');
     if (scrollTop === documentHeight - windowHeight && !this.props.product.isLoading && this.state.hasMore) {
       switch (activeTab) {
         case tabs.yesterday:
@@ -145,6 +148,11 @@ export class Home extends Component {
         default:
           fetchProduct(requestAction.today, pageIndex + 1, pageSize);
       }
+    }
+    if (scrollTop >= tabsOffsetTop) {
+      this.setState({ sticky: true });
+    } else {
+      this.setState({ sticky: false });
     }
   }
 
@@ -168,7 +176,7 @@ export class Home extends Component {
     const categories = portal.data.categorys || [];
     const posters = portal.data.posters || [];
     const products = product.data.results || [];
-    const { activeTab } = this.state;
+    const { activeTab, sticky } = this.state;
     const mainCls = classnames({
       ['menu-active']: this.state.menuActive,
     });
@@ -225,16 +233,16 @@ export class Home extends Component {
                 </ul>
               </div>
             </If>
-            <div className="home-tabs text-center bottom-border">
+            <div className={'home-tabs text-center bottom-border ' + (sticky ? 'sticky' : '')}>
               <ul className="row no-margin">
-                <li id="yesterday" className="col-xs-4" onClick={this.onTabItemClick}>
-                  <img src={activeTab === tabs.yesterday ? yesterdayActive : yesterday} />
+                <li id="yesterday" className={'col-xs-4' + (activeTab === tabs.yesterday ? ' active' : '')} onClick={this.onTabItemClick}>
+                  <button type="button">昨日热卖</button>
                 </li>
-                <li id="today" className="col-xs-4" onClick={this.onTabItemClick}>
-                  <img src={activeTab === tabs.today ? todayActive : today} />
+                <li id="today" className={'col-xs-4' + (activeTab === tabs.today ? ' active' : '')} onClick={this.onTabItemClick}>
+                  <button type="button">今日特卖</button>
                 </li>
-                <li id="tomorrow" className="col-xs-4" onClick={this.onTabItemClick}>
-                  <img src={activeTab === tabs.tomorrow ? tomorrowActive : tomorrow} />
+                <li id="tomorrow" className={'col-xs-4' + (activeTab === tabs.tomorrow ? ' active' : '')} onClick={this.onTabItemClick}>
+                  <button type="button">明日新品</button>
                 </li>
               </ul>
             </div>
