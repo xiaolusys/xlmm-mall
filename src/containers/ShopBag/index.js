@@ -93,7 +93,9 @@ export class ShopBag extends Component {
               {_.isEmpty(shopBag.data) ? null : shopBag.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
-                    <img className="col-xs-4" src={item.pic_path + constants.image.square} />
+                    <div className="col-xs-4">
+                      <img src={item.pic_path + constants.image.square} />
+                    </div>
                     <div className="col-xs-8">
                       <p className="no-wrap">{item.title}</p>
                       <p className="font-xs font-grey-light">{item.sku_name}</p>
@@ -127,7 +129,9 @@ export class ShopBag extends Component {
               {_.isEmpty(shopBagHistory.data) ? null : shopBagHistory.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
-                    <img className="col-xs-4" src={item.pic_path + constants.image.square} />
+                    <div className="col-xs-4">
+                      <img src={item.pic_path + constants.image.square} />
+                    </div>
                     <div className="col-xs-8">
                       <p className="no-wrap">{item.title}</p>
                       <p className="font-xs font-grey-light">{item.sku_name}</p>
