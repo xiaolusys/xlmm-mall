@@ -8,7 +8,6 @@ import * as utils from 'utils';
 import classnames from 'classnames';
 import * as actionCreators from 'actions/user/login';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 
@@ -132,7 +131,6 @@ export default class Login extends Component {
               </div>
             </div>
           </If>
-          <Footer />
         </div>
       </div>
     );

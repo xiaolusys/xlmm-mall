@@ -8,7 +8,6 @@ import * as provinceAction from 'actions/user/province';
 import * as cityAction from 'actions/user/city';
 import * as districtAction from 'actions/user/district';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
 import { Switch } from 'components/Switch';
 
@@ -295,7 +294,6 @@ export default class Edit extends Component {
           <div className="row no-margin">
             <button className={saveBtnCls} type="button" onClick={this.onSaveBntClick} disabled={this.state.nextBtnPressed}>保存</button>
           </div>
-          <Footer />
         </div>
       </div>
     );

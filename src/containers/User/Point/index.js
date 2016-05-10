@@ -5,7 +5,6 @@ import _ from 'underscore';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Loader } from 'components/Loader';
 import * as pointAction from 'actions/user/point';
 import * as pointLogAction from 'actions/user/pointLog';
@@ -104,7 +103,6 @@ export default class Point extends Component {
               <Link className="col-xs-4 col-xs-offset-4 margin-top-xs margin-bottom-lg button button-energized" to="/">快去抢购</Link>
             </div>
           </If>
-          <Footer/>
         </div>
       </div>
     );
