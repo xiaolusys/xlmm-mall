@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
+import { Link } from 'react-router';
 import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
@@ -243,6 +244,9 @@ export class Home extends Component {
               })}
             </div>
             {product.isLoading ? <Loader/> : null}
+            <div className="shop-cart">
+              <Link to="/shop/bag"><i className="icon-cart icon-yellow icon-2x"></i></Link>
+            </div>
             <Footer />
           </div>
         </div>
