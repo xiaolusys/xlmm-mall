@@ -53,47 +53,45 @@
   }
   .home-tabs {
     background-color: #fff;
+    &.sticky {
+      position: fixed;
+      top: 44px;
+      left: 0;
+      right: 0;
+      z-index: 9;
+    }
     > ul {
-      margin-bottom: 10px;
-      > li > img {
-        padding: 8px;
-        width: 80%;
-      }
-      > .active {
-        &:before {
-          display: block;
-          width: 0;
-          content: "";
-          position: absolute;
-          bottom: 0px;
-          left: 50px;
-          border-width: 0px 10px 10px;
-          border-style: solid;
-          border-color: #f3f3f4 transparent;
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > button {
+          padding: 8px;
         }
       }
     }
   }
-  .shop-cart {
-    position: fixed;
-    left: 8px;
-    bottom: 60px;
-    height: 48px;
-    width: 48px;
-    background-color: #4a4a4a;
-    border: 1px solid #26262e;
-    border-radius: 40px;
-    padding: 4px;
-    text-align: center;
-    > a {
+}
+
+.shop-cart {
+  position: fixed;
+  left: 8px;
+  bottom: 60px;
+  height: 48px;
+  width: 48px;
+  background-color: #4a4a4a;
+  border: 1px solid #26262e;
+  border-radius: 40px;
+  padding: 4px;
+  text-align: center;
+  > a {
+    color: transparent;
+    &:hover,
+    :active,
+    :focus,
+    :visited {
       color: transparent;
-      &:hover,
-      :active,
-      :focus,
-      :visited {
-        color: transparent;
-        text-decoration: none !important;
-      }
+      text-decoration: none !important;
     }
   }
 }
