@@ -236,13 +236,13 @@ export class Home extends Component {
             <div className={'home-tabs text-center bottom-border ' + (sticky ? 'sticky' : '')}>
               <ul className="row no-margin">
                 <li id="yesterday" className={'col-xs-4' + (activeTab === tabs.yesterday ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <button type="button">昨日热卖</button>
+                  <div>昨日热卖</div>
                 </li>
                 <li id="today" className={'col-xs-4' + (activeTab === tabs.today ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <button type="button">今日特卖</button>
+                  <div>今日特卖</div>
                 </li>
                 <li id="tomorrow" className={'col-xs-4' + (activeTab === tabs.tomorrow ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <button type="button">明日新品</button>
+                  <div>明日新品</div>
                 </li>
               </ul>
             </div>
