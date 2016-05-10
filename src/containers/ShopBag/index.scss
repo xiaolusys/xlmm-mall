@@ -4,7 +4,9 @@
       background: #fff;
     }
     li {
-      > img {
+      > div > img {
+        max-height: 100px;
+        max-width: 100px;
         padding: 8px;
         border-radius: 16px;
       }
