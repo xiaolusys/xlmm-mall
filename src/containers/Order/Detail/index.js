@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 import classnames from 'classnames';
+import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
@@ -50,7 +51,7 @@ export default class Detail extends Component {
             <div key={product.id} className="row no-margin bottom-border">
               <If condition={product.status === 1}>
                 <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path} />
+                  <img src={product.pic_path + constants.image.square} />
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
@@ -65,7 +66,7 @@ export default class Detail extends Component {
               </If>
               <If condition={product.status !== 1}>
                 <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path} />
+                  <img src={product.pic_path + constants.image.square} />
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
