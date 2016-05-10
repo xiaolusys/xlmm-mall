@@ -54,7 +54,7 @@ export class ShopBag extends Component {
     _.each(shopBag.data, (item) => {
       cartIds.push(item.id);
     });
-    window.location.href = 'http://m.xiaolumeimei.com/pages/queren-dd.html?cart_ids=' + encodeURIComponent(cartIds.join(','));
+    window.location.href = '/pages/queren-dd.html?cart_ids=' + encodeURIComponent(cartIds.join(','));
   }
 
   onUpdateQuantityClick = (e) => {
