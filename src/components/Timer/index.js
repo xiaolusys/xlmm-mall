@@ -5,7 +5,7 @@ import * as utils from 'utils';
 export class Timer extends Component {
 
   static propTypes = {
-    endDate: React.PropTypes.string.isRequired,
+    endDateString: React.PropTypes.string.isRequired,
   }
 
   state = {
@@ -22,8 +22,8 @@ export class Timer extends Component {
   }
 
   tick = () => {
-    const { endDate } = this.props;
-    const remaining = utils.timer.getTimeRemaining(new Date(endDate));
+    const { endDateString } = this.props;
+    const remaining = utils.timer.getTimeRemaining(endDateString);
     if (remaining.totals > 0) {
       this.setState({ remaining: remaining.days + ':' + remaining.hours + ':' + remaining.minutes + ':' + remaining.seconds });
     } else {
