@@ -244,7 +244,7 @@ export class Home extends Component {
             <div className="col-xs-12 text-center">
               <p className="countdown">
                 <span className="font-grey-light margin-right-xxs">{'距本场' + (activeTab === tabs.tomorrow ? '开始' : '结束')}</span>
-                <Timer endDate={product.data.downshelf_deadline.replace('T', ' ')} />
+                <Timer endDateString={product.data.downshelf_deadline} />
               </p>
             </div>
             </If>

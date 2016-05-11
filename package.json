@@ -87,6 +87,7 @@
     "axios": "latest",
     "es6-promise": "^2.0.1",
     "jquery": "^2.2.0",
+    "moment": "^2.13.0",
     "swipe-js-iso": "^2.0.3",
     "react": "^0.14.6",
     "react-redux": "^4.0.6",
