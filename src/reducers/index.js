@@ -4,7 +4,7 @@ import createReducer from './createReducer';
 import orderReducer from './orderReducer';
 import productReducer from './productReducer';
 import couponsReducer from './couponsReducer';
-
+import shopBagReducer from './shopBagReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -33,7 +33,6 @@ const rootReducer = combineReducers({
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
   pointLog: createReducer(pointLogAction.name),
-  coupon: createReducer(couponAction.name),
   complaint: createReducer(complaintAction.name),
   portal: createReducer(portalAction.name),
   product: productReducer,
@@ -43,6 +42,8 @@ const rootReducer = combineReducers({
   city: createReducer(cityAction.name),
   district: createReducer(districtAction.name),
   coupons: couponsReducer,
+  coupon: createReducer(couponAction.name),
+  shopBag: shopBagReducer,
 });
 
 export default rootReducer;

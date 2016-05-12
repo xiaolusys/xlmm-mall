@@ -4,7 +4,6 @@ import _ from 'underscore';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Input } from 'components/Input';
 import * as actionCreators from 'actions/user/password';
 import { Toast } from 'components/Toast';
@@ -121,7 +120,6 @@ export default class Phone extends Component {
           <div className="row no-margin">
             <button className={bindPhoneBtnCls} type="button" onClick={this.onBubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>
           </div>
-          <Footer/>
         </div>
       </div>
     );

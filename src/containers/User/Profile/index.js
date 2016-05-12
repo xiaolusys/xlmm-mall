@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as actionCreators from 'actions/user/profile';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
 import { Loader } from 'components/Loader';
 import { If } from 'jsx-control-statements';
@@ -131,7 +130,6 @@ export default class Profile extends Component {
           <div className="row no-margin">
               <button className={logoutBtnCls} type="button" onClick={this.onLogoutBtnClick}>退出</button>
           </div>
-          <Footer/>
         </div>
       </div>
     );

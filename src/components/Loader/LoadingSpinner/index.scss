@@ -1,0 +1,24 @@
+.loading-spinner {
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 13;
+  justify-content: center;
+  align-items: center;
+  transition: .2s opacity linear;
+  opacity: .7;
+  .spinner {
+    padding: 10px;
+    height: 60px;
+    width: 60px;
+    border-radius: 4px;
+    background-color: #26262e;
+    color: #fafafa;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-size: 14px;
+  }
+}

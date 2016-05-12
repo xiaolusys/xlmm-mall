@@ -59,7 +59,6 @@ body {
 
 .content {
   width: 100%;
-  position: absolute;
 }
 
 .content-white-bg {
@@ -97,6 +96,12 @@ body {
     background-size: 100% 1px;
     background-repeat: no-repeat;
   }
+}
+
+.no-wrap {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 // font color

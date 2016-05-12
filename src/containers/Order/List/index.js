@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as utils from 'utils';
 import classnames from 'classnames';
+import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
-import { Footer } from 'components/Footer';
 import * as orderAction from 'actions/order/order';
 
 import './index.scss';
@@ -107,7 +107,7 @@ export default class List extends Component {
             return (
               <div key={product.id} className="row no-margin">
                 <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path} />
+                  <img src={product.pic_path + constants.image.square} />
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
@@ -126,7 +126,7 @@ export default class List extends Component {
         <If condition={products.length > 1}>
           {products.map((product, index) => {
             return (
-              <img key={product.id} src={product.pic_path} />
+              <img key={product.id} src={product.pic_path + constants.image.square} />
             );
           })}
         </If>
@@ -171,7 +171,6 @@ export default class List extends Component {
                 </div>
               );
             })}
-            <Footer />
           </div>
       </div>
     );

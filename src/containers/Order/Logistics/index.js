@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as actionCreators from 'actions/order/logistics';
 
@@ -62,7 +61,6 @@ export default class Logistics extends Component {
                 </Timeline>
               </div>
             </If>
-            <Footer />
           </div>
       </div>
     );

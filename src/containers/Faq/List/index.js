@@ -6,7 +6,6 @@ import classnames from 'classnames';
 import * as actionCreators from 'actions/faq/questions';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
-import { Footer } from 'components/Footer';
 import QuestionItem from './QuestionItem';
 
 import './index.scss';
@@ -71,7 +70,6 @@ export default class FaqList extends Component {
               return <QuestionItem key={index} data={item} />;
             })}
           </ul>
-          <Footer />
         </div>
       </div>
     );

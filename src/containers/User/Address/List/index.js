@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as actionCreators from 'actions/user/address';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
 import { Loader } from 'components/Loader';
 
 import './index.scss';
@@ -18,7 +17,6 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-
 export default class List extends Component {
   static propTypes = {
     children: React.PropTypes.array,
@@ -84,7 +82,6 @@ export default class List extends Component {
           <div className="row no-margin">
               <Link className={bindPhoneBtnCls} to="/user/address/edit/0" disabled={false}>添加地址</Link>
           </div>
-          <Footer/>
         </div>
       </div>
     );
