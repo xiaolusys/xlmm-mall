@@ -60,8 +60,9 @@ export class Home extends Component {
     product: React.PropTypes.any,
   };
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    context.router;
   }
 
   state = {
@@ -236,7 +237,7 @@ export class Home extends Component {
                   <div>今日特卖</div>
                 </li>
                 <li id="tomorrow" className={'col-xs-4' + (activeTab === tabs.tomorrow ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <div>明日新品</div>
+                  <div>即将上新</div>
                 </li>
               </ul>
             </div>
