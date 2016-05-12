@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import createReducer from './createReducer';
 import orderReducer from './orderReducer';
 import productReducer from './productReducer';
+import couponsReducer from './couponsReducer';
 
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
@@ -11,8 +12,8 @@ import * as loginAction from 'actions/user/login';
 import * as passwordAction from 'actions/user/password';
 import * as pointAction from 'actions/user/point';
 import * as pointLogAction from 'actions/user/pointLog';
-import * as unexpiredCouponAction from 'actions/user/unexpiredCoupon';
-import * as expiredCouponAction from 'actions/user/expiredCoupon';
+import * as couponAction from 'actions/user/coupon';
+import * as couponsAction from 'actions/user/coupons';
 import * as complaintAction from 'actions/user/complaint';
 import * as portalAction from 'actions/home/portal';
 import * as orderAction from 'actions/order/order';
@@ -21,7 +22,6 @@ import * as addressAction from 'actions/user/address';
 import * as provinceAction from 'actions/user/province';
 import * as cityAction from 'actions/user/city';
 import * as districtAction from 'actions/user/district';
-import * as couponAction from 'actions/user/coupon';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -33,8 +33,7 @@ const rootReducer = combineReducers({
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
   pointLog: createReducer(pointLogAction.name),
-  expiredCoupon: createReducer(expiredCouponAction.name),
-  unexpiredCoupon: createReducer(unexpiredCouponAction.name),
+  coupon: createReducer(couponAction.name),
   complaint: createReducer(complaintAction.name),
   portal: createReducer(portalAction.name),
   product: productReducer,
@@ -43,7 +42,7 @@ const rootReducer = combineReducers({
   province: createReducer(provinceAction.name),
   city: createReducer(cityAction.name),
   district: createReducer(districtAction.name),
-  coupon: createReducer(couponAction.name),
+  coupons: couponsReducer,
 });
 
 export default rootReducer;
