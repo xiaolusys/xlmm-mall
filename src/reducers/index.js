@@ -12,8 +12,6 @@ import * as loginAction from 'actions/user/login';
 import * as passwordAction from 'actions/user/password';
 import * as pointAction from 'actions/user/point';
 import * as pointLogAction from 'actions/user/pointLog';
-import * as couponAction from 'actions/user/coupon';
-import * as couponsAction from 'actions/user/coupons';
 import * as complaintAction from 'actions/user/complaint';
 import * as portalAction from 'actions/home/portal';
 import * as orderAction from 'actions/order/order';
@@ -22,6 +20,7 @@ import * as addressAction from 'actions/user/address';
 import * as provinceAction from 'actions/user/province';
 import * as cityAction from 'actions/user/city';
 import * as districtAction from 'actions/user/district';
+import * as couponAction from 'actions/user/coupon';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -41,9 +40,9 @@ const rootReducer = combineReducers({
   province: createReducer(provinceAction.name),
   city: createReducer(cityAction.name),
   district: createReducer(districtAction.name),
-  coupons: couponsReducer,
   coupon: createReducer(couponAction.name),
   shopBag: shopBagReducer,
+  coupons: couponsReducer,
 });
 
 export default rootReducer;
