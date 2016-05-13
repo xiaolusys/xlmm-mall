@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import { connect } from 'react-redux';
@@ -23,7 +24,7 @@ const couponTypes = {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class CouponList extends Component {
+export default class List extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     dispatch: React.PropTypes.func,
@@ -50,13 +51,12 @@ export default class CouponList extends Component {
 
   render() {
     const { available, used, unavailable, expired } = this.props.coupons;
-
+    console.log(_.isEmpty(available.data) && _.isEmpty(used.data) && _.isEmpty(unavailable.data) && _.isEmpty(expired.data));
     return (
       <div>
         <Header title="优惠劵" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content coupons-container">
-          {_(this.props.coupons).map((coupon) => {
-            console.log(coupon.isLoading);
+        {_(this.props.coupons).map((coupon) => {
             return (
               <div>
                 <If condition={coupon.isLoading}>
@@ -83,7 +83,6 @@ export default class CouponList extends Component {
               <Link className="col-xs-4 col-xs-offset-4 margin-top-xs margin-bottom-lg button button-energized" to="/">快去抢购</Link>
             </div>
           </If>
-          <Footer/>
         </div>
       </div>
     );
