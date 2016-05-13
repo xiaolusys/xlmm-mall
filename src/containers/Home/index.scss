@@ -88,14 +88,12 @@
   border-radius: 40px;
   padding: 4px;
   text-align: center;
-  > a {
+  color: transparent;
+  &:hover,
+  :active,
+  :focus,
+  :visited {
     color: transparent;
-    &:hover,
-    :active,
-    :focus,
-    :visited {
-      color: transparent;
-      text-decoration: none !important;
-    }
+    text-decoration: none !important;
   }
 }

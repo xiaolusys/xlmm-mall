@@ -255,9 +255,7 @@ export class Home extends Component {
               })}
             </div>
             {product.isLoading ? <Loader/> : null}
-            <div className="shop-cart">
-              <Link to="/shop/bag"><i className="icon-cart icon-yellow icon-2x"></i></Link>
-            </div>
+            <Link className="shop-cart" to="/shop/bag"><i className="icon-cart icon-yellow icon-2x"></i></Link>
             <Footer />
           </div>
         </div>
