@@ -21,6 +21,7 @@ import * as provinceAction from 'actions/user/province';
 import * as cityAction from 'actions/user/city';
 import * as districtAction from 'actions/user/district';
 import * as couponAction from 'actions/user/coupon';
+import * as promotionAction from 'actions/activity/promotion';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   coupon: createReducer(couponAction.name),
   shopBag: shopBagReducer,
   coupons: couponsReducer,
+  promotion: createReducer(promotionAction.name),
 });
 
 export default rootReducer;
