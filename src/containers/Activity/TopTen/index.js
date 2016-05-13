@@ -36,6 +36,7 @@ const setupWebViewJavascriptBridge = function(callback) {
       data: state.coupon.data,
       isLoading: state.coupon.isLoading,
       success: state.coupon.success,
+      error: state.coupon.error,
     },
     promotion: {
       data: state.promotion.data,
@@ -53,6 +54,7 @@ export default class TopTen extends Component {
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
     fetchCoupon: React.PropTypes.func,
+    resetCoupon: React.PropTypes.func,
     fetchPromotion: React.PropTypes.func,
   };
 
@@ -76,8 +78,14 @@ export default class TopTen extends Component {
     },
   }
 
+
   componentWillMount() {
     this.props.fetchPromotion(activity.activityId);
+  }
+
+  componentDidMount() {
+    this.tick();
+    this.interval = setInterval(this.tick, 1000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,13 +95,10 @@ export default class TopTen extends Component {
       }
       Toast.show(nextProps.coupon.data.res);
     }
-    if (nextProps.promotion.success) {
-      this.tick();
-      this.interval = setInterval(this.tick, 1000);
+    if (nextProps.coupon.error) {
+      this.props.resetCoupon();
+      this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
     }
-    // if (!nextProps.coupon.success && !nextProps.coupon.isLoading && !nextProps.promotion.success && !nextProps.promotion.isLoading) {
-    //   this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
-    // }
   }
 
   componentWillUnmount() {
@@ -158,12 +163,8 @@ export default class TopTen extends Component {
 
   tick = () => {
     const { promotion } = this.props;
-    let remaining = this.state.remaining;
-    if (promotion.data.end_time) {
-      const endDateString = promotion.data.end_time;
-      remaining = utils.timer.getTimeRemaining(endDateString);
-    }
-
+    const endDateString = promotion.data.end_time || new Date();
+    const remaining = utils.timer.getTimeRemaining(endDateString);
     if (remaining.totals > 0) {
       this.setState({ remaining: remaining });
     } else {

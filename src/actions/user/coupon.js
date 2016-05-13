@@ -7,8 +7,9 @@ import * as districtAction from 'actions/user/district';
 
 export const name = 'FETCH_COUPON';
 
+const action = createAction(name);
+
 export const fetchCoupon = (couponIds) => {
-  const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpointV1 + 'usercoupons', qs.stringify({ template_id: couponIds }))
@@ -18,5 +19,12 @@ export const fetchCoupon = (couponIds) => {
       .catch((resp) => {
         dispatch(action.failure(resp.data));
       });
+  };
+};
+
+
+export const resetCoupon = () => {
+  return (dispatch) => {
+    dispatch(action.request());
   };
 };
