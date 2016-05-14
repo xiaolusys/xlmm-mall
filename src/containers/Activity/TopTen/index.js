@@ -180,13 +180,13 @@ export default class TopTen extends Component {
           <div className="content content-white-bg clearfix activity-top10">
             <img className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
             <img className="col-md-6 col-md-offset-3 col-xs-12" src={activity.coupon} onClick={this.onCouponClick}/>
-            <div className="col-md-6 col-md-offset-3 col-xs-12 mragin-top-sm mragin-bottom-xs">
-              <img className="col-xs-5 no-padding" src={activity.countdownText} />
-              <p className="col-xs-7 no-padding countdown">
-                <span className="js-dayss">{days}</span> :
-                <span className="js-hours">{hours}</span> :
-                <span className="js-minutes">{minutes}</span> :
-                <span className="js-seconds">{seconds}</span>
+            <div className="col-md-6 col-md-offset-3 col-xs-12 margin-top-sm margin-bottom-xs">
+              <img className="col-xs-4 no-padding" src={activity.countdownText} />
+              <p className="col-xs-8 no-padding countdown">
+                <span>{days}</span> :
+                <span>{hours}</span> :
+                <span>{minutes}</span> :
+                <span>{seconds}</span>
               </p>
             </div>
             <ul className="product-list">
@@ -198,13 +198,13 @@ export default class TopTen extends Component {
                 );
               })}
             </ul>
-            <img className="col-md-6 col-md-offset-3 col-xs-12 no-padding mragin-top-xs mragin-bottom-xs" src={activity.rule} />
+            <img className="col-md-6 col-md-offset-3 col-xs-12 no-padding margin-top-sm margin-bottom-xs" src={activity.rule} />
             <img className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.footer} />
             <If condition={this.state.redpacketOpened}>
               <div className="popup" onClick={this.toggleRedpacketOpenedState}>
                 <div className="content">
                   <img className="col-xs-12 col-md-3 col-md-offset-4" src={activity.redpacket} />
-                  <img className="js-share col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 mragin-top-xs" src={activity.shareBtn} onClick={this.onShareBtnClick} />
+                  <img className="js-share col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 margin-top-xs" src={activity.shareBtn} onClick={this.onShareBtnClick} />
                 </div>
                 <div className="popup-overlay"></div>
               </div>
