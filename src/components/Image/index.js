@@ -11,14 +11,13 @@ export class Image extends Component {
   };
 
   static defaultProps = {
-    thumbnail: 640,
     quality: 90,
     interlace: 1,
   }
 
   render() {
     const { src, thumbnail, crop, quality, interlace, ...restProps } = this.props;
-    const imgSrc = `${src}?imageMogr2/strip/thumbnail/${thumbnail}/format/jpg/quality/${quality}/interlace/${interlace}/` + (crop ? `crop/${crop}` : '');
+    const imgSrc = `${src}?imageMogr2/strip/format/jpg/quality/${quality}/interlace/${interlace}/` + (thumbnail ? `thumbnail/${thumbnail}/` : '') + (crop ? `crop/${crop}` : '');
     return (<img {...restProps} src= {imgSrc} onLoad={this.onLoad} />);
   }
 }

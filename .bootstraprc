@@ -51,7 +51,7 @@ styles:
   mixins: true
 
   # Reset and dependencies
-  normalize: false
+  normalize: true
   print: true
   glyphicons: false
 
