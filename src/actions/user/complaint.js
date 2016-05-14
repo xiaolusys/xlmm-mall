@@ -3,28 +3,19 @@ import axios from 'axios';
 import qs from 'qs';
 import _ from 'underscore';
 import createAction from '../createAction';
-import * as districtAction from 'actions/user/district';
 
-export const name = 'FETCH_COUPON';
+export const name = 'COMPLAINT';
 
-const action = createAction(name);
-
-export const fetchCoupon = (couponIds) => {
+export const saveComplaint = () => {
+  const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'usercoupons', qs.stringify({ template_id: couponIds }))
+    return axios.post(constants.baseEndpointV1 + 'usercoupons')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
         dispatch(action.failure(resp.data));
       });
-  };
-};
-
-
-export const resetCoupon = () => {
-  return (dispatch) => {
-    dispatch(action.request());
   };
 };

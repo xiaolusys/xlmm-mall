@@ -5,7 +5,7 @@ body {
   font-size: 14px;
   line-height: 1.42857;
   color: #333;
-  background-color: $gloabl-bg !important;
+  background-color: $gloabl-bg;
   overflow-x: hidden;
 }
 
@@ -119,6 +119,9 @@ body {
 
 .font-orange {
   color: #f5a623;
+}
+.font-red {
+  color: #f05050;
 }
 
 // font size

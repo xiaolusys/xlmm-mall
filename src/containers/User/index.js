@@ -7,4 +7,5 @@ export Nickname from './Nickname';
 export AddressList from './Address/List';
 export EditAddress from './Address/Edit';
 export Point from './Point';
-export Coupon from './Coupon';
+export CouponList from './Coupon/List';
+export Complaint from './Complaint';
