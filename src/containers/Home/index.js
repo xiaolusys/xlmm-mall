@@ -15,6 +15,7 @@ import { Footer } from 'components/Footer';
 import { Timer } from 'components/Timer';
 import { Side } from 'components/Side';
 import { Product } from 'components/Product';
+import { Image } from 'components/Image';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 
@@ -189,7 +190,7 @@ export class Home extends Component {
                   return (
                     <div key={index} >
                       <a href={item.item_link}>
-                        <img src={item.pic_link} />
+                        <Image src={item.pic_link} />
                       </a>
                     </div>
                   );
@@ -204,7 +205,7 @@ export class Home extends Component {
                     return (
                       <li className="col-xs-6 no-padding" key={item.id}>
                         <a href={item.cat_link}>
-                          <img src={item.cat_img} />
+                          <Image src={item.cat_img} />
                         </a>
                       </li>
                     );
@@ -220,7 +221,7 @@ export class Home extends Component {
                     return (
                       <li key={item.id}>
                         <a href={item.extras.html.apply}>
-                          <img className="col-xs-12 no-padding" src={item.act_img} />
+                          <Image className="col-xs-12 no-padding" src={item.act_img} />
                         </a>
                       </li>
                     );
