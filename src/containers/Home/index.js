@@ -37,7 +37,7 @@ const tabs = {
 @connect(
   state => ({
     portal: {
-      data: state.portal.data,
+      data: state.portal.data || {},
       isLoading: state.portal.isLoading,
       error: state.portal.error,
       success: state.portal.success,
