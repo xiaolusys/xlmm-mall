@@ -70,7 +70,7 @@ export default class Detail extends Component {
             {details.detail_content && details.detail_content.head_imgs.map((image, index) => {
               return (
                 <div key={index} >
-                  <Image className="head-image" src={image} />
+                  <Image className="head-image" thumbnail={640} src={image} />
                 </div>
               );
             })}
@@ -130,7 +130,7 @@ export default class Detail extends Component {
           </div>
           <div className="details">
             {details.detail_content.content_imgs.map((image, index) => {
-              return (<Image key={index} className="col-xs-12 no-padding" src={image} />);
+              return (<Image key={index} className="col-xs-12 no-padding" thumbnail={640} src={image} />);
             })}
           </div>
         </If>

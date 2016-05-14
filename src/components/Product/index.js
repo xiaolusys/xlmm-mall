@@ -40,7 +40,7 @@ export class Product extends Component {
       <div className="col-xs-6 col-sm-3 col-md-2 no-padding" data-productid={product.id} data-modelid={product.model_id} onClick={this.props.onItemClick}>
         <div className="product text-center">
           <div className="product-picture">
-            <Image className={imageCls} src={product.head_img} onError={this.onImageLoadError}/>
+            <Image className={imageCls} src={product.head_img} thumbnail={640} onError={this.onImageLoadError}/>
           </div>
           <div className="product-info">
           <p className="product-name">{product.name}</p>
