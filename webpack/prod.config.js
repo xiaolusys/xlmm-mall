@@ -34,8 +34,8 @@ module.exports = {
       hash: '[hash]',
       output: 'dist/index.html',
       data: {
-        css: '<link type="text/css" rel="stylesheet" href="./bundle.css?' + Date.now() + '">',
-        js: '<script src="./bundle.js?' + Date.now() + '"></script>',
+        css: '<link type="text/css" rel="stylesheet" href="./bundle.css?v=' + Date.now() + '">',
+        js: '<script src="./bundle.js?v=' + Date.now() + '"></script>',
       },
     }),
     new webpack.ProvidePlugin({
