@@ -28,6 +28,7 @@ app.use(express.static(__dirname + '/'));
 // if API is ready, proxy to api server. else use mock data.
 app.use(mocks());
 app.use('/rest', proxy(url.parse('http://' + config.apiHost + ':' + config.apiPort + '/rest')));
+app.use('/sale', proxy(url.parse('http://' + config.apiHost + ':' + config.apiPort + '/sale')));
 app.get('/.*/', function root(req, res) {
   res.sendFile(__dirname + '/index.html');
 });

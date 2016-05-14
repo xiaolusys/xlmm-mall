@@ -1,14 +1,4 @@
 $bar-border: #dadada !default;
-$gloabl-bg: #f3f3f4 !default;
-body {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.42857;
-  color: #333;
-  background-color: $gloabl-bg !important;
-  overflow-x: hidden;
-}
-
 .hide {
   display: none !important;
 }
@@ -119,6 +109,9 @@ body {
 
 .font-orange {
   color: #f5a623;
+}
+.font-red {
+  color: #f05050;
 }
 
 // font size

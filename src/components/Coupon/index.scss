@@ -1,0 +1,65 @@
+.coupon {
+  margin: 8px;
+  width: 304px;
+  height: 95px;
+  background: url("./images/coupon-avaliable.png") center center no-repeat;
+  background-size: 100%;
+  &.available {
+    .coupon-value {
+      color: #f05050;
+    }
+    .coupon-validity .coupon-date {
+      color: #9b9b9b;
+    }
+  }
+  &.expired {
+    background: url("./images/coupon-expired.png") center center no-repeat;
+    background-size: 100%;
+    color: #d8d8d8 !important;
+  }
+  &.selected {
+    background: url("./images/coupon-selected.png") center center no-repeat;
+    background-size: 100%;
+    .coupon-value {
+      color: #f05050;
+    }
+    .coupon-validity .coupon-date {
+      color: #9b9b9b;
+    }
+  }
+  &.unavailable {
+    background: url("./images/coupon-unavailable.png") center center no-repeat;
+    background-size: 100%;
+    .coupon-validity .coupon-date {
+      color: #9b9b9b;
+    }
+  }
+  &.used {
+    background: url("./images/coupon-used.png") center center no-repeat;
+    background-size: 100%;
+    .coupon-validity .coupon-date {
+      color: #9b9b9b;
+    }
+  }
+  > .coupon-right-top {
+    width: 251px;
+    height: 66px;
+    margin-left: 52px;
+    display: inline-flex;
+    > .coupon-value {
+      font-size: 48px;
+      padding-left: 8px;
+      width: 88px;
+    }
+    > .coupon-detail {
+      padding: 15px;
+    }
+  }
+  > .coupon-validity {
+    width: 244px;
+    font-size: 12px;
+    margin-left: 56px;
+    padding-top: 6px;
+    border-top: 1px dashed #D8D8D8;
+  }
+}
