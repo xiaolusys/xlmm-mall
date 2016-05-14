@@ -43,10 +43,10 @@ const tabs = {
       success: state.portal.success,
     },
     product: {
-      data: state.product.data,
-      isLoading: state.product.isLoading,
-      error: state.product.error,
-      success: state.product.success,
+      data: state.products.data,
+      isLoading: state.products.isLoading,
+      error: state.products.error,
+      success: state.products.success,
     },
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -241,11 +241,11 @@ export class Home extends Component {
                 </li>
               </ul>
             </div>
-            <If condition={product.data.downshelf_deadline}>
+            <If condition={products.data.downshelf_deadline}>
             <div className="col-xs-12 text-center">
               <p className="countdown">
                 <span className="font-grey-light margin-right-xxs">{'距本场' + (activeTab === tabs.tomorrow ? '开始' : '结束')}</span>
-                <Timer endDateString={(activeTab === tabs.tomorrow ? product.data.upshelf_starttime : product.data.downshelf_deadline)} />
+                <Timer endDateString={(activeTab === tabs.tomorrow ? products.data.upshelf_starttime : products.data.downshelf_deadline)} />
               </p>
             </div>
             </If>
@@ -254,7 +254,7 @@ export class Home extends Component {
                 return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
               })}
             </div>
-            {product.isLoading ? <Loader/> : null}
+            {products.isLoading ? <Loader/> : null}
             <Link className="shop-cart" to="/shop/bag"><i className="icon-cart icon-yellow icon-2x"></i></Link>
             <Footer />
           </div>

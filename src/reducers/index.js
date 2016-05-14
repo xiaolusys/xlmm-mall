@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import createReducer from './createReducer';
 import orderReducer from './orderReducer';
-import productReducer from './productReducer';
+import productsReducer from './productsReducer';
 import shopBagReducer from './shopBagReducer';
 
 import * as categoriesAction from 'actions/faq/categories';
@@ -22,6 +22,7 @@ import * as provinceAction from 'actions/user/province';
 import * as cityAction from 'actions/user/city';
 import * as districtAction from 'actions/user/district';
 import * as couponAction from 'actions/user/coupon';
+import * as productDetailsAction from 'actions/product/details';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -36,7 +37,8 @@ const rootReducer = combineReducers({
   expiredCoupon: createReducer(expiredCouponAction.name),
   unexpiredCoupon: createReducer(unexpiredCouponAction.name),
   portal: createReducer(portalAction.name),
-  product: productReducer,
+  products: productsReducer,
+  productDetails: createReducer(productDetailsAction.name),
   order: orderReducer,
   logistics: createReducer(logisticsAction.name),
   province: createReducer(provinceAction.name),

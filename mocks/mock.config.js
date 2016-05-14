@@ -20,4 +20,7 @@ module.exports = {
   // '/rest/v1/integrallog': {
   //   GET: 'data/integralLog.get.json',
   // },
+  // '/rest/v2/modelproducts/': {
+  //   GET: 'data/product.detatils.get.json',
+  // },
 };

@@ -25,7 +25,7 @@ export default (state = initState, action = null) => {
       }
       return _.extend({}, state, { isLoading: false, data: payload, error: false, success: true });
     case productAction.name + '_' + actionTypes.FAILURE:
-      return _.extend({}, state, { isLoading: false, data: action.payload, error: true, success: false });
+      return _.extend({}, state, { isLoading: false, data: action.payload || {}, error: true, success: false });
     default:
       return state;
   }

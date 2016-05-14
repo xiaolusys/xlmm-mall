@@ -1,0 +1,169 @@
+{
+  "id": 9467,
+  "detail_content": {
+    "item_marks": ["包邮", "秒杀"],
+    "sale_time": "2016-05-02",
+    "is_single_spec": false,
+    "offshelf_time": "2016-03-16T10:00:00",
+    "is_recommend": false,
+    "content_imgs": [
+      "http://image.xiaolu.so/MG_1457680784916内容页_01.jpg",
+      "http://image.xiaolu.so/MG_1457680785050内容页_02.jpg",
+      "http://image.xiaolu.so/MG_1457680785159内容页_03.jpg",
+      "http://image.xiaolu.so/MG_1457680785289内容页_04.jpg",
+      "http://image.xiaolu.so/MG_1457680785435内容页_05.jpg",
+      "http://image.xiaolu.so/MG_1457680785621内容页_06.jpg",
+      "http://image.xiaolu.so/MG_1457680785742内容页_07.jpg",
+      "http://image.xiaolu.so/MG_1457680785872内容页_08.jpg"
+    ],
+    "is_sale_out": true,
+    "lowest_std_sale_price": 199,
+    "category": {
+      "id": 13
+    },
+    "is_newsales": false,
+    "name": "可爱卡通印花T恤",
+    "watermark_op": "",
+    "properties": {
+      "note": "舒适柔软面料，可爱米奇印花图案，简约圆领",
+      "color": "红色,灰色",
+      "wash_instructions": "洗涤时请深色、浅色衣物分开洗涤。最高洗涤温度不要超过40度， 不可漂白。有涂层、印花表面不能进行熨烫，会导致表面剥落。不可干洗，悬挂晾干。(如是婴幼儿衣物，请于成人衣物分开洗涤，避免交叉感染。建议手洗水温30度，使用婴幼儿专用衣物洗涤剂。）",
+      "material": "棉织物"
+    },
+    "is_saleopen": false,
+    "lowest_agent_price": 0,
+    "head_imgs": ["http://image.xiaolu.so/MG_1457680769482可爱卡通印花T恤01.png",
+      "http://image.xiaolu.so/MG_1457680776951可爱卡通印花T恤02.png"
+    ]
+  },
+  "sku_info": [{
+    "agent_price": 29.9,
+    "sku_items": [{
+      "agent_price": 29.9,
+      "sku_id": 141762,
+      "name": "90",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141763,
+      "name": "100",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141764,
+      "name": "110",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141765,
+      "name": "120",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141766,
+      "name": "130",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141767,
+      "name": "140",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }],
+    "product_id": 35676,
+    "std_sale_price": 199,
+    "lowest_price": 29.9,
+    "outer_id": "913288620051",
+    "type": "color",
+    "product_img": "http://image.xiaolu.so/MG_1457680769482可爱卡通印花T恤01.png",
+    "name": "可爱卡通印花T恤/红色"
+  }, {
+    "agent_price": 29.9,
+    "sku_items": [{
+      "agent_price": 29.9,
+      "sku_id": 141768,
+      "name": "90",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141769,
+      "name": "100",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141770,
+      "name": "110",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141771,
+      "name": "120",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141772,
+      "name": "130",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }, {
+      "agent_price": 29.9,
+      "sku_id": 141773,
+      "name": "140",
+      "std_sale_price": 199,
+      "type": "size",
+      "free_num": 0,
+      "is_saleout": true
+    }],
+    "product_id": 35677,
+    "std_sale_price": 199,
+    "lowest_price": 29.9,
+    "outer_id": "913288620052",
+    "type": "color",
+    "product_img": "http://image.xiaolu.so/MG_1457680769482可爱卡通印花T恤01.png",
+    "name": "可爱卡通印花T恤/灰色"
+  }],
+  "comparison": {
+    "tables": [{
+      "table": [],
+      "name": "儿童尺码对照表"
+    }, {
+      "table": [],
+      "name": "成人尺码对照表"
+    }]
+  },
+  "extras": {
+    "per_limit": 3,
+    "buy_limit": true
+  }
+}
