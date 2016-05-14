@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Carousel } from 'components/Carousel';
 import { Timer } from 'components/Timer';
+import { Image } from 'components/Image';
 import * as actionCreators from 'actions/product/details';
 import * as constants from 'constants';
 import _ from 'underscore';
@@ -69,7 +70,7 @@ export default class Detail extends Component {
             {details.detail_content && details.detail_content.head_imgs.map((image, index) => {
               return (
                 <div key={index} >
-                  <img className="head-image" src={`${image}${constants.image.head}`} />
+                  <Image className="head-image" src={image} />
                 </div>
               );
             })}
@@ -128,8 +129,8 @@ export default class Detail extends Component {
             </ul>
           </div>
           <div className="details">
-            {details.detail_content.content_imgs.map((img, index) => {
-              return (<img key={index} className="col-xs-12 no-padding" src={img} />);
+            {details.detail_content.content_imgs.map((image, index) => {
+              return (<Image key={index} className="col-xs-12 no-padding" src={image} />);
             })}
           </div>
         </If>
