@@ -43,10 +43,10 @@ const tabs = {
       success: state.portal.success,
     },
     product: {
-      data: state.product.data,
-      isLoading: state.product.isLoading,
-      error: state.product.error,
-      success: state.product.success,
+      data: state.products.data,
+      isLoading: state.products.isLoading,
+      error: state.products.error,
+      success: state.products.success,
     },
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -254,7 +254,7 @@ export class Home extends Component {
                 return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
               })}
             </div>
-            {product.isLoading ? <Loader/> : null}
+            {products.isLoading ? <Loader/> : null}
             <Link className="shop-cart" to="/shop/bag"><i className="icon-cart icon-yellow icon-2x"></i></Link>
             <Footer />
           </div>

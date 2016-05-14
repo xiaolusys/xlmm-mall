@@ -177,7 +177,7 @@ export default class TopTen extends Component {
     return (
       <div>
         <Header title="Top10精选" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-          <div className="content content-white-bg activity-top10">
+          <div className="content content-white-bg clearfix activity-top10">
             <img className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
             <img className="col-md-6 col-md-offset-3 col-xs-12" src={activity.coupon} onClick={this.onCouponClick}/>
             <div className="col-md-6 col-md-offset-3 col-xs-12 mragin-top-sm mragin-bottom-xs">
