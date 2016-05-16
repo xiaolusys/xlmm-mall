@@ -204,8 +204,8 @@ export default class TopTen extends Component {
             <If condition={this.state.redpacketOpened}>
               <div className="popup" onClick={this.toggleRedpacketOpenedState}>
                 <div className="content">
-                  <Image className="col-xs-12 col-md-3 col-md-offset-4" src={activity.redpacket} />
-                  <Image className="js-share col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 margin-top-xs" src={activity.shareBtn} onClick={this.onShareBtnClick} />
+                  <img className="col-xs-12 col-md-3 col-md-offset-4" src={activity.redpacket} />
+                  <img className="js-share col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 margin-top-xs" src={activity.shareBtn} onClick={this.onShareBtnClick} />
                 </div>
                 <div className="popup-overlay"></div>
               </div>
