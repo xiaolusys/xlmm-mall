@@ -7,7 +7,7 @@ export default {
   rule: 'http://7xogkj.com2.z0.glb.qiniucdn.com/activity/top10/20160515/rule.jpg',
   countdownText: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/top10/20160515/countdown-text.png',
   countdownBg: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/top10/20160515/countdown-bg.png',
-  couponIds: '45',
+  couponIds: '46',
   activityId: 8,
   products: [{
     name: '',
