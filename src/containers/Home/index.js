@@ -107,11 +107,7 @@ export class Home extends Component {
 
   onItemClick = (e) => {
     const dataSet = e.currentTarget.dataset;
-    if (dataSet.modelid) {
-      window.location.href = '/tongkuan.html?id=' + dataSet.modelid;
-      return;
-    }
-    window.location.href = '/pages/shangpinxq.html?id=' + dataSet.productid;
+    this.context.router.push('/product/details/' + dataSet.modelid);
   }
 
   onTabItemClick = (e) => {

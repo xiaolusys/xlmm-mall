@@ -10,6 +10,10 @@ class Dom {
     return window.innerHeight;
   }
 
+  windowWidth() {
+    return window.innerWidth;
+  }
+
   offsetTop(selector) {
     return document.querySelector(selector).offsetTop;
   }

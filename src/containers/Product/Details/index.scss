@@ -61,4 +61,41 @@
       }
     }
   }
+  .table {
+    font-size: 11px;
+    background-color: #fff;
+    margin-bottom: 8px;
+    > thead {
+      color: #fff;
+      background-color: #9b9b9b;
+      > tr > th {
+        border-bottom: none;
+      }
+    }
+    > tbody {
+      color: #4a4a4a;
+    }
+  }
+  .shop-cart {
+    > div {
+      height: 36px;
+      width: 36px;
+      background-color: #4a4a4a;
+      border: 1px solid #26262e;
+      border-radius: 40px;
+      padding: 2px;
+      text-align: center;
+      color: transparent;
+      > i {
+        font-size: 24px;
+      }
+    }
+    &:hover,
+    :active,
+    :focus,
+    :visited {
+      color: transparent;
+      text-decoration: none !important;
+    }
+  }
 }
