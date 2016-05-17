@@ -61,6 +61,10 @@ export class Home extends Component {
     product: React.PropTypes.any,
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object,
+  };
+
   constructor(props, context) {
     super(props);
     context.router;
