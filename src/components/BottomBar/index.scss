@@ -8,7 +8,7 @@ $z-index-bar: 9 !default;
     bottom: 0;
     right: 0;
     left: 0;
-    background: #fff;
+    background-color: #fff;
     height: 43px;
     padding: 8px;
     z-index: $z-index-bar;
@@ -19,6 +19,14 @@ $z-index-bar: 9 !default;
     }
     .bottom-bar {
       height: 80px;
+    }
+  }
+  &.bottom-bar-medium {
+    .has-bottom-bar {
+      margin-bottom: 54px;
+    }
+    .bottom-bar {
+      height: 54px;
     }
   }
 }

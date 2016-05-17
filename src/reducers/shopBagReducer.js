@@ -15,6 +15,12 @@ const initState = {
     success: false,
     data: [],
   },
+  addProduct: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -31,6 +37,12 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, { shopBagHistory: { isLoading: false, data: action.payload, success: true, error: false } });
     case shopBagAction.names.FETCH_SHOP_BAG_HISTORY + '_' + actionTypes.FAILURE:
       return _.extend({}, state, { shopBagHistory: { isLoading: false, data: action.payload, success: false, error: true } });
+    case shopBagAction.names.ADD_PRODUCT_TO_SHOP_BAG + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, { addProduct: { isLoading: true, success: false, error: false } });
+    case shopBagAction.names.ADD_PRODUCT_TO_SHOP_BAG + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, { addProduct: { isLoading: false, data: action.payload, success: true, error: false } });
+    case shopBagAction.names.ADD_PRODUCT_TO_SHOP_BAG + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, { addProduct: { isLoading: false, data: action.payload, success: false, error: true } });
     default:
       return state;
   }
