@@ -16,8 +16,6 @@ import { Image } from 'components/Image';
 import { ShopBag } from 'components/ShopBag';
 import * as actionCreators from 'actions/home/product';
 
-import './index.scss';
-
 const requestAction = {
   child: 'childlist',
   lady: 'ladylist',
@@ -122,15 +120,7 @@ export default class List extends Component {
       <div className="product-list">
         <Header title={title[params.type]} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
         <div className="content content-white-bg">
-          <If condition={product.data.downshelf_deadline}>
-          <div className="col-xs-12 text-center">
-            <p className="countdown">
-              <span className="font-grey-light margin-right-xxs">距本场结束</span>
-              <Timer endDateString={product.data.downshelf_deadline} />
-            </p>
-          </div>
-          </If>
-          <div className="home-products clearfix">
+          <div className="product-list clearfix">
             {products.map((item) => {
               return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
             })}
