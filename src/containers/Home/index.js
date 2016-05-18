@@ -150,7 +150,6 @@ export class Home extends Component {
     } else {
       this.setState({ sticky: false });
     }
-    console.log(scrollTop, tabsOffsetTop);
   }
 
   addScrollListener = () => {
