@@ -59,10 +59,13 @@
     background-color: #fff;
     &.sticky {
       position: fixed;
-      top: 44px;
+      top: 0px;
       left: 0;
       right: 0;
       z-index: 9;
+      &.has-header {
+        top: 44px;
+      }
     }
     > ul {
       > li {

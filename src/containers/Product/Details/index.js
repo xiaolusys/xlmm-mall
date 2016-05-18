@@ -313,9 +313,10 @@ export default class Detail extends Component {
     const self = this;
     const { prefixCls, details } = this.props;
     const { trasparentHeader, activeSkuPopup, num, productId, skuId } = this.state;
+
     return (
       <div className={`${prefixCls}`}>
-        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon="icon-share" onLeftBtnClick={this.context.router.goBack} />
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.context.router.goBack} />
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
