@@ -78,24 +78,4 @@
       }
     }
   }
-  .shop-cart {
-    position: fixed;
-    left: 8px;
-    bottom: 60px;
-    height: 48px;
-    width: 48px;
-    background-color: #4a4a4a;
-    border: 1px solid #26262e;
-    border-radius: 40px;
-    padding: 4px;
-    text-align: center;
-    color: transparent;
-    &:hover,
-    :active,
-    :focus,
-    :visited {
-      color: transparent;
-      text-decoration: none !important;
-    }
-  }
 }
