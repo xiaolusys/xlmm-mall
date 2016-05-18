@@ -82,6 +82,7 @@ export const rebuy = (itemId, skuId, cartId) => {
 export const addProductToShopBag = (productId, skuId, num) => {
   const action = createAction(names.ADD_PRODUCT_TO_SHOP_BAG);
   return (dispatch) => {
+    dispatch(action.request());
     return axios.post(constants.baseEndpointV1 + 'carts', qs.stringify({ item_id: productId, sku_id: skuId, num: num }))
       .then((resp) => {
         dispatch(action.success(resp.data));
@@ -89,5 +90,12 @@ export const addProductToShopBag = (productId, skuId, num) => {
       .catch((resp) => {
         dispatch(action.failure(resp.data));
       });
+  };
+};
+
+export const resetAddProductToShopBag = () => {
+  const action = createAction(names.ADD_PRODUCT_TO_SHOP_BAG);
+  return (dispatch) => {
+    dispatch(action.request());
   };
 };

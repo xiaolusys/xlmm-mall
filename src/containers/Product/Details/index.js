@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { Header } from 'components/Header';
 import { Carousel } from 'components/Carousel';
 import { Timer } from 'components/Timer';
 import { Image } from 'components/Image';
@@ -42,6 +43,8 @@ export default class Detail extends Component {
     fetchProductDetails: React.PropTypes.func,
     shopBag: React.PropTypes.object,
     addProductToShopBag: React.PropTypes.func,
+    resetProductDetails: React.PropTypes.func,
+    resetAddProductToShopBag: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -75,6 +78,7 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     window.addEventListener('resize', this.onWindowResize);
   }
 
@@ -99,11 +103,12 @@ export default class Detail extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onWindowResize);
+    this.props.resetAddProductToShopBag();
+    this.props.resetProductDetails();
   }
 
   onWindowResize = (e) => {
     this.setState({ windowWidth: utils.dom.windowWidth() });
-    console.log(this.state);
   }
 
   onPopupOverlayClick = (e) => {
@@ -300,21 +305,21 @@ export default class Detail extends Component {
     const { activeSkuPopup, num, productId, skuId } = this.state;
     return (
       <div className={`${prefixCls}`}>
-        <div className="back" onClick={this.context.router.goBack}>
-          <i className="icon-angle-left icon-yellow-light"></i>
-        </div>
+        <Header title="商品详情" leftIcon="icon-angle-left" rightIcon="icon-share" onLeftBtnClick={this.context.router.goBack} />
         <If condition={!_.isEmpty(details.detail_content)}>
-          {this.renderCarousel(details.detail_content.head_imgs)}
-          {this.renderProductInfo(details.detail_content)}
-          {this.renderPromotion()}
-          {this.renderProductProps(details.detail_content)}
-          <If condition={!_.isEmpty(details.comparison)}>
-            {details.comparison.tables.map((spec, tableIndex) => {
-              return self.renderProductSpec(spec.table);
-            })}
-          </If>
-          {this.renderDetails(details.detail_content.content_imgs)}
-          <BottomBar size="medium">
+          <div className="content">
+            {this.renderCarousel(details.detail_content.head_imgs)}
+            {this.renderProductInfo(details.detail_content)}
+            {this.renderPromotion()}
+            {this.renderProductProps(details.detail_content)}
+            <If condition={!_.isEmpty(details.comparison)}>
+              {details.comparison.tables.map((spec, tableIndex) => {
+                return self.renderProductSpec(spec.table);
+              })}
+            </If>
+            {this.renderDetails(details.detail_content.content_imgs)}
+          </div>
+          <BottomBar className="clearfix" size="medium">
             <Link className="col-xs-2 no-padding shop-cart" to="/shop/bag">
               <div><i className="icon-cart icon-yellow"></i></div>
             </Link>
