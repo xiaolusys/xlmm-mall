@@ -85,7 +85,7 @@ export class ShopBag extends Component {
     return (
       <div>
         <Header title="购物车" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="content shop-bag">
+        <div className="content shop-bag-container">
           <If condition={!_.isEmpty(shopBag.data) || shopBag.isLoading}>
             <ul className="shop-bag-list shop-bag-list-white-bg">
               {shopBag.isLoading ? <Loader/> : null}
