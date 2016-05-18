@@ -237,7 +237,7 @@ export default class Detail extends Component {
     return (
       <div className="product-spec bg-white margin-top-xxs">
         <p className="font-md font-weight-700">商品参数</p>
-        <p><span>商品编号</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.name}</span></p>
+        <p><span>商品编号</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.model_code}</span></p>
         <p><span>商品材质</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.properties.material}</span></p>
         <p><span>可选颜色</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.properties.color}</span></p>
         <p><span>洗涤说明</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.properties.wash_instructions}</span></p>
