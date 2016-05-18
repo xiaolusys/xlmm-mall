@@ -67,7 +67,7 @@ export default class Detail extends Component {
     activeTab: 0,
     activeSkuPopup: false,
     windowWidth: utils.dom.windowWidth(),
-    carouselHeight: 450,
+    carouselHeight: (utils.dom.windowHeight() * 0.7).toFixed(0),
     num: 1,
     productId: 0,
     skuId: 0,
