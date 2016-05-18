@@ -39,6 +39,7 @@ export default class Detail extends Component {
   static propTypes = {
     prefixCls: React.PropTypes.string,
     params: React.PropTypes.object,
+    location: React.PropTypes.object,
     details: React.PropTypes.object,
     fetchProductDetails: React.PropTypes.func,
     shopBag: React.PropTypes.object,
@@ -93,7 +94,7 @@ export default class Detail extends Component {
     }
     if (nextProps.shopBag.addProduct.error) {
       if (nextProps.shopBag.addProduct.data.detail) {
-        Toast.show(nextProps.shopBag.addProduct.data.detail);
+        this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
       } else {
         Toast.show('加入购物车失败');
       }
