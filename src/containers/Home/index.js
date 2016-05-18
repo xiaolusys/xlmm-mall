@@ -257,7 +257,7 @@ export class Home extends Component {
                 return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
               })}
             </div>
-            {products.isLoading ? <Loader/> : null}
+            {product.isLoading ? <Loader/> : null}
             <Link className="shop-cart" to="/shop/bag"><i className="icon-cart icon-yellow icon-2x"></i></Link>
             <Footer />
           </div>
