@@ -22,6 +22,7 @@ export class Header extends Component {
     leftBtnPressed: React.PropTypes.bool,
     rightBtnPressed: React.PropTypes.bool,
     trasparent: React.PropTypes.bool,
+    hide: React.PropTypes.bool,
   };
 
   static defaultProps = {
@@ -42,7 +43,7 @@ export class Header extends Component {
   }
 
   render() {
-    const { prefixCls, className, title, titleType, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed, trasparent } = this.props;
+    const { prefixCls, className, title, titleType, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed, trasparent, hide } = this.props;
     const headerCls = classnames({
       [`${prefixCls}-wrapper ${className}`]: true,
       [`${prefixCls}-trasparent`]: trasparent,
@@ -51,15 +52,17 @@ export class Header extends Component {
       ['icon-btn ' + leftIcon + ' icon-yellow']: 1,
       ['no-icon']: leftText ? true : false,
       ['pressed']: leftBtnPressed,
+      ['hide']: !leftIcon,
     });
     const rightBtnCls = classnames({
       ['icon-btn ' + rightIcon + ' icon-yellow']: 1,
       ['no-icon']: rightText ? true : false,
       ['pressed']: rightBtnPressed,
+      ['hide']: !rightIcon,
     });
     return (
       <div className={headerCls}>
-        <If condition={!utils.detector.isApp()}>
+        <If condition={!hide}>
           <header className="bar bar-header">
             <button className={leftBtnCls} onClick={onLeftBtnClick}>{leftText}</button>
             <If condition={titleType === 'image'}>

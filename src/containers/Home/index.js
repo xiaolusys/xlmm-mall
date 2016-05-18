@@ -145,11 +145,12 @@ export class Home extends Component {
           fetchProduct(requestAction.today, pageIndex + 1, pageSize);
       }
     }
-    if (scrollTop >= tabsOffsetTop) {
+    if (scrollTop > tabsOffsetTop) {
       this.setState({ sticky: true });
     } else {
       this.setState({ sticky: false });
     }
+    console.log(scrollTop, tabsOffsetTop);
   }
 
   addScrollListener = () => {
@@ -176,12 +177,13 @@ export class Home extends Component {
     const mainCls = classnames({
       ['menu-active']: this.state.menuActive,
     });
+    const hasHeader = !utils.detector.isApp();
     return (
       <div className={mainCls}>
         <Side />
         <div className="slide-menu-mask" onClick={this.toggleMenuActive}></div>
         <div className="home-container">
-          <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} />
+          <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} hide={!hasHeader}/>
           <div className="content content-white-bg">
             <div className="home-poster">
               {portal.isLoading ? <Loader/> : null}
@@ -229,7 +231,7 @@ export class Home extends Component {
                 </ul>
               </div>
             </If>
-            <div className={'home-tabs text-center bottom-border ' + (sticky ? 'sticky' : '')}>
+            <div className={'home-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
               <ul className="row no-margin">
                 <li id="yesterday" className={'col-xs-4' + (activeTab === tabs.yesterday ? ' active' : '')} onClick={this.onTabItemClick}>
                   <div>昨日热卖</div>
