@@ -16,6 +16,7 @@ import { Timer } from 'components/Timer';
 import { Side } from 'components/Side';
 import { Product } from 'components/Product';
 import { Image } from 'components/Image';
+import { ShopBag } from 'components/ShopBag';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 
@@ -150,7 +151,6 @@ export class Home extends Component {
     } else {
       this.setState({ sticky: false });
     }
-    console.log(scrollTop, tabsOffsetTop);
   }
 
   addScrollListener = () => {
@@ -258,7 +258,7 @@ export class Home extends Component {
               })}
             </div>
             {product.isLoading ? <Loader/> : null}
-            <Link className="shop-cart" to="/shop/bag"><i className="icon-cart icon-yellow icon-2x"></i></Link>
+            <ShopBag />
             <Footer />
           </div>
         </div>
