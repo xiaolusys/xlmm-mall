@@ -17,3 +17,10 @@ export const fetchProductDetails = (id) => {
       });
   };
 };
+
+export const resetProductDetails = () => {
+  const action = createAction(name);
+  return (dispatch) => {
+    dispatch(action.request());
+  };
+};

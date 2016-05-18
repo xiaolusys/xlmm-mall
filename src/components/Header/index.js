@@ -9,6 +9,7 @@ import './index.scss';
 export class Header extends Component {
   static propTypes = {
     prefixCls: React.PropTypes.string,
+    className: React.PropTypes.string,
     title: React.PropTypes.string.isRequired,
     titleType: React.PropTypes.string,
     leftIcon: React.PropTypes.string,
@@ -20,15 +21,18 @@ export class Header extends Component {
     onRightBtnClick: React.PropTypes.func,
     leftBtnPressed: React.PropTypes.bool,
     rightBtnPressed: React.PropTypes.bool,
+    trasparent: React.PropTypes.bool,
   };
 
   static defaultProps = {
     prefixCls: 'header-bar',
+    className: '',
     title: '',
     leftIcon: '',
     rightIcon: '',
     leftBtnPressed: false,
     rightBtnPressed: false,
+    trasparent: false,
     onLeftBtnClick: _.noop,
     onRightBtnClick: _.noop,
   }
@@ -38,7 +42,11 @@ export class Header extends Component {
   }
 
   render() {
-    const { prefixCls, title, titleType, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed } = this.props;
+    const { prefixCls, className, title, titleType, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed, trasparent } = this.props;
+    const headerCls = classnames({
+      [`${prefixCls}-wrapper ${className}`]: true,
+      [`${prefixCls}-trasparent`]: trasparent,
+    });
     const leftBtnCls = classnames({
       ['icon-btn ' + leftIcon + ' icon-yellow']: 1,
       ['no-icon']: leftText ? true : false,
@@ -50,7 +58,7 @@ export class Header extends Component {
       ['pressed']: rightBtnPressed,
     });
     return (
-      <div className={`${prefixCls}-wrapper`}>
+      <div className={headerCls}>
         <If condition={!utils.detector.isApp()}>
           <header className="bar bar-header">
             <button className={leftBtnCls} onClick={onLeftBtnClick}>{leftText}</button>

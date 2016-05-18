@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { Header } from 'components/Header';
 import { Carousel } from 'components/Carousel';
 import { Timer } from 'components/Timer';
 import { Image } from 'components/Image';
@@ -42,6 +43,8 @@ export default class Detail extends Component {
     fetchProductDetails: React.PropTypes.func,
     shopBag: React.PropTypes.object,
     addProductToShopBag: React.PropTypes.func,
+    resetProductDetails: React.PropTypes.func,
+    resetAddProductToShopBag: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -59,6 +62,7 @@ export default class Detail extends Component {
   }
 
   state = {
+    trasparentHeader: true,
     stickyTab: false,
     activeTab: 0,
     activeSkuPopup: false,
@@ -75,16 +79,15 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.onWindowResize);
+    window.scrollTo(0, 0);
+    this.addEventListener();
   }
 
   componentWillReceiveProps(nextProps) {
-
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
       this.setState({ activeSkuPopup: false });
     }
-
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
     }
@@ -98,12 +101,23 @@ export default class Detail extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onWindowResize);
+    this.removeEventListener();
+    this.props.resetAddProductToShopBag();
+    this.props.resetProductDetails();
   }
 
   onWindowResize = (e) => {
     this.setState({ windowWidth: utils.dom.windowWidth() });
-    console.log(this.state);
+  }
+
+  onScroll = (e) => {
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const { carouselHeight } = this.state;
+    if (scrollTop >= carouselHeight) {
+      this.setState({ trasparentHeader: false });
+    } else if (scrollTop < carouselHeight) {
+      this.setState({ trasparentHeader: true });
+    }
   }
 
   onPopupOverlayClick = (e) => {
@@ -168,6 +182,16 @@ export default class Detail extends Component {
       }
     });
     return product;
+  }
+
+  addEventListener = () => {
+    window.addEventListener('resize', this.onWindowResize);
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeEventListener = () => {
+    window.removeEventListener('resize', this.onWindowResize);
+    window.addEventListener('scroll', this.onScroll);
   }
 
   renderCarousel(images) {
@@ -274,17 +298,8 @@ export default class Detail extends Component {
   renderDetails(images) {
     const { stickyTab, activeTab } = this.state;
     return (
-      <div>
-        <div className={'tabs text-center bottom-border margin-top-xxs' + (stickyTab ? 'sticky' : '')}>
-          <ul className="row no-margin">
-            <li className={'col-xs-6' + (activeTab === tabs.details ? ' active' : '')} data-id={tabs.details} onClick={this.onTabItemClick}>
-              <div>内容展示</div>
-            </li>
-            <li className={'col-xs-6' + (activeTab === tabs.faq ? ' active' : '')} data-id={tabs.faq} onClick={this.onTabItemClick}>
-              <div>购买咨询</div>
-            </li>
-          </ul>
-        </div>
+      <div className="bg-white">
+        <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">商品展示</div>
         <div className="details">
           {images.map((image, index) => {
             return (<Image key={index} className="col-xs-12 no-padding" thumbnail={640} src={image} />);
@@ -297,24 +312,24 @@ export default class Detail extends Component {
   render() {
     const self = this;
     const { prefixCls, details } = this.props;
-    const { activeSkuPopup, num, productId, skuId } = this.state;
+    const { trasparentHeader, activeSkuPopup, num, productId, skuId } = this.state;
     return (
       <div className={`${prefixCls}`}>
-        <div className="back" onClick={this.context.router.goBack}>
-          <i className="icon-angle-left icon-yellow-light"></i>
-        </div>
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon="icon-share" onLeftBtnClick={this.context.router.goBack} />
         <If condition={!_.isEmpty(details.detail_content)}>
-          {this.renderCarousel(details.detail_content.head_imgs)}
-          {this.renderProductInfo(details.detail_content)}
-          {this.renderPromotion()}
-          {this.renderProductProps(details.detail_content)}
-          <If condition={!_.isEmpty(details.comparison)}>
-            {details.comparison.tables.map((spec, tableIndex) => {
-              return self.renderProductSpec(spec.table);
-            })}
-          </If>
-          {this.renderDetails(details.detail_content.content_imgs)}
-          <BottomBar size="medium">
+          <div className="content">
+            {this.renderCarousel(details.detail_content.head_imgs)}
+            {this.renderProductInfo(details.detail_content)}
+            {this.renderPromotion()}
+            {this.renderProductProps(details.detail_content)}
+            <If condition={!_.isEmpty(details.comparison)}>
+              {details.comparison.tables.map((spec, tableIndex) => {
+                return self.renderProductSpec(spec.table);
+              })}
+            </If>
+            {this.renderDetails(details.detail_content.content_imgs)}
+          </div>
+          <BottomBar className="clearfix" size="medium">
             <Link className="col-xs-2 no-padding shop-cart" to="/shop/bag">
               <div><i className="icon-cart icon-yellow"></i></div>
             </Link>
