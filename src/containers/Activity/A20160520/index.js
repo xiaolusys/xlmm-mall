@@ -114,7 +114,7 @@ export default class A20160520 extends Component {
     return (
       <div>
         <Header title="六一提前Go" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
-        <div className="content content-white-bg activity-md clearfix col-md-4 col-md-offset-4 no-padding">
+        <div className="content-white-bg activity-md clearfix col-md-4 col-md-offset-4 no-padding">
           <Image className="col-xs-12 no-padding" src={activity.banner} />
           <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
           <Image className="col-xs-12 no-padding" src={activity.couponFooter} />
