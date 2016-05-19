@@ -18,7 +18,6 @@ import _ from 'underscore';
 import './index.scss';
 
 const actionCreators = _.extend(detailsAction, shopBagAction);
-
 const tabs = {
   details: 0,
   faq: 1,
@@ -51,7 +50,6 @@ export default class Detail extends Component {
   static contextTypes = {
     router: React.PropTypes.object,
   };
-
 
   static defaultProps = {
     prefixCls: 'product-details',
