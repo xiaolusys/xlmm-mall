@@ -7,7 +7,7 @@ export default {
   shareBtn: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/share-btn.png',
   closeBtn: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/close-btn.png',
   couponIds: '48,49,50',
-  activityId: 0,
+  activityId: 9,
   groups: [{
     products: [{
       name: '田园风碎花连衣裙',
