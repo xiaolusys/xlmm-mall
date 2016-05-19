@@ -6,10 +6,10 @@ import _ from 'underscore';
 import * as utils from 'utils';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
-import activity from './products';
+import { Image } from 'components/Image';
+import activity from './activity';
 
 import './index.scss';
-
 
 const setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {
@@ -37,23 +37,17 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class Md20160508 extends Component {
+export default class A20160520 extends Component {
 
   static propTypes = {
-    images: React.PropTypes.string,
-    couponIds: React.PropTypes.string,
     data: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
     fetchCoupon: React.PropTypes.func,
   };
+
   static contextTypes = {
     router: React.PropTypes.object,
-  };
-
-  static defaultProps = {
-    images: './images/',
-    couponIds: '42,43,44',
   };
 
   constructor(props, context) {
@@ -78,26 +72,14 @@ export default class Md20160508 extends Component {
   }
 
   onCouponClick = (e) => {
-    this.props.fetchCoupon(this.props.couponIds);
+    this.props.fetchCoupon(activity.couponIds);
   }
 
   onProductClick = (e) => {
     const dataSet = e.currentTarget.dataset;
     const modelId = Number(dataSet.modelid);
-    const productId = Number(dataSet.productid);
-    let webUrl = '';
-    let appUrl = '';
-    if (modelId === 0 && productId === 0) {
-      return;
-    }
-    if (modelId) {
-      webUrl = '/tongkuan.html?id=' + modelId;
-      appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
-    }
-    if (productId) {
-      webUrl = '/pages/shangpinxq.html?id=' + productId;
-      appUrl = 'com.jimei.xlmm://app/v1/products?product_id=' + productId;
-    }
+    const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
+
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       window.AndroidBridge.jumpToNativeLocation(appUrl);
     } else if (utils.detector.isIOS() && !utils.detector.isWechat()) {
@@ -107,7 +89,21 @@ export default class Md20160508 extends Component {
         }, function(response) {});
       });
     } else {
-      window.location.href = webUrl;
+      this.context.router.push(`/product/details/${modelId}`);
+    }
+  }
+
+  onShareBtnClick = (e) => {
+    const data = {
+      share_to: '',
+      active_id: activity.activityId,
+    };
+    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+      setupWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('callNativeShareFunc', data, function(response) {});
+      });
+    } else if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+      window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
     }
   }
 
@@ -116,23 +112,22 @@ export default class Md20160508 extends Component {
   }
 
   render() {
-    const { images } = this.props;
-    const data = this.props.data || {};
     return (
       <div>
-        <Header title="母亲节特惠" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="content content-white-bg activity-md">
-          <img className="col-md-4 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
-          <img className="col-md-2 col-md-offset-4 col-xs-10 col-xs-offset-1 no-padding margin-top-sm" src={activity.coupon} onClick={this.onCouponClick} />
+        <Header title="六一提前Go" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <div className="content content-white-bg activity-md clearfix col-md-4 col-md-offset-4">
+          <Image className="col-xs-12 no-padding" src={activity.banner} />
+          <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
+          <Image className="col-xs-12 no-padding" src={activity.couponFooter} />
           {activity.groups.map((group, index) => {
             return (
-              <div key={index} className="margin-top-sm col-md-4 col-md-offset-3 ">
-                <img className="col-xs-6 col-xs-offset-3 no-padding margin-top-sm" src={group.header} />
+              <div key={index}>
+                <img className="col-xs-12 no-padding margin-top-sm" src={group.header} />
                 <ul>
                 {group.products.map((product, i) => {
                   return (
-                    <li className="col-xs-6 activity-product" key={i} data-modelid={product.modleId} data-productid={product.productId} onClick={this.onProductClick}>
-                      <img src={product.pic} />
+                    <li className="col-xs-6 activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
+                      <Image src={product.pic} />
                     </li>
                   );
                 })}
@@ -140,16 +135,18 @@ export default class Md20160508 extends Component {
               </div>
             );
           })}
-          <img className="col-md-2 col-md-offset-4 col-xs-8 col-xs-offset-2 no-padding margin-top-md margin-bottom-sm" src={activity.footer} />
-          <If condition={this.state.redpacketOpened}>
-            <div className="popup" onClick={this.toggleRedpacketOpenedState}>
-              <div className="content">
-                <img className="col-xs-12 col-md-3 col-md-offset-4" src={activity.redpacket} />
-              </div>
-              <div className="popup-overlay"></div>
-            </div>
-          </If>
+          <Image className="col-xs-12 no-padding" src={activity.footer} />
         </div>
+        <If condition={this.state.redpacketOpened}>
+          <div className="activity-popup">
+            <div className="popup-content col-md-4 col-md-offset-4">
+              <img className="col-xs-12" src={activity.redpacket} />
+              <img className="col-xs-12" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
+              <img className="col-xs-2 col-xs-offset-5 margin-top-xs" src={activity.closeBtn} onClick={this.toggleRedpacketOpenedState} />
+            </div>
+            <div className="popup-overlay"></div>
+          </div>
+        </If>
       </div>
     );
   }

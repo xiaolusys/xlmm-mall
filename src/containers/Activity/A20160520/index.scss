@@ -8,18 +8,20 @@
       width: auto;
     }
   }
-  .popup > .content {
+}
+
+.activity-popup {
+  > .popup-content {
     position: fixed;
-    top: 5%;
+    top: 10%;
     right: 0;
-    bottom: 10%;
     left: 0;
     z-index: 100;
     overflow-x: hidden;
     overflow-y: auto;
     background: transparent;
   }
-  .popup > .popup-overlay {
+  > .popup-overlay {
     position: fixed;
     top: 0;
     right: 0;
