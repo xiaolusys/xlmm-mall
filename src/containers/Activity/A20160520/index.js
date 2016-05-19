@@ -114,8 +114,8 @@ export default class A20160520 extends Component {
   render() {
     return (
       <div>
-        <Header title="六一提前Go" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="content content-white-bg activity-md clearfix col-md-4 col-md-offset-4">
+        <Header title="六一提前Go" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
+        <div className="content content-white-bg activity-md clearfix col-md-4 col-md-offset-4 no-padding">
           <Image className="col-xs-12 no-padding" src={activity.banner} />
           <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
           <Image className="col-xs-12 no-padding" src={activity.couponFooter} />
@@ -139,7 +139,7 @@ export default class A20160520 extends Component {
         </div>
         <If condition={this.state.redpacketOpened}>
           <div className="activity-popup">
-            <div className="popup-content col-md-4 col-md-offset-4">
+            <div className="popup-content col-md-4 col-md-offset-4 no-padding">
               <img className="col-xs-12" src={activity.redpacket} />
               <img className="col-xs-12" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
               <img className="col-xs-2 col-xs-offset-5 margin-top-xs" src={activity.closeBtn} onClick={this.toggleRedpacketOpenedState} />
