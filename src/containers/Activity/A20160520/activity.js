@@ -99,7 +99,7 @@ export default {
   }, {
     products: [{
       name: '韩版学院风两件套',
-      modleId: 12967,
+      modleId: 12965,
       pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12967.png',
     }, {
       name: '超显瘦A版棉麻连衣裙',
