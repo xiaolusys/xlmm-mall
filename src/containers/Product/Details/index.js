@@ -192,7 +192,7 @@ export default class Detail extends Component {
 
   removeEventListener = () => {
     window.removeEventListener('resize', this.onWindowResize);
-    window.addEventListener('scroll', this.onScroll);
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   renderCarousel(images) {
