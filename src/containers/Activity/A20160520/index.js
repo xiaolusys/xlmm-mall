@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/user/coupon';
-import _ from 'underscore';
 import * as utils from 'utils';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
