@@ -9,6 +9,7 @@ import { Image } from 'components/Image';
 import { BottomBar } from 'components/BottomBar';
 import { SkuPopup } from './SkuPopup';
 import { Toast } from 'components/Toast';
+import classnames from 'classnames';
 import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
 import * as constants from 'constants';
@@ -213,14 +214,14 @@ export default class Detail extends Component {
       <div>
         <div className="product-info bottom-border bg-white">
           <div className="row no-margin">
-            <p>{info.name}</p>
+            <p className="font-md">{info.name}</p>
           </div>
           <div className="row no-margin">
             <p className="col-xs-6 no-padding">
               <span className="font-32">{'￥' + info.lowest_agent_price}</span>
               <span className="font-xs font-grey-light">{'/￥' + info.lowest_std_sale_price}</span>
             </p>
-            <p className="col-xs-6 no-padding margin-top-xs">
+            <p className="col-xs-6 no-padding margin-top-xs text-right">
               {info.item_marks.map((tag, index) => { return (<span className="tag" key={index}>{tag}</span>); })}
             </p>
           </div>
@@ -260,10 +261,10 @@ export default class Detail extends Component {
     return (
       <div className="product-spec bg-white margin-top-xxs">
         <p className="font-md font-weight-700">商品参数</p>
-        <p><span>商品编号</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.model_code}</span></p>
-        <p><span>商品材质</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.properties.material}</span></p>
-        <p><span>可选颜色</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.properties.color}</span></p>
-        <p><span>洗涤说明</span><span className="margin-left-xxs font-grey-light font-weight-200">{info.properties.wash_instructions}</span></p>
+        <p><span>商品编号</span><span className="margin-left-xxs font-grey-light">{info.model_code}</span></p>
+        <p><span>商品材质</span><span className="margin-left-xxs font-grey-light">{info.properties.material}</span></p>
+        <p><span>可选颜色</span><span className="margin-left-xxs font-grey-light">{info.properties.color}</span></p>
+        <p><span>洗涤说明</span><span className="margin-left-xxs font-grey-light">{info.properties.wash_instructions}</span></p>
       </div>
     );
   }

@@ -1,3 +1,6 @@
+.popup-opened {
+  overflow: hidden;
+}
 .popup {
   &.popup-active {}
   > .popup-content {

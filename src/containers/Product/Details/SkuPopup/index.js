@@ -53,6 +53,7 @@ export class SkuPopup extends Component {
   renderHeader() {
     const { prefixCls, productName, productId, skuId } = this.props;
     const product = this.getProduct(productId);
+    console.log(product);
     return (
       <div className={`row bottom-border ${prefixCls}-header`}>
         <Image className="col-xs-3 no-padding" thumbnail={200} crop="200x200" src={product.product_img} />
