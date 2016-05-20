@@ -56,18 +56,18 @@ export default {
     products: [{
       name: '帅气背带礼服套装',
       modleId: 13016,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/13016.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/13016-update.png',
     }, {
       name: '优雅气质礼服裙',
       modleId: 13011,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/13011.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/13011-update.png',
     }],
     header: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/header-5.png',
   }, {
     products: [{
       name: '时尚简约休闲套装',
       modleId: 12955,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12955.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12955-update.png',
     }, {
       name: '淑女范气质裤套装',
       modleId: 12953,
@@ -78,7 +78,7 @@ export default {
     products: [{
       name: '简约条纹百搭t恤',
       modleId: 12962,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12962.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12962-update.png',
     }, {
       name: '修身弹力牛仔短裤',
       modleId: 12227,
@@ -89,29 +89,29 @@ export default {
     products: [{
       name: '百搭通勤风套装',
       modleId: 12959,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12959.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12959-update.png',
     }, {
       name: '休闲西装外套+抽绳短裤套装',
       modleId: 12958,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12958.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12958-update.png',
     }],
     header: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/header-8.png',
   }, {
     products: [{
       name: '韩版学院风两件套',
       modleId: 12965,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12967.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12965.png',
     }, {
       name: '超显瘦A版棉麻连衣裙',
       modleId: 12973,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12973.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12973-update.png',
     }],
     header: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/header-9.png',
   }, {
     products: [{
       name: '潮流压皱荷叶袖上衣',
       modleId: 12954,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12954.png',
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20150520/12954-update.png',
     }, {
       name: '显瘦阔腿短裤',
       modleId: 9039,
