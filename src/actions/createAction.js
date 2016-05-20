@@ -11,13 +11,14 @@ const createAction = (name) => {
     success: (data) => {
       return {
         type: name + '_' + actionTypes.SUCCESS,
-        payload: data,
+        payload: data || {},
       };
     },
-    failure: (data) => {
+    failure: (resp) => {
       return {
         type: name + '_' + actionTypes.FAILURE,
-        payload: data,
+        payload: resp.data || {},
+        status: resp.status || 0,
         error: true,
       };
     },
