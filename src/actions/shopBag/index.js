@@ -101,7 +101,7 @@ export const addProductToShopBag = (productId, skuId, num) => {
     return axios.post(constants.baseEndpointV1 + 'carts', qs.stringify({ item_id: productId, sku_id: skuId, num: num }))
       .then((resp) => {
         dispatch(action.success(resp.data));
-        dispatch(fetchShopBagQuantity())
+        dispatch(fetchShopBagQuantity());
       })
       .catch((resp) => {
         dispatch(action.failure(resp));
