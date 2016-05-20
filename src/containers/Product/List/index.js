@@ -121,6 +121,7 @@ export default class List extends Component {
         <Header title={title[params.type]} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
         <div className="content content-white-bg">
           <div className="product-list clearfix">
+          <div className="margin-top-xxs"></div>
             {products.map((item) => {
               return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
             })}
