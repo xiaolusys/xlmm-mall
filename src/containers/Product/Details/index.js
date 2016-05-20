@@ -47,6 +47,7 @@ export default class Detail extends Component {
     addProductToShopBag: React.PropTypes.func,
     resetProductDetails: React.PropTypes.func,
     resetAddProductToShopBag: React.PropTypes.func,
+    fetchShopBagQuantity: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -78,6 +79,7 @@ export default class Detail extends Component {
   componentWillMount() {
     const { params } = this.props;
     this.props.fetchProductDetails(params.id);
+    this.props.fetchShopBagQuantity();
   }
 
   componentDidMount() {
@@ -252,7 +254,7 @@ export default class Detail extends Component {
               <span className="font-xs font-grey-light">{'/￥' + info.lowest_std_sale_price}</span>
             </p>
             <p className="col-xs-6 no-padding margin-top-xs text-right">
-              {info.item_marks.map((tag, index) => { return (<span className="tag" key={index}>{tag}</span>); })}
+              {info.item_marks.map((tag, index) => { return (<span key={index} className="tag">{tag}</span>); })}
             </p>
           </div>
         </div>
@@ -303,7 +305,7 @@ export default class Detail extends Component {
     return (
       <tr>
         {cells.map((cell, cellIndx) => {
-          return (<th className="text-center font-weight-200">{cell}</th>);
+          return (<th key={cellIndx} className="text-center font-weight-200">{cell}</th>);
         })}
       </tr>
     );
@@ -419,9 +421,12 @@ export default class Detail extends Component {
 
   render() {
     const self = this;
-    const { prefixCls, skuPopupPrefixCls, details } = this.props;
+    const { prefixCls, skuPopupPrefixCls, details, shopBag } = this.props;
     const { trasparentHeader, activeSkuPopup, num, productId, skuId } = this.state;
-
+    let badge = 0;
+    if (shopBag.shopBagQuantity.data) {
+      badge = shopBag.shopBagQuantity.data.result;
+    }
     return (
       <div className={`${prefixCls}`}>
         <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.context.router.goBack} />
@@ -440,7 +445,12 @@ export default class Detail extends Component {
           </div>
           <BottomBar className="clearfix" size="medium">
             <Link className="col-xs-2 no-padding shop-cart" to="/shop/bag">
-              <div><i className="icon-cart icon-yellow"></i></div>
+              <div>
+                <i className="icon-cart icon-yellow"></i>
+                <If condition={badge > 0}>
+                  <span className="shop-cart-badge no-wrap">{badge}</span>
+                </If>
+              </div>
             </Link>
             <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick}>加入购物车</button>
           </BottomBar>
