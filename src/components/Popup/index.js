@@ -25,6 +25,16 @@ export class Popup extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    document.body.classList.toggle('popup-opened', this.props.active);
+  }
+  componentWillReceiveProps(nextProps) {
+    document.body.classList.toggle('popup-opened', nextProps.active);
+  }
+  componentWillUnmount() {
+    document.body.classList.remove('popup-opened');
+  }
+
   render() {
     const { className, prefixCls, children, active, onPopupOverlayClick } = this.props;
     const popupCls = classnames({

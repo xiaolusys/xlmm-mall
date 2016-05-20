@@ -16,7 +16,7 @@
     max-height: 100%;
   }
   .product-info {
-    padding: 8px;
+    padding: 16px 8px;
     p {
       margin-bottom: 0px;
     }
@@ -80,8 +80,8 @@
     > div {
       height: 36px;
       width: 36px;
-      background-color: #4a4a4a;
-      border: 1px solid #26262e;
+      // background-color: #4a4a4a;
+      border: 1px solid #faaa14;
       border-radius: 40px;
       padding: 2px;
       text-align: center;
