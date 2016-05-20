@@ -7,7 +7,7 @@ import { Carousel } from 'components/Carousel';
 import { Timer } from 'components/Timer';
 import { Image } from 'components/Image';
 import { BottomBar } from 'components/BottomBar';
-import { SkuPopup } from './SkuPopup';
+import { Popup } from 'components/Popup';
 import { Toast } from 'components/Toast';
 import classnames from 'classnames';
 import * as detailsAction from 'actions/product/details';
@@ -38,6 +38,7 @@ export default class Detail extends Component {
 
   static propTypes = {
     prefixCls: React.PropTypes.string,
+    skuPopupPrefixCls: React.PropTypes.string,
     params: React.PropTypes.object,
     location: React.PropTypes.object,
     details: React.PropTypes.object,
@@ -54,6 +55,7 @@ export default class Detail extends Component {
 
   static defaultProps = {
     prefixCls: 'product-details',
+    skuPopupPrefixCls: 'sku-popup',
   };
 
   constructor(props, context) {
@@ -127,9 +129,27 @@ export default class Detail extends Component {
 
   onAddToShopBagClick = (e) => {
     const skus = this.props.details.sku_info;
+    let defaultSku = {};
+    for (const skuIndex in skus) {
+      let sum = 0;
+      for (const itemIndex in skus[skuIndex].sku_items) {
+        sum += skus[skuIndex].sku_items[itemIndex].free_num;
+      }
+      if (sum > 0) {
+        defaultSku = skus[skuIndex];
+        break;
+      }
+    }
+    let skuId = 0;
+    for (const index in defaultSku.sku_items) {
+      if (defaultSku.sku_items[index].free_num > 0) {
+        skuId = defaultSku.sku_items[index].sku_id;
+        break;
+      }
+    }
     this.setState({
-      productId: skus[0].product_id,
-      skuId: skus[0].sku_items[0].sku_id,
+      productId: defaultSku.product_id,
+      skuId: skuId,
       activeSkuPopup: true,
     });
     e.preventDefault();
@@ -137,6 +157,9 @@ export default class Detail extends Component {
 
   onSkuItemClick = (e) => {
     const dataset = e.currentTarget.dataset;
+    if (dataset.disabled === 'true') {
+      return false;
+    }
     if (dataset.productid) {
       const productId = Number(dataset.productid);
       const product = this.getProduct(productId);
@@ -309,9 +332,87 @@ export default class Detail extends Component {
     );
   }
 
+  renderSkuHeader() {
+    const { skuPopupPrefixCls, details } = this.props;
+    const { productId, skuId } = this.state;
+    const product = this.getProduct(productId);
+    return (
+      <div className={`row bottom-border ${skuPopupPrefixCls}-header`}>
+        <Image className="col-xs-3 no-padding" thumbnail={200} crop="200x200" src={product.product_img} />
+        <div className="col-xs-7 no-padding">
+          <p className="product-name">{details.detail_content.name}</p>
+          {product.sku_items.map((item) => {
+            if (item.sku_id === skuId) {
+              return (
+                <p>
+                  <span className="font-26">{'￥' + item.agent_price.toFixed(2)}</span>
+                  <span className="font-grey-light">{'/￥' + item.std_sale_price.toFixed(2)}</span>
+                </p>
+              );
+            }
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  renderSkuColor() {
+    const { productId, skuId } = this.state;
+    const skus = this.props.details.sku_info;
+    const product = this.getProduct(productId);
+    return (
+      <div className="row no-margin sku-list">
+        <div className="col-xs-2 no-padding">颜色</div>
+        <ul className="col-xs-10 no-padding">
+        {skus.map((sku) => {
+          let sum = 0;
+          _.each(sku.sku_items, (skuItem) => {
+            sum += skuItem.free_num;
+          });
+          const skuItemCls = classnames({
+            ['sku-item no-wrap']: true,
+            ['active']: product.product_id === sku.product_id,
+            ['disabled']: sum <= 0,
+          });
+          return (
+            <li onClick={this.onSkuItemClick} key={sku.product_id} data-productid={sku.product_id} data-disabled={sum <= 0}>
+              <lable className={skuItemCls}>{sku.name}</lable>
+            </li>
+          );
+        })}
+        </ul>
+      </div>
+    );
+  }
+
+  renderSkuSize() {
+    const { productId, skuId } = this.state;
+    const product = this.getProduct(productId);
+    return (
+      <div className="row no-margin sku-list">
+        <div className="col-xs-2 no-padding">尺寸</div>
+        <ul className="col-xs-10 no-padding">
+        {product.sku_items.map((item) => {
+          const skuItemCls = classnames({
+            ['sku-item no-wrap']: true,
+            ['active']: item.sku_id === skuId,
+            ['disabled']: item.free_num <= 0,
+          });
+          return (
+            <li onClick={this.onSkuItemClick} key={item.sku_id} data-skuid={item.sku_id} data-disabled={item.free_num <= 0}>
+              <lable className={skuItemCls}>{item.name}</lable>
+            </li>
+          );
+        })}
+        </ul>
+      </div>
+    );
+  }
+
+
   render() {
     const self = this;
-    const { prefixCls, details } = this.props;
+    const { prefixCls, skuPopupPrefixCls, details } = this.props;
     const { trasparentHeader, activeSkuPopup, num, productId, skuId } = this.state;
 
     return (
@@ -336,7 +437,24 @@ export default class Detail extends Component {
             </Link>
             <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick}>加入购物车</button>
           </BottomBar>
-          <SkuPopup active={activeSkuPopup} skus={details.sku_info} productName={details.detail_content.name} num={num} productId={productId} skuId={skuId} onPopupOverlayClick={this.onPopupOverlayClick} onSkuItemClick={this.onSkuItemClick} onUdpateQuantityClick={this.onUdpateQuantityClick} onConfirmAddToShopBagClick={this.onConfirmAddToShopBagClick} />
+          <If condition={activeSkuPopup}>
+            <Popup className={`${skuPopupPrefixCls}`} active={activeSkuPopup} onPopupOverlayClick={this.onPopupOverlayClick}>
+              {this.renderSkuHeader()}
+              {this.renderSkuColor()}
+              {this.renderSkuSize()}
+              <div className="row no-margin quantity">
+                <div className="col-xs-2 no-padding">个数</div>
+                <p className="col-xs-10 no-padding">
+                  <span className="minus" data-action="minus" onClick={this.onUdpateQuantityClick}>-</span>
+                  <span>{num}</span>
+                  <span className="plus" data-action="plus" onClick={this.onUdpateQuantityClick}>+</span>
+                </p>
+              </div>
+              <BottomBar size="medium">
+                <button className="button button-energized col-xs-10 col-xs-offset-1 no-padding" type="button" onClick={this.onConfirmAddToShopBagClick}>确定</button>
+              </BottomBar>
+            </Popup>
+          </If>
         </If>
       </div>
     );
