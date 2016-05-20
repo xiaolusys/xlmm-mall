@@ -94,10 +94,17 @@ export default class Detail extends Component {
       Toast.show(nextProps.shopBag.addProduct.data.info);
     }
     if (nextProps.shopBag.addProduct.error) {
-      if (nextProps.shopBag.addProduct.data.detail) {
-        this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
-      } else {
-        Toast.show('加入购物车失败');
+      console.log(nextProps.shopBag.addProduct.status);
+      switch (nextProps.shopBag.addProduct.status) {
+        case 403:
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          break;
+        case 500:
+          Toast.show(nextProps.shopBag.addProduct.data.detail);
+          break;
+        default:
+          Toast.show(nextProps.shopBag.addProduct.data.detail);
+          break;
       }
     }
   }
