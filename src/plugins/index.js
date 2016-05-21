@@ -19,13 +19,10 @@ const setupWebViewJavascriptBridge = (callback) => {
 export const invoke = (params) => {
   if (utils.detector.isApp() && utils.detector.isIOS()) {
     setupWebViewJavascriptBridge((bridge) => {
-      bridge.callHandler(params.method || '', params.data || {}, params.callback || _.noop);
+      bridge.callHandler(params.method, params.data || {}, params.callback || _.noop);
     });
   } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
-    console.log('>>>>>>>>>>', params);
-    console.log(window.AndroidBridge[params.method || '']);
-    console.log(window.AndroidBridge);
-    window.AndroidBridge[params.method || ''](params.data.target_url || '');
+    window.AndroidBridge[params.method](params.data.target_url);
   } else {
     throw String('this context does not support ' + params.method);
   }
