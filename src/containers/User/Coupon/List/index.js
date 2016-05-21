@@ -51,7 +51,6 @@ export default class List extends Component {
 
   render() {
     const { available, used, unavailable, expired } = this.props.coupons;
-    console.log(_.isEmpty(available.data) && _.isEmpty(used.data) && _.isEmpty(unavailable.data) && _.isEmpty(expired.data));
     return (
       <div>
         <Header title="优惠劵" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
