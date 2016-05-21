@@ -140,14 +140,23 @@ export default class Detail extends Component {
         data: { target_url: 'com.jimei.xlmm://app/v1/shopping_cart' },
         callback: (resp) => {},
       });
-      return false;
+    } else {
+      this.context.router.push('/shop/bag');
     }
-    this.context.router.push('/shop/bag');
     e.preventDefault();
   }
 
   onShareBtnClick = (e) => {
 
+  }
+
+  onBackBtnClick = (e) => {
+    if (utils.detector.isApp()) {
+      plugins.invoke({ method: 'callNativeBack' });
+    } else {
+      this.context.route.goBack();
+    }
+    e.preventDefault();
   }
 
   onPopupOverlayClick = (e) => {
@@ -199,6 +208,7 @@ export default class Detail extends Component {
     if (dataset.skuid) {
       this.setState({ skuId: Number(dataset.skuid) });
     }
+    e.preventDefault();
   }
 
   onUdpateQuantityClick = (e) => {
@@ -222,6 +232,7 @@ export default class Detail extends Component {
   onConfirmAddToShopBagClick = (e) => {
     const { productId, skuId, num } = this.state;
     this.props.addProductToShopBag(productId, skuId, num);
+    e.preventDefault();
   }
 
   getProduct = (productId) => {
@@ -449,7 +460,7 @@ export default class Detail extends Component {
     }
     return (
       <div className={`${prefixCls}`}>
-        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.context.router.goBack} onRightBrnClick={this.onShareBtnClick} />
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBrnClick={this.onShareBtnClick} />
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
