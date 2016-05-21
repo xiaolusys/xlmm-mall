@@ -95,12 +95,10 @@ export default class Detail extends Component {
       Toast.show(nextProps.shopBag.addProduct.data.info);
     }
     if (nextProps.shopBag.addProduct.error) {
-      console.log(nextProps.shopBag.addProduct.status);
       switch (nextProps.shopBag.addProduct.status) {
         case 403:
           if (utils.detector.isApp()) {
             plugins.invoke({ method: 'jumpToNativeLogin' });
-            console.log('jumpToNativeLogin');
             return;
           }
           this.context.router.push(`/user/login?next=${this.props.location.pathname}`);

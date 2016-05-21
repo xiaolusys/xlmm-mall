@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+Ïimport React, { Component } from 'react';
 import _ from 'underscore';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -41,7 +41,6 @@ export default class FaqList extends Component {
   }
 
   componentWillMount() {
-    console.log('FAQ componentWillMount');
     const { params } = this.props;
     this.props.fetchQuestions(params.id);
   }
