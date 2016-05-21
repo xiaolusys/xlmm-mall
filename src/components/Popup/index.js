@@ -45,7 +45,7 @@ export class Popup extends Component {
     });
     return (
       <div className={popupCls}>
-        <div className={`${prefixCls}-content`} style={{ height: (utils.dom.windowHeight() * 0.6).toFixed(0), transition: 'height, 0.9s linear' }}>
+        <div className={`${prefixCls}-content`} style={{ height: (utils.dom.windowHeight() * 0.6).toFixed(0) }}>
           {children}
         </div>
         <div className={`${prefixCls}-overlay`} onClick= {onPopupOverlayClick} ></div>
