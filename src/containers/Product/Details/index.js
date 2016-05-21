@@ -14,6 +14,7 @@ import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
 import * as constants from 'constants';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 import _ from 'underscore';
 
 import './index.scss';
@@ -99,8 +100,12 @@ export default class Detail extends Component {
       console.log(nextProps.shopBag.addProduct.status);
       switch (nextProps.shopBag.addProduct.status) {
         case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
           this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
-          break;
+          return;
         case 500:
           Toast.show(nextProps.shopBag.addProduct.data.detail);
           break;
@@ -129,6 +134,23 @@ export default class Detail extends Component {
     } else if (scrollTop < carouselHeight) {
       this.setState({ trasparentHeader: true });
     }
+  }
+
+  onShopbagClick = (e) => {
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'jumpToNativeLocation',
+        data: { target_url: 'com.jimei.xlmm://app/v1/shopping_cart' },
+        callback: (resp) => {},
+      });
+      return false;
+    }
+    this.context.router.push('/shop/bag');
+    e.preventDefault();
+  }
+
+  onShareBtnClick = (e) => {
+
   }
 
   onPopupOverlayClick = (e) => {
@@ -429,7 +451,7 @@ export default class Detail extends Component {
     }
     return (
       <div className={`${prefixCls}`}>
-        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.context.router.goBack} />
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.context.router.goBack} onRightBrnClick={this.onShareBtnClick} />
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
@@ -444,14 +466,14 @@ export default class Detail extends Component {
             {this.renderDetails(details.detail_content.content_imgs)}
           </div>
           <BottomBar className="clearfix" size="medium">
-            <Link className="col-xs-2 no-padding shop-cart" to="/shop/bag">
-              <div>
+            <div className="col-xs-2 no-padding shop-cart">
+              <div onClick={this.onShopbagClick}>
                 <i className="icon-cart icon-yellow"></i>
                 <If condition={badge > 0}>
                   <span className="shop-cart-badge no-wrap">{badge}</span>
                 </If>
               </div>
-            </Link>
+            </div>
             <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick}>加入购物车</button>
           </BottomBar>
           <If condition={activeSkuPopup}>
