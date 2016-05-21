@@ -70,8 +70,6 @@ export default class Detail extends Component {
     stickyTab: false,
     activeTab: 0,
     activeSkuPopup: false,
-    windowWidth: utils.dom.windowWidth(),
-    carouselHeight: Number((utils.dom.windowHeight() * 0.7).toFixed(0)),
     num: 1,
     productId: 0,
     skuId: 0,
@@ -129,7 +127,7 @@ export default class Detail extends Component {
 
   onScroll = (e) => {
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    const { carouselHeight } = this.state;
+    const carouselHeight = Number((utils.dom.windowHeight() * 0.7).toFixed(0));
     if (scrollTop >= carouselHeight) {
       this.setState({ trasparentHeader: false });
     } else if (scrollTop < carouselHeight) {
@@ -250,7 +248,8 @@ export default class Detail extends Component {
   }
 
   renderCarousel(images) {
-    const { windowWidth, carouselHeight } = this.state;
+    const windowWidth = utils.dom.windowWidth();
+    const carouselHeight = Number((utils.dom.windowHeight() * 0.7).toFixed(0));
     return (
       <Carousel >
       {images.map((image, index) => {
