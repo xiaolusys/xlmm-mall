@@ -147,7 +147,10 @@ export default class Detail extends Component {
   }
 
   onShareBtnClick = (e) => {
-
+    plugins.invoke({
+      method: 'callNativeUniShareFunc',
+      
+    })
   }
 
   onBackBtnClick = (e) => {
