@@ -1,7 +1,7 @@
 class Detector {
 
   constructor(userAgent) {
-    this.userAgent = userAgent;
+    this.userAgent = userAgent.toLocaleLowerCase();
   }
 
   test(ua) {
@@ -13,15 +13,15 @@ class Detector {
   }
 
   isWechat() {
-    return this.test('MicroMessenger');
+    return this.test('micromessenger');
   }
 
   isIOS() {
-    return this.test('iPhone') || this.test('iPad') || this.test('iPod');
+    return this.test('iphone') || this.test('ipad') || this.test('ipod');
   }
 
   isAndroid() {
-    return this.test('Android');
+    return this.test('android');
   }
 }
 
