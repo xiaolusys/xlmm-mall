@@ -100,6 +100,7 @@ export default class Detail extends Component {
       console.log(nextProps.shopBag.addProduct.status);
       switch (nextProps.shopBag.addProduct.status) {
         case 403:
+        console.log(utils.detector.isApp());
           if (utils.detector.isApp()) {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
@@ -137,6 +138,7 @@ export default class Detail extends Component {
   }
 
   onShopbagClick = (e) => {
+    console.log(utils.detector.isApp());
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'jumpToNativeLocation',
