@@ -1,4 +1,4 @@
-Ïimport React, { Component } from 'react';
+import React, { Component } from 'react';
 import _ from 'underscore';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
