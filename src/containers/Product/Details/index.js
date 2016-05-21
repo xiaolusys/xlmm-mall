@@ -71,7 +71,7 @@ export default class Detail extends Component {
     activeTab: 0,
     activeSkuPopup: false,
     windowWidth: utils.dom.windowWidth(),
-    carouselHeight: (utils.dom.windowHeight() * 0.7).toFixed(0),
+    carouselHeight: Number((utils.dom.windowHeight() * 0.7).toFixed(0)),
     num: 1,
     productId: 0,
     skuId: 0,
@@ -100,9 +100,9 @@ export default class Detail extends Component {
       console.log(nextProps.shopBag.addProduct.status);
       switch (nextProps.shopBag.addProduct.status) {
         case 403:
-        console.log(utils.detector.isApp());
           if (utils.detector.isApp()) {
             plugins.invoke({ method: 'jumpToNativeLogin' });
+            console.log('jumpToNativeLogin');
             return;
           }
           this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
@@ -138,7 +138,6 @@ export default class Detail extends Component {
   }
 
   onShopbagClick = (e) => {
-    console.log(utils.detector.isApp());
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'jumpToNativeLocation',
