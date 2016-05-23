@@ -23,7 +23,7 @@ export const invoke = (params) => {
     });
   } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
     if (params.data) {
-      window.AndroidBridge[params.method](params.data.target_url);
+      window.AndroidBridge[params.method](JSON.stringify(params.data || {}));
     }
     window.AndroidBridge[params.method]();
   } else {
