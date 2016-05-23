@@ -1,0 +1,12 @@
+.login-sms {
+  .password-box {
+    background-color: #fff;
+    padding: 8px 8px;
+    > input {
+      border: none;
+    }
+  }
+  .verify-code-button {
+    width: 88px;
+  }
+}
