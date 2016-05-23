@@ -54,10 +54,16 @@ export class ShopBag extends Component {
       cartIds.push(item.id);
     });
     window.location.href = '/pages/queren-dd.html?cart_ids=' + encodeURIComponent(cartIds.join(','));
+    // this.context.router.push('/order/commit/' + encodeURIComponent(cartIds.join(',')));
   }
 
   onUpdateQuantityClick = (e) => {
-    const { action, id } = e.currentTarget.dataset;
+    const { action, id, num } = e.currentTarget.dataset;
+    if (action === 'minus' && Number(num) === 1) {
+      this.props.updateQuantity(id, 'delete_carts');
+      e.preventDefault();
+      return false;
+    }
     switch (action) {
       case 'plus':
         this.props.updateQuantity(id, 'plus_product_carts');
@@ -68,6 +74,7 @@ export class ShopBag extends Component {
       default:
         break;
     }
+    e.preventDefault();
   }
 
   totalPrice = () => {
@@ -102,9 +109,9 @@ export class ShopBag extends Component {
                         <span className="font-lg font-orange">{'￥' + item.price}</span>
                         <span className="font-grey-light">{'/￥' + item.std_sale_price}</span>
                         <span className="pull-right cart-quantity">
-                          <i className="icon-minus icon-yellow" data-action="minus" data-id={item.id} onClick={this.onUpdateQuantityClick}></i>
+                          <i className="icon-minus icon-yellow" data-action="minus" data-id={item.id} data-num={item.num} onClick={this.onUpdateQuantityClick}></i>
                           <span>{item.num}</span>
-                          <i className="icon-plus icon-yellow" data-action="plus" data-id={item.id} onClick={this.onUpdateQuantityClick}></i>
+                          <i className="icon-plus icon-yellow" data-action="plus" data-id={item.id} data-num={item.num} onClick={this.onUpdateQuantityClick}></i>
                         </span>
                       </p>
                     </div>
