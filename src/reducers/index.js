@@ -23,6 +23,7 @@ import * as districtAction from 'actions/user/district';
 import * as couponAction from 'actions/user/coupon';
 import * as productDetailsAction from 'actions/product/details';
 import * as promotionAction from 'actions/activity/promotion';
+import * as shareAction from 'actions/share';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   shopBag: shopBagReducer,
   coupons: couponsReducer,
   promotion: createReducer(promotionAction.name),
+  share: createReducer(shareAction.name),
 });
 
 export default rootReducer;

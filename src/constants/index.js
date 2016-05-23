@@ -11,3 +11,7 @@ export const couponStatus = {
   expired: 3,
   selected: 4,
 };
+export const shareType = {
+  product: 'model',
+  shop: 'shop',
+};
