@@ -54,6 +54,10 @@ export const updateQuantity = (id, requestAction) => {
         if (resp.data.status === 1) {
           dispatch(fetchShopBag());
         }
+        if (resp.status === 204) {
+          dispatch(fetchShopBag());
+          dispatch(fetchShopBagHistory());
+        }
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
