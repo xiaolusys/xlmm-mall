@@ -153,6 +153,15 @@ export default class Detail extends Component {
 
   onShareBtnClick = (e) => {
     const shareInfo = this.props.share.data;
+    alert({
+      method: 'callNativeUniShareFunc',
+      data: {
+        share_desc: shareInfo.desc,
+        share_icon: shareInfo.share_img,
+        share_type: 'link',
+        link: shareInfo.share_link,
+      },
+    });
     plugins.invoke({
       method: 'callNativeUniShareFunc',
       data: {
