@@ -115,7 +115,7 @@ export default class Home extends Component {
             <button className="col-xs-4 col-xs-offset-2 button button-stable text-center login-sms" data-to={`/user/login/sms?next=${encodeURIComponent(query.next)}`} onClick={this.onLinkClick}>验证码登录</button>
           </div>
           <div className="row no-margin  padding-top-xs user-register">
-            <button className="col-xs-10 col-xs-offset-1 button-stable text-center font-grey-light" data-to="/user/register" onClick={this.onLinkClick}>注册新用户</button>
+            <div className="col-xs-10 col-xs-offset-1 button-stable text-center font-grey-light" data-to="/user/register" onClick={this.onLinkClick}>注册新用户</div>
           </div>
         </div>
       </div>
