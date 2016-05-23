@@ -1,4 +1,4 @@
-alertimport * as utils from 'utils';
+import * as utils from 'utils';
 import _ from 'underscore';
 
 const setupWebViewJavascriptBridge = (callback) => {
