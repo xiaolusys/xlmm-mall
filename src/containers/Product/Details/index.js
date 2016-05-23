@@ -12,6 +12,7 @@ import { Toast } from 'components/Toast';
 import classnames from 'classnames';
 import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
+import * as shareAction from 'actions/share';
 import * as constants from 'constants';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -19,7 +20,7 @@ import _ from 'underscore';
 
 import './index.scss';
 
-const actionCreators = _.extend(detailsAction, shopBagAction);
+const actionCreators = _.extend(detailsAction, shopBagAction, shareAction);
 const tabs = {
   details: 0,
   faq: 1,
@@ -32,6 +33,7 @@ const tabs = {
     error: state.productDetails.error,
     success: state.productDetails.success,
     shopBag: state.shopBag,
+    share: state.share,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -45,10 +47,12 @@ export default class Detail extends Component {
     details: React.PropTypes.object,
     fetchProductDetails: React.PropTypes.func,
     shopBag: React.PropTypes.object,
+    share: React.PropTypes.object,
     addProductToShopBag: React.PropTypes.func,
     resetProductDetails: React.PropTypes.func,
     resetAddProductToShopBag: React.PropTypes.func,
     fetchShopBagQuantity: React.PropTypes.func,
+    fetchShareInfo: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -79,6 +83,7 @@ export default class Detail extends Component {
     const { params } = this.props;
     this.props.fetchProductDetails(params.id);
     this.props.fetchShopBagQuantity();
+    this.props.fetchShareInfo(constants.shareType.product, params.id);
   }
 
   componentDidMount() {
@@ -147,7 +152,16 @@ export default class Detail extends Component {
   }
 
   onShareBtnClick = (e) => {
-
+    const shareInfo = this.props.share.data;
+    plugins.invoke({
+      method: 'callNativeUniShareFunc',
+      data: {
+        share_desc: shareInfo.desc,
+        share_icon: shareInfo.share_img,
+        share_type: 'link',
+        link: shareInfo.share_link,
+      },
+    });
   }
 
   onBackBtnClick = (e) => {
@@ -460,7 +474,7 @@ export default class Detail extends Component {
     }
     return (
       <div className={`${prefixCls}`}>
-        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBrnClick={this.onShareBtnClick} />
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
