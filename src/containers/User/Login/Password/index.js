@@ -27,7 +27,7 @@ const loginType = {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class Login extends Component {
+export default class Password extends Component {
   static propTypes = {
     dispatch: React.PropTypes.func,
     data: React.PropTypes.any,
@@ -106,7 +106,7 @@ export default class Login extends Component {
     const props = this.props;
     return (
       <div>
-        <Header title="登录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="密码登录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content login">
           <Input type="number" placeholder="请输入手机号" regex={/^0?1[3|4|5|7|8][0-9]\d{8}$/} onChange={this.onUsernameChange} />
           <Input type="password" placeholder="请输入登录密码" onChange={this.onPasswordChange} />

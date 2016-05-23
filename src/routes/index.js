@@ -9,7 +9,7 @@ import activityRoutes from './activityRoutes';
 import { App } from 'containers/App';
 import { Home } from 'containers/Home';
 import { FaqCategory, FaqList } from 'containers/Faq';
-import { Login, Password, UserProfile, UserPhone, Nickname, AddressList, EditAddress, Point, CouponList, Complaint } from 'containers/User';
+import { SmsLogin, LoginHome, PasswordLogin, Password, UserProfile, UserPhone, Nickname, AddressList, EditAddress, Point, CouponList, Complaint } from 'containers/User';
 import { OrderList, OrderDetail, Logistics } from 'containers/Order';
 import { ShopBag } from 'containers/ShopBag';
 import { ProductDetails, ProductList } from 'containers/Product';
@@ -23,7 +23,9 @@ export default (
     <Route path="/user/nickname" component={Nickname} onEnter={utils.checkAuth} />
     <Route path="/user/address" component={AddressList} onEnter={utils.checkAuth} />
     <Route path="/user/address/edit/:id" component={EditAddress} onEnter={utils.checkAuth} />
-    <Route path="/user/login" component={Login} />
+    <Route path="/user/login" component={LoginHome} />
+    <Route path="/user/login/password" component={PasswordLogin} />
+    <Route path="/user/login/sms" component={SmsLogin} />
     <Route path="/user/register" component={Password} />
     <Route path="/user/password/reset" component={Password}/>
     <Route path="/user/password/set" component={Password} onEnter={utils.checkAuth} />

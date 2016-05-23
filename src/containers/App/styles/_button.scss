@@ -14,13 +14,21 @@
     color: #fff;
     background-color: #f5a623;
   }
+  &.button-success {
+    color: #fff;
+    background-color: #44ad35;
+    border: 1px solid #128514;
+  }
   &.pressed {
     opacity: .3;
   }
   &.button-sm {
     padding: 2px 8px;
   }
-  &:hover,:active,:focus,:visited {
+  &:hover,
+  :active,
+  :focus,
+  :visited {
     text-decoration: none;
   }
 }
@@ -28,4 +36,3 @@
 button[disabled] {
   opacity: .7;
 }
-

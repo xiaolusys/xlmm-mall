@@ -1,4 +1,6 @@
-export Login from './Login';
+export PasswordLogin from './Login/Password';
+export SmsLogin from './Login/Sms';
+export LoginHome from './Login/Home';
 export UserProfile from './Profile';
 export UserPhone from './Phone';
 export Password from './Password';
