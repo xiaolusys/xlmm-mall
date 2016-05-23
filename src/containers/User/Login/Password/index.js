@@ -80,26 +80,12 @@ export default class Password extends Component {
     e.preventDefault();
   }
 
-  onRegisterClick = (e) => {
-    this.setState({ loginBtnPressed: true });
-    this.context.router.push('/user/register');
-    e.preventDefault();
-  }
-
   onUsernameChange = (value) => {
     this.setState({ username: value });
   }
 
   onPasswordChange = (value) => {
     this.setState({ password: value });
-  }
-
-  next = () => {
-    const { query } = this.props.location;
-    if (query.next && query.next.indexOf('http') >= 0) {
-      return query.next;
-    }
-    return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl();
   }
 
   render() {
@@ -116,21 +102,6 @@ export default class Password extends Component {
           <div className="row no-margin">
             <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" data-type={loginType.password} onClick={this.onLoginBtnClick}>登录</button>
           </div>
-          <div className="row no-margin">
-            <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-stable" type="button" onClick={this.onRegisterClick}>注册</button>
-          </div>
-          <If condition= {utils.detector.isWechat()}>
-            <p className="row no-margin text-center">
-              <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
-              <span className="col-xs-4 margin-top-lg grey">第三方登录</span>
-              <span className="col-xs-4 bottom-border margin-top-lg height-19"></span>
-            </p>
-            <div className="row no-margin">
-              <div className="col-xs-8 col-xs-offset-2 text-center margin-top-sm">
-                <i className="icon-wechat icon-3x icon-green" data-type={loginType.wechat} onClick={this.onLoginBtnClick}></i>
-              </div>
-            </div>
-          </If>
         </div>
       </div>
     );

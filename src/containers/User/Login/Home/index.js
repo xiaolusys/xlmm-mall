@@ -7,12 +7,12 @@ import * as utils from 'utils';
 import classnames from 'classnames';
 import * as actionCreators from 'actions/user/login';
 import { Header } from 'components/Header';
+import { Image } from 'components/Image';
 import { Toast } from 'components/Toast';
-
-import loginSplash from './images/login-splash.jpg';
 
 import './index.scss';
 
+const loginSplash = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/login-splash.jpg';
 const loginType = {
   password: 0,
   wechat: 1,
@@ -77,27 +77,45 @@ export default class Home extends Component {
     e.preventDefault();
   }
 
+  onLinkClick = (e) => {
+    const link = e.currentTarget.dataset.to;
+    this.context.router.replace(link);
+  }
+
+  next = () => {
+    const { query } = this.props.location;
+    if (query.next && query.next.indexOf('http') >= 0) {
+      return query.next;
+    }
+    return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl();
+  }
+
   render() {
     const { prefixCls, trasparent } = this.props;
+    const { query } = this.props.location;
+    const imgHeight = (utils.dom.windowHeight() * 0.6).toFixed(0);
+    const imgWidth = utils.dom.windowWidth();
     return (
       <div className={`${prefixCls}`}>
         <Header trasparent={`${trasparent}`} title="登录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
-          <img className="login-banner" src={loginSplash}/>
+          <div style={{ height: imgHeight, width: imgWidth }}>
+          <Image className="login-banner" thumbnail={imgWidth} crop={imgWidth + 'x' + imgHeight} quality={100} src={loginSplash}/>
+          </div>
           <If condition= {utils.detector.isWechat()}>
             <div className="row no-margin">
-              <button className="col-xs-10 col-xs-offset-1 margin-top-sm button button-no-padding button-success" type="button" onClick={this.onRegisterClick}>
-                <i className="icon-wechat" data-type={loginType.wechat} onClick={this.onWechatLoginBtnClick}></i>
+              <button className="col-xs-10 col-xs-offset-1 margin-top-sm button button-no-padding button-success" type="button" onClick={this.onWechatLoginBtnClick}>
+                <i className="icon-wechat" data-type={loginType.wechat}></i>
                 <span>微信登录</span>
               </button>
             </div>
           </If>
           <div className="row no-margin margin-bottom-sm">
-            <Link className="col-xs-4 col-xs-offset-1 button button-stable text-center login-mobile" to="/user/login/password">密码登录</Link>
-            <Link className="col-xs-4 col-xs-offset-2 button button-stable text-center login-sms" to="/user/login/sms">验证码登录</Link>
+            <button className="col-xs-4 col-xs-offset-1 button button-stable text-center login-mobile" data-to={`/user/login/password?next=${encodeURIComponent(query.next)}`} onClick={this.onLinkClick}>密码登录</button>
+            <button className="col-xs-4 col-xs-offset-2 button button-stable text-center login-sms" data-to={`/user/login/sms?next=${encodeURIComponent(query.next)}`} onClick={this.onLinkClick}>验证码登录</button>
           </div>
           <div className="row no-margin  padding-top-xs user-register">
-            <Link className="col-xs-10 col-xs-offset-1 button-stable text-center font-grey-light" to="/user/register">注册新用户</Link>
+            <button className="col-xs-10 col-xs-offset-1 button-stable text-center font-grey-light" data-to="/user/register" onClick={this.onLinkClick}>注册新用户</button>
           </div>
         </div>
       </div>
