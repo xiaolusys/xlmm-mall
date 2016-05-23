@@ -80,26 +80,12 @@ export default class Password extends Component {
     e.preventDefault();
   }
 
-  onRegisterClick = (e) => {
-    this.setState({ loginBtnPressed: true });
-    this.context.router.push('/user/register');
-    e.preventDefault();
-  }
-
   onUsernameChange = (value) => {
     this.setState({ username: value });
   }
 
   onPasswordChange = (value) => {
     this.setState({ password: value });
-  }
-
-  next = () => {
-    const { query } = this.props.location;
-    if (query.next && query.next.indexOf('http') >= 0) {
-      return query.next;
-    }
-    return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl();
   }
 
   render() {
