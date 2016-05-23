@@ -93,7 +93,7 @@ export default class Home extends Component {
   render() {
     const { prefixCls, trasparent } = this.props;
     const { query } = this.props.location;
-    const imgHeight = (utils.dom.windowHeight() * 0.6).toFixed(0);
+    const imgHeight = (utils.dom.windowHeight() * 0.56).toFixed(0);
     const imgWidth = utils.dom.windowWidth();
     return (
       <div className={`${prefixCls}`}>
