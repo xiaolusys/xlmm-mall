@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import _ from 'underscore';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from 'actions/user/password';
+import * as actionCreators from 'actions/user/verifyCode';
 import { Header } from 'components/Header';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
@@ -14,10 +14,7 @@ const requestAction = 'sms_login';
 
 @connect(
   state => ({
-    data: state.password.data,
-    isLoading: state.password.isLoading,
-    error: state.password.error,
-    success: state.password.success,
+    verifyCode: state.verifyCode,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -25,12 +22,9 @@ export default class Password extends Component {
   static propTypes = {
     children: React.PropTypes.any,
     location: React.PropTypes.object,
-    data: React.PropTypes.any,
-    isLoading: React.PropTypes.bool,
-    error: React.PropTypes.bool,
+    verifyCode: React.PropTypes.any,
     fetchVerifyCode: React.PropTypes.func,
     verify: React.PropTypes.func,
-    setPassword: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -50,11 +44,16 @@ export default class Password extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success) {
-      Toast.show(nextProps.data.msg);
+    const { query } = this.props.location;
+    const { fetch, verify } = nextProps.verifyCode;
+    if (verify.success && verify.data.rcode === 0 && !verify.isLoading) {
+      Toast.show(verify.data.msg);
+      this.context.router.replace(query.next);
+    } else if ((verify.success || verify.error) && !verify.isLoading) {
+      Toast.show(verify.data.msg);
     }
-    if (nextProps.success && nextProps.data.rcode === 0 && !nextProps.isLoading) {
-      this.context.router.push('/');
+    if ((fetch.success || fetch.error) && !fetch.isLoading && !this.state.verifyCode) {
+      Toast.show(fetch.data.msg);
     }
   }
 
@@ -106,7 +105,7 @@ export default class Password extends Component {
         <div className="content">
           <Input type="number" placeholder="请输入手机号" onChange={this.onPhoneChange}/>
           <div className="row no-margin password-box bottom-border">
-            <input className="col-xs-8" type="number" placeholder="请输入验证码" onChange={this.onVerifyCodeChange} onBlur= {this.onVerifyCodeBlur} />
+            <input className="col-xs-8" type="number" placeholder="请输入验证码" onChange={this.onVerifyCodeChange}/>
             <button className={getVerifyCodeBtnCls} type="button" onClick={this.onGetVerifyCodeBtnClick} disabled={this.state.getVerifyCodeBtnDsiabled}>获取验证码</button>
           </div>
           <div className="row no-margin">

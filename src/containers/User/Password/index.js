@@ -3,14 +3,17 @@ import classnames from 'classnames';
 import _ from 'underscore';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from 'actions/user/password';
+import * as passwordAction from 'actions/user/password';
+import * as verifyCodeAction from 'actions/user/verifyCode';
 import { Header } from 'components/Header';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 
 import './index.scss';
 
-const passwordAction = {
+const actionCreators = _.extend(passwordAction, verifyCodeAction);
+
+const actions = {
   '/user/register': {
     title: '注册',
     nextBtnTitle: '注册',
@@ -30,10 +33,13 @@ const passwordAction = {
 
 @connect(
   state => ({
-    data: state.password.data,
-    isLoading: state.password.isLoading,
-    error: state.password.error,
-    success: state.password.success,
+    password: {
+      data: state.password.data,
+      isLoading: state.password.isLoading,
+      error: state.password.error,
+      success: state.password.success,
+    },
+    verifyCode: state.verifyCode,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -67,15 +73,22 @@ export default class Password extends Component {
   }
 
   componentWillMount() {
-    this.setState({ action: passwordAction[this.props.location.pathname] });
+    this.setState({ action: actions[this.props.location.pathname] });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success) {
-      Toast.show(nextProps.data.msg);
+    const { fetch, verify } = nextProps.verifyCode;
+    if ((fetch.success || fetch.error) && !fetch.isLoading && !this.state.verifyCode) {
+      Toast.show(fetch.data.msg);
     }
-    if (nextProps.success && nextProps.data.rcode === 0 && this.state.setPassword) {
+    if ((verify.success || verify.error) && !verify.isLoading && !this.state.password) {
+      Toast.show(verify.data.msg);
+    }
+    if (nextProps.password.success && nextProps.password.data.rcode === 0 && this.state.setPassword) {
       this.context.router.push('/user/login');
+      Toast.show(nextProps.password.data.msg);
+    } else if ((nextProps.password.error || nextProps.password.success) && !nextProps.password.isLoading) {
+      Toast.show(nextProps.password.data.msg);
     }
   }
 

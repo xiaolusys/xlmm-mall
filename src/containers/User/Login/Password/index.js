@@ -49,34 +49,20 @@ export default class Password extends Component {
   state = {}
 
   componentWillReceiveProps(nextProps) {
-    const { router } = this.context;
     const { query } = this.props.location;
-    if (!nextProps.success) {
-      return;
-    }
-    switch (nextProps.data.rcode) {
-      case 0:
-        Toast.show(nextProps.data.msg);
-        window.location.replace(this.next());
-        break;
-      default:
-        Toast.show(nextProps.data.msg);
-        break;
+    if (nextProps.success && !nextProps.isLoading) {
+      Toast.show(nextProps.data.msg);
+      if (nextProps.data.rcode === 0) {
+        this.context.router.replace(query.next);
+      }
+    } else if (nextProps.error && !nextProps.isLoading) {
+      Toast.show(nextProps.data.msg);
     }
   }
 
   onLoginBtnClick = (e) => {
     const type = Number(e.currentTarget.dataset.type);
-    switch (type) {
-      case loginType.password:
-        this.props.login(this.state.username, this.state.password);
-        break;
-      case loginType.wechat:
-        window.location.replace(constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next()));
-        break;
-      default:
-        break;
-    }
+    this.props.login(this.state.username, this.state.password);
     e.preventDefault();
   }
 
@@ -100,7 +86,7 @@ export default class Password extends Component {
             <Link className="pull-right margin-right-xxs margin-top-xs dark-blue text-underliner" to="/user/password/reset" >忘记密码</Link>
           </div>
           <div className="row no-margin">
-            <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" data-type={loginType.password} onClick={this.onLoginBtnClick}>登录</button>
+            <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.onLoginBtnClick}>登录</button>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import orderReducer from './orderReducer';
 import productsReducer from './productsReducer';
 import couponsReducer from './couponsReducer';
 import shopBagReducer from './shopBagReducer';
+import verifyCodeReducer from './verifyCodeReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   profile: createReducer(profileAction.name),
   address: createReducer(addressAction.name),
   login: createReducer(loginAction.name),
+  verifyCode: verifyCodeReducer,
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
   pointLog: createReducer(pointLogAction.name),
