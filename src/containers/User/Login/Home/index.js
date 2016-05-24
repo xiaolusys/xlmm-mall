@@ -53,7 +53,9 @@ export default class Home extends Component {
     context.router;
   }
 
-  state = {}
+  state = {
+
+  }
 
   componentWillReceiveProps(nextProps) {
     const { router } = this.context;
