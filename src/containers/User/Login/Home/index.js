@@ -92,7 +92,6 @@ export default class Home extends Component {
 
   render() {
     const { prefixCls, trasparent } = this.props;
-    const { query } = this.props.location;
     const imgHeight = (utils.dom.windowHeight() * 0.56).toFixed(0);
     const imgWidth = utils.dom.windowWidth();
     return (
@@ -111,8 +110,8 @@ export default class Home extends Component {
             </div>
           </If>
           <div className="row no-margin margin-bottom-sm">
-            <button className="col-xs-4 col-xs-offset-1 button button-stable text-center login-mobile" data-to={`/user/login/password?next=${encodeURIComponent(query.next)}`} onClick={this.onLinkClick}>密码登录</button>
-            <button className="col-xs-4 col-xs-offset-2 button button-stable text-center login-sms" data-to={`/user/login/sms?next=${encodeURIComponent(query.next)}`} onClick={this.onLinkClick}>验证码登录</button>
+            <button className="col-xs-4 col-xs-offset-1 button button-stable text-center login-mobile" data-to={`/user/login/password?next=${encodeURIComponent(this.next())}`} onClick={this.onLinkClick}>密码登录</button>
+            <button className="col-xs-4 col-xs-offset-2 button button-stable text-center login-sms" data-to={`/user/login/sms?next=${encodeURIComponent(this.next())}`} onClick={this.onLinkClick}>验证码登录</button>
           </div>
           <div className="row no-margin  padding-top-xs padding-bottom-xs user-register">
             <div className="col-xs-10 col-xs-offset-1 button-stable text-center font-grey-light" data-to="/user/register" onClick={this.onLinkClick}>注册新用户</div>
