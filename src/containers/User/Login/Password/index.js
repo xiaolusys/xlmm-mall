@@ -46,7 +46,9 @@ export default class Password extends Component {
     context.router;
   }
 
-  state = {}
+  state = {
+
+  }
 
   componentWillReceiveProps(nextProps) {
     const { query } = this.props.location;
