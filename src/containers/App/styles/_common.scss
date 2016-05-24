@@ -29,6 +29,10 @@ $bar-border: #dadada !default;
   clear: both;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .no-margin {
   margin-right: 0px !important;
   margin-left: 0px !important;
