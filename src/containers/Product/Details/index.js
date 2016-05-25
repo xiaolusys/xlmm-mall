@@ -497,7 +497,9 @@ export default class Detail extends Component {
                 </If>
               </div>
             </div>
-            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick}>加入购物车</button>
+            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out}>
+              {details.detail_content.is_sale_out ? '已抢光' : '加入购物车'}
+            </button>
           </BottomBar>
           <If condition={activeSkuPopup}>
             <Popup className={`${skuPopupPrefixCls}`} active={activeSkuPopup} onPopupOverlayClick={this.onPopupOverlayClick}>
