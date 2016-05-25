@@ -91,7 +91,7 @@ export default class Commit extends Component {
     //   total_fee: ,
     //   addr_id: address.id,
     //   channel: ,
-    //   coupon_id: , 
+    //   coupon_id: ,
     // })
   }
 
