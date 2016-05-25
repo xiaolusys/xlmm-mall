@@ -45,6 +45,7 @@ export default class Detail extends Component {
     params: React.PropTypes.object,
     location: React.PropTypes.object,
     details: React.PropTypes.object,
+    isLoading: React.PropTypes.bool,
     fetchProductDetails: React.PropTypes.func,
     shopBag: React.PropTypes.object,
     share: React.PropTypes.object,
@@ -470,7 +471,7 @@ export default class Detail extends Component {
     const self = this;
     const { prefixCls, skuPopupPrefixCls, details, shopBag } = this.props;
     const { trasparentHeader, activeSkuPopup, num, productId, skuId } = this.state;
-    let badge = shopBag.shopBagQuantity.data.result || 0;
+    const badge = shopBag.shopBagQuantity.data.result || 0;
     if (this.props.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
