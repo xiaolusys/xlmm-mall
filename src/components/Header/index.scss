@@ -83,6 +83,9 @@ $bar-bg: #fff !default;
       &.pressed {
         opacity: .3;
       }
+      &:active {
+        opacity: .5;
+      }
     }
   }
   .bar-header {
