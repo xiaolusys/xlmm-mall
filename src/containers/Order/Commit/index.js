@@ -29,7 +29,7 @@ const payType = {
     address: state.address,
     coupons: state.coupons,
     payInfo: state.payInfo,
-    commitOrder: state.commitOrder,
+    order: state.commitOrder,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -66,7 +66,8 @@ export default class Commit extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchAddress('get_default_address');
+    const { addressId } = this.props.location.query;
+    this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(this.props.params.cartIds);
     // this.props.fetchCoupons(constants.couponStatus.available);
   }
@@ -80,7 +81,9 @@ export default class Commit extends Component {
   }
 
   onCommitOrderClick = (e) => {
+    this.props.commitOrder({
 
+    })
   }
 
   onPayTypeClick = (e) => {
@@ -138,13 +141,13 @@ export default class Commit extends Component {
   render() {
     const { prefixCls, payInfo } = this.props;
     const products = payInfo.data.cart_list || [];
-    const address = this.props.address.data.info || {};
-    const { pathname } = this.props.location;
+    const address = this.props.address.data || {};
+    const { pathname, query } = this.props.location;
     return (
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
-          <div className={`row no-margin bottom-border ${prefixCls}-address`} data-to={`/user/address?next=${encodeURIComponent(pathname)}`} onClick={this.onLinkClick}>
+          <div className={`row no-margin bottom-border ${prefixCls}-address`} data-to={`/user/address?next=${encodeURIComponent(pathname + (query.couponId ? `?couponId=${query.couponId}` : ''))}`} onClick={this.onLinkClick}>
             <i className="col-xs-1 no-padding margin-top-xs icon-location icon-2x icon-yellow-light"></i>
             <div className="col-xs-10">
               <p><span className="margin-right-sm">{address.receiver_name}</span><span>{address.receiver_mobile}</span></p>
@@ -153,7 +156,7 @@ export default class Commit extends Component {
             <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
           </div>
           {this.renderProducts(products)}
-          <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`} data-to={`/user/coupons?next=${encodeURIComponent(pathname)}`} onClick={this.onLinkClick}>
+          <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`} data-to={`/user/coupons?next=${encodeURIComponent(pathname + (query.addressId ? `?addressId=${query.addressId}` : ''))}`} onClick={this.onLinkClick}>
             <p className="col-xs-5 no-padding">可用优惠券</p>
             <p className="col-xs-7 no-padding">
               <span className="col-xs-11 no-padding"></span>
