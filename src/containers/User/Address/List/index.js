@@ -20,6 +20,7 @@ import './index.scss';
 export default class List extends Component {
   static propTypes = {
     children: React.PropTypes.array,
+    location: React.PropTypes.object,
     data: React.PropTypes.any,
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
@@ -40,6 +41,16 @@ export default class List extends Component {
     this.props.fetchAddress();
   }
 
+  onAdrressClick = (e) => {
+    const { id } = e.currentTarget.dataset;
+    const { query } = this.props.location;
+    if (!query.next) {
+      return false;
+    }
+    this.context.router.replace(`${query.next}?addressId=${id}`);
+    e.prevenDefault();
+  }
+
   render() {
     const props = this.props;
     const { children, isLoading, error } = this.props;
@@ -58,22 +69,22 @@ export default class List extends Component {
           {isLoading ? <Loader/> : null}
           <ul className="address-list">
             {
-              data.map((addr, index) => {
+              data.map((address, index) => {
                 return (
-                  <li className="bottom-border row no-margin" key={index}>
-                    <Link to={'/user/address/edit/' + addr.id}>
-                      <div className="col-xs-11">
+                  <li className="bottom-border row no-margin" key={index} data-id={address.id} onClick={this.onAdrressClick}>
+                      <div className="col-xs-10 no-padding">
                         <p className="text-left font-sm no-margin">
-                        <If condition={ addr.default }>
+                        <If condition={ address.default }>
                           <span className="font-xxs margin-right-xs address-mark">默认地址</span>
                         </If>
-                          <span className="address-font-color">{addr.receiver_name}</span>
-                          <span className="margin-left-xs address-font-color">{addr.receiver_mobile}</span>
+                          <span className="address-font-color">{address.receiver_name}</span>
+                          <span className="margin-left-xs address-font-color">{address.receiver_mobile}</span>
                         </p>
-                        <p className="font-xs text-left no-margin address-text">{addr.receiver_state + addr.receiver_city + addr.receiver_district + addr.receiver_address}</p>
+                        <p className="font-xs text-left no-margin address-text">{address.receiver_state + address.receiver_city + address.receiver_district + address.receiver_address}</p>
                       </div>
-                      <i className="icon-angle-right font-grey-light"></i>
-                    </Link>
+                      <div className="col-xs-2 no-padding margin-top-xxs">
+                        <Link className="button button-sm button-light" to={'/user/address/edit/' + address.id}>编辑</Link>
+                      </div>
                   </li>
                 );
               })
