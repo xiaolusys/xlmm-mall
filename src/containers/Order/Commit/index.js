@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { BottomBar } from 'components/BottomBar';
-import { Radio } from 'Components/Radio';
+import { Radio } from 'components/Radio';
 import classnames from 'classnames';
 import * as constants from 'constants';
 import * as utils from 'utils';
