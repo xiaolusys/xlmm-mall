@@ -81,9 +81,18 @@ export default class Commit extends Component {
   }
 
   onCommitOrderClick = (e) => {
-    this.props.commitOrder({
-
-    })
+    // const { address, payInfo, }
+    // this.props.commitOrder({
+    //   uuid: ,
+    //   cart_ids:  ,
+    //   payment: ,
+    //   post_fee: ,
+    //   discount_fee: ,
+    //   total_fee: ,
+    //   addr_id: address.id,
+    //   channel: ,
+    //   coupon_id: , 
+    // })
   }
 
   onPayTypeClick = (e) => {
