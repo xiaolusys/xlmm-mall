@@ -21,8 +21,27 @@
       text-overflow: ellipsis;
     }
   }
+  .product-tips {
+    position: absolute;
+    left: 4px;
+    top: 0;
+    right: 4px;
+    bottom: 68px;
+    > p {
+      position: absolute;
+      top: 32%;
+      left: 32%;
+      text-align: center;
+      line-height: 60px;
+      opacity: .8;
+      color: #fff;
+      background-color: #403B3B;
+      height: 60px;
+      width: 60px;
+      border-radius: 60px;
+    }
+  }
   .font-grey {
     color: #a0a0a0 !important;
   }
 }
-
