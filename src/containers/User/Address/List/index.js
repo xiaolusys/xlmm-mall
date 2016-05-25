@@ -47,7 +47,7 @@ export default class List extends Component {
     if (!query.next) {
       return false;
     }
-    this.context.router.replace(`${query.next}?addressId=${id}`);
+    this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&addressId=${id}` : `${query.next}?addressId=${id}`);
     e.prevenDefault();
   }
 
