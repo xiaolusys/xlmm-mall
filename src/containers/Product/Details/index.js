@@ -470,9 +470,11 @@ export default class Detail extends Component {
     const self = this;
     const { prefixCls, skuPopupPrefixCls, details, shopBag } = this.props;
     const { trasparentHeader, activeSkuPopup, num, productId, skuId } = this.state;
-    let badge = 0;
-    if (shopBag.shopBagQuantity.data) {
-      badge = shopBag.shopBagQuantity.data.result;
+    let badge = shopBag.shopBagQuantity.data.result || 0;
+    if (this.props.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
     }
     return (
       <div className={`${prefixCls}`}>
