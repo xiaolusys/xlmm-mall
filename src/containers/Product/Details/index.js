@@ -156,6 +156,8 @@ export default class Detail extends Component {
     plugins.invoke({
       method: 'callNativeUniShareFunc',
       data: {
+        share_title: shareInfo.title,
+        share_to: '',
         share_desc: shareInfo.desc,
         share_icon: shareInfo.share_img,
         share_type: 'link',
