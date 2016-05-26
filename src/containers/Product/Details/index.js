@@ -93,6 +93,11 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else if (!nextProps.isLoading) {
+      utils.ui.loadingSpinner.hide();
+    }
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
       this.setState({ activeSkuPopup: false });
@@ -483,11 +488,7 @@ export default class Detail extends Component {
     if (shopBag.shopBagQuantity.data) {
       badge = shopBag.shopBagQuantity.data.result;
     }
-    if (this.props.isLoading) {
-      utils.ui.loadingSpinner.show();
-    } else if (!this.props.isLoading) {
-      utils.ui.loadingSpinner.hide();
-    }
+
     return (
       <div className={`${prefixCls}`}>
         <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
