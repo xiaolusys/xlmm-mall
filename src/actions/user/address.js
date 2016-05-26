@@ -12,7 +12,7 @@ export const fetchAddress = (id, isEdit = false) => {
 
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'address' + (id ? '/' + id : ''))
+    return axios.get(constants.baseEndpointV1 + 'address' + (id ? '/' + id : ''))
       .then((resp) => {
         dispatch(action.success(resp.data));
         if (isEdit) {
@@ -28,7 +28,7 @@ export const fetchAddress = (id, isEdit = false) => {
 export const updateAddress = (id, requestAction, address) => {
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'address' + (id ? '/' + id : '') + '/' + requestAction, qs.stringify(address))
+    return axios.post(constants.baseEndpointV1 + 'address' + (id ? '/' + id : '') + '/' + requestAction, qs.stringify(address))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -41,7 +41,7 @@ export const updateAddress = (id, requestAction, address) => {
 export const deleteAddress = (id) => {
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'address/' + id + '/delete_address')
+    return axios.post(constants.baseEndpointV1 + 'address/' + id + '/delete_address')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
