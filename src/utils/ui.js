@@ -1,6 +1,6 @@
 import { LoadingSpinner } from 'components/Loader';
-import { detector } from './detector';
-import { plugins } from 'plugins';
+import detector from './detector';
+import * as plugins from 'plugins';
 
 export const loadingSpinner = detector.isApp() ? {
   show: () => {
