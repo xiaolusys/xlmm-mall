@@ -25,6 +25,6 @@ export const invoke = (params) => {
     if (!window.AndroidBridge) {
       throw String('this context does not support ' + params.method);
     }
-    window.AndroidBridge[params.method](JSON.stringify(params.data || {}));
+    params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
   }
 };
