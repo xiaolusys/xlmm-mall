@@ -263,6 +263,15 @@ export default class Detail extends Component {
     return product;
   }
 
+  getAddToShopBagBtnText = (detail) => {
+    if (detail.is_sale_out) {
+      return '已抢光';
+    } else if (!detail.is_saleopen) {
+      return '即将开售';
+    }
+    return '加入购物车';
+  }
+
   addEventListener = () => {
     window.addEventListener('resize', this.onWindowResize);
     window.addEventListener('scroll', this.onScroll);
@@ -271,15 +280,6 @@ export default class Detail extends Component {
   removeEventListener = () => {
     window.removeEventListener('resize', this.onWindowResize);
     window.removeEventListener('scroll', this.onScroll);
-  }
-
-  getAddToAddToShopBagBtnText = (detail) => {
-    if (detail.is_sale_out) {
-      return '已抢光';
-    } else if (!detail.is_saleopen) {
-      return '即将开售';
-    }
-    return '加入购物车';
   }
 
   renderCarousel(images) {
@@ -514,7 +514,7 @@ export default class Detail extends Component {
               </div>
             </div>
             <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out || !details.detail_content.is_saleopen}>
-              {this.getAddToAddToShopBagBtnText(details.detail_content)}
+              {this.getAddToShopBagBtnText(details.detail_content)}
             </button>
           </BottomBar>
           <If condition={activeSkuPopup}>
