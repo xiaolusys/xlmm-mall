@@ -485,7 +485,7 @@ export default class Detail extends Component {
     }
     if (this.props.isLoading) {
       utils.ui.loadingSpinner.show();
-    } else {
+    } else if (!this.props.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
     return (
