@@ -29,16 +29,15 @@
     bottom: 68px;
     > p {
       position: absolute;
-      top: 32%;
-      left: 32%;
+      top: 30%;
+      left: 26%;
       text-align: center;
-      line-height: 60px;
-      opacity: .8;
+      line-height: 70px;
       color: #fff;
-      background-color: #403B3B;
-      height: 60px;
-      width: 60px;
-      border-radius: 60px;
+      background-color: rgba(0, 0, 0, 0.4);
+      height: 70px;
+      width: 70px;
+      border-radius: 70px;
     }
   }
   .font-grey {

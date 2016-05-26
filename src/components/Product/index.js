@@ -46,6 +46,9 @@ export class Product extends Component {
             <If condition={product.is_saleout}>
               <div className="product-tips"><p>已抢光</p></div>
             </If>
+            <If condition={!product.is_saleopen}>
+              <div className="product-tips"><p>即将开售</p></div>
+            </If>
           </div>
           <div className="product-info">
           <p className="product-name">{product.name}</p>
