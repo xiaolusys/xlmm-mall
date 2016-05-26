@@ -273,6 +273,15 @@ export default class Detail extends Component {
     window.removeEventListener('scroll', this.onScroll);
   }
 
+  getAddToAddToShopBagBtnText = (detail) => {
+    if (detail.is_sale_out) {
+      return '已抢光';
+    } else if (!detail.is_saleopen) {
+      return '即将开售';
+    }
+    return '加入购物车';
+  }
+
   renderCarousel(images) {
     const windowWidth = utils.dom.windowWidth();
     const carouselHeight = Number((utils.dom.windowHeight() * 0.7).toFixed(0));
@@ -466,7 +475,6 @@ export default class Detail extends Component {
     );
   }
 
-
   render() {
     const self = this;
     const { prefixCls, skuPopupPrefixCls, details, shopBag } = this.props;
@@ -505,8 +513,8 @@ export default class Detail extends Component {
                 </If>
               </div>
             </div>
-            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out}>
-              {details.detail_content.is_sale_out ? '已抢光' : '加入购物车'}
+            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out || !details.detail_content.is_saleopen}>
+              {this.getAddToAddToShopBagBtnText(details.detail_content)}
             </button>
           </BottomBar>
           <If condition={activeSkuPopup}>
