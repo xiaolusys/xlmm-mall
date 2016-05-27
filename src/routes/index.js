@@ -10,7 +10,7 @@ import { App } from 'containers/App';
 import { Home } from 'containers/Home';
 import { FaqCategory, FaqList } from 'containers/Faq';
 import { SmsLogin, LoginHome, PasswordLogin, Password, UserProfile, UserPhone, Nickname, AddressList, EditAddress, Point, CouponList, Complaint } from 'containers/User';
-import { OrderList, OrderDetail, Logistics } from 'containers/Order';
+import { OrderList, OrderDetail, Logistics, OrderCommit } from 'containers/Order';
 import { ShopBag } from 'containers/ShopBag';
 import { ProductDetails, ProductList } from 'containers/Product';
 import { RefundsDetail } from 'containers/Refunds';
@@ -36,6 +36,7 @@ export default (
     <Route path="/order/:type" component={OrderList} onEnter={utils.checkAuth} />
     <Route path="/order/detail/:id" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
+    <Route path="/order/commit/:cartIds" component={OrderCommit} onEnter={utils.checkAuth} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/list/:type" component={ProductList} />

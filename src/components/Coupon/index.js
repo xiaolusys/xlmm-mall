@@ -27,9 +27,9 @@ export class Coupon extends Component {
   }
 
   render() {
-    const { prefixCls, status, couponItem } = this.props;
+    const { prefixCls, status, couponItem, ...props } = this.props;
     return (
-      <div className={`${prefixCls} ${couponStatus[status]}`}>
+      <div className={`${prefixCls} ${couponStatus[status]}`} {...props}>
         <div className="coupon-right-top">
           <p className={'no-margin coupon-value'}>{'¥' + couponItem.coupon_value}</p>
           <div className="coupon-detail">

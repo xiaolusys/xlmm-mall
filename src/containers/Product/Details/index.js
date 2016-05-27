@@ -45,6 +45,7 @@ export default class Detail extends Component {
     params: React.PropTypes.object,
     location: React.PropTypes.object,
     details: React.PropTypes.object,
+    isLoading: React.PropTypes.bool,
     fetchProductDetails: React.PropTypes.func,
     shopBag: React.PropTypes.object,
     share: React.PropTypes.object,
@@ -92,6 +93,11 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else if (!nextProps.isLoading) {
+      utils.ui.loadingSpinner.hide();
+    }
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
       this.setState({ activeSkuPopup: false });
@@ -156,6 +162,8 @@ export default class Detail extends Component {
     plugins.invoke({
       method: 'callNativeUniShareFunc',
       data: {
+        share_title: shareInfo.title,
+        share_to: '',
         share_desc: shareInfo.desc,
         share_icon: shareInfo.share_img,
         share_type: 'link',
@@ -258,6 +266,15 @@ export default class Detail extends Component {
       }
     });
     return product;
+  }
+
+  getAddToShopBagBtnText = (detail) => {
+    if (detail.is_sale_out) {
+      return '已抢光';
+    } else if (!detail.is_saleopen) {
+      return '即将开售';
+    }
+    return '加入购物车';
   }
 
   addEventListener = () => {
@@ -393,19 +410,19 @@ export default class Detail extends Component {
     return (
       <div className={`row bottom-border ${skuPopupPrefixCls}-header`}>
         <Image className="col-xs-3 no-padding" thumbnail={200} crop="200x200" src={product.product_img} />
-        <div className="col-xs-7 no-padding">
-          <p className="product-name">{details.detail_content.name}</p>
-          {product.sku_items.map((item) => {
-            if (item.sku_id === skuId) {
-              return (
+        {product.sku_items.map((item) => {
+          if (item.sku_id === skuId) {
+            return (
+              <div className="col-xs-7 no-padding">
+                <p className="product-name">{details.detail_content.name + '/' + product.name}</p>
                 <p>
                   <span className="font-26">{'￥' + item.agent_price.toFixed(2)}</span>
                   <span className="font-grey-light">{'/￥' + item.std_sale_price.toFixed(2)}</span>
                 </p>
-              );
-            }
-          })}
-        </div>
+              </div>
+            );
+          }
+        })}
       </div>
     );
   }
@@ -463,7 +480,6 @@ export default class Detail extends Component {
     );
   }
 
-
   render() {
     const self = this;
     const { prefixCls, skuPopupPrefixCls, details, shopBag } = this.props;
@@ -472,6 +488,7 @@ export default class Detail extends Component {
     if (shopBag.shopBagQuantity.data) {
       badge = shopBag.shopBagQuantity.data.result;
     }
+
     return (
       <div className={`${prefixCls}`}>
         <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
@@ -497,7 +514,9 @@ export default class Detail extends Component {
                 </If>
               </div>
             </div>
-            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick}>加入购物车</button>
+            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out || !details.detail_content.is_saleopen}>
+              {this.getAddToShopBagBtnText(details.detail_content)}
+            </button>
           </BottomBar>
           <If condition={activeSkuPopup}>
             <Popup className={`${skuPopupPrefixCls}`} active={activeSkuPopup} onPopupOverlayClick={this.onPopupOverlayClick}>

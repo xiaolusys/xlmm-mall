@@ -27,6 +27,7 @@ const couponTypes = {
 export default class List extends Component {
   static propTypes = {
     children: React.PropTypes.array,
+    location: React.PropTypes.object,
     dispatch: React.PropTypes.func,
     coupons: React.PropTypes.any,
     fetchCoupons: React.PropTypes.func,
@@ -41,12 +42,24 @@ export default class List extends Component {
     context.router;
   }
 
+  state = {}
+
   componentWillMount() {
     const { couponStatus } = constants;
     this.props.fetchCoupons(couponStatus.available);
     this.props.fetchCoupons(couponStatus.used);
     this.props.fetchCoupons(couponStatus.unavailable);
     this.props.fetchCoupons(couponStatus.expired);
+  }
+
+  onCouponItemClick = (e) => {
+    const { query } = this.props.location;
+    const { status, id } = e.currentTarget.dataset;
+    if (!query.next || Number(status) !== constants.couponStatus.available) {
+      return;
+    }
+    this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&couponId=${id}` : `${query.next}?couponId=${id}`);
+    e.preventDefault();
   }
 
   render() {
@@ -66,7 +79,7 @@ export default class List extends Component {
                   <ul className="coupon-list">
                     {coupon.data.map((item, index) => {
                       return (
-                        <Coupon status={item.status} couponItem={item} key={index}/>
+                        <Coupon status={item.status} couponItem={item} key={index} data-status={item.status} data-id={item.id} onClick={this.onCouponItemClick}/>
                       );
                     })}
                   </ul>

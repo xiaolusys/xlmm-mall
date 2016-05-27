@@ -22,11 +22,9 @@ export const invoke = (params) => {
       bridge.callHandler(params.method, params.data || {}, params.callback || _.noop);
     });
   } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
-    if (params.data) {
-      window.AndroidBridge[params.method](JSON.stringify(params.data));
+    if (!window.AndroidBridge) {
+      throw String('this context does not support ' + params.method);
     }
-    window.AndroidBridge[params.method]();
-  } else {
-    throw String('this context does not support ' + params.method);
+    params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
   }
 };

@@ -1,0 +1,36 @@
+.order-confirm {
+  .order-confirm-address {
+    background-color: #fff;
+    padding: 8px;
+    .margin-top-28 {
+      margin-top: 28px;
+    }
+  }
+  .order-confirm-product-list {
+    background-color: #fff;
+    p {
+      margin-bottom: 0px;
+      padding: 8px;
+    }
+    img {
+      margin: 8px;
+      border-radius: 10px;
+      width: 60px;
+      overflow: hidden;
+      height: 60px;
+    }
+  }
+  .order-confirm-row {
+    padding: 8px;
+    background-color: #fff;
+    &.transparent {
+      background-color: transparent;
+    }
+    > p {
+      margin-bottom: 0px;
+    }
+  }
+  .margin-top-5 {
+    margin-top: 5px;
+  }
+}
