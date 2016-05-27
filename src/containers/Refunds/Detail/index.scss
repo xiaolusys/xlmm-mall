@@ -1,0 +1,47 @@
+.refunds {
+  .refunds-details-list {
+    > li {
+      display: block;
+      width: 100%;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background-color: #fff;
+    }
+    img {
+      border: 1px solid #979797;
+      border-radius: 5px;
+    }
+  }
+  .popup > .content {
+    position: fixed;
+    top: 5%;
+    right: 0;
+    bottom: 10%;
+    left: 0;
+    z-index: 100;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: transparent;
+  }
+  .popup > .popup-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    .refunds-address-info {
+      height: 300px;
+      margin-top: 30%;
+      margin-left: 16px;
+      margin-right: 16px;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      background-color: #fff;
+      padding: 16px;
+    }
+  }
+}

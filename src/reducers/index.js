@@ -25,6 +25,7 @@ import * as couponAction from 'actions/user/coupon';
 import * as productDetailsAction from 'actions/product/details';
 import * as promotionAction from 'actions/activity/promotion';
 import * as shareAction from 'actions/share';
+import * as refundsDetailAction from 'actions/refunds/detail';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
   coupons: couponsReducer,
   promotion: createReducer(promotionAction.name),
   share: createReducer(shareAction.name),
+  refundsDetails: createReducer(refundsDetailAction.name),
 });
 
 export default rootReducer;

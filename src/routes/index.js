@@ -13,6 +13,7 @@ import { SmsLogin, LoginHome, PasswordLogin, Password, UserProfile, UserPhone, N
 import { OrderList, OrderDetail, Logistics } from 'containers/Order';
 import { ShopBag } from 'containers/ShopBag';
 import { ProductDetails, ProductList } from 'containers/Product';
+import { RefundsDetail } from 'containers/Refunds';
 
 
 export default (
@@ -40,6 +41,7 @@ export default (
     <Route path="/product/list/:type" component={ProductList} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
+    <Route path="/refunds/details/:id" component={RefundsDetail} />
     {activityRoutes}
     <Route status={404} path="*" component={Home} />
   </Route>
