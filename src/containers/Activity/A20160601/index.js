@@ -36,7 +36,7 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160520 extends Component {
+export default class A20160601 extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -113,7 +113,7 @@ export default class A20160520 extends Component {
   render() {
     return (
       <div>
-        <Header title="六一提前Go" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
+        <Header title="小鹿儿童节" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
         <div className="content-white-bg activity-md clearfix col-md-4 col-md-offset-4 no-padding">
           <Image className="col-xs-12 no-padding" src={activity.banner} />
           <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
@@ -121,11 +121,11 @@ export default class A20160520 extends Component {
           {activity.groups.map((group, index) => {
             return (
               <div key={index}>
-                <img className="col-xs-12 no-padding margin-top-sm" src={group.header} />
+                <img className="col-xs-12 no-padding" src={group.header} />
                 <ul>
                 {group.products.map((product, i) => {
                   return (
-                    <li className="col-xs-6 activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
+                    <li className="col-xs-6 no-padding activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
                       <Image src={product.pic} />
                     </li>
                   );
