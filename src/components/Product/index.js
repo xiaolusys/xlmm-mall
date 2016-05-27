@@ -51,7 +51,7 @@ export class Product extends Component {
             </If>
           </div>
           <div className="product-info">
-          <p className="product-name">{product.name}</p>
+          <p className="product-name">{product.product_model.name}</p>
           <p>
             <span className="font-lg">{'￥' + product.agent_price}</span>
             <span className="font-grey">{'/￥' + product.std_sale_price}</span>
