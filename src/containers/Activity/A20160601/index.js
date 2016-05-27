@@ -121,11 +121,11 @@ export default class A20160520 extends Component {
           {activity.groups.map((group, index) => {
             return (
               <div key={index}>
-                <img className="col-xs-12 no-padding margin-top-sm" src={group.header} />
+                <img className="col-xs-12 no-padding" src={group.header} />
                 <ul>
                 {group.products.map((product, i) => {
                   return (
-                    <li className="col-xs-6 activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
+                    <li className="col-xs-6 no-padding activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
                       <Image src={product.pic} />
                     </li>
                   );
