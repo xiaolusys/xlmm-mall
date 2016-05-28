@@ -64,7 +64,10 @@ export default class A20160601 extends Component {
       if (nextProps.data.code === 0) {
         this.toggleRedpacketOpenedState();
       }
-      Toast.show(nextProps.data.res);
+      Toast.show({
+        message: nextProps.data.res,
+        position: Toast.POSITION_MIDDLE,
+      });
     }
     if (!nextProps.success && !nextProps.isLoading) {
       this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
