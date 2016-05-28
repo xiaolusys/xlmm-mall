@@ -90,7 +90,7 @@ export default class A20160601 extends Component {
       return;
     }
     if (utils.detector.isAndroid()) {
-      if (appVersion > 20160528) {
+      if (Number(appVersion) >= 20160528) {
         plugins.invoke({
           method: 'jumpToNativeLocation',
           data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substring(0, window.location.href.indexOf('#')) + '#/product/details/' + modelId },
