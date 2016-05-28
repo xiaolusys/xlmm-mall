@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/user/coupon';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { Image } from 'components/Image';
@@ -78,18 +79,26 @@ export default class A20160601 extends Component {
     const dataSet = e.currentTarget.dataset;
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
-
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'jumpToNativeLocation',
+        data: { target_url: appUrl },
+      });
+      return;
+    }
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       window.AndroidBridge.jumpToNativeLocation(appUrl);
-    } else if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+      return;
+    }
+    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
         }, function(response) {});
       });
-    } else {
-      this.context.router.push(`/product/details/${modelId}`);
+      return;
     }
+    this.context.router.push(`/product/details/${modelId}`);
   }
 
   onShareBtnClick = (e) => {
@@ -97,11 +106,19 @@ export default class A20160601 extends Component {
       share_to: '',
       active_id: activity.activityId,
     };
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeShareFunc',
+        data: data,
+      });
+      return;
+    }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('callNativeShareFunc', data, function(response) {});
       });
-    } else if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+    }
+    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
     }
   }
