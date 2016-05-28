@@ -93,7 +93,6 @@ export default class A20160601 extends Component {
       return;
     }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-      alert('isIOS !isWechat');
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
@@ -101,7 +100,6 @@ export default class A20160601 extends Component {
       });
       return;
     }
-    alert('default');
     this.context.router.push(`/product/details/${modelId}`);
   }
 
