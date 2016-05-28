@@ -79,15 +79,16 @@ export default class A20160601 extends Component {
     const dataSet = e.currentTarget.dataset;
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
+    const appVersion = window.AndroidBridge.appVersion();
+    if (utils.detector.isAndroid() && Number(appVersion) < 20160528 && typeof window.AndroidBridge !== 'undefined') {
+      window.AndroidBridge.jumpToNativeLocation(appUrl);
+      return;
+    }
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'jumpToNativeLocation',
-        data: { target_url: appUrl },
+        data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substring(0, window.location.href.indexOf('#')) + '#/product/details/' + modelId },
       });
-      return;
-    }
-    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      window.AndroidBridge.jumpToNativeLocation(appUrl);
       return;
     }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
