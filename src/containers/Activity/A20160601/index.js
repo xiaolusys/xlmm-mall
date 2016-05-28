@@ -79,6 +79,8 @@ export default class A20160601 extends Component {
     const dataSet = e.currentTarget.dataset;
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
+    const appVersion = window.AndroidBridge.appVersion();
+    console.log(appVersion);
     if (utils.detector.isApp()) {
       alert('app');
       plugins.invoke({
@@ -87,9 +89,15 @@ export default class A20160601 extends Component {
       });
       return;
     }
-    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      alert('isAndroid undefined');
-      window.AndroidBridge.jumpToNativeLocation(appUrl);
+    if (utils.detector.isAndroid()) {
+      if (appVersion > 20160528) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substring(0, window.location.href.indexOf('#')) + '#/product/details/' + modelId },
+        });
+      } else {
+        window.AndroidBridge.jumpToNativeLocation(appUrl);
+      }
       return;
     }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
