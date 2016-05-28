@@ -83,7 +83,7 @@ export default class A20160601 extends Component {
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      const appVersion = window.AndroidBridge.appVersion();
+      const appVersion = window.AndroidBridge.appVersion() || 0;
       if (Number(appVersion) < 20160528) {
         window.AndroidBridge.jumpToNativeLocation(appUrl);
         return;
