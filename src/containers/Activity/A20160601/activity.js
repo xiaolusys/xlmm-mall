@@ -34,7 +34,7 @@ export default {
   }, {
     products: [{
       name: '韩版网纱公主裙',
-      modleId: 9714,
+      modleId: 9713,
       pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160601/9714.png',
     }, {
       name: '时尚休闲两件套',
