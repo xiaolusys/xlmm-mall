@@ -89,7 +89,7 @@ export default class Home extends Component {
     if (query.next && query.next.indexOf('http') >= 0) {
       return query.next;
     }
-    return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl();
+    return query.next ? query.next : '/';
   }
 
   render() {
