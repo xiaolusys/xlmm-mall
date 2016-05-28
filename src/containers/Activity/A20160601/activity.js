@@ -8,7 +8,7 @@ export default {
   closeBtn: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160601/close-btn.png',
   couponIds: '51,52,53',
   activityId: 10,
-  startTime: '2016-06-01 00:00:00',
+  startTime: '2016-05-30 00:00:00',
   groups: [{
     products: [{
       name: '旗袍公主纱裙',
