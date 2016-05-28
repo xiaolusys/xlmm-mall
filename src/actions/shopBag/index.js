@@ -16,7 +16,7 @@ export const fetchShopBag = () => {
   const action = createAction(names.FETCH_SHOP_BAG);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'carts')
+    return axios.get(constants.baseEndpoint + 'carts')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -30,7 +30,7 @@ export const fetchShopBagHistory = () => {
   const action = createAction(names.FETCH_SHOP_BAG_HISTORY);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'carts/show_carts_history')
+    return axios.get(constants.baseEndpoint + 'carts/show_carts_history')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -49,7 +49,7 @@ export const updateQuantity = (id, requestAction) => {
   const action = createAction(names.UPDATE_QUANTITY);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'carts/' + id + '/' + requestAction)
+    return axios.post(constants.baseEndpoint + 'carts/' + id + '/' + requestAction)
       .then((resp) => {
         if (resp.data.status === 1) {
           dispatch(fetchShopBag());
@@ -70,7 +70,7 @@ export const fetchShopBagQuantity = () => {
   const action = createAction(names.FETCH_SHOP_BAG_QUANTITY);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'carts/show_carts_num')
+    return axios.get(constants.baseEndpoint + 'carts/show_carts_num')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -84,7 +84,7 @@ export const rebuy = (itemId, skuId, cartId) => {
   const action = createAction(names.REBUY_HISTORY_PRODUCT);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'carts', qs.stringify({ item_id: itemId, sku_id: skuId, cart_id: cartId }))
+    return axios.post(constants.baseEndpoint + 'carts', qs.stringify({ item_id: itemId, sku_id: skuId, cart_id: cartId }))
       .then((resp) => {
         if (resp.data.code === 0) {
           dispatch(fetchShopBag());
@@ -102,7 +102,7 @@ export const addProductToShopBag = (productId, skuId, num) => {
   const action = createAction(names.ADD_PRODUCT_TO_SHOP_BAG);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'carts', qs.stringify({ item_id: productId, sku_id: skuId, num: num }))
+    return axios.post(constants.baseEndpoint + 'carts', qs.stringify({ item_id: productId, sku_id: skuId, num: num }))
       .then((resp) => {
         dispatch(action.success(resp.data));
         dispatch(fetchShopBagQuantity());
