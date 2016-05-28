@@ -9,21 +9,22 @@
     }
     .product-tips {
       position: absolute;
-      left: 4px;
+      left: 0;
       top: 0;
-      right: 4px;
-      bottom: 68px;
+      right: 0;
+      bottom: 0;
       p {
         position: absolute;
-        top: 30%;
-        left: 26%;
+        top: 34%;
+        left: 36%;
         text-align: center;
-        line-height: 70px;
+        font-size: 10px;
+        line-height: 55px;
         color: #fff;
-        background-color: rgba(0, 0, 0, .4);
-        height: 70px;
-        width: 70px;
-        border-radius: 70px;
+        background-color: rgba(36, 91, 210, 0.5);
+        height: 55px;
+        width: 55px;
+        border-radius: 55px;
       }
     }
   }
