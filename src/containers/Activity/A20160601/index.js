@@ -80,28 +80,18 @@ export default class A20160601 extends Component {
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     const appVersion = window.AndroidBridge.appVersion();
-    console.log(appVersion);
+    if (utils.detector.isAndroid() && Number(appVersion) < 20160528 && typeof window.AndroidBridge !== 'undefined') {
+      window.AndroidBridge.jumpToNativeLocation(appUrl);
+      return;
+    }
     if (utils.detector.isApp()) {
-      alert('app');
       plugins.invoke({
         method: 'jumpToNativeLocation',
         data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substring(0, window.location.href.indexOf('#')) + '#/product/details/' + modelId },
       });
       return;
     }
-    if (utils.detector.isAndroid()) {
-      if (Number(appVersion) >= 20160528) {
-        plugins.invoke({
-          method: 'jumpToNativeLocation',
-          data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substring(0, window.location.href.indexOf('#')) + '#/product/details/' + modelId },
-        });
-      } else {
-        window.AndroidBridge.jumpToNativeLocation(appUrl);
-      }
-      return;
-    }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-      alert('isIOS !isWechat');
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
@@ -109,7 +99,6 @@ export default class A20160601 extends Component {
       });
       return;
     }
-    alert('default');
     this.context.router.push(`/product/details/${modelId}`);
   }
 
