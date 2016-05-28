@@ -93,7 +93,7 @@ export const Toast = (function() {
       }
 
       const cssClass = Toast.DEFAULT_CLASS + (toast.class !== '' ? ' ' + toast.class : '');
-      let style = 'position:absolute; display:block; text-align:center; height: auto; overflow: hidden; padding:10px 18px 10px 18px; opacity:0; z-index:100000;';
+      let style = 'position:fixed; display:block; text-align:center; height: auto; overflow: hidden; padding:10px 18px 10px 18px; opacity:0; z-index:100000;';
       style += 'border-radius: ' + toast.radius + 'px; -webkit-border-radius: ' + toast.radius + 'px; -ms-border-radius:';
       style += toast.radius + 'px; -o-border-radius:' + toast.radius + 'px; -moz-border-radius: ' + toast.radius + 'px;';
       style += '-webkit-transition: opacity ' + toast.appearTime + 's; -o-transition: opacity ' + toast.appearTime + 's; transition: opacity';
@@ -110,7 +110,7 @@ export const Toast = (function() {
             $toast.css('top', toast.top);
             break;
           case Toast.POSITION_MIDDLE:
-            $toast.css('top', ($(window).height() - $toast.outerHeight(true)) / 2);
+            $toast.css('top', (window.innerHeight - $toast.outerHeight(true)) / 2);
             break;
           default:
             $toast.css('bottom', toast.top);
