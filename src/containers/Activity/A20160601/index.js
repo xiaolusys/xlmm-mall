@@ -127,6 +127,9 @@ export default class A20160601 extends Component {
                   return (
                     <li className="col-xs-6 no-padding activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
                       <Image src={product.pic} />
+                      <If condition={(new Date(activity.startTime)) > (new Date())}>
+                        <div className="product-tips"><p>即将开售</p></div>
+                      </If>
                     </li>
                   );
                 })}

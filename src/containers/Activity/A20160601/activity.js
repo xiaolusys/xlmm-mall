@@ -8,6 +8,7 @@ export default {
   closeBtn: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160601/close-btn.png',
   couponIds: '51,52,53',
   activityId: 10,
+  startTime: '2016-05-30 10:00:00',
   groups: [{
     products: [{
       name: '旗袍公主纱裙',
@@ -102,9 +103,9 @@ export default {
       modleId: 13620,
       pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160601/13620.png',
     }, {
-      name: '棉麻宽松格子衬衫',
-      modleId: 13622,
-      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160601/13622.png',
+      name: '文艺棉麻印花连衣裙',
+      modleId: 13624,
+      pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160601/13624.png',
     }],
     header: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160601/header-9.png',
   }, {
