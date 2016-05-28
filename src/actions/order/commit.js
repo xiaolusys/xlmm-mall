@@ -9,7 +9,7 @@ export const commitOrder = (params) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + '/carts/carts_payinfo', qs.stringify(params))
+    return axios.post(constants.baseEndpoint + 'trades/shoppingcart_create', qs.stringify(params))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
