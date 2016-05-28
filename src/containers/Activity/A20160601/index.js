@@ -80,6 +80,7 @@ export default class A20160601 extends Component {
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     if (utils.detector.isApp()) {
+      alert('app');
       plugins.invoke({
         method: 'jumpToNativeLocation',
         data: { target_url: appUrl },
@@ -87,10 +88,12 @@ export default class A20160601 extends Component {
       return;
     }
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+      alert('isAndroid undefined');
       window.AndroidBridge.jumpToNativeLocation(appUrl);
       return;
     }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+      alert('isIOS !isWechat');
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
@@ -98,6 +101,7 @@ export default class A20160601 extends Component {
       });
       return;
     }
+    alert('default');
     this.context.router.push(`/product/details/${modelId}`);
   }
 
