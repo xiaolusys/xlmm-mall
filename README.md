@@ -1,7 +1,7 @@
 xlmm-mall
 _______________________
 
-[![Build Status](http://dev.huyi.so:8000/api/badges/XLMM-FE/xlmm-mall/status.svg)](http://dev.huyi.so:8000/XLMM-FE/xlmm-mall)
+[![Build Status](http://git.xiaolumm.com:8000/api/badges/XLMM-FE/xlmm-mall/status.svg)](http://git.xiaolumm.com:8000/XLMM-FE/xlmm-mall)
 
 ## Table of Contents
 
