@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ReplacePlugin = require('replace-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -35,7 +36,7 @@ module.exports = {
       output: 'dist/index.html',
       data: {
         css: '<link type="text/css" rel="stylesheet" href="./bundle.css?v=' + Date.now() + '">',
-        js: '<script src="./bundle.js?v=' + Date.now() + '"></script>',
+        js: '<script src="./bundle.js?v=' + Date.now() + '"></script><script src="./pingpp.js"></script>',
       },
     }),
     new webpack.ProvidePlugin({
@@ -46,5 +47,8 @@ module.exports = {
         warnings: false,
       },
     }),
+    new CopyWebpackPlugin([
+      { from: 'src/vendor/pingpp.js' },
+    ]),
   ],
 };

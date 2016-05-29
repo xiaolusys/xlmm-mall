@@ -30,7 +30,12 @@
       margin-bottom: 0px;
     }
   }
-  .margin-top-5 {
-    margin-top: 5px;
+  .pay-type-popup {
+    >.popup-content {
+      padding: 8px 0px 0px 0px;
+      .pay-type-item {
+        padding: 8px;
+      }
+    }
   }
 }

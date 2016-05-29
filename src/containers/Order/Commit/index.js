@@ -6,9 +6,12 @@ import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { BottomBar } from 'components/BottomBar';
 import { Radio } from 'components/Radio';
+import { Checkbox } from 'components/Checkbox';
+import { Popup } from 'components/Popup';
 import classnames from 'classnames';
 import * as constants from 'constants';
 import * as utils from 'utils';
+import pingpp from 'vendor/pingpp';
 import _ from 'underscore';
 import * as addressAction from 'actions/user/address';
 import * as couponsAction from 'actions/user/coupons';
@@ -18,10 +21,9 @@ import * as commitOrderAction from 'actions/order/commit';
 import './index.scss';
 
 const actionCreators = _.extend(addressAction, couponsAction, payInfoAction, commitOrderAction);
-
-const payType = {
-  alipay: 0,
-  wechat: 1,
+const payTypeIcons = {
+  wx_pub: 'icon-wechat-pay icon-wechat-green',
+  alipay_wap: 'icon-alipay-square icon-alipay-blue',
 };
 
 @connect(
@@ -62,14 +64,15 @@ export default class Commit extends Component {
   }
 
   state = {
-    defaultPayType: payType.alipay,
+    walletChecked: false,
+    walletBalance: 0,
   }
 
   componentWillMount() {
     const { addressId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(this.props.params.cartIds);
-    // this.props.fetchCoupons(constants.couponStatus.available);
+    this.props.fetchCoupons(constants.couponStatus.available);
   }
 
   componentDidMount() {
@@ -77,30 +80,95 @@ export default class Commit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
+    if (nextProps.order.success && nextProps.order.data.charge) {
+      this.pay(nextProps.order.data.charge);
+    }
   }
 
   onCommitOrderClick = (e) => {
-    // const { address, payInfo, }
-    // this.props.commitOrder({
-    //   uuid: ,
-    //   cart_ids:  ,
-    //   payment: ,
-    //   post_fee: ,
-    //   discount_fee: ,
-    //   total_fee: ,
-    //   addr_id: address.id,
-    //   channel: ,
-    //   coupon_id: ,
-    // })
+    const { address, payInfo } = this.props;
+    const { walletChecked, walletBalance, walletPayType } = this.state;
+    if (walletChecked && walletBalance >= payInfo.data.total_fee) {
+      this.props.commitOrder({
+        uuid: payInfo.data.uuid,
+        cart_ids: payInfo.data.cart_ids,
+        payment: this.getpPaymentPrice(payInfo.data.total_payment),
+        post_fee: payInfo.data.post_fee,
+        discount_fee: payInfo.data.discount_fee,
+        total_fee: payInfo.data.total_fee,
+        addr_id: address.data.id,
+        channel: this.getPayType(),
+      });
+    } else {
+      this.setState({ payTypePopupActive: true });
+    }
+    e.preventDefault();
   }
 
   onPayTypeClick = (e) => {
-    this.setState({ defaultPayType: e.target.value });
+    const { address, payInfo } = this.props;
+    const { walletChecked, walletBalance, walletPayType } = this.state;
+    const { paytype } = e.currentTarget.dataset;
+    this.props.commitOrder({
+      uuid: payInfo.data.uuid,
+      cart_ids: payInfo.data.cart_ids,
+      payment: this.getpPaymentPrice(payInfo.data.total_payment),
+      post_fee: payInfo.data.post_fee,
+      discount_fee: payInfo.data.discount_fee,
+      total_fee: payInfo.data.total_fee,
+      addr_id: address.data.id,
+      channel: this.getPayType(paytype),
+    });
   }
 
   onLinkClick = (e) => {
     this.context.router.push(e.currentTarget.dataset.to);
+  }
+
+  onWalletChange = (e) => {
+    this.setState({
+      walletChecked: !this.state.walletChecked,
+      walletBalance: Number(e.target.walletBalance),
+      walletPayType: e.target.payType,
+    });
+  }
+
+  getPayExtras = () => {
+    // pid:1:value:2;pid:2:value:3:conponid:2
+  }
+
+  getPayType = (payType) => {
+    const { payInfo } = this.props;
+    const { walletChecked, walletBalance, walletPayType } = this.state;
+    if (walletChecked && payInfo.data.total_fee <= walletBalance) {
+      return walletPayType;
+    }
+    return payType;
+  }
+
+  getpPaymentPrice = (totalPrice) => {
+    if (totalPrice) {
+      return totalPrice.toFixed(2);
+    }
+  }
+
+  getDisplayPrice = (totalPrice) => {
+    const { walletChecked, walletBalance } = this.state;
+    if (totalPrice) {
+      return totalPrice.toFixed(2);
+    }
+  }
+
+  getTotalPrice = (totalPrice) => {
+    if (totalPrice) {
+      return totalPrice.toFixed(2);
+    }
+  }
+
+  pay = (charge) => {
+    window.pingpp.createPayment(charge, (result, error) => {
+      console.log(result, error);
+    });
   }
 
   renderProducts(products = []) {
@@ -150,13 +218,18 @@ export default class Commit extends Component {
   render() {
     const { prefixCls, payInfo } = this.props;
     const products = payInfo.data.cart_list || [];
+    const logisticsCompanies = payInfo.data.logistics_companys || [];
+    const payExtras = payInfo.data.pay_extras || [];
     const address = this.props.address.data || {};
+    const channels = this.props.payInfo.data.channels || [];
     const { pathname, query } = this.props.location;
+    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + (query.addressId ? '?addressId=' + query.addressId : ''));
+    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + (query.couponId ? '?couponId=' + query.couponId : ''));
     return (
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
-          <div className={`row no-margin bottom-border ${prefixCls}-address`} data-to={`/user/address?next=${encodeURIComponent(pathname + (query.couponId ? `?couponId=${query.couponId}` : ''))}`} onClick={this.onLinkClick}>
+          <div className={`row no-margin bottom-border ${prefixCls}-address`} data-to={addressLink} onClick={this.onLinkClick}>
             <i className="col-xs-1 no-padding margin-top-xs icon-location icon-2x icon-yellow-light"></i>
             <div className="col-xs-10">
               <p><span className="margin-right-sm">{address.receiver_name}</span><span>{address.receiver_mobile}</span></p>
@@ -165,54 +238,82 @@ export default class Commit extends Component {
             <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
           </div>
           {this.renderProducts(products)}
-          <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`} data-to={`/user/coupons?next=${encodeURIComponent(pathname + (query.addressId ? `?addressId=${query.addressId}` : ''))}`} onClick={this.onLinkClick}>
-            <p className="col-xs-5 no-padding">可用优惠券</p>
-            <p className="col-xs-7 no-padding">
-              <span className="col-xs-11 no-padding"></span>
+          <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
+            <p className="col-xs-5 no-padding">物流配送</p>
+            <div className="col-xs-7 no-padding">
+              <div className="col-xs-11 no-padding text-right">
+                <select className="inline-block" >
+                {logisticsCompanies.map((item) => {
+                  return (
+                    <option className="text-right" key={item.id} value={item.id}>{item.name}</option>
+                  );
+                })}
+                </select>
+              </div>
               <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
-            </p>
+            </div>
           </div>
+          {payExtras.map((item) => {
+            switch (item.pid) {
+              case 2:
+                return (
+                  <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`} key={item.pid} data-to={couponLink} onClick={this.onLinkClick}>
+                    <p className="col-xs-5 no-padding">可用优惠券</p>
+                    <p className="col-xs-7 no-padding">
+                      <span className="col-xs-11 no-padding"></span>
+                      <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
+                    </p>
+                  </div>
+                );
+              case 3:
+                return (
+                  <div className={`row no-margin bottom-border ${prefixCls}-row`} key={item.pid}>
+                    <p className="col-xs-5 no-padding">小鹿钱包</p>
+                    <p className="col-xs-7 no-padding">
+                      <span className="col-xs-10 no-padding text-right">{item.value}</span>
+                      <Checkbox className="col-xs-2" checked={this.state.walletChecked} walletBalance={item.value} payType={item.channel} onChange={this.onWalletChange}/>
+                    </p>
+                  </div>
+                );
+              default:
+                break;
+            }
+          })}
           <div className={`row no-margin bottom-border ${prefixCls}-row`}>
             <p className="col-xs-5 no-padding">运费</p>
             <p className="col-xs-7 no-padding text-right">{payInfo.data.post_fee}</p>
           </div>
           <div className={`row no-margin text-right ${prefixCls}-row transparent`}>
-            <p className="col-xs-12 no-padding"><span>合计：￥</span><span>{payInfo.data.total_fee}</span></p>
+            <p className="col-xs-12 no-padding"><span>合计：￥</span><span>{this.getTotalPrice(payInfo.data.total_fee)}</span></p>
           </div>
         </div>
-        <If condition={payInfo.data.alipay_payable}>
-          <div className={`row no-margin bottom-border ${prefixCls}-row`}>
-            <p className="col-xs-5 no-padding">
-              <i className="icon-alipay-square icon-alipay-blue font-xlg margin-right-xxs"></i>
-              <span className="inline-block margin-top-5">支付宝</span>
-            </p>
-            <p className="col-xs-7 no-padding text-right">
-              <label className="margin-top-5">
-                <Radio value={payType.alipay} checked = {this.state.defaultPayType === payType.alipay} onChange={this.onPayTypeClick} />
-              </label>
-            </p>
-          </div>
-        </If>
-        <If condition={payInfo.data.weixin_payable}>
-          <div className={`row no-margin bottom-border ${prefixCls}-row`}>
-            <p className="col-xs-5 no-padding">
-              <i className="icon-wechat-pay icon-wechat-green font-xlg margin-right-xxs"></i>
-              <span className="inline-block margin-top-5">微信支付</span>
-            </p>
-            <p className="col-xs-7 no-padding text-right">
-              <label className="margin-top-5">
-                <Radio value={payType.wechat} checked = {this.state.defaultPayType === payType.wechat} onChange={this.onPayTypeClick} />
-              </label>
-            </p>
-          </div>
-        </If>
         <BottomBar size="large">
           <p>
             <span className="font-xs">应付款金额</span>
-            <span className="font-lg font-orange">{'￥' + payInfo.data.total_payment}</span>
+            <span className="font-lg font-orange">{'￥' + this.getDisplayPrice(payInfo.data.total_payment)}</span>
           </p>
           <button className="button button-energized col-xs-12" type="button" onClick={this.onCommitOrderClick}>购买</button>
         </BottomBar>
+        <Popup active={this.state.payTypePopupActive} className="pay-type-popup" height="auto">
+          <div className={`row no-margin bottom-border ${prefixCls}-row`}>
+            <i className="col-xs-1 no-padding icon-angle-left"></i>
+            <p className="col-xs-11 no-padding text-center">
+              <span className="font-xs">应付款金额</span>
+              <span className="font-lg font-orange">{'￥' + this.getDisplayPrice(payInfo.data.total_payment)}</span>
+            </p>
+          </div>
+          {channels.map((channel) => {
+            if (!channel.payable) {
+              return null;
+            }
+            return (
+              <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
+                <i className={`${payTypeIcons[channel.id]} icon-2x margin-right-xxs`}></i>
+                <span className="inline-block margin-top-xxs">{channel.name}</span>
+              </div>
+            );
+          })}
+        </Popup>
       </div>
     );
   }

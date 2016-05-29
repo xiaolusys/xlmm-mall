@@ -11,6 +11,7 @@ export class Popup extends Component {
     children: React.PropTypes.any,
     className: React.PropTypes.string,
     prefixCls: React.PropTypes.string,
+    height: React.PropTypes.string,
     active: React.PropTypes.bool,
     onPopupOverlayClick: React.PropTypes.func,
   };
@@ -19,6 +20,7 @@ export class Popup extends Component {
     prefixCls: 'popup',
     className: 'className',
     onPopupOverlayClick: _.noop,
+    height: (utils.dom.windowHeight() * 0.6).toFixed(0) + 'px',
   }
 
   constructor(props) {
@@ -36,7 +38,7 @@ export class Popup extends Component {
   }
 
   render() {
-    const { className, prefixCls, children, active, onPopupOverlayClick } = this.props;
+    const { className, prefixCls, children, height, active, onPopupOverlayClick } = this.props;
     const popupCls = classnames({
       [`${prefixCls}`]: true,
       [className]: true,
@@ -45,7 +47,7 @@ export class Popup extends Component {
     });
     return (
       <div className={popupCls}>
-        <div className={`${prefixCls}-content`} style={{ height: (utils.dom.windowHeight() * 0.6).toFixed(0) }}>
+        <div className={`${prefixCls}-content`} style={{ height: height }}>
           {children}
         </div>
         <div className={`${prefixCls}-overlay`} onClick= {onPopupOverlayClick} ></div>

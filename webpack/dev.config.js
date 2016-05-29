@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -33,5 +34,8 @@ module.exports = {
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
     }),
+    new CopyWebpackPlugin([
+      { from: 'src/vendor/pingpp.js' },
+    ]),
   ],
 };
