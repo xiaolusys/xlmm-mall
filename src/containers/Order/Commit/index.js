@@ -118,7 +118,7 @@ export default class Commit extends Component {
         channel: this.getPayType(),
       });
 
-    } else {
+    } else if (walletChecked && walletBalance < payInfo.data.total_fee) {
       this.togglePayTypePopupActive();
     }
     e.preventDefault();
