@@ -84,8 +84,19 @@ export default class Commit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.order.success && nextProps.order.data.charge) {
-      this.pay(nextProps.order.data.charge);
+    const { order } = nextProps;
+    const { router } = this.context;
+    if (order.success && order.data.charge && order.data.charge.channel !== 'budget') {
+      this.pay(order.data.charge);
+    }
+    if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
+      if (order.data.charge.success) {
+        window.location.replace(' /pages/daishouhuo-dd.html?');
+        // router.replace();
+      } else {
+        window.location.replace('/pages/daizhifu-dd.html?');
+        // router.replace();
+      }
     }
   }
 
@@ -97,16 +108,6 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
-      console.log({
-        uuid: payInfo.data.uuid,
-        cart_ids: payInfo.data.cart_ids,
-        payment: this.getpPaymentPrice(payInfo.data.total_payment),
-        post_fee: payInfo.data.post_fee,
-        discount_fee: this.getDiscountValue(),
-        total_fee: payInfo.data.total_fee,
-        addr_id: address.data.id,
-        channel: this.getPayType(),
-      });
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
         cart_ids: payInfo.data.cart_ids,
@@ -118,7 +119,7 @@ export default class Commit extends Component {
         channel: this.getPayType(),
       });
 
-    } else if (walletChecked && walletBalance < payInfo.data.total_fee) {
+    } else if (walletBalance < payInfo.data.total_fee) {
       this.togglePayTypePopupActive();
     }
     e.preventDefault();
@@ -128,17 +129,6 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
     const { paytype } = e.currentTarget.dataset;
-    console.log({
-      uuid: payInfo.data.uuid,
-      cart_ids: payInfo.data.cart_ids,
-      payment: this.getpPaymentPrice(payInfo.data.total_payment),
-      post_fee: payInfo.data.post_fee,
-      discount_fee: payInfo.data.discount_fee,
-      total_fee: payInfo.data.total_fee,
-      addr_id: address.data.id,
-      channel: this.getPayType(paytype),
-      pay_extras: this.getPayExtras(),
-    });
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
