@@ -66,8 +66,8 @@ export class ShopBag extends Component {
     _.each(shopBag.data, (item) => {
       cartIds.push(item.id);
     });
-    window.location.href = '/pages/queren-dd.html?cart_ids=' + encodeURIComponent(cartIds.join(','));
-    // this.context.router.push('/order/commit/' + encodeURIComponent(cartIds.join(',')));
+    // window.location.href = '/pages/queren-dd.html?cart_ids=' + encodeURIComponent(cartIds.join(','));
+    this.context.router.push('/order/commit/' + encodeURIComponent(cartIds.join(',')));
   }
 
   onUpdateQuantityClick = (e) => {
@@ -105,7 +105,7 @@ export class ShopBag extends Component {
       <div>
         <Header title="购物车" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content shop-bag-container">
-          <If condition={!_.isEmpty(shopBag.data) || shopBag.isLoading}>
+          <If condition={!_.isEmpty(shopBag.data)}>
             <ul className="shop-bag-list shop-bag-list-white-bg">
               {_.isEmpty(shopBag.data) ? null : shopBag.data.map((item) => {
                 return (
@@ -139,7 +139,7 @@ export class ShopBag extends Component {
               <Link className="button button-stable" to="/">随便逛逛</Link>
             </div>
           </If>
-          <If condition={!_.isEmpty(shopBagHistory.data) || shopBagHistory.isLoading}>
+          <If condition={!_.isEmpty(shopBagHistory.data)}>
             <p className="margin-top-sm margin-left-xs font-xs">可重新购买商品</p>
             <ul className="shop-bag-list top-border">
               {_.isEmpty(shopBagHistory.data) ? null : shopBagHistory.data.map((item) => {
