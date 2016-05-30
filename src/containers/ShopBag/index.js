@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as constants from 'constants';
+import * as utils from 'utils';
 import * as actionCreators from 'actions/shopBag';
 import { Header } from 'components/Header';
-import { Loader } from 'components/Loader';
+import { Toast } from 'components/Toast';
 import { BottomBar } from 'components/BottomBar';
 
 import './index.scss';
@@ -40,6 +41,18 @@ export class ShopBag extends Component {
   componentWillMount() {
     this.props.fetchShopBag();
     this.props.fetchShopBagHistory();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { updateQuantity, shopBag, shopBagHistory } = nextProps.shopBag;
+    if (updateQuantity.success && updateQuantity.data.code === 2) {
+      Toast.show(updateQuantity.data.info);
+    }
+    if (shopBag.isLoading || shopBagHistory.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
   }
 
   onRebuyClick = (e) => {
@@ -88,14 +101,12 @@ export class ShopBag extends Component {
 
   render() {
     const { shopBag, shopBagHistory } = this.props.shopBag;
-
     return (
       <div>
         <Header title="购物车" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content shop-bag-container">
           <If condition={!_.isEmpty(shopBag.data) || shopBag.isLoading}>
             <ul className="shop-bag-list shop-bag-list-white-bg">
-              {shopBag.isLoading ? <Loader/> : null}
               {_.isEmpty(shopBag.data) ? null : shopBag.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
@@ -131,7 +142,6 @@ export class ShopBag extends Component {
           <If condition={!_.isEmpty(shopBagHistory.data) || shopBagHistory.isLoading}>
             <p className="margin-top-sm margin-left-xs font-xs">可重新购买商品</p>
             <ul className="shop-bag-list top-border">
-              {shopBagHistory.isLoading ? <Loader/> : null}
               {_.isEmpty(shopBagHistory.data) ? null : shopBagHistory.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
