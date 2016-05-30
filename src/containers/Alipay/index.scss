@@ -1,0 +1,17 @@
+.alipay-mask {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  position: fixed;
+  vertical-align: baseline;
+  font: inherit;
+  font-size: 100%;
+  -webkit-tap-highlight-color: transparent;
+  > iframe {
+    border: none;
+  }
+}

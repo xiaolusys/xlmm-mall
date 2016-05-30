@@ -54,7 +54,7 @@ export default class TopTen extends Component {
     promotion: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
-    fetchCoupon: React.PropTypes.func,
+    receiveCoupon: React.PropTypes.func,
     resetCoupon: React.PropTypes.func,
     fetchPromotion: React.PropTypes.func,
   };
@@ -107,7 +107,7 @@ export default class TopTen extends Component {
   }
 
   onCouponClick = (e) => {
-    this.props.fetchCoupon(activity.couponIds);
+    this.props.receiveCoupon(activity.couponIds);
   }
 
   onProductClick = (e) => {
