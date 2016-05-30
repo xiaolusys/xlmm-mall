@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import * as utils from 'utils';
 
 import './index.scss';
 
@@ -19,22 +21,28 @@ export class Alipay extends Component {
   state = {}
 
   componentDidMount() {
-    this.refs.alipay.getDOMNode().addEventListener('load', this.onAliPayLoad);
+    utils.ui.loadingSpinner.show();
+    $('#alipay-container').on('load', this.onAliPayLoad);
   }
 
   componentWillUnmount() {
-    this.refs.alipay.getDOMNode().removeEventListener('load', this.onAliPayLoad);
+    $('#alipay-container').off('load', this.onAliPayLoad);
   }
 
   onAliPayLoad = (e) => {
-    console.log(e);
+    const target = e.currentTarget;
+    utils.ui.loadingSpinner.hide();
+    if (target.contentWindow.location.href && target.contentWindow.location.href.includes('wemart.cn')) {
+      window.location.replace(target.contentWindow.location.href.includes);
+    }
+    e.preventDefault();
   }
 
   render() {
     const { location } = this.props;
     return (
       <div className="alipay-mask">
-        <iframe ref="alipay" src={location.query.url} width="100%" height="100%"/>
+        <iframe id="alipay-container" src={location.query.url} width="100%" height="100%" onLoad={this.onAliPayLoad}/>
       </div>
     );
   }

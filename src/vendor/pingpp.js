@@ -103,7 +103,7 @@ PingppSDK.prototype = {
       credential['_input_charset'] = 'utf-8';
       if (isWechat()) {
         var query = stringify_data(credential, channel, true);
-        window.location.href = '/mall/#/alipay?url=' + encodeURIComponent(cfg.ALIPAY_WAP_URL + "?" + query);
+        window.location.replace('/mall/#/alipay?url=' + encodeURIComponent(cfg.ALIPAY_WAP_URL + "?" + query));
       } else {
         form_submit(cfg.ALIPAY_WAP_URL, 'get', credential);
       }
