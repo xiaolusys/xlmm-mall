@@ -8,19 +8,20 @@ import { BottomBar } from 'components/BottomBar';
 import { Radio } from 'components/Radio';
 import { Checkbox } from 'components/Checkbox';
 import { Popup } from 'components/Popup';
+import { Toast } from 'components/Toast';
 import classnames from 'classnames';
 import * as constants from 'constants';
 import * as utils from 'utils';
 import pingpp from 'vendor/pingpp';
 import _ from 'underscore';
 import * as addressAction from 'actions/user/address';
-import * as couponsAction from 'actions/user/coupons';
+import * as couponAction from 'actions/user/coupon';
 import * as payInfoAction from 'actions/order/payInfo';
 import * as commitOrderAction from 'actions/order/commit';
 
 import './index.scss';
 
-const actionCreators = _.extend(addressAction, couponsAction, payInfoAction, commitOrderAction);
+const actionCreators = _.extend(addressAction, couponAction, payInfoAction, commitOrderAction);
 const payTypeIcons = {
   wx_pub: 'icon-wechat-pay icon-wechat-green',
   alipay_wap: 'icon-alipay-square icon-alipay-blue',
@@ -29,7 +30,7 @@ const payTypeIcons = {
 @connect(
   state => ({
     address: state.address,
-    coupons: state.coupons,
+    coupon: state.coupon,
     payInfo: state.payInfo,
     order: state.commitOrder,
   }),
@@ -42,10 +43,11 @@ export default class Commit extends Component {
     params: React.PropTypes.object,
     location: React.PropTypes.object,
     address: React.PropTypes.object,
-    coupons: React.PropTypes.object,
+    coupon: React.PropTypes.object,
     payInfo: React.PropTypes.object,
     fetchPayInfo: React.PropTypes.func,
-    fetchCoupons: React.PropTypes.func,
+    fetchCouponById: React.PropTypes.func,
+    resetCoupon: React.PropTypes.func,
     fetchAddress: React.PropTypes.func,
     commitOrder: React.PropTypes.func,
   };
@@ -69,14 +71,16 @@ export default class Commit extends Component {
   }
 
   componentWillMount() {
-    const { addressId } = this.props.location.query;
+    const { addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(this.props.params.cartIds);
-    this.props.fetchCoupons(constants.couponStatus.available);
+    if (couponId) {
+      this.props.fetchCouponById(couponId);
+    }
   }
 
   componentDidMount() {
-
+    this.props.resetCoupon();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,22 +89,37 @@ export default class Commit extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetCoupon();
+  }
+
   onCommitOrderClick = (e) => {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
+      console.log({
+        uuid: payInfo.data.uuid,
+        cart_ids: payInfo.data.cart_ids,
+        payment: this.getpPaymentPrice(payInfo.data.total_payment),
+        post_fee: payInfo.data.post_fee,
+        discount_fee: this.getDiscountValue(),
+        total_fee: payInfo.data.total_fee,
+        addr_id: address.data.id,
+        channel: this.getPayType(),
+      });
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
         cart_ids: payInfo.data.cart_ids,
         payment: this.getpPaymentPrice(payInfo.data.total_payment),
         post_fee: payInfo.data.post_fee,
-        discount_fee: payInfo.data.discount_fee,
+        discount_fee: this.getDiscountValue(),
         total_fee: payInfo.data.total_fee,
         addr_id: address.data.id,
         channel: this.getPayType(),
       });
+
     } else {
-      this.setState({ payTypePopupActive: true });
+      this.togglePayTypePopupActive();
     }
     e.preventDefault();
   }
@@ -109,6 +128,17 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
     const { paytype } = e.currentTarget.dataset;
+    console.log({
+      uuid: payInfo.data.uuid,
+      cart_ids: payInfo.data.cart_ids,
+      payment: this.getpPaymentPrice(payInfo.data.total_payment),
+      post_fee: payInfo.data.post_fee,
+      discount_fee: payInfo.data.discount_fee,
+      total_fee: payInfo.data.total_fee,
+      addr_id: address.data.id,
+      channel: this.getPayType(paytype),
+      pay_extras: this.getPayExtras(),
+    });
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
@@ -134,7 +164,20 @@ export default class Commit extends Component {
   }
 
   getPayExtras = () => {
-    // pid:1:value:2;pid:2:value:3:conponid:2
+    const self = this;
+    const { coupon, payInfo } = this.props;
+    const { walletChecked, walletBalance, walletPayType } = this.state;
+    const payExtras = [];
+    _.each(payInfo.data.pay_extras, (extra) => {
+      if (extra.pid === 3 && walletChecked && walletBalance > 0 && self.getDisplayPrice() > 0) {
+        payExtras.push('pid:' + extra.pid + ':value:' + extra.value);
+      }
+      if (extra.pid === 2 && self.getDiscountValue() > 0) {
+        payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue());
+        payExtras.push('conponid:' + coupon.data.id);
+      }
+    });
+    return payExtras.join(','); // pid:1:value:2,pid:2:value:3,conponid:2
   }
 
   getPayType = (payType) => {
@@ -147,25 +190,55 @@ export default class Commit extends Component {
   }
 
   getpPaymentPrice = (totalPrice) => {
-    if (totalPrice) {
-      return totalPrice.toFixed(2);
+    const { coupon, payInfo } = this.props;
+    let value = totalPrice || 0;
+    if (value > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
+      value = value - coupon.data.coupon_value;
     }
+    return value.toFixed(2);
   }
 
   getDisplayPrice = (totalPrice) => {
+    const { coupon, payInfo } = this.props;
     const { walletChecked, walletBalance } = this.state;
-    if (totalPrice) {
-      return totalPrice.toFixed(2);
+    let displayPrice = payInfo.data.total_fee || 0;
+    if (totalPrice && walletChecked && walletBalance >= payInfo.data.total_fee) {
+      displayPrice = 0;
+    } else if (totalPrice && walletChecked && walletBalance < payInfo.data.total_fee) {
+      displayPrice = displayPrice - walletBalance;
     }
+    if (displayPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
+      displayPrice = displayPrice - coupon.data.coupon_value;
+    }
+    return displayPrice.toFixed(2);
   }
 
-  getTotalPrice = (totalPrice) => {
-    if (totalPrice) {
-      return totalPrice.toFixed(2);
+  getTotalPrice = () => {
+    const { coupon, payInfo } = this.props;
+    let totalPrice = payInfo.data.total_fee || 0;
+    if (totalPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
+      totalPrice = totalPrice - coupon.data.coupon_value;
     }
+    return totalPrice;
+  }
+
+  getDiscountValue() {
+    const { coupon, payInfo } = this.props;
+    let discount = 0;
+    if (coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
+      discount = coupon.data.coupon_value;
+    } else if (coupon.success && (coupon.data.status !== 0 || payInfo.data.total_fee < coupon.data.use_fee)) {
+      Toast.show('优惠券不可用！');
+    }
+    return discount.toFixed(2);
+  }
+
+  togglePayTypePopupActive = () => {
+    this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
   }
 
   pay = (charge) => {
+    this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
       console.log(result, error);
     });
@@ -223,8 +296,8 @@ export default class Commit extends Component {
     const address = this.props.address.data || {};
     const channels = this.props.payInfo.data.channels || [];
     const { pathname, query } = this.props.location;
-    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + (query.addressId ? '?addressId=' + query.addressId : ''));
-    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + (query.couponId ? '?couponId=' + query.couponId : ''));
+    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + (query.couponId ? '?couponId=' + query.couponId : ''));
+    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + (query.addressId ? '?addressId=' + query.addressId : ''));
     return (
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
@@ -256,16 +329,22 @@ export default class Commit extends Component {
           {payExtras.map((item) => {
             switch (item.pid) {
               case 2:
+                if (item.pid === 2 && !item.use_coupon_allowed) {
+                  return null;
+                }
                 return (
                   <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`} key={item.pid} data-to={couponLink} onClick={this.onLinkClick}>
                     <p className="col-xs-5 no-padding">可用优惠券</p>
                     <p className="col-xs-7 no-padding">
-                      <span className="col-xs-11 no-padding"></span>
+                      <span className="col-xs-11 no-padding text-right">{'￥-' + this.getDiscountValue()}</span>
                       <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
                     </p>
                   </div>
                 );
               case 3:
+                if (item.pid === 3 && !item.use_budget_allowed) {
+                  return null;
+                }
                 return (
                   <div className={`row no-margin bottom-border ${prefixCls}-row`} key={item.pid}>
                     <p className="col-xs-5 no-padding">小鹿钱包</p>
@@ -284,7 +363,7 @@ export default class Commit extends Component {
             <p className="col-xs-7 no-padding text-right">{payInfo.data.post_fee}</p>
           </div>
           <div className={`row no-margin text-right ${prefixCls}-row transparent`}>
-            <p className="col-xs-12 no-padding"><span>合计：￥</span><span>{this.getTotalPrice(payInfo.data.total_fee)}</span></p>
+            <p className="col-xs-12 no-padding"><span>合计：￥</span><span>{this.getTotalPrice()}</span></p>
           </div>
         </div>
         <BottomBar size="large">
@@ -296,7 +375,7 @@ export default class Commit extends Component {
         </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup" height="auto">
           <div className={`row no-margin bottom-border ${prefixCls}-row`}>
-            <i className="col-xs-1 no-padding icon-angle-left"></i>
+            <i className="col-xs-1 no-padding icon-angle-left" onClick={this.togglePayTypePopupActive}></i>
             <p className="col-xs-11 no-padding text-center">
               <span className="font-xs">应付款金额</span>
               <span className="font-lg font-orange">{'￥' + this.getDisplayPrice(payInfo.data.total_payment)}</span>

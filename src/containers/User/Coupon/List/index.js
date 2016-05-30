@@ -30,7 +30,7 @@ export default class List extends Component {
     location: React.PropTypes.object,
     dispatch: React.PropTypes.func,
     coupons: React.PropTypes.any,
-    fetchCoupons: React.PropTypes.func,
+    fetchCouponsByStatus: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -46,10 +46,10 @@ export default class List extends Component {
 
   componentWillMount() {
     const { couponStatus } = constants;
-    this.props.fetchCoupons(couponStatus.available);
-    this.props.fetchCoupons(couponStatus.used);
-    this.props.fetchCoupons(couponStatus.unavailable);
-    this.props.fetchCoupons(couponStatus.expired);
+    this.props.fetchCouponsByStatus(couponStatus.available);
+    this.props.fetchCouponsByStatus(couponStatus.used);
+    this.props.fetchCouponsByStatus(couponStatus.unavailable);
+    this.props.fetchCouponsByStatus(couponStatus.expired);
   }
 
   onCouponItemClick = (e) => {

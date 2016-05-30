@@ -14,7 +14,7 @@ import { OrderList, OrderDetail, Logistics, OrderCommit } from 'containers/Order
 import { ShopBag } from 'containers/ShopBag';
 import { ProductDetails, ProductList } from 'containers/Product';
 import { RefundsDetail } from 'containers/Refunds';
-
+import { Alipay } from 'containers/Alipay';
 
 export default (
   <Route path="/" component={App}>
@@ -43,6 +43,7 @@ export default (
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
     <Route path="/refunds/details/:id" component={RefundsDetail} />
+    <Route path="/alipay" component={Alipay} />
     {activityRoutes}
     <Route status={404} path="*" component={Home} />
   </Route>
