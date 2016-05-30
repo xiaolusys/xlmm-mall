@@ -230,6 +230,7 @@ export default class Commit extends Component {
   pay = (charge) => {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
+      alert(JSON.stringify(result) + JSON.stringify(error));
       console.log(result, error);
     });
   }
