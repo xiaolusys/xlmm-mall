@@ -30,10 +30,11 @@ export class Alipay extends Component {
   }
 
   onAliPayLoad = (e) => {
-    const target = e.currentTarget;
+    const $target = $(e.currentTarget);
     utils.ui.loadingSpinner.hide();
-    if (target.contentWindow.location.href && target.contentWindow.location.href.includes('wemart.cn')) {
-      window.location.replace(target.contentWindow.location.href.includes);
+    if ($target.contentWindow.location.href && $target.contentWindow.location.href.includes(window.location.host)) {
+      console.log(window.location.host);
+      window.location.replace($target.contentWindow.location.href.includes);
     }
     e.preventDefault();
   }
