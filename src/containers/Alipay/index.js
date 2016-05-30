@@ -27,7 +27,7 @@ export class Alipay extends Component {
   }
 
   onAliPayLoad = (e) => {
-
+    console.log(e);
   }
 
   render() {
