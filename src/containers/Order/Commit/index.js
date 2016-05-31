@@ -74,6 +74,7 @@ export default class Commit extends Component {
     walletChecked: false,
     walletBalance: 0,
     logisticsCompany: '',
+    payTypePopupActive: false,
   }
 
   componentWillMount() {
@@ -156,10 +157,12 @@ export default class Commit extends Component {
       channel: this.getPayType(paytype),
       logistics_company_id: logisticsCompany,
     });
+    e.preventDefault();
   }
 
   onLinkClick = (e) => {
     this.context.router.push(e.currentTarget.dataset.to);
+    e.preventDefault();
   }
 
   onWalletChange = (e) => {
@@ -168,10 +171,12 @@ export default class Commit extends Component {
       walletBalance: Number(e.target.walletBalance),
       walletPayType: e.target.payType,
     });
+    e.preventDefault();
   }
 
   onLogisticsCompanyChange = (e) => {
     this.setState({ logisticsCompany: e.target.value });
+    e.preventDefault();
   }
 
   getPayExtras = () => {
