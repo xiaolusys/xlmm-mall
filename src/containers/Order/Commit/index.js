@@ -26,6 +26,10 @@ const payTypeIcons = {
   wx_pub: 'icon-wechat-pay icon-wechat-green',
   alipay_wap: 'icon-alipay-square icon-alipay-blue',
 };
+const paymentResults = {
+  success: '/pages/zhifucg.html',
+  error: '/pages/daizhifu-dd.html',
+};
 
 @connect(
   state => ({
@@ -44,6 +48,7 @@ export default class Commit extends Component {
     location: React.PropTypes.object,
     address: React.PropTypes.object,
     coupon: React.PropTypes.object,
+    order: React.PropTypes.object,
     payInfo: React.PropTypes.object,
     fetchPayInfo: React.PropTypes.func,
     fetchCouponById: React.PropTypes.func,
@@ -68,6 +73,7 @@ export default class Commit extends Component {
   state = {
     walletChecked: false,
     walletBalance: 0,
+    logisticsCompany: '',
   }
 
   componentWillMount() {
@@ -85,19 +91,27 @@ export default class Commit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { order } = nextProps;
+    const { order, payInfo, address } = nextProps;
     const { router } = this.context;
     if (order.success && order.data.charge && order.data.charge.channel !== 'budget') {
       this.pay(order.data.charge);
     }
     if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
       if (order.data.charge.success) {
-        window.location.replace('/pages/daizhifu-dd.html');
-        // router.replace();
+        window.location.replace(paymentResults.success);
+        // router.replace(paymentResults.success);
       } else {
-        window.location.replace('/pages/zhifucg.html');
-        // router.replace();
+        window.location.replace(paymentResults.error);
+        // router.replace(paymentResults.error);
       }
+    }
+    if (payInfo.isLoading || order.isLoading || address.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+    if (payInfo.error) {
+      this.context.router.goBack();
     }
   }
 
@@ -107,7 +121,7 @@ export default class Commit extends Component {
 
   onCommitOrderClick = (e) => {
     const { address, payInfo } = this.props;
-    const { walletChecked, walletBalance, walletPayType } = this.state;
+    const { walletChecked, walletBalance, walletPayType, logisticsCompany } = this.state;
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
@@ -118,6 +132,7 @@ export default class Commit extends Component {
         total_fee: payInfo.data.total_fee,
         addr_id: address.data.id,
         channel: this.getPayType(),
+        logistics_company_id: logisticsCompany,
       });
 
     } else if (walletBalance < payInfo.data.total_fee) {
@@ -128,7 +143,7 @@ export default class Commit extends Component {
 
   onPayTypeClick = (e) => {
     const { address, payInfo } = this.props;
-    const { walletChecked, walletBalance, walletPayType } = this.state;
+    const { walletChecked, walletBalance, walletPayType, logisticsCompany } = this.state;
     const { paytype } = e.currentTarget.dataset;
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
@@ -139,6 +154,7 @@ export default class Commit extends Component {
       total_fee: payInfo.data.total_fee,
       addr_id: address.data.id,
       channel: this.getPayType(paytype),
+      logistics_company_id: logisticsCompany,
     });
   }
 
@@ -152,6 +168,10 @@ export default class Commit extends Component {
       walletBalance: Number(e.target.walletBalance),
       walletPayType: e.target.payType,
     });
+  }
+
+  onLogisticsCompanyChange = (e) => {
+    this.setState({ logisticsCompany: e.target.value });
   }
 
   getPayExtras = () => {
@@ -231,7 +251,13 @@ export default class Commit extends Component {
   pay = (charge) => {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
-      console.log(result, error);
+      if (result === 'success') {
+        window.location.replace(paymentResults.success);
+        // this.context.router.replace(paymentResults.success);
+        return;
+      }
+      window.location.replace(paymentResults.error);
+      // this.context.router.replace(paymentResults.error);
     });
   }
 
@@ -280,7 +306,7 @@ export default class Commit extends Component {
   }
 
   render() {
-    const { prefixCls, payInfo } = this.props;
+    const { prefixCls, payInfo, order } = this.props;
     const products = payInfo.data.cart_list || [];
     const logisticsCompanies = payInfo.data.logistics_companys || [];
     const payExtras = payInfo.data.pay_extras || [];
@@ -305,8 +331,8 @@ export default class Commit extends Component {
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
             <p className="col-xs-5 no-padding">物流配送</p>
             <div className="col-xs-7 no-padding">
-              <div className="col-xs-11 no-padding text-right">
-                <select className="inline-block" >
+              <div className="col-xs-11 no-padding text-right logistics-companies">
+                <select className="inline-block" value={this.state.logisticsCompany} onChange={this.onLogisticsCompanyChange}>
                 {logisticsCompanies.map((item) => {
                   return (
                     <option className="text-right" key={item.id} value={item.id}>{item.name}</option>
