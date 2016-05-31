@@ -32,7 +32,7 @@ export class Alipay extends Component {
   onAliPayLoad = (e) => {
     utils.ui.loadingSpinner.hide();
     const target = e.currentTarget;
-    console.log(target.contentWindow.location.href.includes(window.location.host));
+    console.log(target.contentWindow.location.href);
     if (target.contentWindow.location.href && target.contentWindow.location.href.includes(window.location.host)) {
       window.location.replace(target.contentWindow.location.href);
     }
