@@ -92,10 +92,10 @@ export default class Commit extends Component {
     }
     if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
       if (order.data.charge.success) {
-        window.location.replace(' /pages/daishouhuo-dd.html?');
+        window.location.replace('/pages/daizhifu-dd.html');
         // router.replace();
       } else {
-        window.location.replace('/pages/daizhifu-dd.html?');
+        window.location.replace('/pages/zhifucg.html');
         // router.replace();
       }
     }
@@ -231,9 +231,8 @@ export default class Commit extends Component {
   pay = (charge) => {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
-      alert(JSON.stringify(result) + JSON.stringify(error));
       console.log(result, error);
-    }, null, true);
+    });
   }
 
   renderProducts(products = []) {
