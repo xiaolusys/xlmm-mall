@@ -36,7 +36,7 @@ export default (
     <Route path="/order/:type" component={OrderList} onEnter={utils.checkAuth} />
     <Route path="/order/detail/:id" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
-    <Route path="/order/commit/:cartIds" component={OrderCommit} onEnter={utils.checkAuth} />
+    <Route path="/oc" component={OrderCommit} onEnter={utils.checkAuth} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/list/:type" component={ProductList} />

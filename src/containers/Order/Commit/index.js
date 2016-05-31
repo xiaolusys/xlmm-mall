@@ -78,13 +78,9 @@ export default class Commit extends Component {
   }
 
   componentWillMount() {
-    window.location.replace(utils.url.getBaseUrl() + this.props.location.pathname);
-    alert(document.location.href);
-    alert(window.location.href);
-    // window.location.reload();
     const { addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
-    this.props.fetchPayInfo(this.props.params.cartIds);
+    this.props.fetchPayInfo(this.props.location.query.cartIds);
     if (couponId) {
       this.props.fetchCouponById(couponId);
     }
@@ -321,8 +317,8 @@ export default class Commit extends Component {
     const address = this.props.address.data || {};
     const channels = this.props.payInfo.data.channels || [];
     const { pathname, query } = this.props.location;
-    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + (query.couponId ? '?couponId=' + query.couponId : ''));
-    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + (query.addressId ? '?addressId=' + query.addressId : ''));
+    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.couponId ? '&couponId=' + query.couponId : ''));
+    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.addressId ? '&addressId=' + query.addressId : ''));
     return (
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
