@@ -79,7 +79,8 @@ export default class Commit extends Component {
 
   componentWillMount() {
     window.location.replace(utils.url.getBaseUrl() + this.props.location.pathname);
-    alert(document.location.hash);
+    alert(document.location.href);
+    alert(window.location.href);
     // window.location.reload();
     const { addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
