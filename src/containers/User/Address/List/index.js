@@ -48,7 +48,7 @@ export default class List extends Component {
       return false;
     }
     this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&addressId=${id}` : `${query.next}?addressId=${id}`);
-    e.prevenDefault();
+    e.preventDefault();
   }
 
   render() {
@@ -71,8 +71,8 @@ export default class List extends Component {
             {
               data.map((address, index) => {
                 return (
-                  <li className="bottom-border row no-margin" key={index} data-id={address.id} onClick={this.onAdrressClick}>
-                      <div className="col-xs-10 no-padding">
+                  <li className="bottom-border row no-margin" key={index}>
+                      <div className="col-xs-10 no-padding" data-id={address.id} onClick={this.onAdrressClick}>
                         <p className="text-left font-sm no-margin">
                         <If condition={ address.default }>
                           <span className="font-xxs margin-right-xs address-mark">默认地址</span>
