@@ -32,6 +32,7 @@ export class Alipay extends Component {
   onAliPayLoad = (e) => {
     utils.ui.loadingSpinner.hide();
     const target = e.currentTarget;
+    console.log(target.contentWindow.location.href.includes(window.location.host));
     if (target.contentWindow.location.href && target.contentWindow.location.href.includes(window.location.host)) {
       window.location.replace(target.contentWindow.location.href);
     }
@@ -42,7 +43,7 @@ export class Alipay extends Component {
     const { location } = this.props;
     return (
       <div className="alipay-mask">
-        <iframe id="alipay-container" src={location.query.url} width="100%" height="100%" onLoad={this.onAliPayLoad}/>
+        <iframe id="alipay-container" ref="alipay" src={location.query.url} width="100%" height="100%" onLoad={this.onAliPayLoad}/>
       </div>
     );
   }
