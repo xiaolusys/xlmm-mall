@@ -58,7 +58,7 @@ export class Header extends Component {
       ['icon-btn ' + rightIcon + ' icon-yellow']: 1,
       ['no-icon']: rightText ? true : false,
       ['pressed']: rightBtnPressed,
-      ['hide']: !rightIcon,
+      ['hide']: !rightIcon && !rightText,
     });
     return (
       <div className={headerCls}>

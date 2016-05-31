@@ -325,12 +325,19 @@ export default class Commit extends Component {
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
           <div className={`row no-margin bottom-border ${prefixCls}-address`} data-to={addressLink} onClick={this.onLinkClick}>
-            <i className="col-xs-1 no-padding margin-top-xs icon-location icon-2x icon-yellow-light"></i>
-            <div className="col-xs-10">
-              <p><span className="margin-right-sm">{address.receiver_name}</span><span>{address.receiver_mobile}</span></p>
-              <p className="font-grey-light">{address.receiver_state + address.receiver_city + address.receiver_district + address.receiver_address}</p>
-            </div>
-            <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
+            <If condition={!_.isEmpty(address)}>
+              <i className="col-xs-1 no-padding margin-top-xxs icon-location icon-2x icon-yellow-light"></i>
+              <div className="col-xs-10">
+                <p><span className="margin-right-sm">{address.receiver_name}</span><span>{address.receiver_mobile}</span></p>
+                <p className="font-grey-light">{address.receiver_state + address.receiver_city + address.receiver_district + address.receiver_address}</p>
+              </div>
+              <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
+            </If>
+            <If condition={_.isEmpty(address)}>
+              <i className="col-xs-1 no-padding icon-location icon-2x icon-yellow-light"></i>
+              <div className="col-xs-10 margin-top-xxs">填写收货地址</div>
+              <i className="col-xs-1 no-padding margin-top-xxs text-right icon-angle-right icon-grey"></i>
+            </If>
           </div>
           {this.renderProducts(products)}
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
