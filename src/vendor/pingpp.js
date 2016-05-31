@@ -143,6 +143,7 @@ PingppSDK.prototype = {
 
   _jsApiCall: function(){
     var self = this;
+    alert(self._jsApiParameters)
     if(self._jsApiParameters != {}){
       WeixinJSBridge.invoke(
         'getBrandWCPayRequest',
