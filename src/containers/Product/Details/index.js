@@ -269,7 +269,7 @@ export default class Detail extends Component {
   }
 
   getAddToShopBagBtnText = (detail) => {
-    if (detail.product_model.is_sale_out) {
+    if (detail.is_sale_out) {
       return '已抢光';
     } else if (!detail.is_saleopen) {
       return '即将开售';
