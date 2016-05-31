@@ -71,6 +71,7 @@ export default class Commit extends Component {
   }
 
   componentWillMount() {
+    document.location.href = utils.url.getBaseUrl() + this.props.location.pathname;
     const { addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(this.props.params.cartIds);
