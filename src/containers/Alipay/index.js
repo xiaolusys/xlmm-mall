@@ -33,9 +33,8 @@ export class Alipay extends Component {
   onAliPayLoad = (e) => {
     utils.ui.loadingSpinner.hide();
     const target = e.currentTarget;
-    console.log('>>>>>>>>>' + target.contentWindow.location.href.toString() || '');
-    console.log(_.contains(target.contentWindow.location.href.toString() || '', window.location.host));
-    if (target.contentWindow.location.href && _.contains(target.contentWindow.location.href.toString() || '', window.location.host.toString())) {
+    console.log('>>>>>>>>>' + target.contentWindow.location.href.toString());
+    if (target.contentWindow.location.href) {
       window.location.replace(target.contentWindow.location.href);
     }
     e.preventDefault();
