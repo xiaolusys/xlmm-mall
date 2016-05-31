@@ -79,7 +79,7 @@ export default class Commit extends Component {
 
   componentWillMount() {
     // alert('before: window.location.href: ' + window.location.href);
-    window.location.replace(utils.url.getBaseUrl() + this.props.location.pathname);
+    // window.location.replace(utils.url.getBaseUrl() + this.props.location.pathname);
     // alert('this.props.location.pathname: ' + this.props.location.pathname);
     // alert('utils.url.getBaseUrl(): ' + utils.url.getBaseUrl());
     // alert('after: window.location.href: ' + window.location.href);
@@ -92,7 +92,7 @@ export default class Commit extends Component {
   }
 
   componentDidMount() {
-    window.location.replace(utils.url.getBaseUrl() + this.props.location.pathname);
+    // window.location.replace(utils.url.getBaseUrl() + this.props.location.pathname);
     this.props.resetCoupon();
   }
 
