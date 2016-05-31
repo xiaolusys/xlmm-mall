@@ -38,4 +38,12 @@
       }
     }
   }
+  .logistics-companies {
+    > select {
+      font-size: 12px;
+      -webkit-appearance: none;
+      border: none;
+      background-color: #fff;
+    }
+  }
 }
