@@ -78,7 +78,11 @@ export default class Commit extends Component {
   }
 
   componentWillMount() {
-    document.location.href = utils.url.getBaseUrl() + this.props.location.pathname;
+    console.log('before: window.location.href: ' + window.location.href);
+    window.location.href = utils.url.getBaseUrl() + this.props.location.pathname;
+    console.log('this.props.location.pathname: ' + this.props.location.pathname)
+    console.log('utils.url.getBaseUrl(): ' + utils.url.getBaseUrl())
+    console.log('after: window.location.href: ' + window.location.href);
     const { addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(this.props.params.cartIds);
@@ -88,6 +92,7 @@ export default class Commit extends Component {
   }
 
   componentDidMount() {
+    console.log(window.location.href);
     this.props.resetCoupon();
   }
 
