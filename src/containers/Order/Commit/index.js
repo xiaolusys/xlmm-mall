@@ -150,11 +150,12 @@ export default class Commit extends Component {
       cart_ids: payInfo.data.cart_ids,
       payment: this.getpPaymentPrice(payInfo.data.total_payment),
       post_fee: payInfo.data.post_fee,
-      discount_fee: payInfo.data.discount_fee,
+      discount_fee: this.getDiscountValue(),
       total_fee: payInfo.data.total_fee,
       addr_id: address.data.id,
       channel: this.getPayType(paytype),
       logistics_company_id: logisticsCompany,
+      pay_extras: this.getPayExtras(),
     });
     e.preventDefault();
   }
