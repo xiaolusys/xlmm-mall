@@ -47,7 +47,7 @@ export class Popup extends Component {
     });
     return (
       <div className={popupCls}>
-        <div className={`${prefixCls}-content`} style={{ height: height }}>
+        <div className={`${prefixCls}-content row no-margin`} style={{ height: height }}>
           {children}
         </div>
         <div className={`${prefixCls}-overlay`} onClick= {onPopupOverlayClick} ></div>
