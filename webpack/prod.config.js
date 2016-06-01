@@ -36,7 +36,7 @@ module.exports = {
       output: 'dist/index.html',
       data: {
         css: '<link type="text/css" rel="stylesheet" href="./bundle.css?v=' + Date.now() + '">',
-        js: '<script src="./bundle.js?v=' + Date.now() + '"></script><script src="./pingpp.js"></script>',
+        js: '<script src="./bundle.js?v=' + Date.now() + '"></script><script src="./pingpp.js?v=1.0.0"></script>',
       },
     }),
     new webpack.ProvidePlugin({
