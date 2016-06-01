@@ -10,6 +10,7 @@ import { Toast } from 'components/Toast';
 import * as actionCreators from 'actions/refunds/expressInfo';
 
 import './index.scss';
+
 @connect(
   state => ({
     data: state.refundsDetails.data,
@@ -19,7 +20,6 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-
 export default class Detail extends Component {
   static propTypes = {
     children: React.PropTypes.array,
@@ -94,7 +94,7 @@ export default class Detail extends Component {
             </div>
           </div>
           <div className="row no-margin bottom-border express-item">
-            <Link to={ '/refunds/expressCompany/' + props.params.id } className="no-margin">
+            <Link to={ '/refunds/express/company/' + props.params.id } className="no-margin">
               <p className="col-xs-6 no-margin">{props.params.name}</p>
               <i className="col-xs-6 icon-angle-right font-grey-light text-right"></i>
             </Link>

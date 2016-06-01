@@ -12,6 +12,7 @@ import * as utils from 'utils';
 import * as actionCreators from 'actions/refunds/detail';
 
 import './index.scss';
+
 @connect(
   state => ({
     data: state.refundsDetails.data,
@@ -21,7 +22,6 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-
 export default class Detail extends Component {
   static propTypes = {
     children: React.PropTypes.array,
@@ -97,7 +97,7 @@ export default class Detail extends Component {
                   </p>
                   <p className="no-wrap no-margin font-grey-light">{data.return_address}</p>
                 </div>
-                <Link to={'/refunds/expressOrder/' + data.order_id + '/' + encodeURIComponent('请选择物流公司')}>
+                <Link to={'/refunds/express/order/' + data.order_id + '/' + encodeURIComponent('请选择物流公司')}>
                   <button className="margin-top-xxs button button-light button-sm pull-right" type="button">填写快递单</button>
                 </Link>
               </If>

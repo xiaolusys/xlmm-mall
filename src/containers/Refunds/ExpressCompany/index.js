@@ -6,9 +6,10 @@ import _ from 'underscore';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
-import expressCompany from 'actions/refunds/expressCompany';
+import expressCompany from './expressCompany';
 
 import './index.scss';
+
 @connect(
   state => ({
     data: state.refundsDetails.data,
@@ -18,7 +19,6 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(expressCompany, dispatch),
 )
-
 export default class ExpressCompany extends Component {
   static propTypes = {
     children: React.PropTypes.array,
@@ -58,7 +58,7 @@ export default class ExpressCompany extends Component {
                         <p className="text-left font-sm no-margin no-padding">{company.type}</p>
                       </div>
                     </If>
-                    <Link className="col-xs-12 company-name" to={'/refunds/expressOrder/' + this.props.params.id + '/' + encodeURIComponent(company.name)}>
+                    <Link className="col-xs-12 company-name" to={'/refunds/express/order/' + this.props.params.id + '/' + encodeURIComponent(company.name)}>
                       <p className="text-left font-sm no-margin no-padding" onClick={this.onCompanySelected}>{company.name}</p>
                     </Link>
                   </li>

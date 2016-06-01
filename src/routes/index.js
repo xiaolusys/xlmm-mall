@@ -43,8 +43,8 @@ export default (
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
     <Route path="/refunds/details/:id" component={RefundsDetail} />
-    <Route path="/refunds/expressOrder/:id/:name" component={ExpressOrder} />
-    <Route path="/refunds/expressCompany/:id" component={ExpressCompany} />
+    <Route path="/refunds/express/order/:id/:name" component={ExpressOrder} />
+    <Route path="/refunds/express/company/:id" component={ExpressCompany} />
     <Route path="/alipay" component={Alipay} />
     {activityRoutes}
     <Route status={404} path="*" component={Home} />
