@@ -10,7 +10,7 @@ export default function configStore(state) {
       process.env.NODE_ENV === 'development',
   });
   const middleware = applyMiddleware(thunkMiddleware, logger);
-  const store = middleware(createStore)(rootReducer, state);
+  const store = middleware(createStore)(rootReducer, state, window.devToolsExtension && window.devToolsExtension());
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

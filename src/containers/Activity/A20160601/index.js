@@ -43,7 +43,7 @@ export default class A20160601 extends Component {
     data: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
-    fetchCoupon: React.PropTypes.func,
+    receiveCoupon: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -75,7 +75,7 @@ export default class A20160601 extends Component {
   }
 
   onCouponClick = (e) => {
-    this.props.fetchCoupon(activity.couponIds);
+    this.props.receiveCoupon(activity.couponIds);
   }
 
   onProductClick = (e) => {

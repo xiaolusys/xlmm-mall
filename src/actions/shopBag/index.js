@@ -51,14 +51,11 @@ export const updateQuantity = (id, requestAction) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpoint + 'carts/' + id + '/' + requestAction)
       .then((resp) => {
-        if (resp.data.status === 1) {
-          dispatch(fetchShopBag());
-        }
-        if (resp.status === 204) {
+        dispatch(action.success(resp.data));
+        if (resp.data.code === 0) {
           dispatch(fetchShopBag());
           dispatch(fetchShopBagHistory());
         }
-        dispatch(action.success(resp.data));
       })
       .catch((resp) => {
         dispatch(action.failure(resp));

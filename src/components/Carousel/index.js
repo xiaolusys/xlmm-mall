@@ -26,10 +26,10 @@ export class Carousel extends Component {
     const self = this;
     let { swipeOptions } = this.props;
     swipeOptions = _.extend({}, swipeOptions, { transitionEnd: this.setActive });
-    // Must be delayed 600 ms, otherwise it will not correctly load component
+    // Must be delayed 700 ms, otherwise it will not correctly load component
     _.delay(() => {
-      self.swipe = new Swipe(this.refs.slider, swipeOptions);
-    }, 600);
+      self.swipe = new Swipe(this.refs.carousel, swipeOptions);
+    }, 700);
   }
 
   componentWillUnmount() {
@@ -64,9 +64,11 @@ export class Carousel extends Component {
   render() {
     const { children, id } = this.props;
     return (
-      <div ref="slider" id={id} className="swipe">
-        <div className="swipe-wrap">
-          {children}
+      <div ref="carousel" id={id} className="carousel">
+        <div className="carousel-wrap">
+          {React.Children.map(children, child => {
+            return React.cloneElement(child, { className: 'carousel-item' });
+          })}
         </div>
       </div>
     );

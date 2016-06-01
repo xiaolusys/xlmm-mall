@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as constants from 'constants';
+import * as utils from 'utils';
 import * as actionCreators from 'actions/shopBag';
 import { Header } from 'components/Header';
-import { Loader } from 'components/Loader';
+import { Toast } from 'components/Toast';
 import { BottomBar } from 'components/BottomBar';
 
 import './index.scss';
@@ -42,6 +43,18 @@ export class ShopBag extends Component {
     this.props.fetchShopBagHistory();
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { updateQuantity, shopBag, shopBagHistory } = nextProps.shopBag;
+    if (updateQuantity.success && updateQuantity.data.code === 2) {
+      Toast.show(updateQuantity.data.info);
+    }
+    if (shopBag.isLoading || shopBagHistory.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+  }
+
   onRebuyClick = (e) => {
     const { itemid, cartid, skuid } = e.currentTarget.dataset;
     this.props.rebuy(itemid, skuid, cartid);
@@ -53,8 +66,7 @@ export class ShopBag extends Component {
     _.each(shopBag.data, (item) => {
       cartIds.push(item.id);
     });
-    window.location.href = '/pages/queren-dd.html?cart_ids=' + encodeURIComponent(cartIds.join(','));
-    // this.context.router.push('/order/commit/' + encodeURIComponent(cartIds.join(',')));
+    this.context.router.push('/oc?cartIds=' + encodeURIComponent(cartIds.join(',')));
   }
 
   onUpdateQuantityClick = (e) => {
@@ -88,14 +100,12 @@ export class ShopBag extends Component {
 
   render() {
     const { shopBag, shopBagHistory } = this.props.shopBag;
-
     return (
       <div>
         <Header title="购物车" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content shop-bag-container">
-          <If condition={!_.isEmpty(shopBag.data) || shopBag.isLoading}>
+          <If condition={!_.isEmpty(shopBag.data)}>
             <ul className="shop-bag-list shop-bag-list-white-bg">
-              {shopBag.isLoading ? <Loader/> : null}
               {_.isEmpty(shopBag.data) ? null : shopBag.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
@@ -128,10 +138,9 @@ export class ShopBag extends Component {
               <Link className="button button-stable" to="/">随便逛逛</Link>
             </div>
           </If>
-          <If condition={!_.isEmpty(shopBagHistory.data) || shopBagHistory.isLoading}>
+          <If condition={!_.isEmpty(shopBagHistory.data)}>
             <p className="margin-top-sm margin-left-xs font-xs">可重新购买商品</p>
             <ul className="shop-bag-list top-border">
-              {shopBagHistory.isLoading ? <Loader/> : null}
               {_.isEmpty(shopBagHistory.data) ? null : shopBagHistory.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">

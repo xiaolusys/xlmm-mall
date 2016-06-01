@@ -66,7 +66,7 @@ export default class Home extends Component {
     switch (nextProps.data.rcode) {
       case 0:
         Toast.show(nextProps.data.msg);
-        window.location.replace(this.next());
+        window.location.replace(this.next(true));
         break;
       default:
         Toast.show(nextProps.data.msg);
@@ -75,7 +75,7 @@ export default class Home extends Component {
   }
 
   onWechatLoginBtnClick = (e) => {
-    window.location.replace(constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next()));
+    window.location.replace(constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next(true)));
     e.preventDefault();
   }
 
@@ -84,10 +84,13 @@ export default class Home extends Component {
     this.context.router.replace(link);
   }
 
-  next = () => {
+  next = (withBaseUrl) => {
     const { query } = this.props.location;
     if (query.next && query.next.indexOf('http') >= 0) {
       return query.next;
+    }
+    if (withBaseUrl) {
+      return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl() + '/';
     }
     return query.next ? query.next : '/';
   }

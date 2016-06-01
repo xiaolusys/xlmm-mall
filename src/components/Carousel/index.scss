@@ -1,16 +1,14 @@
-.swipe {
+.carousel {
   overflow: hidden;
   visibility: hidden;
   position: relative;
-}
-
-.swipe-wrap {
-  overflow: hidden;
-  position: relative;
-}
-
-.swipe-wrap > div {
-  float: left;
-  width: 100%;
-  position: relative;
+  > .carousel-wrap {
+    overflow: hidden;
+    position: relative;
+    > .carousel-item {
+      float: left;
+      width: 100%;
+      position: relative;
+    }
+  }
 }
