@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import * as utils from 'utils';
+import _ from 'underscore';
 
 import './index.scss';
 
@@ -32,7 +33,7 @@ export class Alipay extends Component {
   onAliPayLoad = (e) => {
     utils.ui.loadingSpinner.hide();
     const target = e.currentTarget;
-    if (target.contentWindow.location.href && target.contentWindow.location.href.includes(window.location.host)) {
+    if (target.contentWindow.location.href) {
       window.location.replace(target.contentWindow.location.href);
     }
     e.preventDefault();
@@ -42,7 +43,7 @@ export class Alipay extends Component {
     const { location } = this.props;
     return (
       <div className="alipay-mask">
-        <iframe id="alipay-container" src={location.query.url} width="100%" height="100%" onLoad={this.onAliPayLoad}/>
+        <iframe id="alipay-container" ref="alipay" src={location.query.url} width="100%" height="100%" onLoad={this.onAliPayLoad}/>
       </div>
     );
   }

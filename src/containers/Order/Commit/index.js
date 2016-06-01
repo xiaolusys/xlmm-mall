@@ -78,10 +78,9 @@ export default class Commit extends Component {
   }
 
   componentWillMount() {
-    document.location.href = utils.url.getBaseUrl() + this.props.location.pathname;
     const { addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
-    this.props.fetchPayInfo(this.props.params.cartIds);
+    this.props.fetchPayInfo(this.props.location.query.cartIds);
     if (couponId) {
       this.props.fetchCouponById(couponId);
     }
@@ -151,11 +150,12 @@ export default class Commit extends Component {
       cart_ids: payInfo.data.cart_ids,
       payment: this.getpPaymentPrice(payInfo.data.total_payment),
       post_fee: payInfo.data.post_fee,
-      discount_fee: payInfo.data.discount_fee,
+      discount_fee: this.getDiscountValue(),
       total_fee: payInfo.data.total_fee,
       addr_id: address.data.id,
       channel: this.getPayType(paytype),
       logistics_company_id: logisticsCompany,
+      pay_extras: this.getPayExtras(),
     });
     e.preventDefault();
   }
@@ -189,11 +189,10 @@ export default class Commit extends Component {
         payExtras.push('pid:' + extra.pid + ':value:' + extra.value);
       }
       if (extra.pid === 2 && self.getDiscountValue() > 0) {
-        payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue());
-        payExtras.push('conponid:' + coupon.data.id);
+        payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue() + ':couponid:' + coupon.data.id);
       }
     });
-    return payExtras.join(','); // pid:1:value:2,pid:2:value:3,conponid:2
+    return payExtras.join(','); // pid:1:value:2,pid:2:value:3:cunponid:2
   }
 
   getPayType = (payType) => {
@@ -318,8 +317,8 @@ export default class Commit extends Component {
     const address = this.props.address.data || {};
     const channels = this.props.payInfo.data.channels || [];
     const { pathname, query } = this.props.location;
-    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + (query.couponId ? '?couponId=' + query.couponId : ''));
-    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + (query.addressId ? '?addressId=' + query.addressId : ''));
+    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.couponId ? '&couponId=' + query.couponId : ''));
+    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.addressId ? '&addressId=' + query.addressId : ''));
     return (
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
