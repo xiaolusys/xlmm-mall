@@ -6,7 +6,6 @@ import _ from 'underscore';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
-import { Input } from 'components/Input';
 import expressCompany from 'actions/refunds/expressCompany';
 
 import './index.scss';
