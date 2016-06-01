@@ -1,3 +1,3 @@
 export RefundsDetail from './Detail';
-export ExpressOrder from './ExpressOrder';
-export ExpressCompany from './ExpressCompany';
+export ExpressOrder from './Express/Order';
+export ExpressCompany from './Express/Company';

@@ -13,10 +13,10 @@ import './index.scss';
 
 @connect(
   state => ({
-    data: state.refundsDetails.data,
-    isLoading: state.refundsDetails.isLoading,
-    error: state.refundsDetails.error,
-    success: state.refundsDetails.success,
+    data: state.expressInfo.data,
+    isLoading: state.expressInfo.isLoading,
+    error: state.expressInfo.error,
+    success: state.expressInfo.success,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -44,10 +44,10 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.expressInfo.success) {
-      Toast.show(nextProps.expressInfo.data.msg);
+    if (nextProps.success) {
+      Toast.show(nextProps.data.msg);
     }
-    if (nextProps.expressInfo.success && nextProps.expressInfo.data.code === 0) {
+    if (nextProps.success && nextProps.data.rcode === 0) {
       this.context.router.push('/refunds/details/' + this.props.params.id);
     }
   }
