@@ -1,0 +1,25 @@
+.company-list {
+  > li {
+    background-color: #fff;
+    display: block;
+    width: 100%;
+    .company-type {
+      background-color: #F3F3F4;
+      p {
+        line-height: 26px;
+      }
+    }
+    > a,
+    a:hover,
+    a:active,
+    a:focus,
+    a:visited {
+      color: #26262e;
+      text-decoration: none;
+      height: 58px;
+      p {
+        line-height: 58px;
+      }
+    }
+  }
+}

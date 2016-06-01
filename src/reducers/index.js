@@ -28,6 +28,7 @@ import * as shareAction from 'actions/share';
 import * as refundsDetailAction from 'actions/refunds/detail';
 import * as commitOrderAction from 'actions/order/commit';
 import * as payInfoAction from 'actions/order/payInfo';
+import * as expressInfoAction from 'actions/refunds/expressInfo';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   refundsDetails: createReducer(refundsDetailAction.name),
   payInfo: createReducer(payInfoAction.name),
   commitOrder: createReducer(commitOrderAction.name),
+  expressInfo: createReducer(expressInfoAction.name),
 });
 
 export default rootReducer;
