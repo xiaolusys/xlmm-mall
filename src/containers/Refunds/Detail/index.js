@@ -51,15 +51,16 @@ export default class Detail extends Component {
 
   onRefundsInfoBtnClick = (e) => {
     this.setState({ refundsInfoIsShow: true });
+    e.preventDefault();
   }
 
   toggleRefundsInfoIsShowState = (e) => {
     this.setState({ refundsInfoIsShow: false });
+    e.preventDefault();
   }
 
   render() {
     const { isLoading, data } = this.props;
-    console.log(data);
     let statusList = [];
     if (!_.isEmpty(data.status_shaft)) {
       statusList = data.status_shaft.reverse();
@@ -71,65 +72,84 @@ export default class Detail extends Component {
     }
     return (
       <div className="refunds-details">
-        <Header title="退换货详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title="退货详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
           <ul className="refunds-details-list">
-            <li className="row no-margin bottom-border">
+            <li className="row col-xs-12 no-margin bottom-border">
               <p className="col-xs-6 no-margin text-left">
                 <span className="text-left">订单编号</span>
                 <span className="margin-left-xs font-grey-light">{data.order_id}</span>
               </p>
-              <p className="col-xs-6 no-margin text-right font-orange">
+              <p className="col-xs-6 no-margin no-padding text-right font-orange">
                 <span>{data.status_display}</span>
               </p>
             </li>
-            <If condition={data.status > 2}>
-              <li className="row no-margin padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
-                <button className="button button-light button-sm pull-right" type="button" onClick={this.onRefundsInfoBtnClick}>退货地址信息</button>
-              </li>
-              <li className="row no-margin bottom-border">
-                <p className="col-xs-10 no-margin font-orange">填写物流信息</p>
-                <i className="col-xs-2 icon-angle-right font-grey-light text-right"></i>
-              </li>
-            </If>
-            <li className="row no-margin bottom-border">
+            <p className="row col-xs-12 no-margin bottom-border text-right font-grey-light font-xs refunds-created">
+              <span>下单时间: </span>
+              <span>{data.created && data.created.replace('T', ' ') }</span>
+            </p>
+            <li className="row col-xs-12 no-margin padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
+              <If condition={data.status <= 4}>
+                <div className="col-xs-8">
+                  <p className="no-wrap no-margin">
+                    <span className="margin-right-xxs">小鹿售后</span>
+                    <span>021-50939326</span>
+                  </p>
+                  <p className="no-wrap no-margin font-grey-light">{data.return_address}</p>
+                </div>
+                <Link to={'/refunds/expressOrder/' + data.order_id + '/' + encodeURIComponent('请选择物流公司')}>
+                  <button className="margin-top-xxs button button-light button-sm pull-right" type="button">填写快递单</button>
+                </Link>
+              </If>
+              <If condition={data.status > 4}>
+                <div className="col-xs-12">
+                  <p className="no-wrap no-margin">
+                    <span className="margin-right-xxs">小鹿售后</span>
+                    <span>021-50939326</span>
+                  </p>
+                  <p className="no-wrap no-margin font-grey-light">{data.return_address}</p>
+                </div>
+              </If>
+            </li>
+            <li className="row col-xs-12 no-margin margin-top-xs bottom-border">
               <div className="col-xs-3">
                 <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={data.pic_path}/>
               </div>
               <div className="col-xs-9">
-                <p className="row padding-top-xxs padding-bottom-xxs">
-                  <span className="col-xs-8 no-wrap">{data.title}</span>
-                  <span className="col-xs-4 text-right">{data.total_fee}</span>
+                <p className="row no-padding padding-top-xxs padding-bottom-xxs text-right">
+                  <span className="col-xs-9 no-wrap">{data.title}</span>
+                  <span className="col-xs-3 no-padding text-right">{data.total_fee}</span>
                 </p>
-                <p className="row font-grey-light">
-                  <span className="col-xs-8">尺码:{data.sku_name}</span>
-                  <span className="col-xs-4 text-right"></span>
+                <p className="row no-margin no-padding font-grey-light">
+                  <span className="margin-right-xs">尺码: {data.sku_name}</span>
+                  <span className=""></span>
                 </p>
               </div>
             </li>
-            <li className="row no-margin bottom-border">
+            <li className="row col-xs-12 no-margin bottom-border">
               <p className="col-xs-8 no-margin">申请数量</p>
-              <p className="col-xs-4 no-margin text-right font-grey-light">{data.refund_num}</p>
+              <p className="col-xs-4 no-margin no-padding text-right font-grey-light">{data.refund_num}</p>
             </li>
-            <li className="row no-margin bottom-border">
+            <li className="row col-xs-12 no-margin bottom-border">
               <p className="col-xs-4 no-margin">退款金额</p>
-              <p className="col-xs-8 no-margin text-right font-orange">¥{data.refund_fee}</p>
+              <p className="col-xs-8 no-margin no-padding text-right">¥{data.refund_fee}</p>
             </li>
-            <li className="row no-margin margin-top-xs bottom-border">
+            <li className="row col-xs-12 no-margin margin-top-xs bottom-border">
               <p className="col-xs-4 no-margin">退款原因</p>
-              <p className="col-xs-8 no-margin text-right font-grey-light">{data.reason}</p>
+              <p className="col-xs-8 no-margin no-padding text-right font-grey-light">{data.reason}</p>
             </li>
-            <If condition={!_.isEmpty(data.proof_pic)}>
-              <li className="row no-margin bottom-border">
+            <li className="row col-xs-12 no-margin bottom-border">
+              <p className="col-xs-12 no-margin margin-bottom-xxs">{data.desc}</p>
+              <If condition={!_.isEmpty(data.proof_pic)}>
                 {data.proof_pic.map((item, index) => {
                   return (
-                    <Image className="login-banner border margin-left-xs" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={data.pic_path}/>
+                    <Image className="login-banner border margin-left-xs margin-bottom-xxs" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={item}/>
                   );
                 })}
-              </li>
-            </If>
+              </If>
+            </li>
             <If condition={!_.isEmpty(statusList)}>
-              <li className="row no-margin margin-top-xs padding-left-xs bottom-border">
+              <li className="row col-xs-12 no-margin margin-top-xs padding-left-xs bottom-border">
               <Timeline className="logistics-info margin-left-xxs">
                 {statusList.map((item, index) => {
                   return (
@@ -143,23 +163,6 @@ export default class Detail extends Component {
               </li>
             </If>
           </ul>
-          <If condition={this.state.refundsInfoIsShow}>
-            <div className="popup" onClick={this.toggleRefundsInfoIsShowState}>
-              <div className="content">
-              </div>
-              <div className="popup-overlay">
-                <div className="row margin-left-xxs margin-right-xxs refunds-address-info">
-                  <p className="font-xlg text-center">退货地址信息</p>
-                  <p className="text-center font-md">{data.return_address}</p>
-                  <p className="text-center font-md">请将包裹里原发货单一并寄回或者写张纸条注明您的微信昵称、联系电话和退货原因，方便我们售后收到及时为您处理。</p>
-                  <div className="row no-margin margin-top-xs">
-                    <i className="col-xs-4 margin-right-xs icon-headset font-orange font-md text-right"></i>
-                    <Link className="font-orange text-left text-underliner" to="">联系客服</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </If>
         </div>
       </div>
     );
