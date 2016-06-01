@@ -189,11 +189,10 @@ export default class Commit extends Component {
         payExtras.push('pid:' + extra.pid + ':value:' + extra.value);
       }
       if (extra.pid === 2 && self.getDiscountValue() > 0) {
-        payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue());
-        payExtras.push('conponid:' + coupon.data.id);
+        payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue() + ':couponid:' + coupon.data.id);
       }
     });
-    return payExtras.join(','); // pid:1:value:2,pid:2:value:3,conponid:2
+    return payExtras.join(','); // pid:1:value:2,pid:2:value:3:cunponid:2
   }
 
   getPayType = (payType) => {
