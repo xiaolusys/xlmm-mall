@@ -12,9 +12,9 @@ export class App extends Component {
   };
 
   componentWillMount() {
-    const mmLinkId = utils.url.getQueryValue('mm_linkid') || '';
-    const uFrom = utils.url.getQueryValue('ufrom');
-
+    const { query } = this.props.location;
+    const mmLinkId = query.mm_linkid || '';
+    const uFrom = query.ufrom || '';
     if (mmLinkId) {
       window.document.cookie = 'mm_linkid=' + mmLinkId + '; Path=/';
     }
