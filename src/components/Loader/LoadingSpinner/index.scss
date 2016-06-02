@@ -9,14 +9,13 @@
   justify-content: center;
   align-items: center;
   transition: .2s opacity linear;
-  opacity: .7;
+  opacity: 1;
   .spinner {
     padding: 10px;
     height: 60px;
     width: 60px;
     border-radius: 4px;
-    background-color: #26262e;
-    color: #fafafa;
+    background-color: rgba(38,38,46, 0.8);
     text-align: center;
     text-overflow: ellipsis;
     font-size: 14px;
