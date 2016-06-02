@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -27,15 +26,15 @@ module.exports = {
       },
       __DEVELOPMENT__: true,
     }),
-    new ExtractTextPlugin('bundle.css'),
+    new ExtractTextPlugin('app.css'),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
     }),
-    new CopyWebpackPlugin([
-      { from: 'src/vendor/pingpp.js' },
-    ]),
+    new webpack.ProvidePlugin({
+      pingpp: 'src/vendor/pingpp',
+    }),
   ],
 };

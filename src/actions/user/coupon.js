@@ -3,9 +3,9 @@ import axios from 'axios';
 import qs from 'qs';
 import createAction from '../createAction';
 
-export const names = 'FETCH_COUPON';
+export const name = 'FETCH_COUPON';
 
-const action = createAction(names.RECEIVE_COUPON);
+const action = createAction(name);
 
 export const receiveCoupon = (couponIds) => {
   return (dispatch) => {
