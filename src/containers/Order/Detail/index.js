@@ -8,8 +8,10 @@ import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
+import { BottomBar } from 'components/BottomBar';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as orderAction from 'actions/order/order';
+import * as utils from 'utils';
 
 import './index.scss';
 
@@ -40,6 +42,14 @@ export default class Detail extends Component {
 
   componentWillMount() {
     this.props.fetchOrder(this.props.params.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.order.fetchOrder.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
   }
 
   renderProducts(products = []) {
@@ -112,23 +122,25 @@ export default class Detail extends Component {
   }
 
   render() {
-    const order = this.props.order.fetchOrder.data;
+    const order = this.props.order.fetchOrder.data || {};
+    const receiver = order.user_adress || {};
+    const orderOperation = constants.orderOperations[order.status] || {};
     return (
       <div>
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-          <div className="content order-detail">
-          {this.props.order.fetchOrder.isLoading ? <Loader/> : null}
+        <div className="content order-detail">
           <p className="order-status">
             <sapn>订单编号</sapn>
             <sapn className="margin-left-xxs font-grey">{order.id}</sapn>
             <sapn className="pull-right font-yellow">{order.status_display}</sapn>
           </p>
-          <div className="row receiver-info">
-            <div className="col-xs-2">
+          <div className="row no-margin receiver-info">
+            <div className="col-xs-2 no-padding text-center margin-top-xxs">
+              <i className="icon-location icon-2x icon-yellow-light"></i>
             </div>
-            <div className="col-xs-10">
-              <p><span>{order.receiver_name}</span><span className="margin-left-xxs">{order.receiver_mobile}</span></p>
-              <p className="font-xs">{order.receiver_state + order.receiver_city + order.receiver_district + order.receiver_address}</p>
+            <div className="col-xs-10 no-padding">
+              <p><span>{receiver.receiver_name}</span><span className="margin-left-xxs">{receiver.receiver_mobile}</span></p>
+              <p className="font-xs font-grey-light">{receiver.receiver_state + receiver.receiver_city + receiver.receiver_district + receiver.receiver_address}</p>
             </div>
           </div>
           {this.renderLogistics()}
@@ -139,6 +151,18 @@ export default class Detail extends Component {
             <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(order.post_fee).toFixed(2)}</span></p>
           </div>
            <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(order.total_fee).toFixed(2)}</span></p>
+          <If condition={order.status === 1 || order.status === 7}>
+            <BottomBar>
+              <div className="col-xs-6 no-padding">
+              </div>
+              <div className="col-xs-6 no-padding">
+                <If condition={order.status === 1}>
+                  <button className="button button-md button-light pull-left" type="button" data-action="cancel">取消订单</button>
+                </If>
+                <button className="button button-md button-energized pull-right" type="button" data-action={orderOperation.action}>{orderOperation.tag}</button>
+              </div>
+            </BottomBar>
+          </If>
         </div>
       </div>
     );
