@@ -26,10 +26,6 @@ const payTypeIcons = {
   wx_pub: 'icon-wechat-pay icon-wechat-green',
   alipay_wap: 'icon-alipay-square icon-alipay-blue',
 };
-const paymentResults = {
-  success: '/pages/zhifucg.html',
-  error: '/pages/daizhifu-dd.html',
-};
 
 @connect(
   state => ({
@@ -98,10 +94,10 @@ export default class Commit extends Component {
     }
     if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
       if (order.data.charge.success) {
-        window.location.replace(paymentResults.success);
+        window.location.replace(constants.paymentResults.success);
         // router.replace(paymentResults.success);
       } else {
-        window.location.replace(paymentResults.error);
+        window.location.replace(constants.aymentResults.error);
         // router.replace(paymentResults.error);
       }
     }
@@ -256,11 +252,11 @@ export default class Commit extends Component {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        window.location.replace(paymentResults.success);
+        window.location.replace(constants.paymentResults.success);
         // this.context.router.replace(paymentResults.success);
         return;
       }
-      window.location.replace(paymentResults.error);
+      window.location.replace(constants.paymentResults.error);
       // this.context.router.replace(paymentResults.error);
     });
   }

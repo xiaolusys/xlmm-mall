@@ -22,6 +22,15 @@ const createAction = (name) => {
         error: true,
       };
     },
+    reset: () => {
+      return {
+        type: name + '_' + actionTypes.RESET,
+        error: false,
+        success: false,
+        isLoading: false,
+        payload: {},
+      };
+    },
   };
 };
 
