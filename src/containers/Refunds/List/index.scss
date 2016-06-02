@@ -1,0 +1,21 @@
+.refunds-list {
+  li {
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    .refund-item {
+      padding-left: 0px;
+    }
+  }
+  img {
+    border: 1px solid #9B9B9B;
+    border-radius: 5px;
+  }
+  > a,
+  a:hover,
+  a:active,
+  a:focus,
+  a:visited {
+    color: #26262e;
+  }
+}

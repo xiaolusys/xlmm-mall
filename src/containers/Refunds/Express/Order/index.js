@@ -45,9 +45,9 @@ export default class Detail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.success) {
-      Toast.show(nextProps.data.msg);
+      Toast.show(nextProps.data.info);
     }
-    if (nextProps.success && nextProps.data.rcode === 0) {
+    if (nextProps.success && nextProps.data.code === 0) {
       this.context.router.push('/refunds/details/' + this.props.params.id);
     }
   }
