@@ -69,11 +69,11 @@ export default class List extends Component {
                         <Image className="border" thumbnail={70} crop="70x70" quality={100} src={refund.pic_path} />
                       </div>
                       <div className="col-xs-9 padding-top-xxs padding-bottom-xxs refund-item">
-                        <p className="row no-margin no-padding padding-top-xxs padding-bottom-xxs text-right">
+                        <p className="row no-margin no-padding padding-top-xxs padding-bottom-xxs">
                           <span className="col-xs-9 no-wrap">{refund.title}</span>
                           <span className="col-xs-3 no-padding text-right">{'¥' + refund.total_fee}</span>
                         </p>
-                        <p className="row no-margin no-padding padding-top-xxs padding-bottom-xxs text-right">
+                        <p className="row no-margin no-padding padding-top-xxs padding-bottom-xxs">
                           <span className="col-xs-9 text-left">{'尺码: ' + refund.sku_name}</span>
                           <span className="col-xs-3 no-padding text-right">{'x' + refund.refund_num}</span>
                         </p>
