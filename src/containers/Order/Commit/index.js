@@ -118,6 +118,10 @@ export default class Commit extends Component {
   onCommitOrderClick = (e) => {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompany } = this.state;
+    if (!address.data.id) {
+      Toast.show('请填写收货地址！');
+      return;
+    }
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
