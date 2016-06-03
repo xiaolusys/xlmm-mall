@@ -43,8 +43,6 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       Promise: 'exports?global.Promise!es6-promise',
-    }),
-    new webpack.ProvidePlugin({
       pingpp: 'src/vendor/pingpp',
     }),
     new webpack.optimize.UglifyJsPlugin({
