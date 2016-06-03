@@ -2,13 +2,15 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ReplacePlugin = require('replace-webpack-plugin');
 
+const publicPath = '/mall/';
+
 module.exports = {
   devtool: 'source-map',
 
   entry: ['bootstrap-loader/extractStyles'],
 
   output: {
-    publicPath: '/mall/',
+    publicPath: publicPath,
     filename: 'app-[hash].js',
   },
 
@@ -35,8 +37,8 @@ module.exports = {
       hash: '[hash]',
       output: 'dist/index.html',
       data: {
-        css: '<link type="text/css" rel="stylesheet" href="app-[hash].css">',
-        js: '<script src="./app-[hash].js"></script>',
+        css: '<link type="text/css" rel="stylesheet" href="' + publicPath + 'app-[hash].css">',
+        js: '<script src="' + publicPath + 'app-[hash].js"></script>',
       },
     }),
     new webpack.ProvidePlugin({
