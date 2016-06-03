@@ -30,7 +30,6 @@ const loginType = {
 export default class Home extends Component {
   static propTypes = {
     prefixCls: React.PropTypes.string,
-    trasparent: React.PropTypes.boolean,
     dispatch: React.PropTypes.func,
     data: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
@@ -45,7 +44,6 @@ export default class Home extends Component {
 
   static defaultProps = {
     prefixCls: 'login-home',
-    trasparent: true,
   };
 
   constructor(props, context) {
@@ -96,12 +94,12 @@ export default class Home extends Component {
   }
 
   render() {
-    const { prefixCls, trasparent } = this.props;
+    const { prefixCls } = this.props;
     const imgHeight = (utils.dom.windowHeight() * 0.56).toFixed(0);
     const imgWidth = utils.dom.windowWidth();
     return (
       <div className={`${prefixCls}`}>
-        <Header trasparent={`${trasparent}`} title="登录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header trasparent title="登录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
           <div style={{ height: imgHeight, width: imgWidth }}>
           <Image className="login-banner" thumbnail={imgWidth} crop={imgWidth + 'x' + imgHeight} quality={100} src={loginSplash}/>

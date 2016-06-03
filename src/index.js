@@ -1,17 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, useRouterHistory, browserHistory } from 'react-router';
-import { createHashHistory } from 'history';
+import { Router, useRouterHistory } from 'react-router';
+import { createHistory } from 'history';
 import configStore from './store/configStore';
 import routes from 'routes';
 
-const history = useRouterHistory(createHashHistory)({ queryKey: false });
+const history = useRouterHistory(createHistory)({
+  basename: '/mall/',
+  queryKey: false,
+});
 const store = configStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
+    <Router history={history} routes={routes} />
   </Provider>,
   document.querySelector('#container')
 );
