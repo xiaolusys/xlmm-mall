@@ -14,17 +14,17 @@ import './index.scss';
 const actionCreators = _.extend(passwordAction, verifyCodeAction);
 
 const actions = {
-  '/user/register': {
+  'user/register': {
     title: '注册',
     nextBtnTitle: '注册',
     requestAction: 'register',
   },
-  '/user/password/reset': {
+  'user/password/reset': {
     title: '重置密码',
     nextBtnTitle: '重置密码',
     requestAction: 'find_pwd',
   },
-  '/user/password/set': {
+  'user/password/set': {
     title: '修改密码',
     nextBtnTitle: '修改密码',
     requestAction: 'change_pwd',

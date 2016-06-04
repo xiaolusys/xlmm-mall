@@ -32,8 +32,6 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
-    }),
-    new webpack.ProvidePlugin({
       pingpp: 'src/vendor/pingpp',
     }),
   ],

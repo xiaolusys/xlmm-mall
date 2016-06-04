@@ -153,9 +153,9 @@ export default class Detail extends Component {
            <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(order.total_fee).toFixed(2)}</span></p>
           <If condition={order.status === 1 || order.status === 7}>
             <BottomBar>
-              <div className="col-xs-6 no-padding">
+              <div className="col-xs-5 no-padding">
               </div>
-              <div className="col-xs-6 no-padding">
+              <div className="col-xs-7 no-padding">
                 <If condition={order.status === 1}>
                   <button className="button button-md button-light pull-left" type="button" data-action="cancel">取消订单</button>
                 </If>
