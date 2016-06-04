@@ -49,6 +49,14 @@ export default class List extends Component {
       <div>
         <Header title="退款退货" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
+          <If condition={_.isEmpty(data)}>
+            <div className="text-center margin-top-xlg margin-bottom-lg">
+              <i className="icon-order-o icon-4x icon-grey"></i>
+              <p>您暂时还没有退款退货订单哦～快去看看吧</p>
+              <p className="font-grey font-xs margin-bottom-xs">再不抢购，宝贝就卖光啦～</p>
+              <Link className="button button-stable" to="/" >快去抢购</Link>
+            </div>
+          </If>
           <ul className="refunds-list">
             {data.map((refund) => {
               console.log(refund);
