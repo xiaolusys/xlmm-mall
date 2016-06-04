@@ -7,6 +7,7 @@ import * as plugins from 'plugins';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { Image } from 'components/Image';
+import { Product } from 'components/Product';
 import activity from './activity';
 
 import './index.scss';
@@ -37,7 +38,7 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160601 extends Component {
+export default class A20160606 extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -148,12 +149,7 @@ export default class A20160601 extends Component {
                 <ul>
                 {group.products.map((product, i) => {
                   return (
-                    <li className="col-xs-6 no-padding activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
-                      <Image src={product.pic} />
-                      <If condition={(new Date(activity.startTime)) > (new Date())}>
-                        <div className="product-tips"><p>即将开售</p></div>
-                      </If>
-                    </li>
+                    <Product key={product.id} product={product} onItemClick = {this.onProductClick} />
                   );
                 })}
                 </ul>
