@@ -48,7 +48,7 @@ export default {
     }, {
       id: 9191,
       model_id: 9191,
-      head_img: 'http://image.xiaolu.so/MG_1457343925797模版_01.jpg',
+      head_img: 'http://image.xiaolu.so/MG_1457343808033头图背景1.png',
       is_saleout: false,
       is_saleopen: false,
       product_model: { name: '新品高腰七分裤' },
