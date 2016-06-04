@@ -59,7 +59,7 @@ export default (state = initState, action = null) => {
       });
     case orderAction.names.FETCH_ORDERS + '_' + actionTypes.RESET:
       return _.extend({}, state, {
-        fetchOrders: { isLoading: false, data: action.payload, error: true, success: false },
+        fetchOrders: { isLoading: false, data: action.payload, error: false, success: false },
       });
     case orderAction.names.FETCH_ORDER + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
@@ -97,6 +97,10 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, {
         chargeOrder: { isLoading: false, data: action.payload, error: true, success: false },
       });
+    case orderAction.names.CHARGE_ORDER + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        chargeOrder: { isLoading: false, data: {}, error: false, success: false },
+      });
     case orderAction.names.CONFIRM_RECEIVED_ORDER + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         confirmReceivedOrder: { isLoading: true, data: {}, error: false, success: false },
@@ -120,6 +124,10 @@ export default (state = initState, action = null) => {
     case orderAction.names.REMIND_SHIPMENT + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         remindShipment: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case orderAction.names.REMIND_SHIPMENT + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        remindShipment: { isLoading: false, data: action.payload, error: false, success: false },
       });
     default:
       return state;

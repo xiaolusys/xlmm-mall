@@ -6,7 +6,14 @@ export class Timer extends Component {
 
   static propTypes = {
     endDateString: React.PropTypes.string.isRequired,
-  }
+    format: React.PropTypes.string,
+    hasBeenEnd: React.PropTypes.string,
+  };
+
+  static defaultProps = {
+    format: 'dd:hh:mm:ss',
+    hasBeenEnd: '已结束',
+  };
 
   state = {
     remaining: null,
@@ -22,15 +29,24 @@ export class Timer extends Component {
   }
 
   tick = () => {
-    const { endDateString } = this.props;
+    const { endDateString, hasBeenEnd } = this.props;
     const remaining = utils.timer.getTimeRemaining(endDateString);
     if (remaining.totals > 0) {
-      this.setState({ remaining: remaining.days + ':' + remaining.hours + ':' + remaining.minutes + ':' + remaining.seconds });
+
+      this.setState({ remaining: this.format(remaining) });
     } else {
-      this.setState({ remaining: '已结束' });
+      this.setState({ remaining: hasBeenEnd });
       clearInterval(this.interval);
     }
+  }
 
+  format(remaining) {
+    let { format } = this.props;
+    format = format.replace('dd', remaining.days);
+    format = format.replace('hh', remaining.hours);
+    format = format.replace('mm', remaining.minutes);
+    format = format.replace('ss', remaining.seconds);
+    return format;
   }
 
   render() {

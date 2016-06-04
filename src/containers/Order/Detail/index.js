@@ -9,6 +9,8 @@ import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { BottomBar } from 'components/BottomBar';
+import { Toast } from 'components/Toast';
+import { Timer } from 'components/Timer';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as orderAction from 'actions/order/order';
 import * as utils from 'utils';
@@ -16,6 +18,12 @@ import * as utils from 'utils';
 import './index.scss';
 
 const actionCreators = _.extend({}, orderAction);
+
+const orderOperations = {
+  2: { tag: '申请退款', action: 'apply-return-money' },
+  5: { tag: '申请退货', action: 'apply-refunds' },
+  3: { tag: '确认收货', action: 'confirm' },
+};
 
 @connect(
   state => ({
@@ -29,6 +37,11 @@ export default class Detail extends Component {
     params: React.PropTypes.any,
     order: React.PropTypes.any,
     fetchOrder: React.PropTypes.func,
+    deleteOrder: React.PropTypes.func,
+    chargeOrder: React.PropTypes.func,
+    confirmReceivedOrder: React.PropTypes.func,
+    remindShipment: React.PropTypes.func,
+    resetRemindShipment: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -40,52 +53,128 @@ export default class Detail extends Component {
     context.router;
   }
 
+  state = {
+
+  };
+
   componentWillMount() {
     this.props.fetchOrder(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.order.fetchOrder.isLoading) {
+    const { fetchOrder, chargeOrder, deleteOrder, remindShipment } = nextProps.order;
+    if (fetchOrder.isLoading || chargeOrder.isLoading || deleteOrder.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
     }
+    if (chargeOrder.success && chargeOrder.data.code === 0 && !_.isEmpty(chargeOrder.data.charge)) {
+      this.pay(chargeOrder.data.charge);
+    } else if (chargeOrder.success && chargeOrder.data.info) {
+      Toast.show(chargeOrder.data.info);
+    }
   }
 
-  renderProducts(products = []) {
+  onTradesBtnClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    const { router } = this.context;
+    switch (dataSet.action) {
+      case constants.tradeOperations['1'].action:
+        this.props.chargeOrder(dataSet.tradeid);
+        break;
+      case constants.tradeOperations['2'].action:
+        this.props.remindShipment(dataSet.tradeid);
+        break;
+      case constants.tradeOperations['3'].action:
+        this.props.confirmReceivedOrder(dataSet.tradeid);
+        break;
+      case constants.tradeOperations['7'].action:
+        this.props.deleteOrder(dataSet.tradeid);
+        break;
+      case 'cancel':
+        // TODO: cancel order
+      default:
+        break;
+    }
+  }
+
+  onOrderBtnClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    const { router } = this.context;
+    switch (dataSet.action) {
+      case orderOperations['2'].action:
+        router.push(`/refunds/apply/${dataSet.tradeid}/${dataSet.orderid}`);
+        break;
+      case orderOperations['3'].action:
+        this.props.confirmReceivedOrder(dataSet.orderid);
+        break;
+      case orderOperations['5'].action:
+        router.push(`/refunds/apply/${dataSet.tradeid}/${dataSet.orderid}`);
+        break;
+      default:
+        break;
+    }
+  }
+
+  getClosedDate = (dateString) => {
+    const date = new Date(dateString.replace('-', '/').replace('T', ' '));
+    date.setMinutes(date.getMinutes() + 20);
+    return date.toISOString();
+  }
+
+  pay = (charge) => {
+    window.pingpp.createPayment(charge, (result, error) => {
+      if (result === 'success') {
+        window.location.replace(constants.paymentResults.success);
+        // this.context.router.replace(paymentResults.success);
+        return;
+      }
+      window.location.replace(constants.paymentResults.error);
+      // this.context.router.replace(paymentResults.error);
+    });
+  }
+
+  renderOrders(orders = []) {
+    const trade = this.props.order.fetchOrder.data || {};
+    const orderOperation = orderOperations[trade.status] || {};
     return (
-      <div className="product-list">
-        {products.map((product, index) => {
+      <div className="order-list">
+        {orders.map((order, index) => {
           return (
-            <div key={product.id} className="row no-margin bottom-border">
-              <If condition={product.status === 1}>
+            <div key={order.id} className="row no-margin bottom-border">
+              <If condition={order.status !== 2 && order.status !== 3 && order.status !== 5}>
                 <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path + constants.image.square} />
+                  <img src={order.pic_path + constants.image.square} />
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
-                    <span>{product.title}</span>
-                    <span className="pull-right">{'￥' + product.payment}</span>
+                    <span>{order.title}</span>
+                    <span className="pull-right">{'￥' + order.payment}</span>
                   </p>
                   <p className="row no-margin font-grey">
-                    <span>{'尺码：' + product.sku_name}</span>
-                    <span className="pull-right">{'x' + product.num}</span>
+                    <span>{'尺码：' + order.sku_name}</span>
+                    <span className="pull-right">{'x' + order.num}</span>
                   </p>
                 </div>
               </If>
-              <If condition={product.status !== 1}>
+              <If condition={order.status === 2 || order.status === 3 || order.status === 5}>
                 <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path + constants.image.square} />
+                  <img src={order.pic_path + constants.image.square} />
                 </div>
-                <div className="col-xs-9 no-padding">
+                <div className="col-xs-6 no-padding">
                   <p className="row no-margin">
-                    <span>{product.title}</span>
-                    <span className="pull-right">{'￥' + product.payment}</span>
+                    <span>{order.title}</span>
                   </p>
-                  <p className="row no-margin font-grey">
-                    <span>{'尺码：' + product.sku_name}</span>
-                    <span className="pull-right">{'x' + product.num}</span>
-                  </p>
+                  <div className="row no-margin">
+                    <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
+                    <p className="pull-right">
+                      <span className="margin-right-xxs">{'￥' + order.payment}</span>
+                      <span className="font-grey">{'x' + order.num}</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
+                  <button className="button button-sm button-light" type="button" data-action={orderOperation.action} data-tradeid={trade.id} data-orderid={order.id} onClick={this.onOrderBtnClick}>{orderOperation.tag}</button>
                 </div>
               </If>
             </div>
@@ -114,25 +203,18 @@ export default class Detail extends Component {
     );
   }
 
-  renderBottomBar() {
-    return (
-      <div>
-      </div>
-    );
-  }
-
   render() {
-    const order = this.props.order.fetchOrder.data || {};
-    const receiver = order.user_adress || {};
-    const orderOperation = constants.orderOperations[order.status] || {};
+    const trade = this.props.order.fetchOrder.data || {};
+    const receiver = trade.user_adress || {};
+    const tradeOperation = constants.tradeOperations[trade.status] || {};
     return (
-      <div>
+      <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <div className="content order-detail">
-          <p className="order-status">
+        <div className="content trade-detail">
+          <p className="trade-status">
             <sapn>订单编号</sapn>
-            <sapn className="margin-left-xxs font-grey">{order.id}</sapn>
-            <sapn className="pull-right font-yellow">{order.status_display}</sapn>
+            <sapn className="margin-left-xxs font-grey">{trade.id}</sapn>
+            <sapn className="pull-right font-yellow">{trade.status_display}</sapn>
           </p>
           <div className="row no-margin receiver-info">
             <div className="col-xs-2 no-padding text-center margin-top-xxs">
@@ -144,22 +226,24 @@ export default class Detail extends Component {
             </div>
           </div>
           {this.renderLogistics()}
-          {this.renderProducts(order.orders)}
+          {this.renderOrders(trade.orders)}
           <div className="price-info">
-            <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(order.payment).toFixed(2)}</span></p>
-            <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(order.discount_fee).toFixed(2)}</span></p>
-            <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(order.post_fee).toFixed(2)}</span></p>
+            <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(trade.payment).toFixed(2)}</span></p>
+            <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(trade.discount_fee).toFixed(2)}</span></p>
+            <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(trade.post_fee).toFixed(2)}</span></p>
           </div>
-           <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(order.total_fee).toFixed(2)}</span></p>
-          <If condition={order.status === 1 || order.status === 7}>
+           <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
+          <If condition={trade.status === 1 || trade.status === 7}>
             <BottomBar>
-              <div className="col-xs-5 no-padding">
+              <div className="pull-left text-left countdown">
+                <p className="font-grey">付款剩余时间</p>
+                <p><Timer endDateString={this.getClosedDate(trade.created)} format="mm:ss" /></p>
               </div>
-              <div className="col-xs-7 no-padding">
-                <If condition={order.status === 1}>
-                  <button className="button button-md button-light pull-left" type="button" data-action="cancel">取消订单</button>
+              <div className="pull-right">
+                <If condition={trade.status === -1}>
+                  <button className="button button-md button-light margin-right-xxs" type="button" data-action="cancel" data-tradeid={trade.id} onClick={this.onTradesBtnClick}>取消订单</button>
                 </If>
-                <button className="button button-md button-energized pull-right" type="button" data-action={orderOperation.action}>{orderOperation.tag}</button>
+                <button className="button button-md button-energized" type="button" data-action={tradeOperation.action} data-tradeid={trade.id} onClick={this.onTradesBtnClick}>{tradeOperation.tag}</button>
               </div>
             </BottomBar>
           </If>
