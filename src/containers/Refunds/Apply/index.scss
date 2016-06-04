@@ -1,0 +1,33 @@
+.refunds {
+  .refunds-apply-list {
+    > li {
+      display: block;
+      width: 100%;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      background-color: #fff;
+    }
+    img {
+      border: 1px solid #9B9B9B;
+      border-radius: 5px;
+    }
+    >.refund-reason {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      i {
+        margin-top: 3px;
+      }
+    }
+  }
+  .refunds-desc {
+    textarea {
+      resize: none;
+    }
+  }
+  .refunds-address-info {
+    p {
+      margin: 0px 0px 0px 0px;
+      line-height: 48px;
+    }
+  }
+}
