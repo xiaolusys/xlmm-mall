@@ -91,7 +91,7 @@ export default class A20160606 extends Component {
       if (utils.detector.isApp()) {
         plugins.invoke({
           method: 'jumpToNativeLocation',
-          data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substring(0, window.location.href.indexOf('#')) + '#/product/details/' + modelId },
+          data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substr(0, window.location.href.indexOf('/mall/')) + '/mall/product/details/' + modelId },
         });
         return;
       }
