@@ -237,7 +237,7 @@ export default class Detail extends Component {
             <BottomBar>
               <div className="pull-left text-left countdown">
                 <p className="font-grey">付款剩余时间</p>
-                <p><Timer endDateString={this.getClosedDate(trade.created)} format="mm:ss" /></p>
+                <p><Timer endDateString={this.getClosedDate(trade.created)} format="mm:ss" hasBeenEnd="订单已过期"/></p>
               </div>
               <div className="pull-right">
                 <If condition={trade.status === -1}>
