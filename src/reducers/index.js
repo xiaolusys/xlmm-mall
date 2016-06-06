@@ -63,7 +63,8 @@ const rootReducer = combineReducers({
   commitOrder: createReducer(commitOrderAction.name),
   expressInfo: createReducer(expressInfoAction.name),
   refundsList: createReducer(refundsListAction.name),
-  refundsApply: createReducer(refundsApplyAction.name),
+  refundsApply: createReducer(refundsApplyAction.names.REFUNDS_APPLY),
+  refundsOrder: createReducer(refundsApplyAction.names.FETCH_ORDER),
 });
 
 export default rootReducer;

@@ -20,6 +20,8 @@ const createReducer = function(name, successReducer) {
         return _.extend({}, state, { isLoading: false, data: action.payload, error: false, success: true });
       case name + '_' + actionTypes.FAILURE:
         return _.extend({}, state, { isLoading: false, data: action.payload, error: true, success: false });
+      case name + '_' + actionTypes.RESET:
+        return _.extend({}, state, { isLoading: false, data: {}, error: false, success: false });
       default:
         return state;
     }

@@ -9,6 +9,7 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import { Popup } from 'components/Popup';
+import { Toast } from 'components/Toast';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as utils from 'utils';
 import * as actionCreators from 'actions/refunds/apply';
@@ -19,26 +20,50 @@ const titles = {
   2: '申请退款',
   5: '申请退货',
 };
+const reasons = {
+  0: '其他',
+  1: '错拍',
+  2: '缺货',
+  3: '开线/脱色/脱毛/有色差/有虫洞',
+  4: '发错货/漏发',
+  5: '没有发货',
+  6: '未收到货',
+  7: '与描述不符',
+  8: '退运费',
+  9: '发票问题',
+  10: '七天无理由退换货',
+};
 
 @connect(
   state => ({
-    data: state.refundsApply.data,
-    isLoading: state.refundsApply.isLoading,
-    error: state.refundsApply.error,
-    success: state.refundsApply.success,
+    order: {
+      data: state.refundsOrder.data,
+      isLoading: state.refundsOrder.isLoading,
+      error: state.refundsOrder.error,
+      success: state.refundsOrder.success,
+    },
+    apply: {
+      data: state.refundsApply.data,
+      isLoading: state.refundsApply.isLoading,
+      error: state.refundsApply.error,
+      success: state.refundsApply.success,
+    },
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export default class Apply extends Component {
   static propTypes = {
     children: React.PropTypes.array,
-    data: React.PropTypes.any,
+    order: React.PropTypes.any,
+    apply: React.PropTypes.any,
     params: React.PropTypes.object,
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
-    getOrderById: React.PropTypes.func,
+    fetchOrderById: React.PropTypes.func,
     pushRefundsApply: React.PropTypes.func,
+    resetApply: React.PropTypes.func,
+    resetOrder: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -61,27 +86,39 @@ export default class Apply extends Component {
 
   componentWillMount() {
     const params = this.props.params;
-    this.props.getOrderById(params.tradeId, params.orderId);
+    this.props.fetchOrderById(params.tradeId, params.orderId);
+  }
+
+  componentDidMount() {
+    this.props.resetApply();
+    this.props.resetOrder();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success) {
-      this.setState({ num: nextProps.data.num || 0 });
+    if (nextProps.order.success) {
+      this.setState({ num: nextProps.order.data.num || 0 });
     }
-    // if (isLoading) {
-    //   utils.ui.loadingSpinner.show();
-    // } else {
-    //   utils.ui.loadingSpinner.hide();
-    // }
+    if (nextProps.apply.success) {
+      Toast.show(nextProps.apply.data.info);
+      if (nextProps.apply.data.code === 0) {
+        this.context.router.goBack();
+      }
+    }
+    if (nextProps.order.isLoading || nextProps.apply.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
   }
+
   onSubmitBtnClick = (e) => {
-    const { data } = this.props;
+    const { order } = this.props;
     const state = this.state;
     const params = {
-      id: data.id,
-      reason: state.reason,
+      id: order.data.id,
+      reason: state.reasonIndex,
       num: state.num,
-      sum_price: data.sum_price,
+      sum_price: order.data.sum_price,
       description: state.description,
       proof_pic: '',
     };
@@ -91,7 +128,8 @@ export default class Apply extends Component {
 
   onReasonChange = (e) => {
     const reason = e.target.textContent;
-    this.setState({ reason: reason, showPopup: false });
+    const index = e.target.dataset.reasonIndex;
+    this.setState({ reason: reason, showPopup: false, reasonIndex: Number(index) });
     e.preventDefault();
   }
 
@@ -101,14 +139,14 @@ export default class Apply extends Component {
   }
 
   numMinus = (e) => {
-    if (this.state.num) {
+    if (this.state.num >= 2) {
       this.setState({ num: this.state.num - 1 });
     }
     e.preventDefault();
   }
 
   numPlus = (e) => {
-    if (this.state.num < this.props.data.num) {
+    if (this.state.num < this.props.order.data.num) {
       this.setState({ num: this.state.num + 1 });
     }
     e.preventDefault();
@@ -125,27 +163,27 @@ export default class Apply extends Component {
   }
 
   render() {
-    const { isLoading, data } = this.props;
+    const { isLoading, order, apply } = this.props;
     let statusList = [];
-    if (!_.isEmpty(data.status_shaft)) {
-      statusList = data.status_shaft.reverse();
+    if (!_.isEmpty(order.data.status_shaft)) {
+      statusList = order.data.status_shaft.reverse();
     }
     return (
       <div className="refunds-apply">
-        <Header title={titles[data.status] || ''} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title={titles[apply.data.status] || ''} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
           <ul className="refunds-apply-list">
             <li className="row col-xs-12 no-margin bottom-border">
               <div className="col-xs-3">
-                <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={data.pic_path}/>
+                <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
               </div>
               <div className="col-xs-9 no-padding">
                 <p className="row no-margin padding-top-xxs padding-bottom-xxs padding-left-xxs">
-                  <span className="col-xs-9 no-wrap padding-left-xs">{data.title}</span>
-                  <span className="col-xs-3 no-padding text-right">{'¥' + data.total_fee}</span>
+                  <span className="col-xs-9 no-wrap padding-left-xs">{order.data.title}</span>
+                  <span className="col-xs-3 no-padding text-right">{'¥' + order.data.total_fee}</span>
                 </p>
                 <p className="row no-margin font-grey-light padding-left-xxs">
-                  <span className="col-xs-9 padding-left-xs">尺码: {data.sku_name}</span>
+                  <span className="col-xs-9 padding-left-xs">尺码: {order.data.sku_name}</span>
                   <span className="col-xs-3 no-padding text-right">x1</span>
                 </p>
               </div>
@@ -160,7 +198,7 @@ export default class Apply extends Component {
             </li>
             <li className="row col-xs-12 no-margin bottom-border">
               <p className="col-xs-4 no-margin">可退金额</p>
-              <p className="col-xs-8 no-margin no-padding text-right font-orange">{'¥' + data.payment}</p>
+              <p className="col-xs-8 no-margin no-padding text-right font-orange">{'¥' + order.data.payment}</p>
             </li>
             <li className="row col-xs-12 no-margin margin-top-xs bottom-border">
               <p className="col-xs-4 no-margin">退款原因</p>
@@ -175,11 +213,17 @@ export default class Apply extends Component {
           </ul>
           <Popup className="popup" active={this.state.showPopup} height="auto">
             <div className="refunds-address-info">
-              <p className="no-margin text-center bottom-border" onClick={this.onReasonChange}>未收到货</p>
-              <p className="no-margin text-center bottom-border" onClick={this.onReasonChange}>商品质量问题</p>
-              <p className="no-margin text-center bottom-border" onClick={this.onReasonChange}>收到商品破损</p>
-              <p className="no-margin text-center bottom-border" onClick={this.onReasonChange}>商品漏发/错发</p>
-              <p className="no-margin text-center bottom-border" onClick={this.onReasonChange}>其他原因</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="1" onClick={this.onReasonChange}>{reasons[1]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="2" onClick={this.onReasonChange}>{reasons[2]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="3" onClick={this.onReasonChange}>{reasons[3]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="4" onClick={this.onReasonChange}>{reasons[4]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="5" onClick={this.onReasonChange}>{reasons[5]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="6" onClick={this.onReasonChange}>{reasons[6]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="7" onClick={this.onReasonChange}>{reasons[7]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="8" onClick={this.onReasonChange}>{reasons[8]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="9" onClick={this.onReasonChange}>{reasons[9]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="10" onClick={this.onReasonChange}>{reasons[10]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="11" onClick={this.onReasonChange}>{reasons[0]}</p>
               <div className="row no-margin">
                 <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.hidePopup}>取消</button>
               </div>

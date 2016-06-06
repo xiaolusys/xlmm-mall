@@ -1,35 +1,47 @@
-
 import * as constants from 'constants';
 import axios from 'axios';
 import createAction from '../createAction';
 import qs from 'qs';
 
-export const name = 'PUSH_REFUNDS_APPLY';
+export const names = { REFUNDS_APPLY: 'REFUNDS_APPLY', FETCH_ORDER: 'FETCH_ORDER' };
 
-export const getOrderById = (tradeId, orderId) => {
-  const action = createAction(name);
+const fetchOrderAction = createAction(names.FETCH_ORDER);
+const pushApplyAction = createAction(names.REFUNDS_APPLY);
+
+export const fetchOrderById = (tradeId, orderId) => {
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(fetchOrderAction.request());
     return axios.get(constants.baseEndpointV1 + 'trades/' + tradeId + '/orders/' + orderId)
       .then((resp) => {
-        dispatch(action.success(resp.data));
+        dispatch(fetchOrderAction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp));
+        dispatch(fetchOrderAction.failure(resp));
       });
   };
 };
 
 export const pushRefundsApply = (params) => {
-  const action = createAction(name);
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(pushApplyAction.request());
     return axios.post(constants.baseEndpointV1 + 'refunds', qs.stringify(params))
       .then((resp) => {
-        dispatch(action.success(resp.data));
+        dispatch(pushApplyAction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp));
+        dispatch(pushApplyAction.failure(resp));
       });
+  };
+};
+
+export const resetApply = () => {
+  return (dispatch) => {
+    dispatch(pushApplyAction.reset());
+  };
+};
+
+export const resetOrder = () => {
+  return (dispatch) => {
+    dispatch(fetchOrderAction.reset());
   };
 };
