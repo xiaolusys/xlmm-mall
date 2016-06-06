@@ -4,8 +4,9 @@ import createAction from '../createAction';
 
 export const name = 'FETCH_REFUNDS_LIST';
 
-export const fetchRefundsList = () => {
+export const fetchRefunds = (pageIndex, pageSize) => {
   const action = createAction(name);
+  const params = { params: { page: pageIndex } };
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpointV1 + 'refunds')

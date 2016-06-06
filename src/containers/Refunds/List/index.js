@@ -26,7 +26,7 @@ export default class List extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
-    fetchRefundsList: React.PropTypes.func,
+    fetchRefunds: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -38,8 +38,14 @@ export default class List extends Component {
     context.router;
   }
 
+  state = {
+    pageIndex: 0,
+    hasMore: true,
+  }
+
   componentWillMount() {
-    this.props.fetchRefundsList();
+    const { pageIndex, pageSize } = this.state;
+    this.props.fetchRefunds(pageIndex + 1);
   }
 
   render() {
