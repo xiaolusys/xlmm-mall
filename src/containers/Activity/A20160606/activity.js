@@ -147,7 +147,7 @@ export default {
       is_saleopen: true,
       product_model: { name: '四条装纯棉男童平角内裤' },
       agent_price: 49.9,
-      std_sale_price: 128,
+      std_sale_price: 99,
     }, {
       id: 13980,
       model_id: 13980,
