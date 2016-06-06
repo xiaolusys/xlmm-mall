@@ -45,14 +45,14 @@ export default class Detail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.success) {
-      Toast.show(nextProps.data.msg);
+      Toast.show(nextProps.data.info);
     }
-    if (nextProps.success && nextProps.data.rcode === 0) {
+    if (nextProps.success && nextProps.data.code === 0) {
       this.context.router.push('/refunds/details/' + this.props.params.id);
     }
   }
 
-  onBubmitBtnClick = (e) => {
+  onSubmitBtnClick = (e) => {
     const props = this.props;
     const params = { company: props.params.name, id: props.params.id, modify: 2, sid: this.state.logisticsNUmber };
     this.props.pushExpressInfo(params);
@@ -103,7 +103,7 @@ export default class Detail extends Component {
             <input className="col-xs-12 info-item" type="text" placeholder={'请输入快递单号'} onChange={this.onLogisticsNumberChange} />
           </div>
           <div className="row no-margin">
-            <button className={bindPhoneBtnCls} type="button" onClick={this.onBubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>
+            <button className={bindPhoneBtnCls} type="button" onClick={this.onSubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>
           </div>
         </div>
       </div>

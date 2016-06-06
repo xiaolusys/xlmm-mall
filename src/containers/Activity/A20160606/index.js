@@ -7,6 +7,7 @@ import * as plugins from 'plugins';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { Image } from 'components/Image';
+import { Product } from 'components/Product';
 import activity from './activity';
 
 import './index.scss';
@@ -28,7 +29,6 @@ const setupWebViewJavascriptBridge = function(callback) {
   }, 0);
 };
 
-
 @connect(
   state => ({
     data: state.coupon.data,
@@ -37,7 +37,7 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160601 extends Component {
+export default class A20160606 extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -136,7 +136,7 @@ export default class A20160601 extends Component {
   render() {
     return (
       <div>
-        <Header title="小鹿儿童节" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
+        <Header title="【端午节】深情‘衣’粽" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
         <div className="content-white-bg activity-md clearfix col-md-4 col-md-offset-4 no-padding">
           <Image className="col-xs-12 no-padding" src={activity.banner} />
           <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
@@ -148,12 +148,7 @@ export default class A20160601 extends Component {
                 <ul>
                 {group.products.map((product, i) => {
                   return (
-                    <li className="col-xs-6 no-padding activity-product" key={product.modleId} data-modelid={product.modleId} onClick={this.onProductClick}>
-                      <Image src={product.pic} />
-                      <If condition={(new Date(activity.startTime)) > (new Date())}>
-                        <div className="product-tips"><p>即将开售</p></div>
-                      </If>
-                    </li>
+                    <Product key={product.id} product={product} onItemClick = {this.onProductClick} />
                   );
                 })}
                 </ul>

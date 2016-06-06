@@ -13,7 +13,7 @@ import { SmsLogin, LoginHome, PasswordLogin, Password, UserProfile, UserPhone, N
 import { OrderList, OrderDetail, Logistics, OrderCommit } from 'containers/Order';
 import { ShopBag } from 'containers/ShopBag';
 import { ProductDetails, ProductList } from 'containers/Product';
-import { ExpressCompany, RefundsDetail, ExpressOrder } from 'containers/Refunds';
+import { RefundsApply, RefundsList, ExpressCompany, RefundsDetail, ExpressOrder } from 'containers/Refunds';
 import { Alipay } from 'containers/Alipay';
 
 export default (
@@ -45,6 +45,8 @@ export default (
     <Route path="/refunds/details/:id" component={RefundsDetail} />
     <Route path="/refunds/express/order/:id/:name" component={ExpressOrder} />
     <Route path="/refunds/express/company/:id" component={ExpressCompany} />
+    <Route path="/refunds" component={RefundsList} />
+    <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} />
     <Route path="/alipay" component={Alipay} />
     {activityRoutes}
     <Route status={404} path="*" component={Home} />

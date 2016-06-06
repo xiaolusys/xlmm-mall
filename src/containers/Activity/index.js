@@ -1,2 +1,2 @@
 export TopTen from './TopTen';
-export A20160601 from './A20160601';
+export A20160606 from './A20160606';
