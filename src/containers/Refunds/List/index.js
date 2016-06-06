@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
+import * as utils from 'utils';
 import * as actionCreators from 'actions/refunds/list';
 import { Header } from 'components/Header';
 import { Image } from 'components/Image';
@@ -40,12 +41,53 @@ export default class List extends Component {
 
   state = {
     pageIndex: 0,
+    pageSize: 20,
     hasMore: true,
   }
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
     this.props.fetchRefunds(pageIndex + 1);
+  }
+
+  componentDidMount() {
+    this.addScrollListener();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.success) {
+      const count = nextProps.data.count;
+      const size = nextProps.data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
+      this.setState({ hasMore: count > size });
+    }
+    if (nextProps.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+  }
+
+  componentWillUnmount() {
+    this.removeScrollListener();
+  }
+
+  onScroll = (e) => {
+    const { pageSize, pageIndex } = this.state;
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    if (scrollTop === documentHeight - windowHeight && !this.state.isLoading && this.state.hasMore) {
+      this.props.fetchRefunds(pageIndex + 1);
+    }
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   render() {
@@ -65,7 +107,6 @@ export default class List extends Component {
           </If>
           <ul className="refunds-list">
             {data.map((refund) => {
-              console.log(refund);
               return (
                 <Link to={'/refunds/details/' + refund.id}>
                   <li className="bottom-border row no-margin margin-top-xs" key={refund.order_id}>

@@ -9,7 +9,7 @@ export const fetchRefunds = (pageIndex, pageSize) => {
   const params = { params: { page: pageIndex } };
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'refunds')
+    return axios.get(constants.baseEndpointV1 + 'refunds', params)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
