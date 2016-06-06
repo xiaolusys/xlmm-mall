@@ -239,9 +239,9 @@ export default class List extends Component {
                     </If>
                   </div>
                 </div>
-                <Link to={'od.html?id=' + item.id}>
+                <a href={'/mall/od.html?id=' + item.id}>
                   {this.renderOrders(item.orders)}
-                </Link>
+                </a>
               </div>
             );
           })}

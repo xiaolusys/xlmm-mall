@@ -66,7 +66,7 @@ export class ShopBag extends Component {
     _.each(shopBag.data, (item) => {
       cartIds.push(item.id);
     });
-    this.context.router.push('/oc.html?cartIds=' + encodeURIComponent(cartIds.join(',')));
+    window.location.href = '/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
   }
 
   onUpdateQuantityClick = (e) => {
