@@ -140,6 +140,10 @@ export default class List extends Component {
     }
   }
 
+  onBackClick = (e) => {
+    this.context.router.replace('/');
+  }
+
   getClosedDate = (dateString) => {
     const date = new Date(dateString.replace('-', '/').replace('T', ' '));
     date.setMinutes(date.getMinutes() + 20);
@@ -206,7 +210,7 @@ export default class List extends Component {
     const trades = this.props.order.fetchOrders.data.results || [];
     return (
       <div>
-        <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.onBackClick} />
         <div className="content order-list">
           <If condition={_.isEmpty(trades) && !this.props.order.fetchOrders.isLoading}>
             <div className="text-center margin-top-xlg margin-bottom-lg">
