@@ -33,7 +33,7 @@ export class Carousel extends Component {
   }
 
   componentWillUnmount() {
-    this.swipe.kill();
+    this.swipe && this.swipe.kill();
     this.swipe = null;
   }
 
