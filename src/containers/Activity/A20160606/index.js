@@ -29,7 +29,6 @@ const setupWebViewJavascriptBridge = function(callback) {
   }, 0);
 };
 
-
 @connect(
   state => ({
     data: state.coupon.data,
