@@ -86,7 +86,7 @@ export class Side extends Component {
         </div>
         <ul>
           <li>
-            <Link to="/order/1">
+            <Link to="ol.html?type=1">
               <i className="icon-order-square icon-gold"></i>
               <span>待支付</span>
               <If condition={profile.waitpay_num}>
@@ -95,7 +95,7 @@ export class Side extends Component {
             </Link>
           </li>
           <li>
-            <Link to="/order/2">
+            <Link to="ol.html?type=2">
               <i className="icon-truck icon-gold"></i>
               <span>待收货</span>
               <If condition={profile.waitgoods_num}>
@@ -113,7 +113,7 @@ export class Side extends Component {
             </Link>
           </li>
           <li className="bottom-border-black">
-            <Link to="/order/0">
+            <Link to="ol.html?type=0">
               <i className="icon-order icon-gold"></i>
               <span>全部订单</span>
             </Link>

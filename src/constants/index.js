@@ -16,8 +16,8 @@ export const shareType = {
   shop: 'shop',
 };
 export const paymentResults = {
-  success: '/mall/order/2',
-  error: '/mall/order/1',
+  success: '/mall/ol.html?type=2',
+  error: '/mall/ol.html?type=1',
 };
 export const tradeOperations = {
   1: { tag: '立即支付', action: 'pay' }, // 1: 待付款
