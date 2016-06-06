@@ -4,7 +4,7 @@ import createAction from '../createAction';
 
 export const name = 'FETCH_REFUNDS_LIST';
 
-export const fetchRefunds = (pageIndex, pageSize) => {
+export const fetchRefunds = (pageIndex) => {
   const action = createAction(name);
   const params = { params: { page: pageIndex } };
   return (dispatch) => {
