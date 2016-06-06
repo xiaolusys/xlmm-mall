@@ -71,8 +71,8 @@ export default {
       is_saleout: false,
       is_saleopen: true,
       product_model: { name: '休闲雪纺显瘦连衣裙' },
-      agent_price: 49.9,
-      std_sale_price: 128,
+      agent_price: 139.9,
+      std_sale_price: 398,
     }, {
       id: 10657,
       model_id: 10657,
