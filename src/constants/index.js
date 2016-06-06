@@ -19,7 +19,7 @@ export const paymentResults = {
   success: '/pages/zhifucg.html',
   error: '/pages/daizhifu-dd.html',
 };
-export const orderOperations = {
+export const tradeOperations = {
   1: { tag: '立即支付', action: 'pay' }, // 1: 待付款
   2: { tag: '提醒发货', action: 'remind' }, // 2: 已付款
   3: { tag: '确认收货', action: 'confirm' }, // 3: 已发货
