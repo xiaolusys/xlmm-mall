@@ -9,6 +9,8 @@ import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
+import { Toast } from 'components/Toast';
+import { Timer } from 'components/Timer';
 import * as orderAction from 'actions/order/order';
 
 import './index.scss';
@@ -45,6 +47,8 @@ export default class List extends Component {
     chargeOrder: React.PropTypes.func,
     confirmReceivedOrder: React.PropTypes.func,
     remindShipment: React.PropTypes.func,
+    resetRemindShipment: React.PropTypes.func,
+    resetChargeOrder: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -74,7 +78,7 @@ export default class List extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchOrders, chargeOrder, deleteOrder } = nextProps.order;
+    const { fetchOrders, chargeOrder, deleteOrder, remindShipment } = nextProps.order;
     if (chargeOrder.isLoading || deleteOrder.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
@@ -82,12 +86,20 @@ export default class List extends Component {
     }
     if (chargeOrder.success && chargeOrder.data.code === 0 && !_.isEmpty(chargeOrder.data.charge)) {
       this.pay(chargeOrder.data.charge);
+      this.props.resetChargeOrder();
+    } else if (chargeOrder.success && chargeOrder.data.info) {
+      Toast.show(chargeOrder.data.info);
+      this.props.resetChargeOrder();
     }
     if (fetchOrders.success) {
       const count = fetchOrders.data.count;
       const size = fetchOrders.data.results.length;
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
+    }
+    if (!remindShipment.isLoading && remindShipment.success && remindShipment.data.info) {
+      Toast.show(remindShipment.data.info);
+      this.props.resetRemindShipment();
     }
   }
 
@@ -98,22 +110,18 @@ export default class List extends Component {
   onBtnClick = (e) => {
     const requestAction = types[this.props.params.type].requestAction;
     const { router } = this.context;
-    const { pageIndex, pageSize } = this.state;
     const dataSet = e.currentTarget.dataset;
     switch (dataSet.action) {
-      case constants.orderOperations['1'].action:
+      case constants.tradeOperations['1'].action:
         this.props.chargeOrder(dataSet.orderid);
         break;
-      case constants.orderOperations['2'].action:
+      case constants.tradeOperations['2'].action:
         this.props.remindShipment(dataSet.orderid);
         break;
-      case constants.orderOperations['3'].action:
+      case constants.tradeOperations['3'].action:
         this.props.confirmReceivedOrder(dataSet.orderid);
         break;
-      case constants.orderOperations['5'].action:
-        router.push('/refunds/applay/' + dataSet.orderid);
-        break;
-      case constants.orderOperations['7'].action:
+      case constants.tradeOperations['7'].action:
         this.props.deleteOrder(dataSet.orderid);
         break;
       default:
@@ -132,6 +140,20 @@ export default class List extends Component {
     }
   }
 
+  getClosedDate = (dateString) => {
+    const date = new Date(dateString.replace('-', '/').replace('T', ' '));
+    date.setMinutes(date.getMinutes() + 20);
+    return date.toISOString();
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
   pay = (charge) => {
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
@@ -144,15 +166,7 @@ export default class List extends Component {
     });
   }
 
-  addScrollListener = () => {
-    window.addEventListener('scroll', this.onScroll);
-  }
-
-  removeScrollListener = () => {
-    window.removeEventListener('scroll', this.onScroll);
-  }
-
-  renderProducts(products = []) {
+  renderOrders(products = []) {
     return (
       <div className="order-content">
         <If condition={products.length === 1}>
@@ -189,12 +203,12 @@ export default class List extends Component {
 
   render() {
     const type = types[this.props.params.type];
-    const orders = this.props.order.fetchOrders.data.results || [];
+    const trades = this.props.order.fetchOrders.data.results || [];
     return (
       <div>
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content order-list">
-          <If condition={_.isEmpty(orders) && !this.props.order.fetchOrders.isLoading}>
+          <If condition={_.isEmpty(trades) && !this.props.order.fetchOrders.isLoading}>
             <div className="text-center margin-top-xlg margin-bottom-lg">
               <i className="icon-order-o icon-4x icon-grey"></i>
               <p>您暂时还没有订单哦～快去看看吧</p>
@@ -202,7 +216,7 @@ export default class List extends Component {
               <Link className="button button-stable" to="/" >快去抢购</Link>
             </div>
           </If>
-          { orders.map((item, index) => {
+          { trades.map((item, index) => {
             return (
               <div className="order-item" key={item.id}>
                 <div className="order-header bottom-border clearfix">
@@ -211,14 +225,18 @@ export default class List extends Component {
                     <span className="font-yellow">{'￥' + item.payment}</span>
                   </p>
                   <div className="pull-right">
-                    <span className="margin-right-xxs">{item.status_display}</span>
+                    <If condition={item.status === 1}>
+                      <span>{'剩余时间'}</span>
+                      <Timer endDateString={this.getClosedDate(item.created)} format="mm:ss" />
+                    </If>
+                    <span className="margin-left-xxs margin-right-xxs">{item.status_display}</span>
                     <If condition={item.status === 1 || item.status === 2 || item.status === 3 || item.status === 5 || item.status === 7}>
-                      <button type="button" data-action={constants.orderOperations[item.status].action} data-orderid={item.id} onClick={this.onBtnClick}>{constants.orderOperations[item.status].tag}</button>
+                      <button type="button" data-action={constants.tradeOperations[item.status].action} data-orderid={item.id} onClick={this.onBtnClick}>{constants.tradeOperations[item.status].tag}</button>
                     </If>
                   </div>
                 </div>
                 <Link to={'order/detail/' + item.id}>
-                  {this.renderProducts(item.orders)}
+                  {this.renderOrders(item.orders)}
                 </Link>
               </div>
             );

@@ -11,7 +11,12 @@ export const names = {
   CONFIRM_RECEIVED_ORDER: 'CONFIRM_RECEIVED_ORDER',
   REMIND_SHIPMENT: 'REMIND_SHIPMENT',
 };
+
 const fetchOrdersAction = createAction(names.FETCH_ORDERS);
+const remindShipmentAction = createAction(names.REMIND_SHIPMENT);
+
+const chargeOrderaction = createAction(names.CHARGE_ORDER);
+
 export const fetchOrders = (type, pageIndex, pageSize) => {
   const uri = constants.baseEndpoint + 'trades' + (type ? '/' + type : '');
   const params = { params: { page: pageIndex, pageSize: pageSize } };
@@ -63,16 +68,21 @@ export const deleteOrder = (id) => {
 };
 
 export const chargeOrder = (id) => {
-  const action = createAction(names.CHARGE_ORDER);
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(chargeOrderaction.request());
     return axios.post(constants.baseEndpoint + 'trades/' + id + '/charge')
       .then((resp) => {
-        dispatch(action.success(resp.data));
+        dispatch(chargeOrderaction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(chargeOrderaction.failure(resp.data));
       });
+  };
+};
+
+export const resetChargeOrder = () => {
+  return (dispatch) => {
+    dispatch(chargeOrderaction.reset());
   };
 };
 
@@ -92,16 +102,22 @@ export const confirmReceivedOrder = (id) => {
 };
 
 export const remindShipment = (id) => {
-  const action = createAction(names.REMIND_SHIPMENT);
+
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(remindShipmentAction.request());
     return axios.post(constants.baseEndpoint + 'trades/' + id + '/remind_send')
       .then((resp) => {
-        dispatch(action.success(resp.data));
+        dispatch(remindShipmentAction.success(resp.data));
         dispatch(fetchOrders());
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(remindShipmentAction.failure(resp.data));
       });
+  };
+};
+
+export const resetRemindShipment = () => {
+  return (dispatch) => {
+    dispatch(remindShipmentAction.reset());
   };
 };
