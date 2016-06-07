@@ -7,8 +7,12 @@ export const name = 'COMMIT_ORDER';
 
 export const commitOrder = (params) => {
   const action = createAction(name);
-  const gaPayType = constants.gaPayTypes[params.channel];
-  window.ga && window.ga('send', 'Pay', 'Request', gaPayType.lable, gaPayType.value);
+  window.ga && window.ga('send', {
+    hitType: 'event',
+    eventCategory: 'Pay',
+    eventAction: 'Request',
+    eventLabel: constants.gaPayTypes[params.channel],
+  });
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpoint + 'trades/shoppingcart_create', qs.stringify(params))
