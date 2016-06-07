@@ -34,6 +34,7 @@ const setupWebViewJavascriptBridge = function(callback) {
     data: state.coupon.data,
     isLoading: state.coupon.isLoading,
     success: state.coupon.success,
+    error: state.coupon.error,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -44,6 +45,7 @@ export default class A20160606 extends Component {
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
     receiveCoupon: React.PropTypes.func,
+    resetCoupon: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -69,9 +71,13 @@ export default class A20160606 extends Component {
         position: Toast.POSITION_MIDDLE,
       });
     }
-    if (!nextProps.success && !nextProps.isLoading) {
+    if (nextProps.error && !nextProps.isLoading) {
       this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetCoupon();
   }
 
   onCouponClick = (e) => {

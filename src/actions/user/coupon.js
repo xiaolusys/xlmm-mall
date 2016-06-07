@@ -36,6 +36,6 @@ export const fetchCouponById = (couponId) => {
 
 export const resetCoupon = () => {
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(action.reset());
   };
 };
