@@ -34,7 +34,7 @@ const orderOperations = {
 export default class Detail extends Component {
 
   static propTypes = {
-    params: React.PropTypes.any,
+    location: React.PropTypes.any,
     order: React.PropTypes.any,
     fetchOrder: React.PropTypes.func,
     deleteOrder: React.PropTypes.func,
@@ -58,7 +58,7 @@ export default class Detail extends Component {
   };
 
   componentWillMount() {
-    this.props.fetchOrder(this.props.params.id);
+    this.props.fetchOrder(this.props.location.query.id);
   }
 
   componentWillReceiveProps(nextProps) {

@@ -14,7 +14,7 @@ const store = configStore();
 
 // send page view to ga
 history.listen((location) => {
-  window. ga && window.ga('send', 'pageview', location.pathname);
+  window.ga && window.ga('send', 'pageview', location.pathname);
 });
 
 ReactDOM.render(

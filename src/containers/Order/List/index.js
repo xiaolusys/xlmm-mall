@@ -39,7 +39,7 @@ const types = [{
 export default class List extends Component {
 
   static propTypes = {
-    params: React.PropTypes.any,
+    location: React.PropTypes.any,
     order: React.PropTypes.any,
     fetchOrders: React.PropTypes.func,
     resetOrders: React.PropTypes.func,
@@ -67,7 +67,7 @@ export default class List extends Component {
   }
 
   componentWillMount() {
-    const requestAction = types[this.props.params.type].requestAction;
+    const requestAction = types[this.props.location.query.type].requestAction;
     const { pageIndex, pageSize } = this.state;
     this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
   }
@@ -108,7 +108,7 @@ export default class List extends Component {
   }
 
   onBtnClick = (e) => {
-    const requestAction = types[this.props.params.type].requestAction;
+    const requestAction = types[this.props.location.query.type].requestAction;
     const { router } = this.context;
     const dataSet = e.currentTarget.dataset;
     switch (dataSet.action) {
@@ -130,7 +130,7 @@ export default class List extends Component {
   }
 
   onScroll = (e) => {
-    const requestAction = types[this.props.params.type].requestAction;
+    const requestAction = types[this.props.location.query.type].requestAction;
     const { pageSize, pageIndex } = this.state;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
@@ -138,6 +138,10 @@ export default class List extends Component {
     if (scrollTop === documentHeight - windowHeight && !this.props.order.fetchOrders.isLoading && this.state.hasMore) {
       this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
     }
+  }
+
+  onBackClick = (e) => {
+    this.context.router.replace('/');
   }
 
   getClosedDate = (dateString) => {
@@ -202,11 +206,11 @@ export default class List extends Component {
   }
 
   render() {
-    const type = types[this.props.params.type];
+    const type = types[this.props.location.query.type];
     const trades = this.props.order.fetchOrders.data.results || [];
     return (
       <div>
-        <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.onBackClick} />
         <div className="content order-list">
           <If condition={_.isEmpty(trades) && !this.props.order.fetchOrders.isLoading}>
             <div className="text-center margin-top-xlg margin-bottom-lg">
@@ -235,9 +239,9 @@ export default class List extends Component {
                     </If>
                   </div>
                 </div>
-                <Link to={'order/detail/' + item.id}>
+                <a href={'/mall/od.html?id=' + item.id}>
                   {this.renderOrders(item.orders)}
-                </Link>
+                </a>
               </div>
             );
           })}

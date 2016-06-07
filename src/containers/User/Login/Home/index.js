@@ -74,6 +74,7 @@ export default class Home extends Component {
 
   onWechatLoginBtnClick = (e) => {
     window.location.replace(constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next(true)));
+    console.log(constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next(true)));
     e.preventDefault();
   }
 
@@ -88,7 +89,7 @@ export default class Home extends Component {
       return query.next;
     }
     if (withBaseUrl) {
-      return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl() + '/';
+      return query.next ? utils.url.getBaseUrl() + query.next : utils.url.getBaseUrl();
     }
     return query.next ? query.next : '/';
   }
