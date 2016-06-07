@@ -67,9 +67,25 @@ export default class List extends Component {
   }
 
   componentWillMount() {
-    const requestAction = types[this.props.location.query.type].requestAction;
+    const { query } = this.props.location;
+    const requestAction = types[query.type].requestAction;
     const { pageIndex, pageSize } = this.state;
     this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
+    if (query.paid && query.paid === 'true') {
+      window.ga && window.ga('send', {
+        hitType: 'event',
+        eventCategory: 'Pay',
+        eventAction: 'Succeed',
+        eventLabel: 'All',
+      });
+    } else if (query.paid && query.paid === 'false') {
+      window.ga && window.ga('send', {
+        hitType: 'event',
+        eventCategory: 'Pay',
+        eventAction: 'Failed',
+        eventLabel: 'All',
+      });
+    }
   }
 
   componentDidMount() {
@@ -234,7 +250,7 @@ export default class List extends Component {
                       <Timer endDateString={this.getClosedDate(item.created)} format="mm:ss" />
                     </If>
                     <span className="margin-left-xxs margin-right-xxs">{item.status_display}</span>
-                    <If condition={item.status === 1 || item.status === 2 || item.status === 3 || item.status === 5 || item.status === 7}>
+                    <If condition={item.status === 1 || item.status === 2 || item.status === 3 || item.status === 4 || item.status === 7}>
                       <button type="button" data-action={constants.tradeOperations[item.status].action} data-orderid={item.id} onClick={this.onBtnClick}>{constants.tradeOperations[item.status].tag}</button>
                     </If>
                   </div>
