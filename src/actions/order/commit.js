@@ -11,6 +11,12 @@ export const commitOrder = (params) => {
     hitType: 'event',
     eventCategory: 'Pay',
     eventAction: 'Request',
+    eventLabel: 'All',
+  });
+  window.ga && window.ga('send', {
+    hitType: 'event',
+    eventCategory: 'Pay',
+    eventAction: 'Request',
     eventLabel: constants.gaPayTypes[params.channel],
   });
   return (dispatch) => {
