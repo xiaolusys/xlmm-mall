@@ -204,11 +204,11 @@ export default class Apply extends Component {
               <p className="col-xs-4 no-margin">退款原因</p>
             </li>
             <li className="row col-xs-12 no-margin bottom-border refund-reason" onClick={this.showPopup}>
-              <input className="col-xs-10" type="text" placeholder="请选择退货原因" value={this.state.reason} onChange={this.onVerifyCodeChange} />
+              <input className="col-xs-10 border-none" type="text" placeholder="请选择退货原因" value={this.state.reason} onChange={this.onVerifyCodeChange} />
               <i className="col-xs-2 no-padding icon-angle-down font-grey-light text-right"></i>
             </li>
             <li className="row col-xs-12 no-margin bottom-border refunds-desc">
-              <textarea className="col-xs-12" type="text" placeholder="请输入退款说明" onChange={this.onDesciptionChange} />
+              <textarea className="col-xs-12 border-none" type="text" placeholder="请输入退款说明" onChange={this.onDesciptionChange} />
             </li>
           </ul>
           <Popup className="popup" active={this.state.showPopup} height="auto">
