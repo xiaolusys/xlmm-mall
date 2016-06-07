@@ -116,7 +116,7 @@ export default class Detail extends Component {
                 <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={data.pic_path}/>
               </div>
               <div className="col-xs-9">
-                <p className="row no-padding padding-top-xxs padding-bottom-xxs text-right">
+                <p className="row no-padding padding-top-xxs padding-bottom-xxs">
                   <span className="col-xs-9 no-wrap">{data.title}</span>
                   <span className="col-xs-3 no-padding text-right">{data.total_fee}</span>
                 </p>
