@@ -21,7 +21,7 @@ const actionCreators = _.extend({}, orderAction);
 
 const orderOperations = {
   2: { tag: '申请退款', action: 'apply-return-money' },
-  5: { tag: '申请退货', action: 'apply-refunds' },
+  4: { tag: '申请退货', action: 'apply-refunds' },
   3: { tag: '确认收货', action: 'confirm' },
 };
 
@@ -142,7 +142,7 @@ export default class Detail extends Component {
         {orders.map((order, index) => {
           return (
             <div key={order.id} className="row no-margin bottom-border">
-              <If condition={order.status !== 2 && order.status !== 3 && order.status !== 5}>
+              <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
                 <div className="col-xs-3 no-padding">
                   <img src={order.pic_path + constants.image.square} />
                 </div>
@@ -157,7 +157,7 @@ export default class Detail extends Component {
                   </p>
                 </div>
               </If>
-              <If condition={order.status === 2 || order.status === 3 || order.status === 5}>
+              <If condition={order.status === 2 || order.status === 3 || order.status === 4}>
                 <div className="col-xs-3 no-padding">
                   <img src={order.pic_path + constants.image.square} />
                 </div>

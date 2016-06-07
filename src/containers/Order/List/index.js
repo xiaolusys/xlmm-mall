@@ -234,7 +234,7 @@ export default class List extends Component {
                       <Timer endDateString={this.getClosedDate(item.created)} format="mm:ss" />
                     </If>
                     <span className="margin-left-xxs margin-right-xxs">{item.status_display}</span>
-                    <If condition={item.status === 1 || item.status === 2 || item.status === 3 || item.status === 5 || item.status === 7}>
+                    <If condition={item.status === 1 || item.status === 2 || item.status === 3 || item.status === 4 || item.status === 7}>
                       <button type="button" data-action={constants.tradeOperations[item.status].action} data-orderid={item.id} onClick={this.onBtnClick}>{constants.tradeOperations[item.status].tag}</button>
                     </If>
                   </div>
