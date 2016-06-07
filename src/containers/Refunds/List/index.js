@@ -47,7 +47,7 @@ export default class List extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    this.props.fetchRefunds(pageIndex + 1);
+    this.props.fetchRefunds(pageIndex + 1, pageSize);
   }
 
   componentDidMount() {
@@ -58,6 +58,7 @@ export default class List extends Component {
     if (nextProps.success) {
       const count = nextProps.data.count;
       const size = nextProps.data.results.length;
+      console.log(size);
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
     }
@@ -78,7 +79,7 @@ export default class List extends Component {
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
     if (scrollTop === documentHeight - windowHeight && !this.props.isLoading && this.state.hasMore) {
-      this.props.fetchRefunds(pageIndex + 1);
+      this.props.fetchRefunds(pageIndex + 1, pageSize);
     }
   }
 
@@ -91,6 +92,7 @@ export default class List extends Component {
   }
 
   render() {
+    console.log(this);
     const props = this.props;
     const data = this.props.data && this.props.data.results || [];
     return (

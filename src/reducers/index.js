@@ -6,6 +6,7 @@ import productsReducer from './productsReducer';
 import couponsReducer from './couponsReducer';
 import shopBagReducer from './shopBagReducer';
 import verifyCodeReducer from './verifyCodeReducer';
+import refundsReducer from './refundsReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -29,7 +30,6 @@ import * as refundsDetailAction from 'actions/refunds/detail';
 import * as commitOrderAction from 'actions/order/commit';
 import * as payInfoAction from 'actions/order/payInfo';
 import * as expressInfoAction from 'actions/refunds/expressInfo';
-import * as refundsListAction from 'actions/refunds/list';
 import * as refundsApplyAction from 'actions/refunds/apply';
 
 
@@ -62,7 +62,7 @@ const rootReducer = combineReducers({
   payInfo: createReducer(payInfoAction.name),
   commitOrder: createReducer(commitOrderAction.name),
   expressInfo: createReducer(expressInfoAction.name),
-  refundsList: createReducer(refundsListAction.name),
+  refundsList: refundsReducer,
   refundsApply: createReducer(refundsApplyAction.names.REFUNDS_APPLY),
   refundsOrder: createReducer(refundsApplyAction.names.FETCH_ORDER),
 });

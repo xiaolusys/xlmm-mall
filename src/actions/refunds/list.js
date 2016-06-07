@@ -2,19 +2,19 @@ import * as constants from 'constants';
 import axios from 'axios';
 import createAction from '../createAction';
 
-export const name = 'FETCH_REFUNDS_LIST';
+export const names = { FETCH_REFUNDS: 'FETCH_REFUNDS' };
+const fetchRefundsAction = createAction(names.FETCH_REFUNDS);
 
-export const fetchRefunds = (pageIndex) => {
-  const action = createAction(name);
-  const params = { params: { page: pageIndex } };
+export const fetchRefunds = (pageIndex, pageSize) => {
+  const params = { params: { page: pageIndex, page_size: pageSize } };
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(fetchRefundsAction.request());
     return axios.get(constants.baseEndpointV1 + 'refunds', params)
       .then((resp) => {
-        dispatch(action.success(resp.data));
+        dispatch(fetchRefundsAction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp));
+        dispatch(fetchRefundsAction.failure(resp));
       });
   };
 };

@@ -19,7 +19,7 @@ const chargeOrderaction = createAction(names.CHARGE_ORDER);
 
 export const fetchOrders = (type, pageIndex, pageSize) => {
   const uri = constants.baseEndpoint + 'trades' + (type ? '/' + type : '');
-  const params = { params: { page: pageIndex, pageSize: pageSize } };
+  const params = { params: { page: pageIndex, page_size: pageSize } };
   return (dispatch) => {
     dispatch(fetchOrdersAction.request());
     return axios.get(uri, params)
