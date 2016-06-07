@@ -92,6 +92,10 @@ $bar-border: #dadada !default;
   }
 }
 
+.border-none {
+  border: none;
+}
+
 .no-wrap {
   white-space: nowrap;
   text-overflow: ellipsis;

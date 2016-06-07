@@ -26,3 +26,17 @@ export const tradeOperations = {
   5: { tag: '退货退款', action: 'refund' }, // 3: 交易成功
   7: { tag: '删除订单', action: 'delete' }, // 3: 交易关闭
 };
+export const gaPayTypes = {
+  alipay_wap: {
+    lable: '支付宝',
+    value: 'Alipay',
+  },
+  wx_pub: {
+    lable: '微信钱包',
+    value: 'Wechat Wallet',
+  },
+  budget: {
+    lable: '小鹿钱包',
+    value: 'Xiaolu Wallet',
+  },
+};
