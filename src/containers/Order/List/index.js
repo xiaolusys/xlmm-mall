@@ -67,9 +67,23 @@ export default class List extends Component {
   }
 
   componentWillMount() {
-    const requestAction = types[this.props.location.query.type].requestAction;
+    const { query } = this.props.location;
+    const requestAction = types[query.type].requestAction;
     const { pageIndex, pageSize } = this.state;
     this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
+    if (query.paid && query.paid === 'true') {
+      window.ga && window.ga('send', {
+        hitType: 'event',
+        eventCategory: 'Pay',
+        eventAction: 'Succeed',
+      });
+    } else if (query.paid && query.paid === 'false') {
+      window.ga && window.ga('send', {
+        hitType: 'event',
+        eventCategory: 'Pay',
+        eventAction: 'Failed',
+      });
+    }
   }
 
   componentDidMount() {
