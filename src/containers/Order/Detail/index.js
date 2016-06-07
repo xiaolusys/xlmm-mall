@@ -174,7 +174,12 @@ export default class Detail extends Component {
                   </div>
                 </div>
                 <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
-                  <button className="button button-sm button-light" type="button" data-action={orderOperation.action} data-tradeid={trade.id} data-orderid={order.id} onClick={this.onOrderBtnClick}>{orderOperation.tag}</button>
+                  <If condition={order.refund_status === 0}>
+                    <button className="button button-sm button-light" type="button" data-action={orderOperation.action} data-tradeid={trade.id} data-orderid={order.id} onClick={this.onOrderBtnClick}>{orderOperation.tag}</button>
+                  </If>
+                  <If condition={order.refund_status !== 0}>
+                    <div>{order.refund_status_display}</div>
+                  </If>
                 </div>
               </If>
             </div>
