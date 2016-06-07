@@ -77,7 +77,7 @@ export default class List extends Component {
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
-    if (scrollTop === documentHeight - windowHeight && !this.state.isLoading && this.state.hasMore) {
+    if (scrollTop === documentHeight - windowHeight && !this.props.isLoading && this.state.hasMore) {
       this.props.fetchRefunds(pageIndex + 1);
     }
   }
