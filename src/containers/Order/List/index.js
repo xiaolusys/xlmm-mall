@@ -76,12 +76,14 @@ export default class List extends Component {
         hitType: 'event',
         eventCategory: 'Pay',
         eventAction: 'Succeed',
+        eventLabel: 'All',
       });
     } else if (query.paid && query.paid === 'false') {
       window.ga && window.ga('send', {
         hitType: 'event',
         eventCategory: 'Pay',
         eventAction: 'Failed',
+        eventLabel: 'All',
       });
     }
   }
