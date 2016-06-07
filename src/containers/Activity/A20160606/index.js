@@ -70,7 +70,7 @@ export default class A20160606 extends Component {
       });
     }
     if (!nextProps.success && !nextProps.isLoading) {
-      this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
+      // this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
     }
   }
 
