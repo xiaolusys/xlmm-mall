@@ -12,7 +12,7 @@ class Url {
 
   getBaseUrl() {
     const href = window.location.href;
-    return href.substring(0, href.indexOf('#') + 1);
+    return href.substring(0, href.indexOf('/mall/')) + '/mall/';
   }
 }
 

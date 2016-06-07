@@ -38,7 +38,7 @@ module.exports = {
       output: 'dist/index.html',
       data: {
         css: '<link type="text/css" rel="stylesheet" href="' + publicPath + 'app-[hash].css">',
-        js: '<script src="' + publicPath + 'app-[hash].js"></script>',
+        js: '<script src="' + publicPath + 'app-[hash].js"></script><script type="text/javascript">window.bughd = window.bughd || function() {}; window.bughd(\'create\',{key: \'84f20f4fcf7cc0c71462e63cfa8cd1b5\',});</script>',
       },
     }),
     new webpack.ProvidePlugin({

@@ -33,10 +33,10 @@ export default (
     <Route path="/user/point" component={Point} onEnter={utils.checkAuth} />
     <Route path="/user/coupons" component={CouponList} onEnter={utils.checkAuth} />
     <Route path="/user/complaint" component={Complaint} onEnter={utils.checkAuth} />
-    <Route path="/order/:type" component={OrderList} onEnter={utils.checkAuth} />
-    <Route path="/order/detail/:id" component={OrderDetail} onEnter={utils.checkAuth} />
+    <Route path="/ol.html" component={OrderList} onEnter={utils.checkAuth} />
+    <Route path="/od.html" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
-    <Route path="/oc" component={OrderCommit} onEnter={utils.checkAuth} />
+    <Route path="/oc.html" component={OrderCommit} onEnter={utils.checkAuth} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/list/:type" component={ProductList} />
