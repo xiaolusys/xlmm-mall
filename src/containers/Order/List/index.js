@@ -6,6 +6,7 @@ import _ from 'underscore';
 import * as utils from 'utils';
 import classnames from 'classnames';
 import * as constants from 'constants';
+import moment from 'moment';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
@@ -161,7 +162,7 @@ export default class List extends Component {
   }
 
   getClosedDate = (dateString) => {
-    const date = new Date(dateString.replace('-', '/').replace('T', ' '));
+    const date = moment(dateString).toDate();
     date.setMinutes(date.getMinutes() + 20);
     return date.toISOString();
   }
@@ -224,8 +225,6 @@ export default class List extends Component {
   render() {
     const type = types[this.props.location.query.type];
     const trades = this.props.order.fetchOrders.data.results || [];
-    console.log(this.props.order.fetchOrders.data);
-    console.log(this.props.order.fetchOrders.data.results);
     return (
       <div>
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.onBackClick} />
@@ -238,17 +237,17 @@ export default class List extends Component {
               <Link className="button button-stable" to="/" >快去抢购</Link>
             </div>
           </If>
-          { trades.map((item, index) => {
+          { trades.map((item) => {
             return (
               <div className="order-item" key={item.id}>
                 <div className="order-header bottom-border clearfix">
                   <p className="pull-left margin-left-xxs">
-                    <span>{'实付金额'}</span>
+                    <span>实付金额</span>
                     <span className="font-yellow">{'￥' + item.payment}</span>
                   </p>
                   <div className="pull-right">
                     <If condition={item.status === 1}>
-                      <span>{'剩余时间'}</span>
+                      <span>剩余时间</span>
                       <Timer endDateString={this.getClosedDate(item.created)} format="mm:ss" />
                     </If>
                     <span className="margin-left-xxs margin-right-xxs">{item.status_display}</span>
