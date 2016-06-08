@@ -1,13 +1,8 @@
 .loading-spinner {
-  display: flex;
   position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  left: 40%;
+  top: 50%;
   z-index: 13;
-  justify-content: center;
-  align-items: center;
   transition: .2s opacity linear;
   opacity: 1;
   .spinner {
@@ -15,7 +10,7 @@
     height: 60px;
     width: 60px;
     border-radius: 4px;
-    background-color: rgba(38,38,46, 0.8);
+    background-color: rgba(38, 38, 46, 0.8);
     text-align: center;
     text-overflow: ellipsis;
     font-size: 14px;
