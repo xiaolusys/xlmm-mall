@@ -77,11 +77,12 @@ export default class Apply extends Component {
   state = {
     submitBtnDisabled: true,
     showPopup: false,
-    reason: '',
+    reason: '请选择退货原因',
     num: 0,
     sum_price: 0,
     description: '',
     proof_pic: [],
+    reasonChange: true,
   }
 
   componentWillMount() {
@@ -129,7 +130,7 @@ export default class Apply extends Component {
   onReasonChange = (e) => {
     const reason = e.target.textContent;
     const index = e.target.dataset.reasonIndex;
-    this.setState({ reason: reason, showPopup: false, reasonIndex: Number(index) });
+    this.setState({ reason: reason, showPopup: false, reasonIndex: Number(index), reasonChange: false });
     e.preventDefault();
   }
 
@@ -165,6 +166,9 @@ export default class Apply extends Component {
   render() {
     const { isLoading, order, apply } = this.props;
     let statusList = [];
+    const reasonCls = classnames('col-xs-10', {
+      'font-grey-light': this.state.reasonChange,
+    });
     if (!_.isEmpty(order.data.status_shaft)) {
       statusList = order.data.status_shaft.reverse();
     }
@@ -204,7 +208,7 @@ export default class Apply extends Component {
               <p className="col-xs-4 no-margin">退款原因</p>
             </li>
             <li className="row col-xs-12 no-margin bottom-border refund-reason" onClick={this.showPopup}>
-              <input className="col-xs-10 border-none" type="text" placeholder="请选择退货原因" value={this.state.reason} onChange={this.onVerifyCodeChange} />
+              <div className={ reasonCls } onChange={this.onVerifyCodeChange}>{this.state.reason}</div>
               <i className="col-xs-2 no-padding icon-angle-down font-grey-light text-right"></i>
             </li>
             <li className="row col-xs-12 no-margin bottom-border refunds-desc">
