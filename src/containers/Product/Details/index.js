@@ -322,7 +322,7 @@ export default class Detail extends Component {
         </div>
         <p className="on-shelf-countdown bottom-border bg-white margin-bottom-xxs">
           <span>剩余时间</span>
-          <Timer className="pull-right" endDateString={info.offshelf_time} format="dd天:hh时:mm分:ss秒" />
+          <Timer className="pull-right" endDateString={info.offshelf_time} format="dd天hh时mm分ss秒" />
         </p>
       </div>
     );
