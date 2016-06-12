@@ -55,7 +55,7 @@ export default class Detail extends Component {
 
   state = {
 
-  };
+  }
 
   componentWillMount() {
     this.props.fetchOrder(this.props.location.query.id);
@@ -85,14 +85,6 @@ export default class Detail extends Component {
       case constants.tradeOperations['2'].action:
         this.props.remindShipment(dataSet.tradeid);
         break;
-      case constants.tradeOperations['3'].action:
-        this.props.confirmReceivedOrder(dataSet.tradeid);
-        break;
-      case constants.tradeOperations['7'].action:
-        this.props.deleteOrder(dataSet.tradeid);
-        break;
-      case 'cancel':
-        // TODO: cancel order
       default:
         break;
     }
@@ -238,16 +230,13 @@ export default class Detail extends Component {
             <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(trade.post_fee).toFixed(2)}</span></p>
           </div>
            <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
-          <If condition={trade.status === 1 || trade.status === 7}>
+          <If condition={trade.status === 1 || trade.status === 2}>
             <BottomBar>
               <div className="pull-left text-left countdown">
                 <p className="font-grey">付款剩余时间</p>
                 <p><Timer endDateString={this.getClosedDate(trade.created)} format="mm:ss" hasBeenEnd="订单已过期"/></p>
               </div>
               <div className="pull-right">
-                <If condition={trade.status === -1}>
-                  <button className="button button-md button-light margin-right-xxs" type="button" data-action="cancel" data-tradeid={trade.id} onClick={this.onTradesBtnClick}>取消订单</button>
-                </If>
                 <button className="button button-md button-energized" type="button" data-action={tradeOperation.action} data-tradeid={trade.id} onClick={this.onTradesBtnClick}>{tradeOperation.tag}</button>
               </div>
             </BottomBar>

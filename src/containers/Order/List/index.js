@@ -135,15 +135,6 @@ export default class List extends Component {
       case constants.tradeOperations['2'].action:
         this.props.remindShipment(dataSet.orderid);
         break;
-      case constants.tradeOperations['3'].action:
-        this.props.confirmReceivedOrder(dataSet.orderid);
-        break;
-      case constants.tradeOperations['4'].action:
-        router.push(`/refunds/apply/${dataSet.tradeid}/${dataSet.orderid}`);
-        break;
-      case constants.tradeOperations['7'].action:
-        this.props.deleteOrder(dataSet.orderid);
-        break;
       default:
         break;
     }
@@ -254,7 +245,7 @@ export default class List extends Component {
                       <Timer endDateString={this.getClosedDate(item.created)} format="mm:ss" />
                     </If>
                     <span className="margin-left-xxs margin-right-xxs">{item.status_display}</span>
-                    <If condition={item.status === 1 || item.status === 2 || item.status === 3 || item.status === 7}>
+                    <If condition={item.status === 1 || item.status === 2}>
                       <button type="button" data-action={constants.tradeOperations[item.status].action} data-orderid={item.id} onClick={this.onBtnClick}>{constants.tradeOperations[item.status].tag}</button>
                     </If>
                   </div>
