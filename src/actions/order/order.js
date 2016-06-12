@@ -38,11 +38,11 @@ export const resetOrders = () => {
   };
 };
 
-export const fetchOrder = (id) => {
+export const fetchOrder = (tradeId) => {
   const action = createAction(names.FETCH_ORDER);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'trades/' + id)
+    return axios.get(constants.baseEndpoint + 'trades/' + tradeId)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -52,11 +52,11 @@ export const fetchOrder = (id) => {
   };
 };
 
-export const deleteOrder = (id) => {
+export const deleteOrder = (tradeId) => {
   const action = createAction(names.DELETE_ORDER);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.delete(constants.baseEndpoint + 'trades/' + id + 'undisplay')
+    return axios.delete(constants.baseEndpoint + 'trades/' + tradeId + 'undisplay')
       .then((resp) => {
         dispatch(action.success(resp.data));
         dispatch(fetchOrders());
@@ -67,10 +67,10 @@ export const deleteOrder = (id) => {
   };
 };
 
-export const chargeOrder = (id) => {
+export const chargeOrder = (tradeId) => {
   return (dispatch) => {
     dispatch(chargeOrderaction.request());
-    return axios.post(constants.baseEndpoint + 'trades/' + id + '/charge')
+    return axios.post(constants.baseEndpoint + 'trades/' + tradeId + '/charge')
       .then((resp) => {
         dispatch(chargeOrderaction.success(resp.data));
       })
@@ -86,14 +86,14 @@ export const resetChargeOrder = () => {
   };
 };
 
-export const confirmReceivedOrder = (id) => {
+export const confirmReceivedOrder = (tradeId, orderId) => {
   const action = createAction(names.CONFIRM_RECEIVED_ORDER);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'trades/' + id + '/confirm_sign')
+    return axios.post(constants.baseEndpoint + 'orders/' + orderId + '/confirm_sign')
       .then((resp) => {
         dispatch(action.success(resp.data));
-        dispatch(fetchOrders());
+        dispatch(fetchOrder(tradeId));
       })
       .catch((resp) => {
         dispatch(action.failure(resp.data));
@@ -101,11 +101,11 @@ export const confirmReceivedOrder = (id) => {
   };
 };
 
-export const remindShipment = (id) => {
+export const remindShipment = (tradeId) => {
 
   return (dispatch) => {
     dispatch(remindShipmentAction.request());
-    return axios.post(constants.baseEndpoint + 'trades/' + id + '/remind_send')
+    return axios.post(constants.baseEndpoint + 'trades/' + tradeId + '/remind_send')
       .then((resp) => {
         dispatch(remindShipmentAction.success(resp.data));
         dispatch(fetchOrders());

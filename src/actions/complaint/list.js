@@ -4,9 +4,9 @@ import qs from 'qs';
 import _ from 'underscore';
 import createAction from '../createAction';
 
-export const name = 'COMPLAINT_REPLY';
+export const name = 'COMPLAINT_HOSTORY';
 
-export const fetchComplaintHistories = () => {
+export const fetchComplaints = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
@@ -15,7 +15,7 @@ export const fetchComplaintHistories = () => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

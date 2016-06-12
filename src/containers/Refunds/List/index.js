@@ -95,6 +95,7 @@ export default class List extends Component {
     console.log(this);
     const props = this.props;
     const data = this.props.data && this.props.data.results || [];
+    console.log(this.props);
     return (
       <div>
         <Header title="退款退货" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />

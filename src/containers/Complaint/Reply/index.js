@@ -7,17 +7,17 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Toast } from 'components/Toast';
-import * as actionCreators from 'actions/complaint/reply';
+import * as actionCreators from 'actions/complaint/list';
 
 import './index.scss';
 
 @connect(
   state => ({
     complaint: {
-      data: state.complaintReply.data,
-      isLoading: state.complaintReply.isLoading,
-      error: state.complaintReply.error,
-      success: state.complaintReply.success,
+      data: state.complaintHistory.data,
+      isLoading: state.complaintHistory.isLoading,
+      error: state.complaintHistory.error,
+      success: state.complaintHistory.success,
     },
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -29,8 +29,7 @@ export default class Reply extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
-    complaintReply: React.PropTypes.any,
-    fetchComplaintHistories: React.PropTypes.func,
+    fetchComplaints: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -49,11 +48,11 @@ export default class Reply extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchComplaintHistories();
+    this.props.fetchComplaints();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.complaintReply.success) {
+    if (nextProps.complaint.success) {
       Toast.show('提交成功');
       this.setState({
         textareaContent: '',
@@ -74,7 +73,7 @@ export default class Reply extends Component {
   }
 
   onBubmitBtnClick = () => {
-    this.props.fetchComplaintHistories();
+    this.props.fetchComplaints();
     this.setState({ save: true });
   }
 
