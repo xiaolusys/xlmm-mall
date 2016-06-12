@@ -108,7 +108,7 @@ export default class Detail extends Component {
       case orderOperations['3'].action:
         this.props.confirmReceivedOrder(dataSet.orderid);
         break;
-      case orderOperations['5'].action:
+      case orderOperations['4'].action:
         router.push(`/refunds/apply/${dataSet.tradeid}/${dataSet.orderid}`);
         break;
       default:
