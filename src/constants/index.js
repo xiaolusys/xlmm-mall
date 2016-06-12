@@ -22,10 +22,6 @@ export const paymentResults = {
 export const tradeOperations = {
   1: { tag: '立即支付', action: 'pay' }, // 1: 待付款
   2: { tag: '提醒发货', action: 'remind' }, // 2: 已付款
-  3: { tag: '确认收货', action: 'confirm' }, // 3: 已发货
-  4: { tag: '退货退款', action: 'refund' }, // 3: 确认签收
-  // 5: { tag: '退货退款', action: 'refund' }, // 3: 交易成功
-  7: { tag: '删除订单', action: 'delete' }, // 3: 交易关闭
 };
 export const gaPayTypes = {
   alipay_wap: 'Alipay',

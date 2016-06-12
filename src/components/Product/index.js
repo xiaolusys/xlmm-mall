@@ -41,7 +41,7 @@ export class Product extends Component {
         <div className="product text-center">
           <div className="product-picture">
             <LazyLoad throttle={200}>
-              <Image className={imageCls} src={product.head_img} thumbnail={200} onError={this.onImageLoadError}/>
+              <Image quality={90} className={imageCls} src={product.head_img} thumbnail={200} onError={this.onImageLoadError}/>
             </LazyLoad>
             <If condition={product.is_saleout}>
               <div className="product-tips"><p>已抢光</p></div>
