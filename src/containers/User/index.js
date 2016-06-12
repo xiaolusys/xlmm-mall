@@ -10,4 +10,3 @@ export AddressList from './Address/List';
 export EditAddress from './Address/Edit';
 export Point from './Point';
 export CouponList from './Coupon/List';
-export Complaint from './Complaint';

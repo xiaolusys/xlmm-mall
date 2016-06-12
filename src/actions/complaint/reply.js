@@ -4,13 +4,13 @@ import qs from 'qs';
 import _ from 'underscore';
 import createAction from '../createAction';
 
-export const name = 'COMPLAINT';
+export const name = 'COMPLAINT_REPLY';
 
-export const saveComplaint = () => {
+export const fetchComplaintHistories = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'usercoupons')
+    return axios.get(constants.baseEndpointV1 + 'complain/history_complains')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
