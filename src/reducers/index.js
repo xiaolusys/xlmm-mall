@@ -14,7 +14,8 @@ import * as loginAction from 'actions/user/login';
 import * as passwordAction from 'actions/user/password';
 import * as pointAction from 'actions/user/point';
 import * as pointLogAction from 'actions/user/pointLog';
-import * as complaintAction from 'actions/user/complaint';
+import * as complaintCommitAction from 'actions/complaint/commit';
+import * as complaintHostoryAction from 'actions/complaint/list';
 import * as portalAction from 'actions/home/portal';
 import * as orderAction from 'actions/order/order';
 import * as logisticsAction from 'actions/order/logistics';
@@ -44,7 +45,8 @@ const rootReducer = combineReducers({
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
   pointLog: createReducer(pointLogAction.name),
-  complaint: createReducer(complaintAction.name),
+  complaintCommit: createReducer(complaintCommitAction.name),
+  complaintHistory: createReducer(complaintHostoryAction.name),
   portal: createReducer(portalAction.name),
   products: productsReducer,
   productDetails: createReducer(productDetailsAction.name),

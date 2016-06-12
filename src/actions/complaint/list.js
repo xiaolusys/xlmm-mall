@@ -4,18 +4,18 @@ import qs from 'qs';
 import _ from 'underscore';
 import createAction from '../createAction';
 
-export const name = 'COMPLAINT';
+export const name = 'COMPLAINT_HOSTORY';
 
-export const saveComplaint = () => {
+export const fetchComplaints = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'usercoupons')
+    return axios.get(constants.baseEndpointV1 + 'complain/history_complains')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
