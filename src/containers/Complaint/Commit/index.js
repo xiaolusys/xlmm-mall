@@ -92,7 +92,7 @@ export default class Commit extends Component {
           <div className="row no-margin">
             <button className={bindPhoneBtnCls} type="button" onClick={this.onBubmitBtnClick} disabled={this.state.save}>提交</button>
           </div>
-          <Link to="/complaint/reply">
+          <Link to="/complaint/history">
             <p className="col-xs-12 text-right no-margin font-grey-light margin-top-xs margin-bottom-xs">查看历史纪录</p>
           </Link>
           <Footer/>

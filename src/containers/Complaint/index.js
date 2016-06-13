@@ -1,2 +1,2 @@
-export Commit from './Commit';
-export Reply from './Reply';
+export ComplainCommit from './Commit';
+export ComplainList from './List';

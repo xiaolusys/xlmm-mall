@@ -58,7 +58,6 @@ export default class List extends Component {
     if (nextProps.success) {
       const count = nextProps.data.count;
       const size = nextProps.data.results.length;
-      console.log(size);
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
     }
@@ -92,10 +91,8 @@ export default class List extends Component {
   }
 
   render() {
-    console.log(this);
     const props = this.props;
     const data = this.props.data && this.props.data.results || [];
-    console.log(this.props);
     return (
       <div>
         <Header title="退款退货" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
