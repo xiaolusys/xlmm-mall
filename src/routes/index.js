@@ -44,11 +44,11 @@ export default (
     <Route path="/product/list/:type" component={ProductList} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
-    <Route path="/refunds/details/:id" component={RefundsDetail} />
-    <Route path="/refunds/express/order/:id/:name" component={ExpressOrder} />
-    <Route path="/refunds/express/company/:id" component={ExpressCompany} />
+    <Route path="/refunds/details/:id" component={RefundsDetail} onEnter={utils.checkAuth} />
+    <Route path="/refunds/express/order/:id/:name" component={ExpressOrder} onEnter={utils.checkAuth} />
+    <Route path="/refunds/express/company/:id" component={ExpressCompany} onEnter={utils.checkAuth} />
     <Route path="/refunds" component={RefundsList} />
-    <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} />
+    <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} onEnter={utils.checkAuth} />
     <Route path="/alipay" component={Alipay} />
     {activityRoutes}
     <Route status={404} path="*" component={Home} />
