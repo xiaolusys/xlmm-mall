@@ -29,7 +29,6 @@ export default class Commit extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
-    complaintCommit: React.PropTypes.any,
     commitComplaint: React.PropTypes.func,
   };
 
@@ -53,7 +52,7 @@ export default class Commit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.complaintCommit.success) {
+    if (nextProps.complaint.success) {
       Toast.show('提交成功');
       this.setState({
         textareaContent: '',
@@ -74,7 +73,7 @@ export default class Commit extends Component {
   }
 
   onBubmitBtnClick = () => {
-    this.props.commitComplaint();
+    this.props.commitComplaint(this.state.textareaContent);
     this.setState({ save: true });
   }
 
