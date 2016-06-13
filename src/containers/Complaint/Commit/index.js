@@ -82,7 +82,6 @@ export default class Commit extends Component {
     const bindPhoneBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
     });
-    console.log('fasdfasdfa');
     return (
       <div>
         <Header title="投诉建议" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>

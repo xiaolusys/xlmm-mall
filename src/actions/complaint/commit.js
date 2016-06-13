@@ -10,7 +10,7 @@ export const commitComplaint = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'users/profile')
+    return axios.post(constants.baseEndpointV1 + 'complain')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

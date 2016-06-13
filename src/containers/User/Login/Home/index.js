@@ -74,7 +74,6 @@ export default class Home extends Component {
 
   onWechatLoginBtnClick = (e) => {
     window.location.replace(constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next(true)));
-    console.log(constants.baseEndpointV1 + 'users/weixin_login/?next=' + encodeURIComponent(this.next(true)));
     e.preventDefault();
   }
 
