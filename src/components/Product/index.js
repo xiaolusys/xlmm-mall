@@ -54,7 +54,8 @@ export class Product extends Component {
           <p className="product-name">{product.product_model.name}</p>
           <p>
             <span className="font-lg">{'￥' + product.agent_price}</span>
-            <span className="font-grey">{'/￥' + product.std_sale_price}</span>
+            <span className="font-grey">/</span>
+            <span className="font-grey text-line-through ">{'￥' + product.std_sale_price}</span>
           </p>
           </div>
         </div>

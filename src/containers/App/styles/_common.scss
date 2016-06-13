@@ -51,6 +51,10 @@ $bar-border: #dadada !default;
   text-decoration: underline;
 }
 
+.text-line-through {
+  text-decoration: line-through;
+}
+
 .content {
   width: 100%;
 }
