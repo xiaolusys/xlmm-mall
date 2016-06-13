@@ -71,13 +71,13 @@ export default class List extends Component {
             {data.map((complaint) => {
               return (
                 <li className="bottom-border row no-margin margin-bottom-xs" key={complaint.id}>
-                  <p className="col-xs-12 text-left no-margin text-range bottom-border padding-top-xxs padding-bottom-xxs">{complaint.com_title}</p>
+                  <p className="col-xs-12 text-left no-margin text-range bottom-border padding-top-xxs padding-bottom-xxs">{complaint.com_content}</p>
                   <div className="col-xs-12 no-margin margin-bottom-xs margin-top-xs">
                     <p className="no-margin padding-bottom-xxs">
                       <i className="icon-xiaolu font-grey-light margin-right-xs"></i>
                       <span>鹿小美</span>
                     </p>
-                    <div className="col-xs-11 col-xs-offset-1 complaint-content">{complaint.com_content}</div>
+                    <div className="col-xs-11 col-xs-offset-1 complaint-content">{complaint.reply}</div>
                   </div>
                 </li>
               );
