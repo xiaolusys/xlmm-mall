@@ -313,7 +313,8 @@ export default class Detail extends Component {
           <div className="row no-margin">
             <p className="col-xs-6 no-padding">
               <span className="font-32">{'￥' + info.lowest_agent_price}</span>
-              <span className="font-xs font-grey-light">{'/￥' + info.lowest_std_sale_price}</span>
+              <span className="font-grey">/</span>
+              <span className="font-xs font-grey-light text-line-through">{'￥' + info.lowest_std_sale_price}</span>
             </p>
             <p className="col-xs-6 no-padding margin-top-xs text-right">
               {info.item_marks.map((tag, index) => { return (<span key={index} className="tag">{tag}</span>); })}
@@ -322,7 +323,7 @@ export default class Detail extends Component {
         </div>
         <p className="on-shelf-countdown bottom-border bg-white margin-bottom-xxs">
           <span>剩余时间</span>
-          <Timer className="pull-right" endDateString={info.offshelf_time} format="dd天hh时mm分ss秒" />
+          <Timer className="pull-right" endDateString={info.offshelf_time} />
         </p>
       </div>
     );

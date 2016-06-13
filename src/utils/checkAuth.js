@@ -12,7 +12,7 @@ export default function checkAuth(nextState, replace, next) {
     .catch((resp) => {
       ui.loadingSpinner.hide();
       if (resp.status === 403) {
-        replace(`/user/login?next=${nextState.location.pathname}`);
+        replace(`/user/login?next=${encodeURIComponent(nextState.location.pathname + nextState.location.search)}`);
       }
       next();
     });

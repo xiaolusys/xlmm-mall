@@ -11,7 +11,7 @@ export class Timer extends Component {
   };
 
   static defaultProps = {
-    format: 'dd:hh:mm:ss',
+    format: 'dd天hh时mm分ss秒',
     hasBeenEnd: '已结束',
   };
 

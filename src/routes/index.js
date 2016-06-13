@@ -15,7 +15,7 @@ import { ShopBag } from 'containers/ShopBag';
 import { ProductDetails, ProductList } from 'containers/Product';
 import { RefundsApply, RefundsList, ExpressCompany, RefundsDetail, ExpressOrder } from 'containers/Refunds';
 import { Alipay } from 'containers/Alipay';
-import { Commit, Reply } from 'containers/Complaint';
+import { ComplainCommit, ComplainList } from 'containers/Complaint';
 
 export default (
   <Route path="/" component={App}>
@@ -33,8 +33,8 @@ export default (
     <Route path="/user/password/set" component={Password} onEnter={utils.checkAuth} />
     <Route path="/user/point" component={Point} onEnter={utils.checkAuth} />
     <Route path="/user/coupons" component={CouponList} onEnter={utils.checkAuth} />
-    <Route path="/complaint/commit" component={Commit} onEnter={utils.checkAuth} />
-    <Route path="/complaint/reply" component={Reply} onEnter={utils.checkAuth} />
+    <Route path="/complaint/commit" component={ComplainCommit} onEnter={utils.checkAuth} />
+    <Route path="/complaint/history" component={ComplainList} onEnter={utils.checkAuth} />
     <Route path="/ol.html" component={OrderList} onEnter={utils.checkAuth} />
     <Route path="/od.html" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
@@ -44,11 +44,11 @@ export default (
     <Route path="/product/list/:type" component={ProductList} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
-    <Route path="/refunds/details/:id" component={RefundsDetail} />
-    <Route path="/refunds/express/order/:id/:name" component={ExpressOrder} />
-    <Route path="/refunds/express/company/:id" component={ExpressCompany} />
+    <Route path="/refunds/details/:id" component={RefundsDetail} onEnter={utils.checkAuth} />
+    <Route path="/refunds/express/order/:id/:name" component={ExpressOrder} onEnter={utils.checkAuth} />
+    <Route path="/refunds/express/company/:id" component={ExpressCompany} onEnter={utils.checkAuth} />
     <Route path="/refunds" component={RefundsList} />
-    <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} />
+    <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} onEnter={utils.checkAuth} />
     <Route path="/alipay" component={Alipay} />
     {activityRoutes}
     <Route status={404} path="*" component={Home} />
