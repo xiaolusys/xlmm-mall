@@ -135,10 +135,10 @@ export default class A20160615 extends Component {
   render() {
     return (
       <div>
-        <Header title="Top10精选" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="贴身宠爱文胸专场活动" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content content-white-bg clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
-            <Image className="col-md-6 col-md-offset-3 col-xs-12" src={activity.shareBtn} onClick={this.onShareBtnClick} />
+            <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.shareBtn} onClick={this.onShareBtnClick} />
             <ul className="product-list">
               {activity.products.map((product, index) => {
                 return (
