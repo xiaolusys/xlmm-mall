@@ -25,7 +25,7 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    FastClick.attach(document.body);
+    // FastClick.attach(document.body);
   }
 
   render() {
