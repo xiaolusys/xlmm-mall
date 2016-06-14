@@ -22,20 +22,21 @@ export class Carousel extends Component {
     },
   };
 
-  componentDidMount() {
-    const self = this;
-    let { swipeOptions } = this.props;
-    swipeOptions = _.extend({}, swipeOptions, { transitionEnd: this.setActive });
-    // Must be delayed 700 ms, otherwise it will not correctly load component
-    _.delay(() => {
-      self.swipe = new Swipe(this.refs.carousel, swipeOptions);
-    }, 700);
+  state = {
+
+  }
+
+  componentDidUpdate() {
+    if (this.swipe) {
+      this.killSwipe();
+    }
+    this.initSwipe();
   }
 
   componentWillUnmount() {
-    this.swipe && this.swipe.kill();
-    this.swipe = null;
+    this.killSwipe();
   }
+
 
   setActive = (index, el) => {
 
@@ -47,6 +48,17 @@ export class Carousel extends Component {
 
   getNumSlides() {
     return this.swipe.getNumSlides();
+  }
+
+  killSwipe = () => {
+    this.swipe && this.swipe.kill();
+    this.swipe = null;
+  }
+
+  initSwipe = () => {
+    let { swipeOptions } = this.props;
+    swipeOptions = _.extend({}, swipeOptions, { transitionEnd: this.setActive });
+    this.swipe = new Swipe(this.refs.carousel, swipeOptions);
   }
 
   next() {
