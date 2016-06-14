@@ -34,6 +34,6 @@ app.get('*', function root(req, res) {
 });
 
 http.createServer(app).listen(config.port || 7070, function onListen() {
-  console.log(' --> Server started: http://localhost:%d', config.port);
-  console.log(' --> API Proxy Server started: %s:%d', config.apiHost, config.apiPort);
+  console.log('🎈 --> Server started: http://localhost:%d', config.port);
+  console.log('🎈 --> API Proxy Server started: %s:%d', config.apiHost, config.apiPort);
 });

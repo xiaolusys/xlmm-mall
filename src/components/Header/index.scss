@@ -62,15 +62,16 @@ $bar-bg: #fff !default;
     }
     > .icon-btn {
       z-index: 1;
-      padding: 0 6px;
+      padding: 0 8px;
       min-width: initial;
       min-height: 31px;
       font-weight: 400;
-      font-size: 22px;
+      font-size: 17px;
       line-height: 32px;
       transition: opacity 0.1s;
       border-color: transparent;
       background: none;
+      cursor: pointer;
       &.no-icon {
         font-size: 14px;
       }
