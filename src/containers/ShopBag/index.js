@@ -153,7 +153,7 @@ export class ShopBag extends Component {
                       <p>
                         <span className="font-lg font-orange">{'￥' + item.price}</span>
                         <span className="font-grey-light">{'/￥' + item.std_sale_price}</span>
-                        <button className="button button-stable button-sm font-xs pull-right" type="button" data-itemid={item.item_id} data-cartid={item.id} data-skuid={item.sku_id} onClick={this.onRebuyClick}>再次购买</button>
+                        <button className="button button-stable button-sm font-xs pull-right" type="button" data-itemid={item.item_id} data-cartid={item.id} data-skuid={item.sku_id} onClick={this.onRebuyClick}>加入购物车</button>
                       </p>
                     </div>
                   </li>

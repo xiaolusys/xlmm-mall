@@ -12,7 +12,7 @@ const history = useRouterHistory(createHistory)({
 });
 const store = configStore();
 
-// send page view to ga
+// send pageview to ga
 history.listen((location) => {
   window.ga && window.ga('send', 'pageview', location.pathname);
 });
