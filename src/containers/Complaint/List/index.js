@@ -73,7 +73,7 @@ export default class List extends Component {
               return (
                 <If condition= {complaint.com_content}>
                   <li className="bottom-border row no-margin margin-bottom-xs" key={complaint.id}>
-                    <p className="col-xs-12 text-left no-margin text-range padding-top-xxs padding-bottom-xxs">{complaint.com_content}</p>
+                    <p className="col-xs-12 text-left no-margin text-range padding-top-xxs padding-bottom-xxs">{'反馈问题: ' + complaint.com_content}</p>
                     <If condition= {complaint.reply}>
                       <div className="col-xs-12 no-margin margin-bottom-xs margin-top-xs">
                         <p className="no-margin padding-bottom-xxs">
