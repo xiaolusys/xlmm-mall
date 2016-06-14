@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import * as utils from 'utils';
+import FastClick from 'fastclick';
 
 // global styles for app
 import './styles/app.scss';
@@ -21,6 +22,10 @@ export class App extends Component {
     if (uFrom) {
       window.document.cookie = 'ufrom=' + uFrom + '; Path=/';
     }
+  }
+
+  componentDidMount() {
+    FastClick.attach(document.body);
   }
 
   render() {

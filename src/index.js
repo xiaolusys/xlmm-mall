@@ -5,7 +5,6 @@ import { Router, useRouterHistory } from 'react-router';
 import { createHistory } from 'history';
 import configStore from './store/configStore';
 import routes from 'routes';
-import 'react-fastclick';
 
 const history = useRouterHistory(createHistory)({
   basename: '/mall/',
@@ -13,7 +12,7 @@ const history = useRouterHistory(createHistory)({
 });
 const store = configStore();
 
-// send page view to ga
+// send pageview to ga
 history.listen((location) => {
   window.ga && window.ga('send', 'pageview', location.pathname);
 });
