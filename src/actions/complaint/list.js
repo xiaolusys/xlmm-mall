@@ -6,11 +6,12 @@ import createAction from '../createAction';
 
 export const name = 'COMPLAINT_HOSTORY';
 
-export const fetchComplaints = () => {
+export const fetchComplaints = (pageIndex, pageSize) => {
+  const params = { params: { page: pageIndex, page_size: pageSize } };
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'complain/history_complains')
+    return axios.get(constants.baseEndpointV1 + 'complain/history_complains', params)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

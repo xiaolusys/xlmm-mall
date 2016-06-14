@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as couponAction from 'actions/user/coupon';
-import * as promotionAction from 'actions/activity/promotion';
+import * as actionCreators from 'actions/activity/promotion';
 import _ from 'underscore';
 import * as utils from 'utils';
 import { Header } from 'components/Header';
@@ -12,7 +11,6 @@ import activity from './activity';
 
 import './index.scss';
 
-const actionCreators = _.extend(promotionAction, couponAction);
 const setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {
     return callback(window.WebViewJavascriptBridge);
@@ -30,15 +28,8 @@ const setupWebViewJavascriptBridge = function(callback) {
   }, 0);
 };
 
-
 @connect(
   state => ({
-    coupon: {
-      data: state.coupon.data,
-      isLoading: state.coupon.isLoading,
-      success: state.coupon.success,
-      error: state.coupon.error,
-    },
     promotion: {
       data: state.promotion.data,
       isLoading: state.promotion.isLoading,
@@ -47,15 +38,12 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class TopTen extends Component {
+export default class A20160615 extends Component {
 
   static propTypes = {
-    coupon: React.PropTypes.any,
     promotion: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
-    receiveCoupon: React.PropTypes.func,
-    resetCoupon: React.PropTypes.func,
     fetchPromotion: React.PropTypes.func,
   };
 
@@ -69,16 +57,8 @@ export default class TopTen extends Component {
   }
 
   state = {
-    redpacketOpened: false,
-    remaining: {
-      totals: '00',
-      days: '00',
-      hours: '00',
-      minutes: '00',
-      seconds: '00',
-    },
-  }
 
+  }
 
   componentWillMount() {
     this.props.fetchPromotion(activity.activityId);
@@ -89,25 +69,8 @@ export default class TopTen extends Component {
     this.interval = setInterval(this.tick, 1000);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.coupon.success) {
-      if (nextProps.coupon.data.code === 0) {
-        this.toggleRedpacketOpenedState();
-      }
-      Toast.show(nextProps.coupon.data.res);
-    }
-    if (nextProps.coupon.error) {
-      this.props.resetCoupon();
-      this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
-    }
-  }
-
   componentWillUnmount() {
     clearInterval(this.interval);
-  }
-
-  onCouponClick = (e) => {
-    this.props.receiveCoupon(activity.couponIds);
   }
 
   onProductClick = (e) => {
@@ -120,7 +83,7 @@ export default class TopTen extends Component {
       return;
     }
     if (modelId) {
-      webUrl = '/tongkuan.html?id=' + modelId;
+      webUrl = '/mall/product/details/' + modelId;
       appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     }
     if (productId) {
@@ -158,10 +121,6 @@ export default class TopTen extends Component {
     }
   };
 
-  toggleRedpacketOpenedState = (e) => {
-    this.setState({ redpacketOpened: !this.state.redpacketOpened });
-  }
-
   tick = () => {
     const { promotion } = this.props;
     const endDateString = promotion.data.end_time || new Date();
@@ -174,42 +133,22 @@ export default class TopTen extends Component {
   }
 
   render() {
-    const { days, hours, minutes, seconds } = this.state.remaining;
     return (
       <div>
-        <Header title="Top10精选" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="聚拢无钢圈文胸专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content content-white-bg clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
-            <Image className="col-md-6 col-md-offset-3 col-xs-12" src={activity.coupon} onClick={this.onCouponClick}/>
-            <div className="col-md-6 col-md-offset-3 col-xs-12 margin-top-sm margin-bottom-xs">
-              <Image className="col-xs-4 no-padding" src={activity.countdownText} />
-              <p className="col-xs-8 no-padding countdown">
-                <span>{days}</span> :
-                <span>{hours}</span> :
-                <span>{minutes}</span> :
-                <span>{seconds}</span>
-              </p>
-            </div>
+            <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.shareBtn} onClick={this.onShareBtnClick} />
             <ul className="product-list">
               {activity.products.map((product, index) => {
                 return (
-                  <li key={index} data-modelid={product.modelId} data-productid={product.productId} onClick={this.onProductClick}>
-                    <Image className="col-xs-12 col-md-6 col-md-offset-3" src={product.pic} />
+                  <li className="col-xs-12 col-md-6 col-md-offset-3" key={index} data-modelid={product.modelId} data-productid={product.productId} onClick={this.onProductClick}>
+                    <Image src={product.pic} />
                   </li>
                 );
               })}
             </ul>
-            <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding margin-top-sm margin-bottom-xs" src={activity.rule} />
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.footer} />
-            <If condition={this.state.redpacketOpened}>
-              <div className="popup" onClick={this.toggleRedpacketOpenedState}>
-                <div className="content">
-                  <img className="col-xs-12 col-md-3 col-md-offset-4" src={activity.redpacket} />
-                  <img className="js-share col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 margin-top-xs" src={activity.shareBtn} onClick={this.onShareBtnClick} />
-                </div>
-                <div className="popup-overlay"></div>
-              </div>
-            </If>
           </div>
       </div>
     );
