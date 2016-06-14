@@ -1,7 +1,7 @@
 export default {
-  banner: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/top10/20160615/banner.png',
+  banner: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/top10/20160615/banner1.png',
   footer: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/top10/20160615/footer.png',
-  shareBtn: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/top10/20160615/share-btn.png',
+  shareBtn: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/top10/20160615/share-btn1.png',
   activityId: 8,
   products: [{
     name: '一片式无痕聚拢文胸',
