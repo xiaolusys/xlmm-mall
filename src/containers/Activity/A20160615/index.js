@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'actions/activity/promotion';
 import _ from 'underscore';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { Image } from 'components/Image';
@@ -76,32 +77,32 @@ export default class A20160615 extends Component {
   onProductClick = (e) => {
     const dataSet = e.currentTarget.dataset;
     const modelId = Number(dataSet.modelid);
-    const productId = Number(dataSet.productid);
-    let webUrl = '';
-    let appUrl = '';
-    if (modelId === 0 && productId === 0) {
-      return;
-    }
-    if (modelId) {
-      webUrl = '/mall/product/details/' + modelId;
-      appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
-    }
-    if (productId) {
-      webUrl = '/pages/shangpinxq.html?id=' + productId;
-      appUrl = 'com.jimei.xlmm://app/v1/products?product_id=' + productId;
-    }
+    const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      window.AndroidBridge.jumpToNativeLocation(appUrl);
-    } else if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+      const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
+      if (appVersion < 20160528) {
+        window.AndroidBridge.jumpToNativeLocation(appUrl);
+        return;
+      }
+      if (utils.detector.isApp()) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substr(0, window.location.href.indexOf('/mall/')) + '/mall/product/details/' + modelId },
+        });
+        return;
+      }
+    }
+    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
         }, function(response) {});
       });
-    } else {
-      window.location.href = webUrl;
+      return;
     }
+    this.context.router.push(`/product/details/${modelId}`);
   }
+
 
   onShareBtnClick = (e) => {
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
@@ -135,7 +136,7 @@ export default class A20160615 extends Component {
   render() {
     return (
       <div>
-        <Header title="聚拢无钢圈文胸专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="聚拢无钢圈文胸专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
           <div className="content content-white-bg clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.shareBtn} onClick={this.onShareBtnClick} />
