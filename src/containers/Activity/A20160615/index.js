@@ -142,8 +142,8 @@ export default class A20160615 extends Component {
             <ul className="product-list">
               {activity.products.map((product, index) => {
                 return (
-                  <li key={index} data-modelid={product.modelId} data-productid={product.productId} onClick={this.onProductClick}>
-                    <Image className="col-xs-12 col-md-6 col-md-offset-3" src={product.pic} />
+                  <li className="col-xs-12 col-md-6 col-md-offset-3" key={index} data-modelid={product.modelId} data-productid={product.productId} onClick={this.onProductClick}>
+                    <Image src={product.pic} />
                   </li>
                 );
               })}

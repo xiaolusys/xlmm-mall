@@ -18,6 +18,9 @@
   }
   .product-list {
     -webkit-padding-start: 0px;
+    > li > img {
+      width: 100%;
+    } 
   }
   .popup > .content {
     position: fixed;
