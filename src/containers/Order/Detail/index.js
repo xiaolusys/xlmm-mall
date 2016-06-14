@@ -232,10 +232,12 @@ export default class Detail extends Component {
            <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
           <If condition={trade.status === 1 || trade.status === 2}>
             <BottomBar>
-              <div className="pull-left text-left countdown">
-                <p className="font-grey">付款剩余时间</p>
-                <p><Timer endDateString={this.getClosedDate(trade.created)} format="mm:ss" hasBeenEnd="订单已过期"/></p>
-              </div>
+              <If condition={trade.status === 1}>
+                <div className="pull-left text-left countdown">
+                  <p className="font-grey">付款剩余时间</p>
+                  <p><Timer endDateString={this.getClosedDate(trade.created)} format="mm:ss" hasBeenEnd="订单已过期"/></p>
+                </div>
+              </If>
               <div className="pull-right">
                 <button className="button button-md button-energized" type="button" data-action={tradeOperation.action} data-tradeid={trade.id} onClick={this.onTradesBtnClick}>{tradeOperation.tag}</button>
               </div>

@@ -13,8 +13,9 @@
     > p {
       background-color: #fff;
       line-height: 16px;
-      height: 32px;
       font-size: 13px;
+      word-wrap: break-word;
+      border-bottom: 1px solid #dadada;
     }
   }
 }
