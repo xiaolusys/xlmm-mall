@@ -1,0 +1,62 @@
+.exam-bg {
+  background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/yellow-bg.png?imageMogr2/strip/format/jpg/quality/100/interlace/1/") repeat center center;
+  background-size: contain;
+}
+
+.activity-exam-question {
+  > .question-header {
+    position: relative;
+    > .exit-btn {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      height: 16%;
+      width: auto;
+      z-index: 9;
+    }
+    > .header-text {
+      position: absolute;
+      top: 22%;
+      left: 16%;
+      width: 70%;
+    }
+    >img {
+      width: 100%;
+    }
+  }
+  > .question-body {
+    color: #000;
+    text-align: center;
+    margin: 0px 16px;
+    .option {
+      margin: 16px auto 0px auto;
+      height: 80px;
+      min-width: 288px;
+      max-width: 343px;
+      background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/item-bg.png?imageMogr2/strip/format/jpg/quality/100/interlace/1/") no-repeat center center;
+      background-size: contain;
+      > p {
+        margin: 10px 0px;
+        height: 60px;
+      }
+      > .left {
+        line-height: 60px;
+        font-size: 22px;
+        font-weight: 600;
+        border-right: dashed 2px #000;
+      }
+      > .right {
+        padding: 10px;
+      }
+    }
+  }
+  .font-36 {
+    font-size: 36;
+  }
+  .font-24 {
+    font-size: 24;
+  }
+  .font-red {
+    color: #F74964;
+  }
+}
