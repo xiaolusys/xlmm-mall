@@ -88,6 +88,7 @@
   "dependencies": {
     "axios": "latest",
     "es6-promise": "^2.0.1",
+    "react-fastclick": "^2.1.2",
     "jquery": "^2.2.0",
     "moment": "^2.13.0",
     "swipe-js-iso": "^2.0.3",
