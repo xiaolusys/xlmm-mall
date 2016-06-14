@@ -26,6 +26,10 @@ export class Carousel extends Component {
 
   }
 
+  componentDidMount() {
+    this.initSwipe();
+  }
+
   componentDidUpdate() {
     if (this.swipe) {
       this.killSwipe();
