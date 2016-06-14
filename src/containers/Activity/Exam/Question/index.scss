@@ -35,6 +35,12 @@
       max-width: 343px;
       background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/item-bg.png?imageMogr2/strip/format/jpg/quality/100/interlace/1/") no-repeat center center;
       background-size: contain;
+      &.active {
+        > .left {
+          background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/checked.png") no-repeat center center;
+          background-size: contain;
+        }
+      }
       > p {
         margin: 10px 0px;
         height: 60px;
