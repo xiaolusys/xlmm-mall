@@ -9,6 +9,7 @@ import * as utils from 'utils';
 import moment from 'moment';
 import * as plugins from 'plugins';
 import classnames from 'classnames';
+import _ from 'underscore';
 
 import './index.scss';
 
@@ -42,7 +43,7 @@ export default class Question extends Component {
   }
 
   state = {
-
+    selected: [],
   }
 
   componentWillMount() {
@@ -58,16 +59,27 @@ export default class Question extends Component {
   }
 
   onOptionClick = (e) => {
-
+    const type = this.props.location.query.type || 1;
+    const { optionid } = e.currentTarget.dataset;
+    switch (type) {
+      case 1:
+        this.setState({ selected: [optionid] });
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      default:
+        break;
+    }
+    e.preventDefault();
   }
 
   render() {
     const { prefixCls, exam } = this.props;
     const question = exam.question.data || {};
     const type = this.props.location.query.type || 1;
-    const optionCls = classnames({
-      ['option']: true,
-    });
+    const { selected } = this.state;
     return (
       <div className={`${prefixCls} col-xs-12 col-sm-8 col-sm-offset-2 no-padding`}>
         <div className="question-header">
@@ -83,9 +95,13 @@ export default class Question extends Component {
           <p className="font-lg font-weight-600">{question.question_content && question.question_content.question}</p>
           <ul>
           {question.question_content && question.question_content.question_choice.map((option, index) => {
+            const optionCls = classnames({
+              ['option']: true,
+              ['active']: _.contains(selected, option.choice_title),
+            });
             return (
               <If condition={type === 1}>
-                <li className="option" key={index} data-id={option.choice_title} onClick={this.onOptionClick}>
+                <li className={optionCls} key={index} data-optionid={option.choice_title} onClick={this.onOptionClick}>
                   <p className="col-xs-2 text-center left">{option.choice_title}</p>
                   <p className="col-xs-10 text-left right">{option.choice_text}</p>
                 </li>
@@ -94,6 +110,8 @@ export default class Question extends Component {
           })}
           </ul>
         </div>
+        <img className="previous-btn" src={`${staticBase}previous-btn.png`} onClick={this.context.router.goBack} />
+        <img className="next-btn" src={`${staticBase}next-btn.png`} onClick={this.context.router.goBack} />
       </div>
     );
   }
