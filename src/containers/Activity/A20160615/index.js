@@ -103,24 +103,28 @@ export default class A20160615 extends Component {
     this.context.router.push(`/product/details/${modelId}`);
   }
 
-
   onShareBtnClick = (e) => {
+    const data = {
+      share_to: '',
+      active_id: activity.activityId,
+    };
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeShareFunc',
+        data: data,
+      });
+      return;
+    }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
-        const data = {
-          share_to: '',
-          active_id: activity.activityId,
-        };
         bridge.callHandler('callNativeShareFunc', data, function(response) {});
       });
-    } else if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      const data = {
-        share_to: '',
-        active_id: activity.activityId,
-      };
+    }
+    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
     }
-  };
+  }
+
 
   tick = () => {
     const { promotion } = this.props;
