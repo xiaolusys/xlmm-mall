@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import classnames from 'classnames';
 import _ from 'underscore';
+import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
@@ -70,16 +71,20 @@ export default class List extends Component {
           <ul className="complaint-reply-list">
             {data.map((complaint) => {
               return (
-                <li className="bottom-border row no-margin margin-bottom-xs" key={complaint.id}>
-                  <p className="col-xs-12 text-left no-margin text-range bottom-border padding-top-xxs padding-bottom-xxs">{complaint.com_content}</p>
-                  <div className="col-xs-12 no-margin margin-bottom-xs margin-top-xs">
-                    <p className="no-margin padding-bottom-xxs">
-                      <i className="icon-xiaolu font-grey-light margin-right-xs"></i>
-                      <span>鹿小美</span>
-                    </p>
-                    <div className="col-xs-11 col-xs-offset-1 complaint-content">{complaint.reply}</div>
-                  </div>
-                </li>
+                <If condition= {complaint.com_content}>
+                  <li className="bottom-border row no-margin margin-bottom-xs" key={complaint.id}>
+                    <p className="col-xs-12 text-left no-margin text-range padding-top-xxs padding-bottom-xxs">{complaint.com_content}</p>
+                    <If condition= {complaint.reply}>
+                      <div className="col-xs-12 no-margin margin-bottom-xs margin-top-xs">
+                        <p className="no-margin padding-bottom-xxs">
+                          <i className="icon-xiaolu font-grey-light margin-right-xs"></i>
+                          <span>鹿小美</span>
+                        </p>
+                        <div className="col-xs-11 col-xs-offset-1 complaint-content">{complaint.reply}</div>
+                      </div>
+                    </If>
+                  </li>
+                </If>
               );
             })}
           </ul>
