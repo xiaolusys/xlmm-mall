@@ -66,7 +66,7 @@ export default class List extends Component {
     const data = this.props.complaint.data && this.props.complaint.data.results || [];
     return (
       <div>
-        <Header title="反馈回复" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title="历史记录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content">
           <ul className="complaint-reply-list">
             {data.map((complaint) => {
