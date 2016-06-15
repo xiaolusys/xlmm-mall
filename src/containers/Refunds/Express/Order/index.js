@@ -7,16 +7,17 @@ import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
-import * as actionCreators from 'actions/refunds/expressInfo';
+import * as expressInfoAction from 'actions/refunds/expressInfo';
+import * as detailsAction from 'actions/refunds/detail';
 
 import './index.scss';
 
+const actionCreators = _.extend(detailsAction, expressInfoAction);
+
 @connect(
   state => ({
-    data: state.expressInfo.data,
-    isLoading: state.expressInfo.isLoading,
-    error: state.expressInfo.error,
-    success: state.expressInfo.success,
+    express: state.expressInfo,
+    refundsDetails: state.refundsDetails,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -28,6 +29,9 @@ export default class Detail extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
+    refundsDetails: React.PropTypes.object,
+    express: React.PropTypes.object,
+    fetchRefundsDetail: React.PropTypes.func,
     pushExpressInfo: React.PropTypes.func,
   };
 
@@ -41,6 +45,12 @@ export default class Detail extends Component {
   }
   state = {
     submitBtnDisabled: true,
+  }
+
+  componentWillMount() {
+    if (_.isEmpty(this.props.refundsDetails.data)) {
+      this.props.fetchRefundsDetail(this.props.params.refundsid);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,20 +87,23 @@ export default class Detail extends Component {
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
       ['pressed']: this.state.submitBtnPressed,
     });
-    const props = this.props;
+    const { refundsDetails, params } = this.props;
+    const data = refundsDetails.data || {};
     return (
       <div className="fill-logistics-info">
         <Header title="填写快递单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content">
           <div className="row express-item refunds-address border">
             <p className="text-center font-xlg font-weight-800 margin-top-xs">收货地址</p>
-            <div className="bottom-border">
-              <p className="text-left no-margin">
-                <span className="margin-right-xs">收货人：小鹿售后</span>
-                <span>联系电话：021-50939326</span>
-              </p>
-              <p className="no-margin font-grey-light">上海市松江区佘山镇吉业路245号5号楼</p>
-            </div>
+            <If condition={data.return_address}>
+              <div className="bottom-border">
+                <p className="text-left no-margin">
+                  <span className="margin-right-xs">{'收货人：' + data.return_address.split('，')[2]}</span>
+                  <span>{'联系电话：' + data.return_address.split('，')[1]}</span>
+                </p>
+                <p className="no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
+              </div>
+            </If>
             <div>
               <p>为提高您的退货退款效率，请注意一下事项</p>
               <p>1.填写退货单or小纸条一并寄回，写明您的<span className="font-orange">微信昵称、联系电话、退换货原因</span></p>
@@ -101,7 +114,7 @@ export default class Detail extends Component {
           </div>
           <div className="row no-margin bottom-border express-item">
             <div className="select-express" onClick={this.onExpressChooseBtnClick}>
-              <p className="col-xs-6 no-margin">{props.params.name}</p>
+              <p className="col-xs-6 no-margin">{params.name}</p>
               <i className="col-xs-6 icon-angle-right font-grey-light text-right"></i>
             </div>
           </div>
