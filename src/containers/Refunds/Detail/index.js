@@ -46,11 +46,17 @@ export default class Detail extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchRefundsDetail(this.props.params.id);
+    this.props.fetchRefundsDetail(this.props.params.refundsid);
   }
 
   onRefundsInfoBtnClick = (e) => {
     this.setState({ refundsInfoIsShow: true });
+    e.preventDefault();
+  }
+
+  onExpressBtnClick = (e) => {
+    const { refundsid, orderid } = e.currentTarget.dataset;
+    this.context.router.push(`/refunds/express/order/${refundsid}/${orderid}/${encodeURIComponent('请选择物流公司')}`);
     e.preventDefault();
   }
 
@@ -97,9 +103,7 @@ export default class Detail extends Component {
                   </p>
                   <p className="no-wrap no-margin font-grey-light">{data.return_address}</p>
                 </div>
-                <Link to={'/refunds/express/order/' + data.order_id + '/' + encodeURIComponent('请选择物流公司')}>
-                  <button className="margin-top-xxs button button-light button-sm pull-right" type="button">填写快递单</button>
-                </Link>
+                <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>填写快递单</button>
               </If>
               <If condition={data.status > 4}>
                 <div className="col-xs-12">

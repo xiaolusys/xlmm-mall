@@ -36,11 +36,16 @@ export default class ExpressCompany extends Component {
     super(props);
     context.router;
   }
+
   state = {
     submitBtnDisabled: true,
   }
 
-  componentWillMount() {}
+  onExpressItemClick = (e) => {
+    const { refundsid, orderid } = this.props.params;
+    const { company } = e.currentTarget.dataset;
+    this.context.router.replace(`/refunds/express/order/${refundsid}/${orderid}/${company}`);
+  }
 
   render() {
     const companys = expressCompany.companyList;
@@ -58,9 +63,9 @@ export default class ExpressCompany extends Component {
                         <p className="text-left font-sm no-margin no-padding">{company.type}</p>
                       </div>
                     </If>
-                    <Link className="col-xs-12 company-name" to={'/refunds/express/order/' + this.props.params.id + '/' + encodeURIComponent(company.name)}>
+                    <div className="col-xs-12 company-name" data-company={company.name} onClick={this.onExpressItemClick}>
                       <p className="text-left font-sm no-margin no-padding" onClick={this.onCompanySelected}>{company.name}</p>
-                    </Link>
+                    </div>
                   </li>
                 );
               })
