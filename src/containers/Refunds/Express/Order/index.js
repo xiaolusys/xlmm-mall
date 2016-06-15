@@ -48,16 +48,22 @@ export default class Detail extends Component {
       Toast.show(nextProps.data.info);
     }
     if (nextProps.success && nextProps.data.code === 0) {
-      this.context.router.push('/refunds/details/' + this.props.params.id);
+      this.context.router.push('/refunds/details/' + this.props.params.refundsid);
     }
   }
 
   onSubmitBtnClick = (e) => {
     const props = this.props;
-    const params = { company: props.params.name, id: props.params.id, modify: 2, sid: this.state.logisticsNUmber };
+    const params = { company: props.params.name, id: props.params.orderid, modify: 2, sid: this.state.logisticsNUmber };
     this.props.pushExpressInfo(params);
     e.preventDefault();
   }
+
+  onExpressChooseBtnClick = (e) => {
+    const { refundsid, orderid } = this.props.params;
+    this.context.router.replace(`/refunds/express/company/${refundsid}/${orderid}`);
+  }
+
   onLogisticsNumberChange = (e) => {
     this.setState({
       logisticsNUmber: e.currentTarget.value,
@@ -94,10 +100,10 @@ export default class Detail extends Component {
             </div>
           </div>
           <div className="row no-margin bottom-border express-item">
-            <Link to={ '/refunds/express/company/' + props.params.id } className="no-margin">
+            <div className="select-express" onClick={this.onExpressChooseBtnClick}>
               <p className="col-xs-6 no-margin">{props.params.name}</p>
               <i className="col-xs-6 icon-angle-right font-grey-light text-right"></i>
-            </Link>
+            </div>
           </div>
           <div className="row no-margin bottom-border express-item">
             <input className="col-xs-12 info-item" type="text" placeholder={'请输入快递单号'} onChange={this.onLogisticsNumberChange} />
