@@ -94,8 +94,8 @@ export default class Detail extends Component {
               <span>下单时间: </span>
               <span>{data.created && data.created.replace('T', ' ') }</span>
             </p>
-            <li className="row col-xs-12 no-margin padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
-              <If condition={data.status === 4}>
+            <If condition={data.status === 4}>
+              <li className="row col-xs-12 no-margin padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
                 <div className="col-xs-8">
                   <p className="no-wrap no-margin">
                     <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
@@ -104,8 +104,8 @@ export default class Detail extends Component {
                   <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
                 </div>
                 <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>填写快递单</button>
-              </If>
-            </li>
+              </li>
+            </If>
             <li className="row col-xs-12 no-margin margin-top-xs bottom-border">
               <div className="col-xs-3">
                 <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={data.pic_path}/>
