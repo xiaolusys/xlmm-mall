@@ -110,29 +110,6 @@ export default class A20160615 extends Component {
     this.context.router.push(`/product/details/${modelId}`);
   }
 
-  onShareBtnClick = (e) => {
-    const data = {
-      share_to: '',
-      active_id: activity.activityId,
-    };
-    if (utils.detector.isApp()) {
-      plugins.invoke({
-        method: 'callNativeShareFunc',
-        data: data,
-      });
-      return;
-    }
-    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-      setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('callNativeShareFunc', data, function(response) {});
-      });
-    }
-    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
-    }
-  }
-
-
   tick = () => {
     const { promotion } = this.props;
     const endDateString = promotion.data.end_time || new Date();
@@ -150,7 +127,7 @@ export default class A20160615 extends Component {
         <Header title="聚拢无钢圈文胸专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
           <div className="content content-white-bg clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
-            <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.shareBtn} onClick={this.onShareBtnClick} />
+            <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.shareBtn} />
             <ul className="product-list">
               {activity.products.map((product, index) => {
                 return (
