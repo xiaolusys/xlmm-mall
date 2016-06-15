@@ -67,7 +67,7 @@ export default class Home extends Component {
       Toast.show('您不是小鹿妈妈，无法参加此次考试！');
       return;
     }
-    this.context.router.push('/activity/exam/question');
+    this.context.router.push('/activity/exam/question/1/-1');
     e.preventDefault();
   }
 
