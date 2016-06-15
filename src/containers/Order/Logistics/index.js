@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
+import * as utils from 'utils';
 import { If } from 'jsx-control-statements';
 import { Header } from 'components/Header';
 import { Timeline, TimelineItem } from 'components/Timeline';
@@ -37,6 +38,16 @@ export default class Logistics extends Component {
     this.props.fetchLogistics(this.props.params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { isLoading } = nextProps;
+    if (isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+
+  }
+
   render() {
     const { logistics, isLoading } = this.props || {};
     const logisticsInfo = logistics.data || [];
@@ -44,9 +55,8 @@ export default class Logistics extends Component {
       <div>
         <Header title="物流信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content">
-          {isLoading ? <Loader/> : null}
-            <p className="logistics-item bottom-border"><span>快递公司</span><span className="pull-right">{logistics.name || logistics.message}</span></p>
-            <p className="logistics-item bottom-border"><span>快递单号</span><span className="pull-right">{logistics.order || logistics.message}</span></p>
+            <p className="logistics-item bottom-border"><span>快递公司</span><span className="pull-right">{logistics.name || '暂无'}</span></p>
+            <p className="logistics-item bottom-border"><span>快递单号</span><span className="pull-right">{logistics.order || '暂无'}</span></p>
             <If condition={!_.isEmpty(logisticsInfo)}>
               <div className="logistics-item margin-top-xs">
                 <Timeline className="logistics-info">

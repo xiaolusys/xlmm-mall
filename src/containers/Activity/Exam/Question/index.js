@@ -47,15 +47,9 @@ export default class Question extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchExamQuestion();
-  }
-
-  componentDidMount() {
-    document.body.classList.add('exam-bg');
-  }
-
-  componentWillUnmount() {
-    document.body.classList.remove('exam-bg');
+    const type = this.props.location.query.type || 1;
+    const id = this.props.location.query.id || 1;
+    this.props.fetchExamQuestion(type, id);
   }
 
   onOptionClick = (e) => {
@@ -74,6 +68,14 @@ export default class Question extends Component {
     }
     e.preventDefault();
   }
+
+  onNextQuestionBtnClick = (e) => {
+    const question = this.props.exam.question.data || {};
+    const type = this.props.location.query.type || 1;
+    // window.location.href = `/mall/activity/exam/question?type=${type}&id=${question.next_id}`;
+    this.props.fetchExamQuestion(type, question.next_id);
+  }
+
 
   render() {
     const { prefixCls, exam } = this.props;
@@ -110,8 +112,10 @@ export default class Question extends Component {
           })}
           </ul>
         </div>
-        <img className="previous-btn" src={`${staticBase}previous-btn.png`} onClick={this.context.router.goBack} />
-        <img className="next-btn" src={`${staticBase}next-btn.png`} onClick={this.context.router.goBack} />
+        <If condition={type === 1 && question.current_no !== 1}>
+          <img className="previous-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/previous-btn.png" onClick={this.context.router.goBack} />
+        </If>
+        <img className="next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
       </div>
     );
   }
