@@ -141,7 +141,7 @@ export default class Detail extends Component {
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
                     <span>{order.title}</span>
-                    <span className="pull-right">{'￥' + order.payment}</span>
+                    <span className="pull-right">{'￥' + order.total_fee}</span>
                   </p>
                   <p className="row no-margin font-grey">
                     <span>{'尺码：' + order.sku_name}</span>
@@ -160,7 +160,7 @@ export default class Detail extends Component {
                   <div className="row no-margin">
                     <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
                     <p className="pull-right">
-                      <span className="margin-right-xxs">{'￥' + order.payment}</span>
+                      <span className="margin-right-xxs">{'￥' + order.total_fee}</span>
                       <span className="font-grey">{'x' + order.num}</span>
                     </p>
                   </div>
@@ -207,6 +207,7 @@ export default class Detail extends Component {
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <If condition={!_.isEmpty(trade)}>
         <div className="content trade-detail">
           <p className="trade-status">
             <sapn>订单编号</sapn>
@@ -225,11 +226,11 @@ export default class Detail extends Component {
           {this.renderLogistics()}
           {this.renderOrders(trade.orders)}
           <div className="price-info">
-            <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(trade.payment).toFixed(2)}</span></p>
+            <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
             <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(trade.discount_fee).toFixed(2)}</span></p>
             <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(trade.post_fee).toFixed(2)}</span></p>
           </div>
-           <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
+           <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(trade.payment).toFixed(2)}</span></p>
           <If condition={trade.status === 1 || trade.status === 2}>
             <BottomBar>
               <If condition={trade.status === 1}>
@@ -244,6 +245,7 @@ export default class Detail extends Component {
             </BottomBar>
           </If>
         </div>
+        </If>
       </div>
     );
   }
