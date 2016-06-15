@@ -71,7 +71,7 @@ $bar-bg: #fff !default;
       transition: opacity 0.1s;
       border-color: transparent;
       background: none;
-      cursor: pointer;
+      // cursor: pointer;
       &.no-icon {
         font-size: 14px;
       }
