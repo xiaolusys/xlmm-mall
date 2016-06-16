@@ -54,6 +54,14 @@ export default class Result extends Component {
     document.body.classList.add('activity-exam-bg');
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.exam.result.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+  }
+
   componentWillUnmount() {
     document.body.classList.remove('activity-exam-bg');
   }

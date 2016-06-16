@@ -81,6 +81,11 @@ export default class Question extends Component {
     if (!question.isLoading && question.success && !_.isEmpty(question.data.user_answer) && _.isEmpty(this.state.selected)) {
       this.setState({ selected: question.data.user_answer.answer.split('') });
     }
+    if (question.isLoading || answer.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
   }
 
   componentWillUnmount() {
@@ -199,10 +204,12 @@ export default class Question extends Component {
           <img className="pull-right next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
         </div>
         <Popup active={this.state.popupOpened && Number(id) === -1} height="none" onPopupOverlayClick={this.onClosePopupClick}>
-          <img className="col-xs-12" src={`${staticBase}title-part-${type}.png`} />
+          <img className="popup-bg" src={`${staticBase}popup-red-bg.png`} />
+          <img className="popup-text col-xs-12 no-padding" src={`${staticBase}title-part-${type}.png`} />
         </Popup>
         <Popup active={this.state.finishedPopupOpend} height="100%">
-          <img className="col-xs-12" src={`${staticBase}text-finished-exam.png`} />
+          <img className="popup-bg col-xs-12 no-padding" src={`${staticBase}popup-red-bg.png`} />
+          <img className="popup-text col-xs-12" src={`${staticBase}text-finished-exam.png`} />
           <div className="row no-margin exam-btn-group">
             <div className="col-xs-6">
               <img className="col-xs-12" src={`${staticBase}check-again-btn.png`} onClick={this.onCheckAgainBtnClick} />

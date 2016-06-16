@@ -82,13 +82,17 @@
   }
   .popup > .popup-content {
     top: 0;
-    bottom: 30%;
+    height: 80%;
     background-color: transparent;
     padding: 0px;
-    background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/popup-red-bg.png") no-repeat;
-    background-size: contain;
-    > img {
-      margin-top: 30%;
+    .popup-bg {
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+    .popup-text {
+      position: absolute;
+      top: 20%; 
     }
     .exam-btn-group {
       position: absolute;
