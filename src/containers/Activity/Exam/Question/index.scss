@@ -22,7 +22,7 @@
       left: 8px;
       height: 16%;
       width: auto;
-      z-index: 9;
+      z-index: 11;
     }
     > .header-text {
       position: absolute;
@@ -50,6 +50,10 @@
           background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/checked.png") no-repeat center center;
           background-size: contain;
         }
+        > .center {
+          background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/checked.png") no-repeat center center;
+          background-size: contain;
+        }
       }
       > p {
         margin: 10px 0px;
@@ -64,6 +68,9 @@
       > .right {
         padding: 10px;
       }
+      > .center {
+        line-height: 60px;
+      }
     }
   }
   .font-36 {
@@ -74,5 +81,20 @@
   }
   .font-red {
     color: #F74964;
+  }
+  .popup > .popup-content {
+    top: 0;
+    bottom: 30%;
+    background-color: transparent;
+    padding: 0px;
+    background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/popup-red-bg.png") no-repeat;
+    background-size: contain;
+    > img {
+      margin-top: 30%;
+    }
+    .exam-btn-group {
+      position: absolute;
+      bottom: 20%;
+    }
   }
 }
