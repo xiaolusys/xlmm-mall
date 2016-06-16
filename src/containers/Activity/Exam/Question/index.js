@@ -60,6 +60,10 @@ export default class Question extends Component {
 
   }
 
+  componentDidMount() {
+    document.body.classList.add('activity-exam-bg');
+  }
+
   componentWillReceiveProps(nextProps) {
     const { answer, question } = nextProps.exam;
     const { type } = this.props.params;
@@ -77,6 +81,10 @@ export default class Question extends Component {
     if (!question.isLoading && question.success && !_.isEmpty(question.data.user_answer) && _.isEmpty(this.state.selected)) {
       this.setState({ selected: question.data.user_answer.answer.split('') });
     }
+  }
+
+  componentWillUnmount() {
+    document.body.classList.remove('activity-exam-bg');
   }
 
   onOptionClick = (e) => {
@@ -184,10 +192,12 @@ export default class Question extends Component {
             </ul>
           </div>
         </If>
-        <If condition={(Number(type) === 1 && Number(id) !== -1) || Number(type) === 2 || Number(type) === 3 }>
-          <img className="previous-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/previous-btn.png" onClick={this.context.router.goBack} />
-        </If>
-        <img className="next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
+        <div>
+          <If condition={(Number(type) === 1 && Number(id) !== -1) || Number(type) === 2 || Number(type) === 3 }>
+            <img className="pull-left previous-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/previous-btn.png" onClick={this.context.router.goBack} />
+          </If>
+          <img className="pull-right next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
+        </div>
         <Popup active={this.state.popupOpened && Number(id) === -1} height="none" onPopupOverlayClick={this.onClosePopupClick}>
           <img className="col-xs-12" src={`${staticBase}title-part-${type}.png`} />
         </Popup>
