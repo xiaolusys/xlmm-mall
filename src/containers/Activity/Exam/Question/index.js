@@ -105,12 +105,8 @@ export default class Question extends Component {
   }
 
   onNextQuestionBtnClick = (e) => {
-    const { type, id } = this.props.params;
-    if (Number(id) === -1) {
-      this.props.commitAnswer(1, this.state.selected.join(''));
-    } else {
-      this.props.commitAnswer(id, this.state.selected.join(''));
-    }
+    const id = this.props.exam.question.data.question_content.id;
+    this.props.commitAnswer(id, this.state.selected.join(''));
     e.preventDefault();
   }
 
