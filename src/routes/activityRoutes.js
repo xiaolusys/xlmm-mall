@@ -9,6 +9,6 @@ export default (
     <Route path="/activity/20160615" component={A20160615}/>
     <Route path="/activity/20160606" component={A20160606} />
     <Route path="/activity/exam" component={ExamHome} onEnter={utils.checkAuth} />
-    <Route path="/activity/exam/question" component={ExamQuestion} onEnter={utils.checkAuth} />
+    <Route path="/activity/exam/question/:type/:id" component={ExamQuestion} onEnter={utils.checkAuth} />
   </Route>
 );
