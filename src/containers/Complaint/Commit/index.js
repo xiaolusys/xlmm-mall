@@ -56,6 +56,7 @@ export default class Commit extends Component {
       Toast.show('提交成功');
       this.setState({
         textareaContent: '',
+        textRange: '0/500',
       });
     }
   }
