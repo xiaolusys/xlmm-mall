@@ -49,15 +49,15 @@ export default class Result extends Component {
     const { sheaves } = this.props.location.query;
     this.props.fetchExamResult(sheaves);
   }
- 
+
   componentDidMount() {
     document.body.classList.add('activity-exam-bg');
   }
- 
+
   componentWillUnmount() {
     document.body.classList.remove('activity-exam-bg');
   }
- 
+
   onExitBtnClick = (e) => {
     this.context.router.replace('/');
     e.preventDefault();
