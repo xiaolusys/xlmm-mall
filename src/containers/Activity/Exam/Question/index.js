@@ -47,6 +47,7 @@ export default class Question extends Component {
   state = {
     selected: [],
     popupOpened: true,
+    finishedPopupOpend: false,
   }
 
   componentWillMount() {
@@ -62,17 +63,18 @@ export default class Question extends Component {
   componentWillReceiveProps(nextProps) {
     const { answer, question } = nextProps.exam;
     const { type } = this.props.params;
+    const nextQuestionId = question.data.next_id;
     if (!answer.isLoading && answer.success && answer.data.code === 0) {
       const next = this.getNextQuestion();
-      if (Number(type) === 3 && !next) {
-        // TODO: show complete popup
+      if (Number(type) === 3 && !nextQuestionId) {
+        this.setState({ finishedPopupOpend: true });
       } else {
         window.location.href = `/mall/activity/exam/question/${next.type}/${next.id}`;
       }
     } else if (!answer.isLoading && answer.success && answer.data.info) {
       Toast.show(answer.data.info);
     }
-    if (!question.isLoading && question.success && !_.isEmpty(question.data) && _.isEmpty(this.state.selected)) {
+    if (!question.isLoading && question.success && !_.isEmpty(question.data.user_answer) && _.isEmpty(this.state.selected)) {
       this.setState({ selected: question.data.user_answer.answer.split('') });
     }
   }
@@ -103,7 +105,7 @@ export default class Question extends Component {
   }
 
   onNextQuestionBtnClick = (e) => {
-    const { id } = this.props.params;
+    const { type, id } = this.props.params;
     if (Number(id) === -1) {
       this.props.commitAnswer(1, this.state.selected.join(''));
     } else {
@@ -120,6 +122,15 @@ export default class Question extends Component {
   onClosePopupClick = (e) => {
     this.setState({ popupOpened: false });
     e.preventDefault();
+  }
+
+  onCheckAgainBtnClick = (e) => {
+    window.location.href = '/activity/exam/question/1/-1';
+  }
+
+  onCommitBtnClick = (e) => {
+    const question = this.props.exam.question.data || {};
+    this.context.router.push(`/activity/exam/result?sheaves=${question.question_content.sheaves}`);
   }
 
   getNextQuestion = () => {
@@ -183,6 +194,17 @@ export default class Question extends Component {
         <img className="next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
         <Popup active={this.state.popupOpened && Number(id) === -1} height="none" onPopupOverlayClick={this.onClosePopupClick}>
           <img className="col-xs-12" src={`${staticBase}title-part-${type}.png`} />
+        </Popup>
+        <Popup active={this.state.finishedPopupOpend} height="100%">
+          <img className="col-xs-12" src={`${staticBase}text-finished-exam.png`} />
+          <div className="row no-margin exam-btn-group">
+            <div className="col-xs-6">
+              <img className="col-xs-12" src={`${staticBase}check-again-btn.png`} onClick={this.onCheckAgainBtnClick} />
+            </div>
+            <div className="col-xs-6">
+              <img className="col-xs-12" src={`${staticBase}commit-btn.png`} onClick={this.onCommitBtnClick} />
+            </div>
+          </div>
         </Popup>
       </div>
     );

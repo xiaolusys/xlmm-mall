@@ -51,11 +51,11 @@ export const commitAnswer = (id, answer) => {
   };
 };
 
-export const fetchExamResult = () => {
+export const fetchExamResult = (sheaves) => {
   const action = createAction(names.FETCH_EXAM_RESULT);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'mmexam/get_start_page_info')
+    return axios.get(constants.baseEndpointV1 + 'mmexam/computation_result', { params: { sheaves: sheaves } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
