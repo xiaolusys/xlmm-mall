@@ -60,7 +60,7 @@ export default class Question extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { answer } = nextProps.exam;
+    const { answer, question } = nextProps.exam;
     const { type } = this.props.params;
     if (!answer.isLoading && answer.success && answer.data.code === 0) {
       const next = this.getNextQuestion();
@@ -71,6 +71,9 @@ export default class Question extends Component {
       }
     } else if (!answer.isLoading && answer.success && answer.data.info) {
       Toast.show(answer.data.info);
+    }
+    if (!question.isLoading && question.success && !_.isEmpty(question.data) && _.isEmpty(this.state.selected)) {
+      this.setState({ selected: question.data.user_answer.answer.split('') });
     }
   }
 
