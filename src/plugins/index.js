@@ -18,13 +18,17 @@ const setupWebViewJavascriptBridge = (callback) => {
 
 export const invoke = (params) => {
   if (utils.detector.isApp() && utils.detector.isIOS()) {
-    setupWebViewJavascriptBridge((bridge) => {
-      bridge.callHandler(params.method, params.data || {}, function() {
-        const callback = params.callback || _.noop;
-        window.WVJBIframe = null;
-        window.WVJBCallbacks = [];
-      });
-    });
+    // setupWebViewJavascriptBridge((bridge) => {
+    //   bridge.callHandler(params.method, params.data || {}, function() {
+    //     const callback = params.callback || _.noop;
+    //     window.WVJBIframe = null;
+    //     window.WVJBCallbacks = [];
+    //   });
+    // });
+    if (!window.IosJsBridge) {
+      throw String('this context does not support ' + params.method);
+    }
+    params.data ? window.IosJsBridge[params.method](JSON.stringify(params.data)) : window.IosJsBridge[params.method]();
   } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
     if (!window.AndroidBridge) {
       throw String('this context does not support ' + params.method);

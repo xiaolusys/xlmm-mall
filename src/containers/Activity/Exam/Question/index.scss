@@ -1,18 +1,16 @@
-.activity-exam-question {
-  height: 100%;
+.activity-exam-bg {
   background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/yellow-bg.png?imageMogr2/strip/format/jpg/quality/100/interlace/1/") repeat center center;
   background-size: contain;
-  > .previous-btn {
+}
+
+.activity-exam-question {
+  .previous-btn {
     width: 26%;
-    position: absolute;
-    bottom: 0;
-    left: 16px;
+    padding-left: 16px;
   }
-  > .next-btn {
+  .next-btn {
     width: 26%;
-    position: absolute;
-    bottom: 0;
-    right: 16px;
+    padding-right: 16px;
   }
   > .question-header {
     position: relative;
@@ -84,13 +82,17 @@
   }
   .popup > .popup-content {
     top: 0;
-    bottom: 30%;
+    height: 80%;
     background-color: transparent;
     padding: 0px;
-    background: url("http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/popup-red-bg.png") no-repeat;
-    background-size: contain;
-    > img {
-      margin-top: 30%;
+    .popup-bg {
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+    .popup-text {
+      position: absolute;
+      top: 20%; 
     }
     .exam-btn-group {
       position: absolute;
