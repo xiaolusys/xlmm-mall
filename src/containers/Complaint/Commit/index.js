@@ -45,7 +45,7 @@ export default class Commit extends Component {
 
   state = {
     save: true,
-    reaonContent: '',
+    reasonContent: '',
     textRange: '0/500',
     typeIndex: 1,
   }
@@ -59,7 +59,7 @@ export default class Commit extends Component {
       Toast.show('提交成功');
       this.setState({
         typeIndex: 1,
-        reaonContent: '',
+        reasonContent: '',
         textRange: '0/500',
       });
     }
@@ -83,7 +83,7 @@ export default class Commit extends Component {
     });
     if (leftLength >= 0) {
       this.setState({
-        reaonContent: value,
+        reasonContent: value,
         textRange: '0/' + leftLength,
       });
     }
@@ -91,7 +91,7 @@ export default class Commit extends Component {
   }
 
   onBubmitBtnClick = (e) => {
-    const reasonContent = this.state.reaonContent;
+    const reasonContent = this.state.reasonContent;
     if (utils.string.isEmpty(reasonContent)) {
       Toast.show('内容不能为空！');
       return;
@@ -112,7 +112,7 @@ export default class Commit extends Component {
             <Checkbox className="col-xs-3 no-margin no-padding" value="4" checked={this.state.typeIndex === 4} onChange={this.onComplaintTypeChange}> 售后问题</Checkbox>
             <Checkbox className="col-xs-3 no-margin no-padding" value="3" checked={this.state.typeIndex === 3} onChange={this.onComplaintTypeChange}> 其它问题</Checkbox>
           </div>
-          <textarea className="margin-top-xs" placeholder="请描述您的具体问题，我们将尽快为你解决！" value={this.state.reaonContent} onChange={this.onTextareaChange}></textarea>
+          <textarea className="margin-top-xs" placeholder="请描述您的具体问题，我们将尽快为你解决！" value={this.state.reasonContent} onChange={this.onTextareaChange}></textarea>
           <p className="col-xs-12 text-right no-margin font-grey-light text-range">{this.state.textRange}</p>
           <div className="row no-margin">
             <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.onBubmitBtnClick} disabled={this.state.save}>提交</button>
