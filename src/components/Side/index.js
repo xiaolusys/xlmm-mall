@@ -119,10 +119,10 @@ export class Side extends Component {
             </a>
           </li>
           <li>
-            <a href="/mall/complaint/commit">
+            <Link to="/complaint/commit">
               <i className="icon-mail-open icon-gold"></i>
               <span>投诉建议</span>
-            </a>
+            </Link>
           </li>
           <li>
             <Link to="/faq">
