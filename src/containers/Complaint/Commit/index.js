@@ -107,10 +107,10 @@ export default class Commit extends Component {
         <Header title="投诉建议" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText="历史记录" onRightBtnClick={this.onRightBtnClick} />
         <div className="content complaint-container">
           <div className="col-xs-12 padding-top-xs padding-bottom-xs complaint-type">
-            <Checkbox className="col-xs-3 no-margin no-padding" value="1" checked={this.state.typeIndex === 1} onChange={this.onComplaintTypeChange}> 订单相关</Checkbox>
-            <Checkbox className="col-xs-3 no-margin no-padding" value="2" checked={this.state.typeIndex === 2} onChange={this.onComplaintTypeChange}> 意见/建议</Checkbox>
-            <Checkbox className="col-xs-3 no-margin no-padding" value="4" checked={this.state.typeIndex === 4} onChange={this.onComplaintTypeChange}> 售后问题</Checkbox>
-            <Checkbox className="col-xs-3 no-margin no-padding" value="3" checked={this.state.typeIndex === 3} onChange={this.onComplaintTypeChange}> 其它问题</Checkbox>
+            <Checkbox className="col-xs-4 no-margin no-padding" value="1" checked={this.state.typeIndex === 1} onChange={this.onComplaintTypeChange}> 订单相关</Checkbox>
+            <Checkbox className="col-xs-4 no-margin no-padding" value="2" checked={this.state.typeIndex === 2} onChange={this.onComplaintTypeChange}> 意见/建议</Checkbox>
+            <Checkbox className="col-xs-4 no-margin no-padding" value="4" checked={this.state.typeIndex === 4} onChange={this.onComplaintTypeChange}> 售后问题</Checkbox>
+            <Checkbox className="col-xs-4 no-margin no-padding" value="3" checked={this.state.typeIndex === 3} onChange={this.onComplaintTypeChange}> 其它问题</Checkbox>
           </div>
           <textarea className="margin-top-xs" placeholder="请描述您的具体问题，我们将尽快为你解决！" value={this.state.reasonContent} onChange={this.onTextareaChange}></textarea>
           <p className="col-xs-12 text-right no-margin font-grey-light text-range">{this.state.textRange}</p>
