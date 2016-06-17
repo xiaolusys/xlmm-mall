@@ -215,7 +215,7 @@ export default class Apply extends Component {
               <textarea className="col-xs-12 border-none" type="text" placeholder="请输入退款说明" onChange={this.onDesciptionChange} />
             </li>
           </ul>
-          <Popup className="popup" active={this.state.showPopup} height="auto">
+          <Popup className="popup" active={this.state.showPopup}>
             <div className="refunds-address-info">
               <p className="no-margin text-center bottom-border" data-reason-index="1" onClick={this.onReasonChange}>{reasons[1]}</p>
               <p className="no-margin text-center bottom-border" data-reason-index="2" onClick={this.onReasonChange}>{reasons[2]}</p>
