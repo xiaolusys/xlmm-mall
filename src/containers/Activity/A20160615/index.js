@@ -124,7 +124,7 @@ export default class A20160615 extends Component {
   render() {
     return (
       <div>
-        <Header title="聚拢无钢圈文胸专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
+        <Header title="聚拢无钢圈文胸专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
           <div className="content content-white-bg clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.shareBtn} />

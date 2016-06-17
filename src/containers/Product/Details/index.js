@@ -176,7 +176,7 @@ export default class Detail extends Component {
     if (utils.detector.isApp()) {
       plugins.invoke({ method: 'callNativeBack' });
     } else {
-      this.context.router.goBack();
+      this.context.router.goSmartBack();
     }
     e.preventDefault();
   }
