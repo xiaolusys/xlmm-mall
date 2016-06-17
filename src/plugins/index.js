@@ -28,7 +28,8 @@ export const invoke = (params) => {
     if (!window.webkit) {
       throw String('this context does not support ' + params.method);
     }
-    params.data ? window.webkit.messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : window.webkit.messageHandlers[params.method].postMessage[params.method]();
+    const messageHandlers = window.webkit.messageHandlers;
+    params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage[params.method]();
   } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
     if (!window.AndroidBridge) {
       throw String('this context does not support ' + params.method);
