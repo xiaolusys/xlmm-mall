@@ -18,18 +18,18 @@ const setupWebViewJavascriptBridge = (callback) => {
 
 export const invoke = (params) => {
   if (utils.detector.isApp() && utils.detector.isIOS()) {
-    setupWebViewJavascriptBridge((bridge) => {
-      bridge.callHandler(params.method, params.data || {}, function() {
-        const callback = params.callback || _.noop;
-        window.WVJBIframe = null;
-        window.WVJBCallbacks = [];
-      });
-    });
-    // if (!window.webkit) {
-    //   throw String('this context does not support ' + params.method);
-    // }
-    // const messageHandlers = window.webkit.messageHandlers;
-    // params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
+    //   setupWebViewJavascriptBridge((bridge) => {
+    //     bridge.callHandler(params.method, params.data || {}, function() {
+    //       const callback = params.callback || _.noop;
+    //       window.WVJBIframe = null;
+    //       window.WVJBCallbacks = [];
+    //     });
+    //   });
+    if (!window.webkit) {
+      throw String('this context does not support ' + params.method);
+    }
+    const messageHandlers = window.webkit.messageHandlers;
+    params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
   } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
     if (!window.AndroidBridge) {
       throw String('this context does not support ' + params.method);
