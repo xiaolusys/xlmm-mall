@@ -11,12 +11,7 @@ import { Image } from 'components/Image';
 import './index.scss';
 
 @connect(
-  state => ({
-    data: state.refundsList.data,
-    isLoading: state.refundsList.isLoading,
-    error: state.refundsList.error,
-    success: state.refundsList.success,
-  }),
+  state => (state.refundsList),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export default class List extends Component {

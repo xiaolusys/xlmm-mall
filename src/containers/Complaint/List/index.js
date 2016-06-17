@@ -48,21 +48,56 @@ export default class List extends Component {
 
   state = {
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 20,
+    hasMore: true,
   }
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
     this.props.fetchComplaints(pageIndex + 1, pageSize);
-    this.props.fetchProfile();
+    if (_.isEmpty(this.props.profile.data)) {
+      this.props.fetchProfile();
+    }
+  }
+
+  componentDidMount() {
+    this.addScrollListener();
   }
 
   componentWillReceiveProps(nextProps) {
+    const { pageIndex, pageSize } = this.state;
+    if (nextProps.complaint.success) {
+      const count = nextProps.complaint.data.count;
+      const size = nextProps.complaint.data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize), hasMore: count > size });
+    }
     if (nextProps.complaint.isLoading || nextProps.profile.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
     }
+  }
+
+  componentWillUnmount() {
+    this.removeScrollListener();
+  }
+
+  onScroll = (e) => {
+    const { pageSize, pageIndex } = this.state;
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    if (scrollTop === documentHeight - windowHeight && !this.props.isLoading && this.state.hasMore) {
+      this.props.fetchComplaints(pageIndex + 1, pageSize);
+    }
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   render() {
