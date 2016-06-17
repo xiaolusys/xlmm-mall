@@ -227,7 +227,7 @@ export default class Apply extends Component {
               <p className="no-margin text-center bottom-border" data-reason-index="8" onClick={this.onReasonChange}>{reasons[8]}</p>
               <p className="no-margin text-center bottom-border" data-reason-index="9" onClick={this.onReasonChange}>{reasons[9]}</p>
               <p className="no-margin text-center bottom-border" data-reason-index="10" onClick={this.onReasonChange}>{reasons[10]}</p>
-              <p className="no-margin text-center bottom-border" data-reason-index="11" onClick={this.onReasonChange}>{reasons[0]}</p>
+              <p className="no-margin text-center bottom-border" data-reason-index="0" onClick={this.onReasonChange}>{reasons[0]}</p>
               <div className="row no-margin">
                 <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.hidePopup}>取消</button>
               </div>
