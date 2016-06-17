@@ -82,7 +82,7 @@
   }
   .popup > .popup-content {
     top: 0;
-    height: 80%;
+    height: 80% !important;
     background-color: transparent;
     padding: 0px;
     .popup-bg {
@@ -96,7 +96,7 @@
     }
     .exam-btn-group {
       position: absolute;
-      bottom: 20%;
+      bottom: 0;
     }
   }
 }

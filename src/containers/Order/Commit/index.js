@@ -401,7 +401,7 @@ export default class Commit extends Component {
           </p>
           <button className="button button-energized col-xs-12" type="button" onClick={this.onCommitOrderClick}>购买</button>
         </BottomBar>
-        <Popup active={this.state.payTypePopupActive} className="pay-type-popup" height="auto">
+        <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className={`row no-margin bottom-border ${prefixCls}-row`}>
             <i className="col-xs-1 no-padding icon-angle-left" onClick={this.togglePayTypePopupActive}></i>
             <p className="col-xs-11 no-padding text-center">

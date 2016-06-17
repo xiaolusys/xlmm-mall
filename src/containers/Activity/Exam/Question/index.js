@@ -203,11 +203,11 @@ export default class Question extends Component {
           </If>
           <img className="pull-right next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
         </div>
-        <Popup active={this.state.popupOpened && Number(id) === -1} height="none" onPopupOverlayClick={this.onClosePopupClick}>
+        <Popup active={this.state.popupOpened && Number(id) === -1} maxHeight="none" onPopupOverlayClick={this.onClosePopupClick}>
           <img className="popup-bg" src={`${staticBase}popup-red-bg.png`} />
           <img className="popup-text col-xs-12 no-padding" src={`${staticBase}title-part-${type}.png`} />
         </Popup>
-        <Popup active={this.state.finishedPopupOpend} height="100%">
+        <Popup active={this.state.finishedPopupOpend} maxHeight="none">
           <img className="popup-bg col-xs-12 no-padding" src={`${staticBase}popup-red-bg.png`} />
           <img className="popup-text col-xs-12" src={`${staticBase}text-finished-exam.png`} />
           <div className="row no-margin exam-btn-group">
