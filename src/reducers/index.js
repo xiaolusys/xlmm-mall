@@ -8,6 +8,7 @@ import shopBagReducer from './shopBagReducer';
 import verifyCodeReducer from './verifyCodeReducer';
 import refundsReducer from './refundsReducer';
 import examReducer from './examReducer';
+import complaintsReducer from './complaintsReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -47,7 +48,7 @@ const rootReducer = combineReducers({
   point: createReducer(pointAction.name),
   pointLog: createReducer(pointLogAction.name),
   complaintCommit: createReducer(complaintCommitAction.name),
-  complaintHistory: createReducer(complaintHostoryAction.name),
+  complaintHistory: complaintsReducer,
   portal: createReducer(portalAction.name),
   products: productsReducer,
   productDetails: createReducer(productDetailsAction.name),

@@ -6,13 +6,12 @@ import createAction from '../createAction';
 
 export const name = 'COMPLAINT_COMMIT';
 
-export const commitComplaint = (content) => {
+export const commitComplaint = (content, type) => {
   const action = createAction(name);
-  const params = { params: { com_content: content } };
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'complain', params)
-      .then((resp) => {
+    return axios.post(constants.baseEndpointV1 + 'complain', qs.stringify({ com_content: content, com_type: type }))
+    .then((resp) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
