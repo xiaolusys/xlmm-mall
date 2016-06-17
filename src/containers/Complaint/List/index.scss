@@ -1,21 +1,21 @@
 .complaint-reply-list {
   > li {
     background-color: #fff;
-    .complaint-content {
-      min-height: 80px;
-      font-size: 13px;
-      padding: 8px 8px 8px 8px;
-      resize: none;
-      border: 1px solid #dadada;
-      border-radius: 8px 8px;
-      word-wrap: break-word;
-    }
-    > p {
+    > .text-range {
       background-color: #fff;
       line-height: 16px;
-      font-size: 13px;
       word-wrap: break-word;
-      border-bottom: 1px solid #dadada;
     }
+    img {
+      display: block;
+      width: 38px;
+      height: 38px;
+      border: 1px solid #fdcb0e;
+      border-radius: 38px;
+    }
+  }
+  .reply-content{
+    margin: 16px;
+    background-color: #f3f3f4;
   }
 }
