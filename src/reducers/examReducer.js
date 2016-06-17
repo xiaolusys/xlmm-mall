@@ -21,6 +21,12 @@ const initState = {
     success: false,
     data: {},
   },
+  answer: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -43,6 +49,12 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, { question: { isLoading: false, data: action.payload, success: true, error: false } });
     case examAction.names.FETCH_EXAM_QUESTION + '_' + actionTypes.FAILURE:
       return _.extend({}, state, { question: { isLoading: false, data: action.payload, success: false, error: true, status: action.status } });
+    case examAction.names.COMMIT_ANSWER + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, { answer: { isLoading: true, data: {}, success: false, error: false } });
+    case examAction.names.COMMIT_ANSWER + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, { answer: { isLoading: false, data: action.payload, success: true, error: false } });
+    case examAction.names.COMMIT_ANSWER + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, { answer: { isLoading: false, data: action.payload, success: false, error: true, status: action.status } });
     default:
       return state;
   }

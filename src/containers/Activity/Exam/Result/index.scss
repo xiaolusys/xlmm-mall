@@ -1,0 +1,39 @@
+.activity-exam-result {
+  > .exit-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    height: 28px;
+    width: auto;
+    z-index: 11;
+  }
+  .score-container {
+    position: relative;
+    > img {
+      width: 100%;
+    }
+    > .score {
+      position: absolute;
+      top: 20%;
+      right: 0;
+      left: 0;
+      color: #fff;
+      text-align: center;
+      > p {
+        text-shadow: 4px 2px rgba(0, 0, 0, 0.3);
+      }
+      .font-yellow-light {
+        color: #faf461;
+      }
+      .font-86 {
+        font-size: 86px;
+      }
+    }
+  }
+  .failed-exam {
+    color: #000;
+    font-weight: 500;
+    font-size: 22px;
+    text-shadow: 4px 2px rgba(0, 0, 0, 0.3);
+  }
+}

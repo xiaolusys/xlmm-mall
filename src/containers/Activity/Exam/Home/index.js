@@ -48,6 +48,13 @@ export default class Home extends Component {
     this.props.fetchExamInfo();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.exam.info.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+  }
 
   onShareBtnClick = (e) => {
     plugins.invoke({
@@ -67,7 +74,11 @@ export default class Home extends Component {
       Toast.show('您不是小鹿妈妈，无法参加此次考试！');
       return;
     }
-    this.context.router.push('/activity/exam/question');
+    if (examInfo.total_point > 0) {
+      Toast.show('您已经参加过本次考试！');
+      // return;
+    }
+    this.context.router.push('/activity/exam/question/1/-1');
     e.preventDefault();
   }
 
