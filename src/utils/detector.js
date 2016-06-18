@@ -25,17 +25,16 @@ class Detector {
   }
 
   osMainVersion() {
+    let osMainVersion = 0;
     if (this.isIOS()) {
-      console.log(this.userAgent.match(/OS (\d+)/));
-      return this.userAgent.match(/OS (\d+)/);
+      osMainVersion = this.userAgent.match(/os (\d+)/)[1];
     } else if (this.isAndroid()) {
-      console.log(this.userAgent.match(/OS (\d+)/));
-      return this.userAgent.match(/Android (\d+)/);
+      osMainVersion = this.userAgent.match(/android (\d+)/)[1];
     }
+    return parseInt(osMainVersion, 10);
   }
 
   appVersion() {
-    console.log(this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, ''));
     if (this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)) {
       return this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, '');
     }
