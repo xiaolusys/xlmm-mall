@@ -459,9 +459,9 @@ export default class Commit extends Component {
                   <div className="col-xs-2 no-padding">
                   <i className="col-xs-1 no-padding icon-2x text-right icon-xiaolu icon-grey"></i>
                   </div>
-                  <div className="col-xs-10 no-padding">
+                  <div className="col-xs-10 padding-top-xxs">
                     <p className="no-margin font-md">{item.name}</p>
-                    <p className="no-margin font-xs font-grey-light">小鹿配送需要1-3天</p>
+                    <p className="no-margin font-xs font-grey-light"></p>
                   </div>
                 </div>
               );
