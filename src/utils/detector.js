@@ -23,6 +23,13 @@ class Detector {
   isAndroid() {
     return this.test('android');
   }
+
+  appVersion() {
+    if (this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)) {
+      return this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, '');
+    }
+    return 0;
+  }
 }
 
 export default new Detector(window.navigator.userAgent);
