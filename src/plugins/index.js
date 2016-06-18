@@ -28,7 +28,12 @@ export const invoke = (params) => {
     }
     const messageHandlers = window.webkit.messageHandlers;
     params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
-  } else {
+  } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
+    if (!window.AndroidBridge) {
+      throw String('this context does not support ' + params.method);
+    }
+    params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
+  } else if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.appVersion() < supportNewBridgeVerison.iOS) {
     setupWebViewJavascriptBridge((bridge) => {
       bridge.callHandler(params.method, params.data || {}, function() {
         const callback = params.callback || _.noop;
@@ -36,11 +41,5 @@ export const invoke = (params) => {
         window.WVJBCallbacks = [];
       });
     });
-  }
-  if (utils.detector.isApp() && utils.detector.isAndroid()) {
-    if (!window.AndroidBridge) {
-      throw String('this context does not support ' + params.method);
-    }
-    params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
   }
 };
