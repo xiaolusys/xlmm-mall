@@ -30,6 +30,10 @@ class Detector {
     }
     return 0;
   }
+
+  deviceId() {
+    this.userAgent.substr(this.userAgent.indexOf('uuid')).split('/')[1];
+  }
 }
 
 export default new Detector(window.navigator.userAgent);
