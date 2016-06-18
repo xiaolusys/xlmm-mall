@@ -22,7 +22,7 @@ export class Popup extends Component {
     className: 'className',
     onPopupOverlayClick: _.noop,
     height: 'auto',
-    maxHeight: (utils.dom.windowHeight() * 0.6).toFixed(0) + 'px',
+    maxHeight: (utils.dom.windowHeight() * 0.8).toFixed(0) + 'px',
   }
 
   constructor(props) {

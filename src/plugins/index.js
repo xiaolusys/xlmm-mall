@@ -1,6 +1,12 @@
 import * as utils from 'utils';
 import _ from 'underscore';
 
+const supportNewBridgeVerison = {
+  iOS: 190,
+  android: 144,
+};
+
+
 const setupWebViewJavascriptBridge = (callback) => {
   if (window.WebViewJavascriptBridge) {
     return callback(window.WebViewJavascriptBridge);
@@ -17,20 +23,22 @@ const setupWebViewJavascriptBridge = (callback) => {
 };
 
 export const invoke = (params) => {
-  if (utils.detector.isApp() && utils.detector.isIOS()) {
-    //   setupWebViewJavascriptBridge((bridge) => {
-    //     bridge.callHandler(params.method, params.data || {}, function() {
-    //       const callback = params.callback || _.noop;
-    //       window.WVJBIframe = null;
-    //       window.WVJBCallbacks = [];
-    //     });
-    //   });
+  if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
     if (!window.webkit) {
       throw String('this context does not support ' + params.method);
     }
     const messageHandlers = window.webkit.messageHandlers;
     params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
-  } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
+  } else {
+    setupWebViewJavascriptBridge((bridge) => {
+      bridge.callHandler(params.method, params.data || {}, function() {
+        const callback = params.callback || _.noop;
+        window.WVJBIframe = null;
+        window.WVJBCallbacks = [];
+      });
+    });
+  }
+  if (utils.detector.isApp() && utils.detector.isAndroid()) {
     if (!window.AndroidBridge) {
       throw String('this context does not support ' + params.method);
     }
