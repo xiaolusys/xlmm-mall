@@ -305,7 +305,7 @@ export default class Commit extends Component {
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
-                    <span>{product.title}</span>
+                    <span className="col-xs-8 no-padding no-wrap">{product.title}</span>
                     <span className="pull-right">{'￥' + product.price}</span>
                   </p>
                   <p className="row no-margin font-grey-light">
@@ -320,7 +320,7 @@ export default class Commit extends Component {
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
-                    <span>{product.title}</span>
+                    <span className="col-xs-8 no-padding no-wrap">{product.title}</span>
                     <span className="pull-right">{'￥' + product.price}</span>
                   </p>
                   <p className="row no-margin font-grey-light">
