@@ -7,7 +7,7 @@ import { Header } from 'components/Header';
 import { BottomBar } from 'components/BottomBar';
 import { Radio } from 'components/Radio';
 import { Checkbox } from 'components/Checkbox';
-import { Popup } from 'components/Popup';
+import { LogisticsPopup } from 'components/LogisticsPopup';
 import { Toast } from 'components/Toast';
 import classnames from 'classnames';
 import * as constants from 'constants';
@@ -447,27 +447,7 @@ export default class Commit extends Component {
             );
           })}
         </Popup>
-        <Popup active={this.state.logisticsPopupShow} className="pay-type-popup">
-          <div className="refunds-address-info">
-            <div className="col-xs-12 bottom-border padding-bottom-xxs">
-              <i className="col-xs-1 margin-top-xxs no-padding icon-1x text-left icon-close font-orange" onClick={this.onColseLogisticsPopupClick}></i>
-              <p className="col-xs-11 no-margin padding-top-xxs text-center font-lg">物流配送</p>
-            </div>
-            {logisticsCompanies.map((item) => {
-              return (
-                <div className="col-xs-12 bottom-border padding-bottom-xxs padding-top-xxs" key={item.id} data-value={item.id} data-name={item.name} onClick={this.onLogisticsCompanyChange}>
-                  <div className="col-xs-2 no-padding">
-                  <i className="col-xs-1 no-padding icon-2x text-right icon-xiaolu icon-grey"></i>
-                  </div>
-                  <div className="col-xs-10 padding-top-xxs">
-                    <p className="no-margin font-md">{item.name}</p>
-                    <p className="no-margin font-xs font-grey-light"></p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </Popup>
+        <LogisticsPopup active={this.state.logisticsPopupShow} companies={logisticsCompanies} onItemClick={this.onLogisticsCompanyChange} onColsePopupClick={this.onColseLogisticsPopupClick}/>
       </div>
     );
   }
