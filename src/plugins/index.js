@@ -6,7 +6,6 @@ const supportNewBridgeVerison = {
   android: 144,
 };
 
-
 const setupWebViewJavascriptBridge = (callback) => {
   if (window.WebViewJavascriptBridge) {
     return callback(window.WebViewJavascriptBridge);
