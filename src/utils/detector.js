@@ -24,7 +24,18 @@ class Detector {
     return this.test('android');
   }
 
+  osMainVersion() {
+    if (this.isIOS()) {
+      console.log(this.userAgent.match(/OS (\d+)/));
+      return this.userAgent.match(/OS (\d+)/);
+    } else if (this.isAndroid()) {
+      console.log(this.userAgent.match(/OS (\d+)/));
+      return this.userAgent.match(/Android (\d+)/);
+    }
+  }
+
   appVersion() {
+    console.log(this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, ''));
     if (this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)) {
       return this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, '');
     }
@@ -32,7 +43,8 @@ class Detector {
   }
 
   deviceId() {
-    this.userAgent.substr(this.userAgent.indexOf('uuid')).split('/')[1];
+    console.log(this.userAgent.substr(this.userAgent.indexOf('uuid')).split('/')[1]);
+    return this.userAgent.substr(this.userAgent.indexOf('uuid')).split('/')[1];
   }
 }
 

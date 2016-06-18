@@ -22,7 +22,7 @@ const setupWebViewJavascriptBridge = (callback) => {
 };
 
 export const invoke = (params) => {
-  if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
+  if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.osMainVersion() > 7 && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
     if (!window.webkit) {
       throw String('this context does not support ' + params.method);
     }
