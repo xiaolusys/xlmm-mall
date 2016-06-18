@@ -33,7 +33,7 @@ export const invoke = (params) => {
       throw String('this context does not support ' + params.method);
     }
     params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
-  } else if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.appVersion() < supportNewBridgeVerison.iOS) {
+  } else if (utils.detector.isApp() && utils.detector.isIOS()) {
     setupWebViewJavascriptBridge((bridge) => {
       bridge.callHandler(params.method, params.data || {}, function() {
         const callback = params.callback || _.noop;
