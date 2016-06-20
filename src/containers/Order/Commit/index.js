@@ -8,6 +8,7 @@ import { BottomBar } from 'components/BottomBar';
 import { Radio } from 'components/Radio';
 import { Checkbox } from 'components/Checkbox';
 import { Popup } from 'components/Popup';
+import { LogisticsPopup } from 'components/LogisticsPopup';
 import { Toast } from 'components/Toast';
 import classnames from 'classnames';
 import * as constants from 'constants';
@@ -69,8 +70,12 @@ export default class Commit extends Component {
   state = {
     walletChecked: false,
     walletBalance: 0,
-    logisticsCompany: '',
+    logisticsCompanyId: '',
+    logisticsCompanyName: '自动分配',
     payTypePopupActive: false,
+    logisticsPopupShow: false,
+    agreePurchaseTerms: true,
+    isShowPurchaseTerms: false,
   }
 
   componentWillMount() {
@@ -117,9 +122,13 @@ export default class Commit extends Component {
 
   onCommitOrderClick = (e) => {
     const { address, payInfo } = this.props;
-    const { walletChecked, walletBalance, walletPayType, logisticsCompany } = this.state;
+    const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
+      return;
+    }
+    if (!agreePurchaseTerms) {
+      Toast.show('请勾选购买条款！');
       return;
     }
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
@@ -132,7 +141,7 @@ export default class Commit extends Component {
         total_fee: payInfo.data.total_fee,
         addr_id: address.data.id,
         channel: this.getPayType(),
-        logistics_company_id: logisticsCompany,
+        logistics_company_id: logisticsCompanyId,
       });
 
     } else if (walletBalance < payInfo.data.total_fee) {
@@ -143,7 +152,7 @@ export default class Commit extends Component {
 
   onPayTypeClick = (e) => {
     const { address, payInfo } = this.props;
-    const { walletChecked, walletBalance, walletPayType, logisticsCompany } = this.state;
+    const { walletChecked, walletBalance, walletPayType, logisticsCompanyId } = this.state;
     const { paytype } = e.currentTarget.dataset;
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
@@ -154,7 +163,7 @@ export default class Commit extends Component {
       total_fee: payInfo.data.total_fee,
       addr_id: address.data.id,
       channel: this.getPayType(paytype),
-      logistics_company_id: logisticsCompany,
+      logistics_company_id: logisticsCompanyId,
       pay_extras: this.getPayExtras(),
     });
     e.preventDefault();
@@ -175,7 +184,40 @@ export default class Commit extends Component {
   }
 
   onLogisticsCompanyChange = (e) => {
-    this.setState({ logisticsCompany: e.target.value });
+    const { value, name } = e.currentTarget.dataset;
+    this.setState({
+      logisticsCompanyId: value,
+      logisticsCompanyName: name,
+      logisticsPopupShow: false,
+    });
+    e.preventDefault();
+  }
+
+  onShowLogisticsPopUpClick = (e) => {
+    this.setState({ logisticsPopupShow: true });
+    e.preventDefault();
+  }
+
+  onColseLogisticsPopupClick = (e) => {
+    this.setState({ logisticsPopupShow: false });
+    e.preventDefault();
+  }
+
+  onAgreePurchaseTermsChange = (e) => {
+    if (this.state.agreePurchaseTerms) {
+      this.setState({ agreePurchaseTerms: false });
+    } else {
+      this.setState({ agreePurchaseTerms: true });
+    }
+    e.preventDefault();
+  }
+
+  onShowPurchaseItermsClick = (e) => {
+    if (this.state.isShowPurchaseTerms) {
+      this.setState({ isShowPurchaseTerms: false });
+    } else {
+      this.setState({ isShowPurchaseTerms: true });
+    }
     e.preventDefault();
   }
 
@@ -268,7 +310,7 @@ export default class Commit extends Component {
   renderProducts(products = []) {
     const { prefixCls } = this.props;
     return (
-      <div className={`${prefixCls}-product-list margin-top-xs`}>
+      <div className={`${prefixCls}-product-list`}>
         {products.map((product, index) => {
           return (
             <div key={product.id} className="row no-margin bottom-border">
@@ -278,7 +320,7 @@ export default class Commit extends Component {
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
-                    <span>{product.title}</span>
+                    <span className="col-xs-8 no-padding no-wrap">{product.title}</span>
                     <span className="pull-right">{'￥' + product.price}</span>
                   </p>
                   <p className="row no-margin font-grey-light">
@@ -293,7 +335,7 @@ export default class Commit extends Component {
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
-                    <span>{product.title}</span>
+                    <span className="col-xs-8 no-padding no-wrap">{product.title}</span>
                     <span className="pull-right">{'￥' + product.price}</span>
                   </p>
                   <p className="row no-margin font-grey-light">
@@ -338,22 +380,14 @@ export default class Commit extends Component {
               <i className="col-xs-1 no-padding margin-top-xxs text-right icon-angle-right icon-grey"></i>
             </If>
           </div>
-          {this.renderProducts(products)}
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
-            <p className="col-xs-5 no-padding">物流配送</p>
-            <div className="col-xs-7 no-padding">
-              <div className="col-xs-11 no-padding text-right logistics-companies">
-                <select className="inline-block" value={this.state.logisticsCompany} onChange={this.onLogisticsCompanyChange}>
-                {logisticsCompanies.map((item) => {
-                  return (
-                    <option className="text-right" key={item.id} value={item.id}>{item.name}</option>
-                  );
-                })}
-                </select>
-              </div>
+            <p className="col-xs-5 no-margin no-padding">物流配送</p>
+            <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
+              <p className="col-xs-11 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
               <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
             </div>
           </div>
+          {this.renderProducts(products)}
           {payExtras.map((item) => {
             switch (item.pid) {
               case 2:
@@ -362,7 +396,7 @@ export default class Commit extends Component {
                 }
                 return (
                   <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`} key={item.pid} data-to={couponLink} onClick={this.onLinkClick}>
-                    <p className="col-xs-5 no-padding">可用优惠券</p>
+                    <p className="col-xs-5 no-padding">优惠券</p>
                     <p className="col-xs-7 no-padding">
                       <span className="col-xs-11 no-padding text-right">{'￥-' + this.getDiscountValue()}</span>
                       <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
@@ -386,12 +420,19 @@ export default class Commit extends Component {
                 break;
             }
           })}
-          <div className={`row no-margin bottom-border ${prefixCls}-row`}>
-            <p className="col-xs-5 no-padding">运费</p>
-            <p className="col-xs-7 no-padding text-right">{payInfo.data.post_fee}</p>
+          <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
+            <p className="col-xs-5 no-padding" onClick={this.onShowPurchaseItermsClick}>同意购买条款</p>
+            <Checkbox className="col-xs-7 no-padding text-right" checked={this.state.agreePurchaseTerms} onChange={this.onAgreePurchaseTermsChange}/>
           </div>
-          <div className={`row no-margin text-right ${prefixCls}-row transparent`}>
-            <p className="col-xs-12 no-padding"><span>合计：￥</span><span>{this.getTotalPrice()}</span></p>
+          <div className={`row no-margin ${prefixCls}-row transparent`}>
+            <p className="col-xs-12 no-padding">
+              <span className="col-xs-5 no-padding text-left">商品金额</span>
+              <span className="col-xs-7 no-padding text-right font-orange">{'￥' + this.getTotalPrice()}</span>
+            </p>
+            <p className="col-xs-12 margin-top-xxs no-padding">
+              <span className="col-xs-5 no-padding text-left">运费</span>
+              <span className="col-xs-7 no-padding text-right">{payInfo.data.post_fee}</span>
+            </p>
           </div>
         </div>
         <BottomBar size="large">
@@ -403,7 +444,7 @@ export default class Commit extends Component {
         </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className={`row no-margin bottom-border ${prefixCls}-row`}>
-            <i className="col-xs-1 no-padding icon-angle-left" onClick={this.togglePayTypePopupActive}></i>
+            <i className="col-xs-1 no-padding icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
             <p className="col-xs-11 no-padding text-center">
               <span className="font-xs">应付款金额</span>
               <span className="font-lg font-orange">{'￥' + this.getDisplayPrice(payInfo.data.total_payment)}</span>
@@ -421,6 +462,14 @@ export default class Commit extends Component {
             );
           })}
         </Popup>
+        <Popup active={this.state.isShowPurchaseTerms}>
+          <p className="font-md text-center">购买条款</p>
+          <p className="font-xs">亲爱的小鹿用户，由于特卖商城购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了您长时间的等待，一旦出现这种情况，我们将在您购买一周后帮您自动退款，并补偿给您一张为全场通用优惠劵，给您带来不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。</p>
+          <div className="row no-margin">
+            <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-sm button-energized" type="button" onClick={this.onShowPurchaseItermsClick} disabled={this.state.save}>确定</button>
+          </div>
+        </Popup>
+        <LogisticsPopup active={this.state.logisticsPopupShow} companies={logisticsCompanies} onItemClick={this.onLogisticsCompanyChange} onColsePopupClick={this.onColseLogisticsPopupClick}/>
       </div>
     );
   }

@@ -211,7 +211,7 @@ export default class Detail extends Component {
         <div className="content trade-detail">
           <p className="trade-status">
             <sapn>订单编号</sapn>
-            <sapn className="margin-left-xxs font-grey">{trade.id}</sapn>
+            <sapn className="margin-left-xxs font-grey">{trade.tid}</sapn>
             <sapn className="pull-right font-yellow">{trade.status_display}</sapn>
           </p>
           <div className="row no-margin receiver-info">
