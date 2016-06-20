@@ -23,7 +23,7 @@ const setupWebViewJavascriptBridge = (callback) => {
 
 export const invoke = (params) => {
   const messageHandlers = window.webkit.messageHandlers;
-  params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
+  params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage('{}');
 
   // if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.osMainVersion() > 7 && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
   //   if (!window.webkit) {
