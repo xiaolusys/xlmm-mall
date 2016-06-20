@@ -117,7 +117,7 @@ export default class List extends Component {
                       <Image src={profileData.thumbnail}/>
                       </div>
                       <div className="col-xs-10 no-padding">
-                        <p className="no-margin font-md">{profileData.nick || '小鹿妈妈'}</p>
+                        <p className="no-margin font-md">{profileData.nick && profileData.nick || '小鹿妈妈'}</p>
                         <p className="no-margin font-xs font-grey-light">{complaint.created_time}</p>
                       </div>
                       <p className="col-xs-12 no-margin no-padding padding-top-xxs padding-bottom-xxs font-md text-left text-range">{complaint.com_content}</p>
