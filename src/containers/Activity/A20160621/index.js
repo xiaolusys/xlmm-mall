@@ -142,7 +142,7 @@ export default class A20160606 extends Component {
   render() {
     return (
       <div>
-        <Header title="【端午节】深情‘衣’粽" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
+        <Header title="快乐暑假—童装特卖专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <div className="content-white-bg activity-md clearfix col-md-4 col-md-offset-4 no-padding">
           <Image className="col-xs-12 no-padding" src={activity.banner} />
           <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
