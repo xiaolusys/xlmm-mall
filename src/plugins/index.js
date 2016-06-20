@@ -22,6 +22,7 @@ const setupWebViewJavascriptBridge = (callback) => {
 };
 
 export const invoke = (params) => {
+  alert(JSON.stringify(window.webkit));
   if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.osMainVersion() > 7 && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
     alert(JSON.stringify(window.webkit));
     if (!window.webkit) {
