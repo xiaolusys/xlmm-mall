@@ -23,11 +23,11 @@ const setupWebViewJavascriptBridge = (callback) => {
 
 export const invoke = (params) => {
   if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.osMainVersion() > 7 && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
+    alert(JSON.stringify(window.webkit));
     if (!window.webkit) {
       throw String('this context does not support ' + params.method);
     }
     const messageHandlers = window.webkit.messageHandlers;
-    alert(JSON.stringify(messageHandlers));
     params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
   } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
     if (!window.AndroidBridge) {
