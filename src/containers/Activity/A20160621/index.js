@@ -38,7 +38,7 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160606 extends Component {
+export default class A20160621 extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -142,7 +142,7 @@ export default class A20160606 extends Component {
   render() {
     return (
       <div>
-        <Header title="【端午节】深情‘衣’粽" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
+        <Header title="快乐暑假—童装特卖专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <div className="content-white-bg activity-md clearfix col-md-4 col-md-offset-4 no-padding">
           <Image className="col-xs-12 no-padding" src={activity.banner} />
           <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
@@ -150,11 +150,10 @@ export default class A20160606 extends Component {
           {activity.groups.map((group, index) => {
             return (
               <div key={index}>
-                <img className="col-xs-12 no-padding" src={group.header} />
                 <ul>
                 {group.products.map((product, i) => {
                   return (
-                    <Product key={product.id} product={product} onItemClick = {this.onProductClick} />
+                    <Image className="col-xs-6 no-padding" src={product.pic} key={product.model_id} data-modelid={product.model_id} onClick = {this.onProductClick}/>
                   );
                 })}
                 </ul>
