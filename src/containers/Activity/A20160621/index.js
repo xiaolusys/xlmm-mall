@@ -121,7 +121,6 @@ export default class A20160621 extends Component {
   }
 
   onShareBtnClick = (e) => {
-    console.log('test');
     const data = {
       share_to: '',
       active_id: activity.activityId,
@@ -135,7 +134,7 @@ export default class A20160621 extends Component {
       }
       if (utils.detector.isApp()) {
         plugins.invoke({
-          method: 'callNativeShareFunc',
+          method: 'callNativeUniShareFunc',
           data: data,
         });
         return;
@@ -143,7 +142,7 @@ export default class A20160621 extends Component {
     }
     if (utils.detector.isIOS() && utils.detector.isApp()) {
       plugins.invoke({
-        method: 'callNativeShareFunc',
+        method: 'callNativeUniShareFunc',
         data: data,
       });
       return;
