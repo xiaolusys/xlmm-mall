@@ -174,8 +174,10 @@ export default class Detail extends Component {
 
   onBackBtnClick = (e) => {
     if (utils.detector.isApp()) {
+      alert('call native back');
       plugins.invoke({ method: 'callNativeBack' });
     } else {
+      alert('call web back');
       this.context.router.goSmartBack();
     }
     e.preventDefault();
