@@ -1,6 +1,11 @@
 import * as utils from 'utils';
 import _ from 'underscore';
 
+const supportNewBridgeVerison = {
+  iOS: 190,
+  android: 144,
+};
+
 const setupWebViewJavascriptBridge = (callback) => {
   if (window.WebViewJavascriptBridge) {
     return callback(window.WebViewJavascriptBridge);
@@ -17,7 +22,22 @@ const setupWebViewJavascriptBridge = (callback) => {
 };
 
 export const invoke = (params) => {
-  if (utils.detector.isApp() && utils.detector.isIOS()) {
+  alert('invoke');
+  if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.osMainVersion() > 7 && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
+    if (!window.webkit) {
+      return;
+    }
+    const messageHandlers = window.webkit.messageHandlers;
+    params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
+    alert('iOS native');
+    return;
+  } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
+    if (!window.AndroidBridge) {
+      return;
+    }
+    params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
+    return;
+  } else if (utils.detector.isApp() && utils.detector.isIOS()) {
     setupWebViewJavascriptBridge((bridge) => {
       bridge.callHandler(params.method, params.data || {}, function() {
         const callback = params.callback || _.noop;
@@ -25,15 +45,6 @@ export const invoke = (params) => {
         window.WVJBCallbacks = [];
       });
     });
-    // if (!window.webkit) {
-    //   throw String('this context does not support ' + params.method);
-    // }
-    // const messageHandlers = window.webkit.messageHandlers;
-    // params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
-  } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
-    if (!window.AndroidBridge) {
-      throw String('this context does not support ' + params.method);
-    }
-    params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
+    return;
   }
 };

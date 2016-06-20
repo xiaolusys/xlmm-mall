@@ -23,6 +23,28 @@ class Detector {
   isAndroid() {
     return this.test('android');
   }
+
+  osMainVersion() {
+    let osMainVersion = 0;
+    if (this.isIOS()) {
+      osMainVersion = this.userAgent.match(/os (\d+)/)[1];
+    } else if (this.isAndroid()) {
+      osMainVersion = this.userAgent.match(/android (\d+)/)[1];
+    }
+    return parseInt(osMainVersion, 10);
+  }
+
+  appVersion() {
+    if (this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)) {
+      return parseInt(this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, ''), 10);
+    }
+    return 0;
+  }
+
+  deviceId() {
+    console.log(this.userAgent.substr(this.userAgent.indexOf('uuid')).split('/')[1]);
+    return this.userAgent.substr(this.userAgent.indexOf('uuid')).split('/')[1];
+  }
 }
 
 export default new Detector(window.navigator.userAgent);
