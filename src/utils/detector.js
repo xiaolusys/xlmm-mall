@@ -36,7 +36,7 @@ class Detector {
 
   appVersion() {
     if (this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)) {
-      return this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, '');
+      return parseInt(this.userAgent.match(/xlmm\/(\d+).(\d+).(\d+)/)[0].split('/')[1].replace(/\./g, ''), 10);
     }
     return 0;
   }
