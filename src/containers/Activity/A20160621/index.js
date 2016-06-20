@@ -150,11 +150,10 @@ export default class A20160606 extends Component {
           {activity.groups.map((group, index) => {
             return (
               <div key={index}>
-                <img className="col-xs-12 no-padding" src={group.header} />
                 <ul>
                 {group.products.map((product, i) => {
                   return (
-                    <Product key={product.id} product={product} onItemClick = {this.onProductClick} />
+                    <Image className="col-xs-6 no-padding" src={product.pic} key={product.model_id} data-modelid={product.model_id} onClick = {this.onProductClick}/>
                   );
                 })}
                 </ul>
