@@ -489,7 +489,6 @@ export default class Detail extends Component {
     if (shopBag.shopBagQuantity.data) {
       badge = shopBag.shopBagQuantity.data.result;
     }
-
     return (
       <div className={`${prefixCls}`}>
         <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
