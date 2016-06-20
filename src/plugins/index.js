@@ -36,7 +36,6 @@ export const invoke = (params) => {
       return;
     }
     params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
-    alert('android native');
     return;
   } else if (utils.detector.isApp() && utils.detector.isIOS()) {
     setupWebViewJavascriptBridge((bridge) => {
@@ -46,7 +45,6 @@ export const invoke = (params) => {
         window.WVJBCallbacks = [];
       });
     });
-    alert('iOS iframe');
     return;
   }
 };
