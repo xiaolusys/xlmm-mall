@@ -7,6 +7,7 @@ import { Header } from 'components/Header';
 import { BottomBar } from 'components/BottomBar';
 import { Radio } from 'components/Radio';
 import { Checkbox } from 'components/Checkbox';
+import { Popup } from 'components/Popup';
 import { LogisticsPopup } from 'components/LogisticsPopup';
 import { Toast } from 'components/Toast';
 import classnames from 'classnames';
@@ -73,7 +74,8 @@ export default class Commit extends Component {
     logisticsCompanyName: '自动分配',
     payTypePopupActive: false,
     logisticsPopupShow: false,
-    agreePurchaseTerms: false,
+    agreePurchaseTerms: true,
+    isShowPurchaseTerms: false,
   }
 
   componentWillMount() {
@@ -120,9 +122,13 @@ export default class Commit extends Component {
 
   onCommitOrderClick = (e) => {
     const { address, payInfo } = this.props;
-    const { walletChecked, walletBalance, walletPayType, logisticsCompanyId } = this.state;
+    const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
+      return;
+    }
+    if (!agreePurchaseTerms) {
+      Toast.show('请勾选购买条款！');
       return;
     }
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
@@ -202,6 +208,15 @@ export default class Commit extends Component {
       this.setState({ agreePurchaseTerms: false });
     } else {
       this.setState({ agreePurchaseTerms: true });
+    }
+    e.preventDefault();
+  }
+
+  onShowPurchaseItermsClick = (e) => {
+    if (this.state.isShowPurchaseTerms) {
+      this.setState({ isShowPurchaseTerms: false });
+    } else {
+      this.setState({ isShowPurchaseTerms: true });
     }
     e.preventDefault();
   }
@@ -406,7 +421,7 @@ export default class Commit extends Component {
             }
           })}
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
-            <p className="col-xs-5 no-padding">同意购买条款</p>
+            <p className="col-xs-5 no-padding" onClick={this.onShowPurchaseItermsClick}>同意购买条款</p>
             <Checkbox className="col-xs-7 no-padding text-right" checked={this.state.agreePurchaseTerms} onChange={this.onAgreePurchaseTermsChange}/>
           </div>
           <div className={`row no-margin ${prefixCls}-row transparent`}>
@@ -446,6 +461,13 @@ export default class Commit extends Component {
               </div>
             );
           })}
+        </Popup>
+        <Popup active={this.state.isShowPurchaseTerms}>
+          <p className="font-md text-center">购买条款</p>
+          <p className="font-xs">亲爱的小鹿用户，由于特卖商城购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了您长时间的等待，一旦出现这种情况，我们将在您购买一周后帮您自动退款，并补偿给您一张为全场通用优惠劵，给您带来不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。</p>
+          <div className="row no-margin">
+            <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-sm button-energized" type="button" onClick={this.onShowPurchaseItermsClick} disabled={this.state.save}>确定</button>
+          </div>
         </Popup>
         <LogisticsPopup active={this.state.logisticsPopupShow} companies={logisticsCompanies} onItemClick={this.onLogisticsCompanyChange} onColsePopupClick={this.onColseLogisticsPopupClick}/>
       </div>
