@@ -22,30 +22,27 @@ const setupWebViewJavascriptBridge = (callback) => {
 };
 
 export const invoke = (params) => {
-  const messageHandlers = window.webkit.messageHandlers;
-  params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage('{}');
-
-  // if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.osMainVersion() > 7 && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
-  //   if (!window.webkit) {
-  //     return;
-  //   }
-  //   const messageHandlers = window.webkit.messageHandlers;
-  //   params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage();
-  //   return;
-  // } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
-  //   if (!window.AndroidBridge) {
-  //     return;
-  //   }
-  //   params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
-  //   return;
-  // } else if (utils.detector.isApp() && utils.detector.isIOS()) {
-  //   setupWebViewJavascriptBridge((bridge) => {
-  //     bridge.callHandler(params.method, params.data || {}, function() {
-  //       const callback = params.callback || _.noop;
-  //       window.WVJBIframe = null;
-  //       window.WVJBCallbacks = [];
-  //     });
-  //   });
-  //   return;
-  // }
+  if (utils.detector.isApp() && utils.detector.isIOS() && utils.detector.osMainVersion() > 7 && utils.detector.appVersion() >= supportNewBridgeVerison.iOS) {
+    if (!window.webkit) {
+      return;
+    }
+    const messageHandlers = window.webkit.messageHandlers;
+    params.data ? messageHandlers[params.method].postMessage(JSON.stringify(params.data)) : messageHandlers[params.method].postMessage('{}');
+    return;
+  } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
+    if (!window.AndroidBridge) {
+      return;
+    }
+    params.data ? window.AndroidBridge[params.method](JSON.stringify(params.data)) : window.AndroidBridge[params.method]();
+    return;
+  } else if (utils.detector.isApp() && utils.detector.isIOS()) {
+    setupWebViewJavascriptBridge((bridge) => {
+      bridge.callHandler(params.method, params.data || {}, function() {
+        const callback = params.callback || _.noop;
+        window.WVJBIframe = null;
+        window.WVJBCallbacks = [];
+      });
+    });
+    return;
+  }
 };
