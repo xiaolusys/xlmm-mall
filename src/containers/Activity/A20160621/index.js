@@ -121,11 +121,27 @@ export default class A20160621 extends Component {
   }
 
   onShareBtnClick = (e) => {
+    console.log('test');
     const data = {
       share_to: '',
       active_id: activity.activityId,
     };
-    if (utils.detector.isApp()) {
+
+    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+      const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
+      if (appVersion < 20160528) {
+        window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
+        return;
+      }
+      if (utils.detector.isApp()) {
+        plugins.invoke({
+          method: 'callNativeShareFunc',
+          data: data,
+        });
+        return;
+      }
+    }
+    if (utils.detector.isIOS() && utils.detector.isApp()) {
       plugins.invoke({
         method: 'callNativeShareFunc',
         data: data,
@@ -136,9 +152,7 @@ export default class A20160621 extends Component {
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('callNativeShareFunc', data, function(response) {});
       });
-    }
-    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
+      return;
     }
   }
 
