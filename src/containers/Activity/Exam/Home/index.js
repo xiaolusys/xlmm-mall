@@ -11,6 +11,11 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
+const shareData = {
+  share_to: '',
+  active_id: 13,
+};
+
 const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/';
 @connect(
   state => ({
@@ -57,14 +62,24 @@ export default class Home extends Component {
   }
 
   onShareBtnClick = (e) => {
+    if (utils.detector.isWechat()) {
+      Toast.show('点击右上角按钮分享');
+      return;
+    }
     plugins.invoke({
-
+      method: 'callNativeShareFunc',
+      data: shareData,
     });
   }
 
   onInviteBtnClick = (e) => {
+    if (utils.detector.isWechat()) {
+      Toast.show('点击右上角按钮分享');
+      return;
+    }
     plugins.invoke({
-
+      method: 'callNativeShareFunc',
+      data: shareData,
     });
   }
 
@@ -94,7 +109,7 @@ export default class Home extends Component {
     return (
       <div className={`${prefixCls}`}>
         <Header title="🚄✨VIP2考试✨💪💯" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
-        <Image className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding" src={`${staticBase}banner.png`} />
+        <Image className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding" src={`${staticBase}banner-1.png`} />
         <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding exam-date">
           <Image src={`${staticBase}date-bg.png`} />
           <div>
