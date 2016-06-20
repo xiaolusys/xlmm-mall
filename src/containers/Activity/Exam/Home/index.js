@@ -94,7 +94,7 @@ export default class Home extends Component {
     return (
       <div className={`${prefixCls}`}>
         <Header title="🚄✨VIP2考试✨💪💯" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
-        <Image className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding" src={`${staticBase}banner.png`} />
+        <Image className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding" src={`${staticBase}banner-1.png`} />
         <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding exam-date">
           <Image src={`${staticBase}date-bg.png`} />
           <div>
