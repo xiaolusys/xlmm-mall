@@ -13,7 +13,7 @@ import './index.scss';
 
 const shareData = {
   share_to: '',
-  active_id: activity.activityId,
+  active_id: 13,
 };
 
 const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/';
