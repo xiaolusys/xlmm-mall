@@ -38,7 +38,7 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160606 extends Component {
+export default class A20160621 extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
