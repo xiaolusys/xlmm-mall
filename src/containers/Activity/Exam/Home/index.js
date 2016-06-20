@@ -11,6 +11,11 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
+const shareData = {
+  share_to: '',
+  active_id: activity.activityId,
+};
+
 const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/';
 @connect(
   state => ({
@@ -57,14 +62,24 @@ export default class Home extends Component {
   }
 
   onShareBtnClick = (e) => {
+    if (utils.detector.isWechat()) {
+      Toast.show('点击右上角按钮分享');
+      return;
+    }
     plugins.invoke({
-
+      method: 'callNativeShareFunc',
+      data: shareData,
     });
   }
 
   onInviteBtnClick = (e) => {
+    if (utils.detector.isWechat()) {
+      Toast.show('点击右上角按钮分享');
+      return;
+    }
     plugins.invoke({
-
+      method: 'callNativeShareFunc',
+      data: shareData,
     });
   }
 
