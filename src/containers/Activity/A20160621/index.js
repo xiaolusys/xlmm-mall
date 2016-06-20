@@ -129,7 +129,7 @@ export default class A20160621 extends Component {
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
       if (appVersion < 20160528) {
-        window.AndroidBridge.callNativeShareFunc(data.share_to, data.active_id);
+        window.AndroidBridge.callNativeUniShareFunc(data.share_to, data.active_id);
         return;
       }
       if (utils.detector.isApp()) {
@@ -149,7 +149,7 @@ export default class A20160621 extends Component {
     }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('callNativeShareFunc', data, function(response) {});
+        bridge.callHandler('callNativeUniShareFunc', data, function(response) {});
       });
       return;
     }
