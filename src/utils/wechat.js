@@ -30,32 +30,35 @@ class WechatUtils {
     if (!shareInfo.success) {
       return;
     }
-    const params = shareInfo.data;
-    shareMethods.map(method => {
-      window.wx[method]({
-        title: params.title,
-        desc: params.desc,
-        link: params.share_link,
-        imgUrl: params.share_img,
-        success: () => {
-          window.ga && window.ga('send', {
-            hitType: 'event',
-            eventCategory: 'ShareSucceed',
-            eventAction: method,
-            eventLabel: params.link,
-          });
-        },
-        cancel: () => {
-          window.ga && window.ga('send', {
-            hitType: 'event',
-            eventCategory: 'ShareCanceled',
-            eventAction: method,
-            eventLabel: params.link,
-          });
-        },
+    window.wx.ready(() => {
+      const params = shareInfo.data;
+      shareMethods.map(method => {
+        window.wx[method]({
+          title: params.title,
+          desc: params.desc,
+          link: params.share_link,
+          imgUrl: params.share_img,
+          success: () => {
+            window.ga && window.ga('send', {
+              hitType: 'event',
+              eventCategory: 'ShareSucceed',
+              eventAction: method,
+              eventLabel: params.link,
+            });
+          },
+          cancel: () => {
+            window.ga && window.ga('send', {
+              hitType: 'event',
+              eventCategory: 'ShareCanceled',
+              eventAction: method,
+              eventLabel: params.link,
+            });
+          },
+        });
       });
     });
   }
+
 }
 
 export default new WechatUtils();
