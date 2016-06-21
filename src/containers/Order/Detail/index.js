@@ -140,7 +140,7 @@ export default class Detail extends Component {
                 </div>
                 <div className="col-xs-9 no-padding">
                   <p className="row no-margin">
-                    <span>{order.title}</span>
+                    <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
                     <span className="pull-right">{'￥' + order.total_fee}</span>
                   </p>
                   <p className="row no-margin font-grey">
@@ -155,7 +155,7 @@ export default class Detail extends Component {
                 </div>
                 <div className="col-xs-6 no-padding">
                   <p className="row no-margin">
-                    <span>{order.title}</span>
+                    <span className="no-wrap no-padding">{order.title}</span>
                   </p>
                   <div className="row no-margin">
                     <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
