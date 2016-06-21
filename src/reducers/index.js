@@ -19,7 +19,6 @@ import * as pointLogAction from 'actions/user/pointLog';
 import * as complaintCommitAction from 'actions/complaint/commit';
 import * as complaintHostoryAction from 'actions/complaint/list';
 import * as portalAction from 'actions/home/portal';
-import * as orderAction from 'actions/order/order';
 import * as logisticsAction from 'actions/order/logistics';
 import * as addressAction from 'actions/user/address';
 import * as provinceAction from 'actions/user/province';
@@ -34,7 +33,8 @@ import * as commitOrderAction from 'actions/order/commit';
 import * as payInfoAction from 'actions/order/payInfo';
 import * as expressInfoAction from 'actions/refunds/expressInfo';
 import * as refundsApplyAction from 'actions/refunds/apply';
-
+import * as redpacketAction from 'actions/order/redpacket';
+import * as wechatSignAction from 'actions/wechat/sign';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -70,6 +70,8 @@ const rootReducer = combineReducers({
   refundsApply: createReducer(refundsApplyAction.names.REFUNDS_APPLY),
   refundsOrder: createReducer(refundsApplyAction.names.FETCH_ORDER),
   exam: examReducer,
+  redpacket: createReducer(redpacketAction.name),
+  wechatSign: createReducer(wechatSignAction.name),
 });
 
 export default rootReducer;

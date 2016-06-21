@@ -82,9 +82,10 @@ export default class Detail extends Component {
 
   componentWillMount() {
     const { params } = this.props;
-    this.props.fetchProductDetails(params.id);
+    const productId = params.id.match(/(\d+)/)[0];
+    this.props.fetchProductDetails(productId);
     this.props.fetchShopBagQuantity();
-    this.props.fetchShareInfo(constants.shareType.product, params.id);
+    this.props.fetchShareInfo(constants.shareType.product, productId);
   }
 
   componentDidMount() {
@@ -104,6 +105,15 @@ export default class Detail extends Component {
     }
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
+    }
+    if (!nextProps.share.isLoading && nextProps.share.success) {
+      const shareInfo = nextProps.share.data;
+      utils.wechat.configShareContent({
+        title: shareInfo.title,
+        desc: shareInfo.desc,
+        link: shareInfo.share_link,
+        imgUrl: shareInfo.share_img,
+      });
     }
     if (nextProps.shopBag.addProduct.error) {
       switch (nextProps.shopBag.addProduct.status) {

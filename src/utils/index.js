@@ -6,3 +6,4 @@ export timer from './timer';
 export number from './number';
 export * as ui from './ui';
 export * as string from './string';
+export wechat from './wechat';
