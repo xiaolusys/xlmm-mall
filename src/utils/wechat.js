@@ -8,7 +8,11 @@ const shareMethods = [
 
 class WechatUtils {
 
-  config(params) {
+  config(wechatSign) {
+    if (!wechatSign.success) {
+      return;
+    }
+    const params = wechatSign.data;
     window.wx.config({
       debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
       appId: params.app_id, // 必填，公众号的唯一标识
@@ -27,13 +31,17 @@ class WechatUtils {
     });
   }
 
-  configShareContent(params) {
+  configShareContent(shareInfo) {
+    if (!shareInfo.success) {
+      return;
+    }
+    const params = shareInfo.data;
     shareMethods.map(method => {
       window.wx[method]({
         title: params.title,
         desc: params.desc,
-        link: params.link,
-        imgUrl: params.imgUrl,
+        link: params.share_link,
+        imgUrl: params.share_img,
         success: () => {
           window.ga && window.ga('send', {
             hitType: 'event',
