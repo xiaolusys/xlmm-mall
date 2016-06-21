@@ -8,14 +8,53 @@ import activityRoutes from './activityRoutes';
 // containers
 import { App } from 'containers/App';
 import { Home } from 'containers/Home';
-import { FaqCategory, FaqList } from 'containers/Faq';
-import { SmsLogin, LoginHome, PasswordLogin, Password, UserProfile, UserPhone, Nickname, AddressList, EditAddress, Point, CouponList } from 'containers/User';
-import { OrderList, OrderDetail, Logistics, OrderCommit } from 'containers/Order';
 import { ShopBag } from 'containers/ShopBag';
-import { ProductDetails, ProductList } from 'containers/Product';
-import { RefundsApply, RefundsList, ExpressCompany, RefundsDetail, ExpressOrder } from 'containers/Refunds';
 import { Alipay } from 'containers/Alipay';
-import { ComplainCommit, ComplainList } from 'containers/Complaint';
+
+import {
+  FaqCategory,
+  FaqList,
+} from 'containers/Faq';
+
+import {
+  SmsLogin,
+  LoginHome,
+  PasswordLogin,
+  Password,
+  UserProfile,
+  UserPhone,
+  Nickname,
+  AddressList,
+  EditAddress,
+  Point,
+  CouponList,
+} from 'containers/User';
+
+import {
+  OrderList,
+  OrderDetail,
+  Logistics,
+  OrderCommit,
+  OrderSuccess,
+} from 'containers/Order';
+
+import {
+  ProductDetails,
+  ProductList,
+} from 'containers/Product';
+
+import {
+  RefundsApply,
+  RefundsList,
+  ExpressCompany,
+  RefundsDetail,
+  ExpressOrder,
+} from 'containers/Refunds';
+
+import {
+  ComplainCommit,
+  ComplainList,
+} from 'containers/Complaint';
 
 export default (
   <Route path="/" component={App}>
@@ -37,8 +76,8 @@ export default (
     <Route path="/complaint/history" component={ComplainList} onEnter={utils.checkAuth} />
     <Route path="/ol.html" component={OrderList} onEnter={utils.checkAuth} />
     <Route path="/od.html" component={OrderDetail} onEnter={utils.checkAuth} />
-    <Route path="/order/logistics/:id" component={Logistics} onEnter={utils.checkAuth} />
     <Route path="/oc.html" component={OrderCommit} onEnter={utils.checkAuth} />
+    <Route path="/order/success/:tradeId/:tid" component={OrderSuccess} onEnter={utils.checkAuth} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/list/:type" component={ProductList} />
