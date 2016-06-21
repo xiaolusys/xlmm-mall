@@ -1,0 +1,38 @@
+.order-success {
+  .redpacket-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    > .redpacket {
+      position: relative;
+      > img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      > div {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 16px;
+        width: 100%;
+        > .redpacket-count {
+          font-size: 20px;
+          margin: 0px;
+        }
+      }
+    }
+  }
+  .font-30 {
+    font-size: 30px;
+  }
+  .font-white {
+    color: #fff;
+  }
+  .font-yellow {
+    color: #faac14
+  }
+}
