@@ -63,7 +63,7 @@ export default class Success extends Component {
     }
     if (!redpacket.isLoading && redpacket.success) {
       const shareInfo = {
-        success: redpacket.data.success,
+        success: redpacket.success,
         data: {
           title: redpacket.data.title,
           desc: redpacket.data.description,
