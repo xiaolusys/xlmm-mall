@@ -3,14 +3,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { WechatPopup } from 'components/WechatPopup';
+import _ from 'underscore';
 import * as utils from 'utils';
-import * as actionCreators from 'actions/order/redpacket';
+import * as redpacketAction from 'actions/order/redpacket';
+import * as wechatSignAction from 'actions/wechat/sign';
 
 import './index.scss';
+
+const actionCreators = _.extend(redpacketAction, wechatSignAction);
 
 @connect(
   state => ({
     redpacket: state.redpacket,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -19,7 +24,10 @@ export default class Success extends Component {
   static propTypes = {
     prefixCls: React.PropTypes.string,
     params: React.PropTypes.object,
+    redpacket: React.PropTypes.object,
+    wechatSign: React.PropTypes.object,
     fetchRedpacket: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -41,7 +49,30 @@ export default class Success extends Component {
 
   componentWillMount() {
     const { params } = this.props;
+    this.props.fetchWechatSign();
     this.props.fetchRedpacket(params.tid);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { wechatSign, redpacket } = nextProps;
+    utils.wechat.config(wechatSign);
+    if (redpacket.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+    if (!redpacket.isLoading && redpacket.success) {
+      const shareInfo = {
+        success: redpacket.data.success,
+        data: {
+          title: redpacket.data.title,
+          desc: redpacket.data.description,
+          link: redpacket.data.share_link,
+          imgUrl: redpacket.data.post_img,
+        },
+      };
+      utils.wechat.configShareContent(shareInfo);
+    }
   }
 
   onViewOrderBtnClick = (e) => {
