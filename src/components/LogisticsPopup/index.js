@@ -21,6 +21,16 @@ export class LogisticsPopup extends Component {
     super(props);
   }
 
+  state = {
+    imageLoadError: false,
+  }
+
+  onImageLoadError = (e) => {
+    this.setState({
+      imageLoadError: true,
+    });
+  }
+
   render() {
     const { active, companies, onItemClick, onColsePopupClick } = this.props;
     const imageCls = classnames({
@@ -37,10 +47,10 @@ export class LogisticsPopup extends Component {
           return (
             <div className="col-xs-12 bottom-border padding-bottom-xxs padding-top-xxs logistics-item" key={item.id} data-value={item.id} data-name={item.name} onClick={onItemClick}>
               <If condition={!item.code}>
-                <Image className="col-xs-2 login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/XIAOLU.png'}/>
+                <Image className="col-xs-2 login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/XIAOLU.png'} onError={this.onImageLoadError}/>
               </If>
               <If condition={item.code}>
-                <Image className="col-xs-2 login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/' + item.code + '.png'}/>
+                <Image className="col-xs-2 login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/' + item.code + '.png'} onError={this.onImageLoadError}/>
               </If>
               <p className="no-margin text-center font-md">{item.name}</p>
             </div>
