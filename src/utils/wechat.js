@@ -19,15 +19,10 @@ class WechatUtils {
       timestamp: params.timestamp, // 必填，生成签名的时间戳
       nonceStr: params.noncestr, // 必填，生成签名的随机串
       signature: params.signature, // 必填，签名，见附录1
-      jsApiList: [
-        'menuItem:share:appMessage',
-        'menuItem:share:timeline',
-        'menuItem:share:qq',
-        'menuItem:share:weiboApp',
-        'menuItem:share:QZone',
+      jsApiList: shareMethods.concat([
         'menuItem:profile',
         'menuItem:addContact',
-      ], // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      ]), // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
   }
 
