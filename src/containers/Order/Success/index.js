@@ -67,8 +67,8 @@ export default class Success extends Component {
         data: {
           title: redpacket.data.title,
           desc: redpacket.data.description,
-          link: redpacket.data.share_link,
-          imgUrl: redpacket.data.post_img,
+          share_link: redpacket.data.share_link,
+          share_img: redpacket.data.post_img,
         },
       };
       utils.wechat.configShareContent(shareInfo);
