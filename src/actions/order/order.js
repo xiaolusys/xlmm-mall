@@ -56,7 +56,7 @@ export const deleteOrder = (tradeId) => {
   const action = createAction(names.DELETE_ORDER);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.delete(constants.baseEndpoint + 'trades/' + tradeId + 'undisplay')
+    return axios.post(constants.baseEndpoint + 'trades/' + tradeId + '/undisplay')
       .then((resp) => {
         dispatch(action.success(resp.data));
         dispatch(fetchOrders());

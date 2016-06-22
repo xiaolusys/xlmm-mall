@@ -12,12 +12,16 @@ import { BottomBar } from 'components/BottomBar';
 import { Toast } from 'components/Toast';
 import { Timer } from 'components/Timer';
 import { Timeline, TimelineItem } from 'components/Timeline';
+import { LogisticsPopup } from 'components/LogisticsPopup';
 import * as orderAction from 'actions/order/order';
+import * as payInfoAction from 'actions/order/logistics';
+import * as expressAction from 'actions/order/express';
+import * as updateExpressAction from 'actions/order/updateExpress';
 import * as utils from 'utils';
 
 import './index.scss';
 
-const actionCreators = _.extend({}, orderAction);
+const actionCreators = _.extend(payInfoAction, orderAction, expressAction, updateExpressAction);
 
 const orderOperations = {
   2: { tag: '申请退款', action: 'apply-return-money' },
@@ -28,6 +32,8 @@ const orderOperations = {
 @connect(
   state => ({
     order: state.order,
+    express: state.express,
+    updateExpress: state.updateExpress,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -35,6 +41,10 @@ export default class Detail extends Component {
 
   static propTypes = {
     location: React.PropTypes.any,
+    express: React.PropTypes.any,
+    updateExpress: React.PropTypes.any,
+    fetchLogisticsCompanies: React.PropTypes.func,
+    changeLogisticsCompany: React.PropTypes.func,
     order: React.PropTypes.any,
     fetchOrder: React.PropTypes.func,
     deleteOrder: React.PropTypes.func,
@@ -54,15 +64,19 @@ export default class Detail extends Component {
   }
 
   state = {
-
+    logisticsPopupShow: false,
+    logisticsCompanyName: '',
   }
 
   componentWillMount() {
     this.props.fetchOrder(this.props.location.query.id);
+    this.props.fetchLogisticsCompanies();
   }
 
   componentWillReceiveProps(nextProps) {
     const { fetchOrder, chargeOrder, deleteOrder, remindShipment } = nextProps.order;
+    let logisticsCompany = '';
+    let addressId = '';
     if (fetchOrder.isLoading || chargeOrder.isLoading || deleteOrder.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
@@ -73,6 +87,32 @@ export default class Detail extends Component {
     } else if (chargeOrder.success && chargeOrder.data.info) {
       Toast.show(chargeOrder.data.info);
     }
+    if (fetchOrder.success) {
+      logisticsCompany = fetchOrder.data.logistics_company && fetchOrder.data.logistics_company.name || '小鹿推荐';
+      addressId = fetchOrder.data && fetchOrder.data.user_adress.id;
+      this.setState({ logisticsCompanyName: logisticsCompany, addressid: addressId });
+    }
+  }
+
+  onLogisticsCompanyChange = (e) => {
+    const { value, name } = e.currentTarget.dataset;
+    this.setState({
+      logisticsCompanyId: value,
+      logisticsCompanyName: name,
+      logisticsPopupShow: false,
+    });
+    this.props.changeLogisticsCompany(this.state.addressid);
+    e.preventDefault();
+  }
+
+  onShowLogisticsPopUpClick = (e) => {
+    this.setState({ logisticsPopupShow: true });
+    e.preventDefault();
+  }
+
+  onColseLogisticsPopupClick = (e) => {
+    this.setState({ logisticsPopupShow: false });
+    e.preventDefault();
   }
 
   onTradesBtnClick = (e) => {
@@ -200,21 +240,32 @@ export default class Detail extends Component {
     );
   }
 
+  renderCreatedTime() {
+    const order = this.props.order.fetchOrder.data;
+    const time = order.created || '';
+    return (
+      <p className="no-margin font-grey font-xs text-right order-createTime">{time.replace('T', ' ') + '下单'}</p>
+    );
+  }
+
   render() {
+    const { express } = this.props;
     const trade = this.props.order.fetchOrder.data || {};
     const receiver = trade.user_adress || {};
     const tradeOperation = constants.tradeOperations[trade.status] || {};
+    const logisticsCompanies = express.data || [];
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <If condition={!_.isEmpty(trade)}>
         <div className="content trade-detail">
-          <p className="trade-status">
+          <p className="no-margin trade-status">
             <sapn>订单编号</sapn>
             <sapn className="margin-left-xxs font-grey">{trade.tid}</sapn>
             <sapn className="pull-right font-yellow">{trade.status_display}</sapn>
           </p>
-          <div className="row no-margin receiver-info">
+          {this.renderCreatedTime()}
+          <div className="row no-margin margin-bottom-xs receiver-info">
             <div className="col-xs-2 no-padding text-center margin-top-xxs">
               <i className="icon-location icon-2x icon-yellow-light"></i>
             </div>
@@ -223,7 +274,15 @@ export default class Detail extends Component {
               <p className="font-xs font-grey-light">{receiver.receiver_state + receiver.receiver_city + receiver.receiver_district + receiver.receiver_address}</p>
             </div>
           </div>
-          {this.renderLogistics()}
+          <If condition={trade.status === 1 || trade.status === 2}>
+          <div className="row no-margin bottom-border margin-top-xs logistics-company">
+            <p className="col-xs-5 no-margin no-padding">物流配送</p>
+            <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
+              <p className="col-xs-11 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
+              <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
+            </div>
+          </div>
+          </If>
           {this.renderOrders(trade.orders)}
           <div className="price-info">
             <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
@@ -246,6 +305,7 @@ export default class Detail extends Component {
           </If>
         </div>
         </If>
+        <LogisticsPopup active={this.state.logisticsPopupShow} companies={logisticsCompanies} onItemClick={this.onLogisticsCompanyChange} onColsePopupClick={this.onColseLogisticsPopupClick}/>
       </div>
     );
   }

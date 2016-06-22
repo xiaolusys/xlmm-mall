@@ -43,9 +43,9 @@ export class LogisticsPopup extends Component {
           <p className="col-xs-11 no-margin padding-top-xxs text-center font-lg">物流配送</p>
         </div>
         <If condition={!_.isEmpty(companies)}>
-        {companies.map((item) => {
+        {companies.map((item, index) => {
           return (
-            <div className="col-xs-12 bottom-border padding-bottom-xxs padding-top-xxs logistics-item" key={item.id} data-value={item.id} data-name={item.name} onClick={onItemClick}>
+            <div className="col-xs-12 bottom-border padding-bottom-xxs padding-top-xxs logistics-item" key={index} data-value={item.id} data-name={item.name} onClick={onItemClick}>
               <If condition={!item.code}>
                 <Image className="col-xs-2 login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/XIAOLU.png'} onError={this.onImageLoadError}/>
               </If>

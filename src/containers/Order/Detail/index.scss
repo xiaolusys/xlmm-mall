@@ -5,12 +5,25 @@
       background: #fff;
       padding: 8px;
     }
+    .order-createTime {
+      padding: 4px 8px 4px;
+    }
     .receiver-info {
       background: #fff;
       padding: 8px;
     }
     .logistics-info {
       padding: 8px;
+    }
+    .logistics-company {
+      padding: 8px;
+      background-color: #fff;
+      &.transparent {
+        background-color: transparent;
+      }
+      p {
+        margin-bottom: 0px;
+      }
     }
     .order-list {
       background: #fff;
