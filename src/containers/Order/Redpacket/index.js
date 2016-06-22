@@ -58,7 +58,7 @@ export default class Redpacket extends Component {
   componentWillMount() {
     const { query } = this.props.location;
     this.props.fetchProfile();
-    this.props.fetchUsersRedpacket();
+    this.props.fetchUsersRedpacket(query.uniq_id);
   }
 
   componentWillReceiveProps(nextProps) {

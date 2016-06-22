@@ -9,8 +9,8 @@ export const fetchUsersRedpacket = (tid) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'sharecoupon/get_share_coupon', qs.stringify({ uniq_id: tid }))
-    .then((resp) => {
+    return axios.get(constants.baseEndpoint + 'usercoupons/get_share_coupon', { params: { uniq_id: tid } })
+      .then((resp) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
