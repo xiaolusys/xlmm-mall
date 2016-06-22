@@ -1,0 +1,83 @@
+.order-redpacket {
+  .order-redpacket-bg {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
+  .order-redpacket-opened {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+  }
+  .order-redpacket-container {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    right: 5%;
+    bottom: 0;
+    z-index: 2;
+    margin-top: 45%;
+    .order-redpacket-content {
+      padding-bottom: 60%;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, .9);
+      overflow-y: auto;
+      overflow-x: hidden;
+      > .input-box {
+        background-color: transparent;
+        > input {
+          height: 48px;
+          width: 90%;
+          font-size: 24px;
+          padding: 0px 16px;
+          border: 1px solid #dadada;
+          border-radius: 8px;
+        }
+      }
+      > .divider {
+        margin-left: 16px;
+        margin-right: 16px;
+        height: 9px;
+        background: radial-gradient(#dadada 0, #dadada 3px, transparent 3px);
+        background-size: 9px 9px;
+      }
+      > .order-redpacket-rules {
+        margin-left: 16px;
+        margin-right: 16px;
+        > p {
+          margin: 8px 0px;
+          line-height: 24px;
+          > .badge {
+            background-color: #ff4225;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+  .font-red {
+    color: #ff4225;
+  }
+  > .button {
+    position: fixed;
+    bottom: 8%;
+    left: 10%;
+    right: 10%;
+    z-index: 4;
+    &.button-red {
+      width: 80%;
+      color: #ff4225;
+      background-color: #fff;
+      border: 1px solid #e03015;
+      font-size: 16;
+      font-weight: 600;
+    }
+  }
+}
