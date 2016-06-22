@@ -60,10 +60,24 @@
           }
         }
       }
+      > ul > .user {
+        margin: 8px;
+        .user-avatar {
+          border-radius: 36px;
+          height: 36px;
+          width: 36px;
+        }
+        p {
+          margin: 0;
+        }
+      }
     }
   }
   .font-red {
     color: #ff4225;
+  }
+  .font-26 {
+    font-size: 26px;
   }
   > .button {
     position: fixed;

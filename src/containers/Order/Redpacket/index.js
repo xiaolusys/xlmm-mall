@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Toast } from 'components/Toast';
 import { WechatPopup } from 'components/WechatPopup';
 import { Image } from 'components/Image';
+import moment from 'moment';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as profileAction from 'actions/user/profile';
@@ -19,7 +20,6 @@ const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/';
 
 @connect(
   state => ({
-    profile: state.profile,
     usersRedpacket: state.usersRedpacket,
     receiveRedpacket: state.receiveRedpacket,
   }),
@@ -30,10 +30,8 @@ export default class Redpacket extends Component {
   static propTypes = {
     prefixCls: React.PropTypes.string,
     location: React.PropTypes.object,
-    profile: React.PropTypes.object,
     usersRedpacket: React.PropTypes.object,
     receiveRedpacket: React.PropTypes.object,
-    fetchProfile: React.PropTypes.func,
     fetchUsersRedpacket: React.PropTypes.func,
     fetchReceiveRedpacket: React.PropTypes.func,
   };
@@ -57,15 +55,12 @@ export default class Redpacket extends Component {
 
   componentWillMount() {
     const { query } = this.props.location;
-    this.props.fetchProfile();
+    this.props.fetchReceiveRedpacket(query.uniq_id);
     this.props.fetchUsersRedpacket(query.uniq_id);
   }
 
   componentWillReceiveProps(nextProps) {
     const { profile, receiveRedpacket } = nextProps;
-    if (!profile.isLoading && profile.success && profile.data.mobile) {
-      this.setState({ phone: profile.data.mobile, inputDisabled: true });
-    }
     if (!receiveRedpacket.isLoading && receiveRedpacket.success && receiveRedpacket.data.msg) {
       Toast.show(receiveRedpacket.data.msg);
     }
@@ -77,26 +72,44 @@ export default class Redpacket extends Component {
 
   onReceiveRedPacketClick = (e) => {
     const tid = this.props.location.query.uniq_id;
-    if (this.props.profile.data.mobile) {
-      this.props.fetchReceiveRedpacket(tid);
-      return false;
-    }
     this.props.fetchReceiveRedpacket(tid, this.state.phone);
   }
 
   render() {
-    const { prefixCls } = this.props;
+    const { prefixCls, receiveRedpacket, usersRedpacket } = this.props;
     return (
       <div className={`${prefixCls}`}>
         <Image className={`${prefixCls}-bg`} src={`${staticBase}sharing-redpacket-bg.png`} />
         <img className={`${prefixCls}-opened`} src={`${staticBase}redpacket-opened.png`} />
         <div className={`${prefixCls}-container`}>
           <div className={`${prefixCls}-content`}>
-            <p className="text-center font-lg margin-top-lg">绑定手机号领取红包</p>
-            <div className="text-center input-box">
-              <input type="number" placeholder="请输入您的手机号" value={this.state.phone} onChange={this.onInputTextChange} disabled={this.state.inputDisabled}/>
-            </div>
+            <If condition={!receiveRedpacket.isLoading && !receiveRedpacket.data.coupon}>
+              <p className="text-center font-lg margin-top-lg">绑定手机号领取红包</p>
+              <div className="text-center input-box">
+                <input type="number" placeholder="请输入您的手机号" value={this.state.phone} onChange={this.onInputTextChange} />
+              </div>
+            </If>
             <div className="divider margin-top-lg margin-bottom-md"></div>
+            <If condition={!usersRedpacket.isLoading && !_.isEmpty(usersRedpacket.data)}>
+              <h4 className="text-center font-red">看看小伙伴的手气</h4>
+              <ul className="">
+                {usersRedpacket.data.map((item) => {
+                  return (
+                    <li className="row user">
+                      <img className="col-xs-3 no-padding user-avatar" src={item.head_img}/>
+                      <div className="col-xs-6 padding-right-xxs padding-left-xxs ">
+                        <p>{item.nick}</p>
+                        <p className="font-grey-light">{moment(item.created).format('YYYY-MM-DD HH:mm')}</p>
+                      </div>
+                      <p className="col-xs-3 no-padding font-red">
+                        <span>￥</span>
+                        <span className="font-26">{item.coupon_value.toFixed(2)}</span>
+                      </p>
+                    </li>
+                  );
+                })}
+              </ul>
+            </If>
             <div className={`${prefixCls}-rules`}>
               <h4 className="text-center font-red">红包领取规则</h4>
               <p><span className="badge">1</span><span>发放至手机号的红包需在App用手机号注册，或将手机号绑定的小鹿美美账户后才可使用。</span></p>
@@ -107,7 +120,12 @@ export default class Redpacket extends Component {
             </div>
           </div>
         </div>
-        <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>领取红包</button>
+        <If condition={!receiveRedpacket.isLoading && !receiveRedpacket.data.coupon}>
+          <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>领取红包</button>
+        </If>
+        <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon}>
+          <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>立即使用</button>
+        </If>
       </div>
     );
   }
