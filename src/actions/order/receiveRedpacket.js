@@ -3,14 +3,18 @@ import axios from 'axios';
 import qs from 'qs';
 import createAction from '../createAction';
 
-export const name = 'FETCH_REDPACKET';
+export const name = 'RECEIVE_REDPACKET';
 
-export const fetchRedpacket = (tradeId) => {
+export const fetchReceiveRedpacket = (tid, mobile) => {
   const action = createAction(name);
+  let uri = 'sharecoupon/pick_order_share_coupon';
+  if (mobile) {
+    uri = 'tmpsharecoupon';
+  }
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'sharecoupon/create_order_share', qs.stringify({ uniq_id: tradeId }))
-    .then((resp) => {
+    return axios.post(constants.baseEndpoint + uri, qs.stringify({ uniq_id: tid, mobile: mobile }))
+      .then((resp) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
