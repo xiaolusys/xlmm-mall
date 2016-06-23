@@ -285,6 +285,7 @@ export default class Commit extends Component {
     if (coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       discount = coupon.data.coupon_value;
     } else if (coupon.success && (coupon.data.status !== 0 || payInfo.data.total_fee < coupon.data.use_fee)) {
+      this.props.resetCoupon();
       Toast.show('优惠券不可用！');
     }
     return discount.toFixed(2);
