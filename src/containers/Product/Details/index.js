@@ -13,6 +13,7 @@ import classnames from 'classnames';
 import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
 import * as shareAction from 'actions/share';
+import * as wechatSignAction from 'actions/wechat/sign';
 import * as constants from 'constants';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -20,7 +21,7 @@ import _ from 'underscore';
 
 import './index.scss';
 
-const actionCreators = _.extend(detailsAction, shopBagAction, shareAction);
+const actionCreators = _.extend(detailsAction, shopBagAction, shareAction, wechatSignAction);
 const tabs = {
   details: 0,
   faq: 1,
@@ -34,6 +35,7 @@ const tabs = {
     success: state.productDetails.success,
     shopBag: state.shopBag,
     share: state.share,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -49,6 +51,8 @@ export default class Detail extends Component {
     fetchProductDetails: React.PropTypes.func,
     shopBag: React.PropTypes.object,
     share: React.PropTypes.object,
+    fetchWechatSign: React.PropTypes.func,
+    wechatSign: React.PropTypes.object,
     addProductToShopBag: React.PropTypes.func,
     resetProductDetails: React.PropTypes.func,
     resetAddProductToShopBag: React.PropTypes.func,
@@ -86,6 +90,9 @@ export default class Detail extends Component {
     this.props.fetchProductDetails(productId);
     this.props.fetchShopBagQuantity();
     this.props.fetchShareInfo(constants.shareType.product, productId);
+    if (utils.detector.isWechat()) {
+      this.props.fetchWechatSign();
+    }
   }
 
   componentDidMount() {
@@ -94,6 +101,8 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    utils.wechat.config(nextProps.wechatSign);
+    utils.wechat.configShareContent(nextProps.share);
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
@@ -105,15 +114,6 @@ export default class Detail extends Component {
     }
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
-    }
-    if (!nextProps.share.isLoading && nextProps.share.success) {
-      const shareInfo = nextProps.share.data;
-      utils.wechat.configShareContent({
-        title: shareInfo.title,
-        desc: shareInfo.desc,
-        link: shareInfo.share_link,
-        imgUrl: shareInfo.share_img,
-      });
     }
     if (nextProps.shopBag.addProduct.error) {
       switch (nextProps.shopBag.addProduct.status) {

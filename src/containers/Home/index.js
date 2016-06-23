@@ -112,7 +112,7 @@ export class Home extends Component {
 
   onItemClick = (e) => {
     const dataSet = e.currentTarget.dataset;
-    this.context.router.push('/product/details/' + dataSet.modelid);
+    window.location.href = `/mall/product/details/${dataSet.modelid}`;
   }
 
   onTabItemClick = (e) => {
