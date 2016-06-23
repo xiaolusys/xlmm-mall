@@ -75,6 +75,10 @@ export default class Redpacket extends Component {
     this.props.fetchReceiveRedpacket(tid, this.state.phone);
   }
 
+  onBuyNowClick = (e) => {
+    this.context.router.replace('/');
+  }
+
   render() {
     const { prefixCls, receiveRedpacket, usersRedpacket } = this.props;
     const coupon = receiveRedpacket.data.coupon || {};
@@ -141,7 +145,7 @@ export default class Redpacket extends Component {
           <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>领取红包</button>
         </If>
         <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon}>
-          <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>立即使用</button>
+          <button className="button button-red" type="button" onClick={this.onBuyNowClick}>立即使用</button>
         </If>
       </div>
     );
