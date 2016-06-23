@@ -95,7 +95,7 @@ export default class Commit extends Component {
     const { order, payInfo, address } = nextProps;
     const { router } = this.context;
     if (order.success && order.data.charge && order.data.charge.channel !== 'budget') {
-      this.pay(order.data.charge);
+      this.pay(order.data.charge, order.data.trade);
     }
     if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
       if (order.data.charge.success) {
@@ -294,11 +294,11 @@ export default class Commit extends Component {
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
   }
 
-  pay = (charge) => {
+  pay = (charge, trade) => {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        window.location.replace(constants.paymentResults.success);
+        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
         // this.context.router.replace(paymentResults.success);
         return;
       }
