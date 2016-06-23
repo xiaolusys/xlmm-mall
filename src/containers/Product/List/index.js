@@ -118,7 +118,7 @@ export default class List extends Component {
     const products = product.data.results || [];
     return (
       <div className="product-list">
-        <Header title={title[params.type]} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
+        <Header title={title[params.type]} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()}/>
         <div className="content content-white-bg">
           <div className="product-list clearfix">
           <div className="margin-top-xxs"></div>

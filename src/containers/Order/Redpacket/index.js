@@ -133,11 +133,26 @@ export default class Redpacket extends Component {
             </If>
             <div className={`${prefixCls}-rules`}>
               <h4 className="text-center font-red">红包领取规则</h4>
-              <p><span className="badge">1</span><span>发放至手机号的红包需在App用手机号注册，或将手机号绑定的小鹿美美账户后才可使用。</span></p>
-              <p><span className="badge">2</span><span>每位用户每个红包只限领取一次，红包使用以后，订单发生退款红包则不进行补发。</span></p>
-              <p><span className="badge">3</span><span>每个订单仅限使用一张红包，红包不找零。</span></p>
-              <p><span className="badge">4</span><span>若订单产生部分退款，将不退回分摊至每个商品优惠的金额。</span></p>
-              <p><span className="badge">5</span><span>小鹿美美可在法律法规允许范围内对本次活动规则进行解释。</span></p>
+              <div className="row no-margin">
+                <p className="col-xs-1 no-padding"><span className="badge">1</span></p>
+                <p className="col-xs-11 no-padding">发放至手机号的红包需在App用手机号注册，或将手机号绑定的小鹿美美账户后才可使用。</p>
+              </div>
+              <div className="row no-margin">
+                <p className="col-xs-1 no-padding"><span className="badge">2</span></p>
+                <p className="col-xs-11 no-padding">每位用户每个红包只限领取一次，红包使用以后，订单发生退款红包则不进行补发。</p>
+              </div>
+              <div className="row no-margin">
+                <p className="col-xs-1 no-padding"><span className="badge">3</span></p>
+                <p className="col-xs-11 no-padding">每个订单仅限使用一张红包，红包不找零。</p>
+              </div>
+              <div className="row no-margin">
+                <p className="col-xs-1 no-padding"><span className="badge">4</span></p>
+                <p className="col-xs-11 no-padding">若订单产生部分退款，将不退回分摊至每个商品优惠的金额。</p>
+              </div>
+              <div className="row no-margin">
+                <p className="col-xs-1 no-padding"><span className="badge">5</span></p>
+                <p className="col-xs-11 no-padding">小鹿美美可在法律法规允许范围内对本次活动规则进行解释。</p>
+              </div>
             </div>
           </div>
         </div>
