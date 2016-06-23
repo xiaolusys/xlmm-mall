@@ -77,6 +77,7 @@ export default class Redpacket extends Component {
 
   render() {
     const { prefixCls, receiveRedpacket, usersRedpacket } = this.props;
+    const coupon = receiveRedpacket.data.coupon || {};
     return (
       <div className={`${prefixCls}`}>
         <Image className={`${prefixCls}-bg`} src={`${staticBase}sharing-redpacket-bg.png`} />
@@ -89,10 +90,26 @@ export default class Redpacket extends Component {
                 <input type="number" placeholder="请输入您的手机号" value={this.state.phone} onChange={this.onInputTextChange} />
               </div>
             </If>
+            <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon}>
+              <p className="font-red text-center">
+                <span>￥</span>
+                <span className="coupon-value">{coupon.coupon_value}</span>
+              </p>
+              <p className="font-grey-light text-center">
+                <span>有效期</span>
+                <span>{moment(coupon.created).format('YYYY年MM月DD日')}</span>
+                <span> - </span>
+                <span>{moment(coupon.deadline).format('YYYY年MM月DD日')}</span>
+              </p>
+              <p className="text-center">
+                <span>红包已放至账户</span>
+                <span className="font-grey-light">{coupon.nick || coupon.mobile}</span>
+              </p>
+            </If>
             <div className="divider margin-top-lg margin-bottom-md"></div>
             <If condition={!usersRedpacket.isLoading && !_.isEmpty(usersRedpacket.data)}>
               <h4 className="text-center font-red">看看小伙伴的手气</h4>
-              <ul className="">
+              <ul className="margin-top-sm margin-bottom-sm">
                 {usersRedpacket.data.map((item) => {
                   return (
                     <li className="row user">

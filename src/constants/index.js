@@ -16,7 +16,7 @@ export const shareType = {
   shop: 'shop',
 };
 export const paymentResults = {
-  success: '/mall/ol.html?type=2&paid=true',
+  success: '/mall/order/success',
   error: '/mall/ol.html?type=1&paid=false',
 };
 export const tradeOperations = {
