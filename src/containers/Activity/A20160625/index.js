@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from 'actions/activity/promotion';
+import * as actionCreators from 'actions/user/coupon';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -31,21 +31,21 @@ const setupWebViewJavascriptBridge = function(callback) {
 
 @connect(
   state => ({
-    promotion: {
-      data: state.promotion.data,
-      isLoading: state.promotion.isLoading,
-      success: state.promotion.success,
-    },
+    data: state.coupon.data,
+    isLoading: state.coupon.isLoading,
+    success: state.coupon.success,
+    error: state.coupon.error,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160615 extends Component {
+export default class A20160625 extends Component {
 
   static propTypes = {
-    promotion: React.PropTypes.any,
+    data: React.PropTypes.any,
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
-    fetchPromotion: React.PropTypes.func,
+    receiveCoupon: React.PropTypes.func,
+    resetCoupon: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -58,20 +58,30 @@ export default class A20160615 extends Component {
   }
 
   state = {
-
+    redpacketOpened: false,
   }
 
-  componentWillMount() {
-    this.props.fetchPromotion(activity.activityId);
-  }
-
-  componentDidMount() {
-    this.tick();
-    this.interval = setInterval(this.tick, 1000);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.success) {
+      if (nextProps.data.code === 0) {
+        this.toggleRedpacketOpenedState();
+      }
+      Toast.show({
+        message: nextProps.data.res,
+        position: Toast.POSITION_MIDDLE,
+      });
+    }
+    if (nextProps.error && !nextProps.isLoading) {
+      this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
+    }
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    this.props.resetCoupon();
+  }
+
+  onCouponClick = (e) => {
+    this.props.receiveCoupon(activity.couponIds);
   }
 
   onProductClick = (e) => {
@@ -110,15 +120,43 @@ export default class A20160615 extends Component {
     this.context.router.push(`/product/details/${modelId}`);
   }
 
-  tick = () => {
-    const { promotion } = this.props;
-    const endDateString = promotion.data.end_time || new Date();
-    const remaining = utils.timer.getTimeRemaining(endDateString);
-    if (remaining.totals > 0) {
-      this.setState({ remaining: remaining });
-    } else {
-      clearInterval(this.interval);
+  onShareBtnClick = (e) => {
+    const data = {
+      share_to: '',
+      active_id: activity.activityId,
+    };
+
+    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+      const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
+      if (appVersion < 20160528) {
+        window.AndroidBridge.callNativeUniShareFunc(data.share_to, data.active_id);
+        return;
+      }
+      if (utils.detector.isApp()) {
+        plugins.invoke({
+          method: 'callNativeUniShareFunc',
+          data: data,
+        });
+        return;
+      }
     }
+    if (utils.detector.isIOS() && utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeUniShareFunc',
+        data: data,
+      });
+      return;
+    }
+    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+      setupWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('callNativeUniShareFunc', data, function(response) {});
+      });
+      return;
+    }
+  }
+
+  toggleRedpacketOpenedState = (e) => {
+    this.setState({ redpacketOpened: !this.state.redpacketOpened });
   }
 
   render() {
@@ -127,7 +165,7 @@ export default class A20160615 extends Component {
         <Header title="聚拢无钢圈文胸专场" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
           <div className="content content-white-bg clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
-            <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.shareBtn} />
+            <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
             <ul className="product-list">
               {activity.products.map((product, index) => {
                 return (
@@ -139,6 +177,16 @@ export default class A20160615 extends Component {
             </ul>
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.footer} />
           </div>
+          <If condition={this.state.redpacketOpened}>
+          <div className="activity-popup">
+            <div className="popup-content col-md-4 col-md-offset-4 no-padding">
+              <img className="col-xs-12" src={activity.redpacket} />
+              <img className="col-xs-12" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
+              <img className="col-xs-2 col-xs-offset-5 margin-top-xs" src={activity.closeBtn} onClick={this.toggleRedpacketOpenedState} />
+            </div>
+            <div className="popup-overlay"></div>
+          </div>
+        </If>
       </div>
     );
   }
