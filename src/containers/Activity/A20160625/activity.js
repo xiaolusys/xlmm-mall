@@ -14,7 +14,7 @@ export default {
   }, {
     modelId: 14029,
     productId: 0,
-    pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160625/14029.jpg',
+    pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160625/140290.jpg',
   }, {
     modelId: 14212,
     productId: 0,
