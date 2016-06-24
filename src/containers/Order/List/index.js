@@ -250,7 +250,7 @@ export default class List extends Component {
                     </If>
                   </div>
                 </div>
-                <a href={'/mall/od.html?id=' + item.id}>
+                <a href={'/mall/od.html/' + item.tid + '?id=' + item.id}>
                   {this.renderOrders(item.orders)}
                 </a>
               </div>

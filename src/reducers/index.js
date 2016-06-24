@@ -37,6 +37,7 @@ import * as expressInfoAction from 'actions/refunds/expressInfo';
 import * as refundsApplyAction from 'actions/refunds/apply';
 import * as redpacketAction from 'actions/order/redpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
+import * as orderPackagesAction from 'actions/order/package';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -76,6 +77,7 @@ const rootReducer = combineReducers({
   exam: examReducer,
   redpacket: createReducer(redpacketAction.name),
   wechatSign: createReducer(wechatSignAction.name),
+  package: createReducer(orderPackagesAction.name),
 });
 
 export default rootReducer;

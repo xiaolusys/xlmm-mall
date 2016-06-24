@@ -17,11 +17,12 @@ import * as orderAction from 'actions/order/order';
 import * as payInfoAction from 'actions/order/logistics';
 import * as expressAction from 'actions/order/express';
 import * as updateExpressAction from 'actions/order/updateExpress';
+import * as orderPackagesAction from 'actions/order/package';
 import * as utils from 'utils';
 
 import './index.scss';
 
-const actionCreators = _.extend(payInfoAction, orderAction, expressAction, updateExpressAction);
+const actionCreators = _.extend(payInfoAction, orderAction, expressAction, updateExpressAction, orderPackagesAction);
 
 const orderOperations = {
   2: { tag: '申请退款', action: 'apply-return-money' },
@@ -34,6 +35,7 @@ const orderOperations = {
     order: state.order,
     express: state.express,
     updateExpress: state.updateExpress,
+    package: state.package,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -43,6 +45,7 @@ export default class Detail extends Component {
     location: React.PropTypes.any,
     express: React.PropTypes.any,
     updateExpress: React.PropTypes.any,
+    package: React.PropTypes.any,
     fetchLogisticsCompanies: React.PropTypes.func,
     changeLogisticsCompany: React.PropTypes.func,
     order: React.PropTypes.any,
@@ -52,6 +55,8 @@ export default class Detail extends Component {
     confirmReceivedOrder: React.PropTypes.func,
     remindShipment: React.PropTypes.func,
     resetRemindShipment: React.PropTypes.func,
+    fetchpPackages: React.PropTypes.func,
+    params: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -71,6 +76,7 @@ export default class Detail extends Component {
   componentWillMount() {
     this.props.fetchOrder(this.props.location.query.id);
     this.props.fetchLogisticsCompanies();
+    this.props.fetchpPackages(this.props.params.tradeId);
   }
 
   componentWillReceiveProps(nextProps) {
