@@ -180,7 +180,7 @@ export default class A20160628 extends Component {
                 );
               })}
             </ul>
-            <Image className="col-xs-6 col-xs-offset-3 margin-bottom-md margin-top-md no-padding" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
+            <Image className="col-xs-6 col-xs-offset-3 margin-top-md no-padding act-share" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
           </div>
       </div>
     );
