@@ -57,15 +57,8 @@ export default class A20160628 extends Component {
     context.router;
   }
 
-  state = {
-    redpacketOpened: false,
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.success) {
-      if (nextProps.data.code === 0) {
-        this.toggleRedpacketOpenedState();
-      }
       Toast.show({
         message: nextProps.data.res,
         position: Toast.POSITION_MIDDLE,
