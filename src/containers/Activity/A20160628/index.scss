@@ -1,12 +1,8 @@
 .activity-top10 {
   background-color: #d7caff;
-  .coupon-list {
-    display: inline-block;
-  }
-  .product-list1 {
+  > ul {
     display: inline-block;
     -webkit-padding-start: 0px;
-    margin-top: 24px;
     > li {
       padding: 0 8px;
       > img {
@@ -14,9 +10,7 @@
       }
     }
   }
-  .product-list2 {
-    display: inline-block;
-    -webkit-padding-start: 0px;
+  .product-list-vertical {
     img:nth-child(2n+0) {
       padding: 0 8px 8px 4px;
     }
