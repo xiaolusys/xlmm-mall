@@ -155,7 +155,7 @@ export default class A20160628 extends Component {
         <Header title="俏丽素人" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
           <div className="content clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
-            <ul className="no-margin coupon-list">
+            <ul>
               {activity.coupons.map((coupon, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
@@ -164,8 +164,8 @@ export default class A20160628 extends Component {
                 );
               })}
             </ul>
-            <ul className="no-margin product-list1">
-              {activity.productsGroup1.map((product, index) => {
+            <ul className="margin-top-xs">
+              {activity.productsGroupH.map((product, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xxs" key={index} data-modelid={product.modelId} onClick={this.onProductClick}>
                     <Image src={product.pic} />
@@ -173,8 +173,8 @@ export default class A20160628 extends Component {
                 );
               })}
             </ul>
-            <ul className="no-margin product-list2">
-              {activity.productsGroup2.map((product, index) => {
+            <ul className="product-list-vertical">
+              {activity.productsGroupV.map((product, index) => {
                 return (
                   <Image className="col-xs-6" src={product.pic} key={index} data-modelid={product.modelId} onClick={this.onProductClick}/>
                 );

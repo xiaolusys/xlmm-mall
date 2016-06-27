@@ -12,7 +12,7 @@ export default {
   }],
   shareBtn: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160628/share-btn.png',
   activityId: 16,
-  productsGroup1: [{
+  productsGroupH: [{
     modelId: 15452,
     pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160628/15452.jpg',
   }, {
@@ -25,7 +25,7 @@ export default {
     modelId: 9290,
     pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160628/9290.jpg',
   }],
-  productsGroup2: [{
+  productsGroupV: [{
     modelId: 15451,
     pic: 'http://7xogkj.com1.z0.glb.clouddn.com/activity/20160628/005.jpg',
   }, {
