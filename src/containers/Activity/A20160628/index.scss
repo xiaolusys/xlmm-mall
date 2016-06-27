@@ -1,0 +1,27 @@
+.activity-top10 {
+  background-color: #d7caff;
+  .coupon-list {
+    display: inline-block;
+  }
+  .product-list1 {
+    display: inline-block;
+    -webkit-padding-start: 0px;
+    margin-top: 24px;
+    > li {
+      padding: 0 8px;
+      > img {
+        width: 100%;
+      }
+    }
+  }
+  .product-list2 {
+    display: inline-block;
+    -webkit-padding-start: 0px;
+    img:nth-child(2n+0) {
+      padding: 0 8px 8px 4px;
+    }
+    img:nth-child(2n+1) {
+      padding: 0 4px 8px 8px;
+    }
+  }
+}
