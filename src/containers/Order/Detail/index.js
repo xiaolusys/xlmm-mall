@@ -55,7 +55,7 @@ export default class Detail extends Component {
     confirmReceivedOrder: React.PropTypes.func,
     remindShipment: React.PropTypes.func,
     resetRemindShipment: React.PropTypes.func,
-    fetchpPackages: React.PropTypes.func,
+    fetchPackages: React.PropTypes.func,
     params: React.PropTypes.object,
   };
 
@@ -76,7 +76,9 @@ export default class Detail extends Component {
   componentWillMount() {
     this.props.fetchOrder(this.props.location.query.id);
     this.props.fetchLogisticsCompanies();
-    this.props.fetchpPackages(this.props.params.tradeId);
+    if (this.props.params.tradeId) {
+      this.props.fetchPackages(this.props.params.tradeId);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -227,6 +229,50 @@ export default class Detail extends Component {
     );
   }
 
+  renderPackages(packages = []) {
+    const trade = this.props.order.fetchOrder.data || {};
+    const orderOperation = orderOperations[trade.status] || {};
+    const tradeId = this.props.params.tradeId;
+    return (
+      <div className="order-list">
+      {packages.map((pk, index) => {
+        return (
+          <div key={index}>
+            <div className="row no-margin bottom-border">
+              <a href={'/order/package/' + tradeId + '/' + index}>
+              <p className="col-xs-2 text-left font-grey">{'包裹' + (index + 1)}</p>
+              <p className="col-xs-9 text-right font-orange">{pk[0].assign_status_display}</p>
+              <i className="col-xs-1 no-padding padding-top-xxs text-right icon-angle-right icon-grey"></i>
+              </a>
+            </div>
+            <ul>
+            {pk.map((od, i) => {
+              return (
+                <div key={i} className="row no-margin bottom-border">
+                  <div className="col-xs-3 no-padding">
+                    <img src={od.pic_path + constants.image.square} />
+                  </div>
+                  <div className="col-xs-9 no-padding">
+                    <p className="row no-margin">
+                      <span className="col-xs-8 no-wrap no-padding">{od.title}</span>
+                      <span className="pull-right">{'￥' + od.payment}</span>
+                    </p>
+                    <p className="row no-margin">
+                      <span className="col-xs-8 no-wrap no-padding">数量</span>
+                      <span className="pull-right">{'x' + od.num}</span>
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+            </ul>
+          </div>
+        );
+      })}
+      </div>
+    );
+  }
+
   renderLogistics() {
     const order = this.props.order.fetchOrder.data;
     const time = order.created || '';
@@ -260,6 +306,19 @@ export default class Detail extends Component {
     const receiver = trade.user_adress || {};
     const tradeOperation = constants.tradeOperations[trade.status] || {};
     const logisticsCompanies = express.data || [];
+    const packagesOrders = this.props.package.data || [];
+    const packages = [];
+    let packageGroupKey = '';
+    let j = 0;
+    packages[0] = [];
+    for (let i = 0; i < packagesOrders.length; i++) {
+      if (i > 0 && packageGroupKey !== packagesOrders[i].package_group_key) {
+        j = j + 1;
+        packages[j] = [];
+      }
+      packages[j].push(packagesOrders[i]);
+      packageGroupKey = packagesOrders[i].package_group_key;
+    }
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
@@ -280,7 +339,7 @@ export default class Detail extends Component {
               <p className="font-xs font-grey-light">{receiver.receiver_state + receiver.receiver_city + receiver.receiver_district + receiver.receiver_address}</p>
             </div>
           </div>
-          <If condition={trade.status === 1 || trade.status === 2}>
+          <If condition={trade.status_display === '待付款' || trade.status_display === '待发货'}>
           <div className="row no-margin bottom-border margin-top-xs logistics-company">
             <p className="col-xs-5 no-margin no-padding">物流配送</p>
             <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
@@ -289,7 +348,12 @@ export default class Detail extends Component {
             </div>
           </div>
           </If>
-          {this.renderOrders(trade.orders)}
+          <If condition={_.isEmpty(packages)}>
+            {this.renderOrders(trade.orders)}
+          </If>
+          <If condition={!_.isEmpty(packages)}>
+            {this.renderPackages(packages)}
+          </If>
           <div className="price-info">
             <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
             <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(trade.discount_fee).toFixed(2)}</span></p>
