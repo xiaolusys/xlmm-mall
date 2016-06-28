@@ -5,7 +5,6 @@ const ReplacePlugin = require('replace-webpack-plugin');
 const publicPath = '/mall/';
 
 module.exports = {
-  devtool: 'source-map',
 
   entry: ['bootstrap-loader/extractStyles'],
 

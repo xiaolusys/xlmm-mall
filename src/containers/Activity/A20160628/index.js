@@ -38,7 +38,7 @@ const setupWebViewJavascriptBridge = function(callback) {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160625 extends Component {
+export default class A20160628 extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -57,15 +57,8 @@ export default class A20160625 extends Component {
     context.router;
   }
 
-  state = {
-    redpacketOpened: false,
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.success) {
-      if (nextProps.data.code === 0) {
-        this.toggleRedpacketOpenedState();
-      }
       Toast.show({
         message: nextProps.data.res,
         position: Toast.POSITION_MIDDLE,
@@ -81,7 +74,8 @@ export default class A20160625 extends Component {
   }
 
   onCouponClick = (e) => {
-    this.props.receiveCoupon(activity.couponIds);
+    const couponId = e.currentTarget.dataset.couponid;
+    this.props.receiveCoupon(Number(couponId));
   }
 
   onProductClick = (e) => {
@@ -155,38 +149,39 @@ export default class A20160625 extends Component {
     }
   }
 
-  toggleRedpacketOpenedState = (e) => {
-    this.setState({ redpacketOpened: !this.state.redpacketOpened });
-  }
-
   render() {
     return (
       <div>
-        <Header title="夏季主角—本周Top榜单10强" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
-          <div className="content content-white-bg clearfix activity-top10">
+        <Header title="俏丽素人" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
+          <div className="content clearfix activity-top10">
             <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.banner} />
-            <Image className="col-xs-12 no-padding" src={activity.coupon} onClick={this.onCouponClick} />
-            <ul className="product-list">
-              {activity.products.map((product, index) => {
+            <ul>
+              {activity.coupons.map((coupon, index) => {
                 return (
-                  <li className="col-xs-12 col-md-6 col-md-offset-3" key={index} data-modelid={product.modelId} data-productid={product.productId} onClick={this.onProductClick}>
+                  <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
+                    <Image className="col-xs-12 no-padding" src={coupon.pic} />
+                  </li>
+                );
+              })}
+            </ul>
+            <ul className="margin-top-xs">
+              {activity.productsGroupH.map((product, index) => {
+                return (
+                  <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xxs" key={index} data-modelid={product.modelId} onClick={this.onProductClick}>
                     <Image src={product.pic} />
                   </li>
                 );
               })}
             </ul>
-            <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={activity.footer} />
+            <ul className="product-list-vertical">
+              {activity.productsGroupV.map((product, index) => {
+                return (
+                  <Image className="col-xs-6" src={product.pic} key={index} data-modelid={product.modelId} onClick={this.onProductClick}/>
+                );
+              })}
+            </ul>
+            <Image className="col-xs-6 col-xs-offset-3 margin-top-md no-padding act-share" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
           </div>
-          <If condition={this.state.redpacketOpened}>
-          <div className="activity-popup">
-            <div className="popup-content col-md-4 col-md-offset-4 no-padding">
-              <img className="col-xs-12" src={activity.redpacket} />
-              <img className="col-xs-12" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
-              <img className="col-xs-2 col-xs-offset-5 margin-top-xs" src={activity.closeBtn} onClick={this.toggleRedpacketOpenedState} />
-            </div>
-            <div className="popup-overlay"></div>
-          </div>
-        </If>
       </div>
     );
   }

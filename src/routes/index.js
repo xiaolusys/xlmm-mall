@@ -36,7 +36,7 @@ import {
   Logistics,
   OrderCommit,
   OrderSuccess,
-  OrderPackage,
+  OrderRedpacket,
 } from 'containers/Order';
 
 import {
@@ -76,10 +76,10 @@ export default (
     <Route path="/complaint/commit" component={ComplainCommit} onEnter={utils.checkAuth} />
     <Route path="/complaint/history" component={ComplainList} onEnter={utils.checkAuth} />
     <Route path="/ol.html" component={OrderList} onEnter={utils.checkAuth} />
-    <Route path="/od.html/:tradeId" component={OrderDetail} onEnter={utils.checkAuth} />
+    <Route path="/od.html" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/oc.html" component={OrderCommit} onEnter={utils.checkAuth} />
     <Route path="/order/success/:tradeId/:tid" component={OrderSuccess} onEnter={utils.checkAuth} />
-    <Route path="/order/package/:tradeId/:packageIndex" component={OrderPackage} onEnter={utils.checkAuth} />
+    <Route path="/order/redpacket" component={OrderRedpacket} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/list/:type" component={ProductList} />

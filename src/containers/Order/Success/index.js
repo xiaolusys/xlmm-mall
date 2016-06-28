@@ -5,16 +5,16 @@ import { Header } from 'components/Header';
 import { WechatPopup } from 'components/WechatPopup';
 import _ from 'underscore';
 import * as utils from 'utils';
-import * as redpacketAction from 'actions/order/redpacket';
+import * as shareRedpacketAction from 'actions/order/shareRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
 
 import './index.scss';
 
-const actionCreators = _.extend(redpacketAction, wechatSignAction);
+const actionCreators = _.extend(shareRedpacketAction, wechatSignAction);
 
 @connect(
   state => ({
-    redpacket: state.redpacket,
+    shareRedpacket: state.shareRedpacket,
     wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -24,9 +24,9 @@ export default class Success extends Component {
   static propTypes = {
     prefixCls: React.PropTypes.string,
     params: React.PropTypes.object,
-    redpacket: React.PropTypes.object,
+    shareRedpacket: React.PropTypes.object,
     wechatSign: React.PropTypes.object,
-    fetchRedpacket: React.PropTypes.func,
+    fetchShareRedpacket: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
   };
 
@@ -50,25 +50,25 @@ export default class Success extends Component {
   componentWillMount() {
     const { params } = this.props;
     this.props.fetchWechatSign();
-    this.props.fetchRedpacket(params.tid);
+    this.props.fetchShareRedpacket(params.tid);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { wechatSign, redpacket } = nextProps;
+    const { wechatSign, shareRedpacket } = nextProps;
     utils.wechat.config(wechatSign);
-    if (redpacket.isLoading) {
+    if (shareRedpacket.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
     }
-    if (!redpacket.isLoading && redpacket.success) {
+    if (!shareRedpacket.isLoading && shareRedpacket.success) {
       const shareInfo = {
-        success: redpacket.success,
+        success: shareRedpacket.success,
         data: {
-          title: redpacket.data.title,
-          desc: redpacket.data.description,
-          share_link: redpacket.data.share_link,
-          share_img: redpacket.data.post_img,
+          title: shareRedpacket.data.title,
+          desc: shareRedpacket.data.description,
+          share_link: shareRedpacket.data.share_link,
+          share_img: shareRedpacket.data.post_img,
         },
       };
       utils.wechat.configShareContent(shareInfo);
@@ -92,7 +92,7 @@ export default class Success extends Component {
   }
 
   render() {
-    const { prefixCls } = this.props;
+    const { prefixCls, shareRedpacket } = this.props;
     return (
       <div className={`${prefixCls}`}>
         <Header title="支付成功" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
@@ -107,7 +107,7 @@ export default class Success extends Component {
             <div className="redpacket">
               <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/redpacket-bg.jpg" />
               <div>
-                <p className="font-white redpacket-count"><span>恭喜你获得</span><span className="font-30">15</span><span>个红包</span></p>
+                <p className="font-white redpacket-count"><span>恭喜你获得</span><span className="font-30">{15}</span><span>个红包</span></p>
                 <p className="font-yellow">分享红包给好友可抵扣在线支付金额</p>
                 <button className="button button-energized font-md col-xs-10 col-xs-offset-1" type="button" onClick={this.onShareRedpacketBtnClick}>分享领取红包</button>
               </div>
