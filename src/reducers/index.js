@@ -76,16 +76,10 @@ const rootReducer = combineReducers({
   refundsApply: createReducer(refundsApplyAction.names.REFUNDS_APPLY),
   refundsOrder: createReducer(refundsApplyAction.names.FETCH_ORDER),
   exam: examReducer,
-<<<<<<< HEAD
-  redpacket: createReducer(redpacketAction.name),
-  wechatSign: createReducer(wechatSignAction.name),
-  package: createReducer(orderPackagesAction.name),
-=======
   shareRedpacket: createReducer(shareRedpacketAction.name),
   receiveRedpacket: createReducer(receiveRedpacketAction.name),
   usersRedpacket: createReducer(usersRedpacketAction.name),
   wechatSign: createReducer(wechatSignAction.name),
->>>>>>> temp
 });
 
 export default rootReducer;
