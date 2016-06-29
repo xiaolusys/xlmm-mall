@@ -237,18 +237,18 @@ export default class Detail extends Component {
     const tradeId = this.props.params.tradeId;
     return (
       <div className="order-list">
-      {packages.map((pk, index) => {
+      {_.map(packages, function(item, key) {
         return (
-          <div key={index}>
+          <div key={key}>
             <div className="row no-margin bottom-border">
-              <a href={'/order/package/' + tradeId + '/' + index}>
-              <p className="col-xs-2 text-left font-grey">{'包裹' + (index + 1)}</p>
-              <p className="col-xs-9 text-right font-orange">{pk[0].assign_status_display}</p>
+              <a href={'/order/logistics/' + tradeId + '/' + item[0].package_group_key + '/' + item[0].out_sid}>
+              <p className="col-xs-6 text-left font-grey">{'包裹' + key.substr(2, 1)}</p>
+              <p className="col-xs-5 text-right font-orange">{item[0].assign_status_display}</p>
               <i className="col-xs-1 no-padding padding-top-xxs text-right icon-angle-right icon-grey"></i>
               </a>
             </div>
             <ul>
-            {pk.map((od, i) => {
+            {item.map((od, i) => {
               return (
                 <div key={i} className="row no-margin bottom-border">
                   <div className="col-xs-3 no-padding">
@@ -309,20 +309,7 @@ export default class Detail extends Component {
     const tradeOperation = constants.tradeOperations[trade.status] || {};
     const logisticsCompanies = express.data || [];
     const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
-    const packages = [];
-    let packageGroupKey = '';
-    let j = 0;
-    for (let i = 0; i < packagesOrders.length; i++) {
-      if (i === 0) {
-        packages[0] = [];
-      }
-      if (i > 0 && packageGroupKey !== packagesOrders[i].package_group_key) {
-        j = j + 1;
-        packages[j] = [];
-      }
-      packages[j].push(packagesOrders[i]);
-      packageGroupKey = packagesOrders[i].package_group_key;
-    }
+    const packages = _.groupBy(packagesOrders, 'package_group_key');
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
@@ -359,6 +346,18 @@ export default class Detail extends Component {
             {this.renderPackages(packages)}
           </If>
           <div className="price-info">
+            <p>
+              <span>支付方式</span>
+              <If condition={trade.channel === 'wx'}>
+                <i className="pull-right icon-1x icon-wechat-pay font-green"></i>
+              </If>
+              <If condition={trade.channel === 'alipay' || trade.channel === 'alipay-wap'}>
+                <i className="pull-right icon-1x icon-alipay-square font-blue"></i>
+              </If>
+              <If condition={trade.channel === 'budget'}>
+                <i className="pull-right icon-1x icon-xiaolu font-orange"></i>
+              </If>
+            </p>
             <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
             <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(trade.discount_fee).toFixed(2)}</span></p>
             <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(trade.post_fee).toFixed(2)}</span></p>

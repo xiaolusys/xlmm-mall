@@ -1,14 +1,22 @@
-.logistics-item {
-  padding: 8px;
-  background-color: #fff;
-  .font-yellow {
-    color: #f5b123;
+.package-content {
+  .express-item {
+    padding: 8px;
+    background-color: #fff;
+    margin: 0;
   }
-  .font-grey {
-    color: #9b9b9b;
+  .order-list {
+    background: #fff;
+    p {
+      margin-bottom: 0px;
+      padding: 8px;
+    }
+    img {
+      margin: 8px;
+      // border: 1px solid #979797;
+      border-radius: 10px;
+      width: 60px;
+      overflow: hidden;
+      height: 60px;
+    }
   }
-}
-
-p.logistics-item {
-  margin: 0px;
 }
