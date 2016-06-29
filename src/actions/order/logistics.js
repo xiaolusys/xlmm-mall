@@ -4,11 +4,11 @@ import createAction from '../createAction';
 
 export const name = 'LOGISTICS';
 
-export const fetchLogistics = (id) => {
+export const fetchLogistics = (packetId, companyCode) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'wuliu/get_wuliu_by_tid', { params: { tid: id } })
+    return axios.get(constants.baseEndpointV1 + 'wuliu/get_wuliu_by_packetid', { params: { packetid: packetId, company_code: companyCode } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

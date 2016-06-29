@@ -41,7 +41,7 @@ export default class Package extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchLogistics(this.props.params.tradeId);
+    this.props.fetchLogistics('3-1-0-', '');
     if (_.isEmpty(this.props.package.data)) {
       this.props.fetchPackages(this.props.params.tradeId);
     }
@@ -55,7 +55,7 @@ export default class Package extends Component {
     }
     if (nextProps.package.success) {
       this.setState({
-        logisticsCompanyName: nextProps.package.data,
+        logisticsCompanyName: '',
         logisticsOutSid: '',
       });
     }
@@ -91,13 +91,14 @@ export default class Package extends Component {
 
   render() {
     const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
-    debugger;
     const { packageIndex, tradeId } = this.props.params;
     const packages = [];
     let packageGroupKey = '';
     let j = 0;
-    packages[0] = [];
     for (let i = 0; i < packagesOrders.length; i++) {
+      if (i === 0) {
+        packages[0] = [];
+      }
       if (i > 0 && packageGroupKey !== packagesOrders[i].package_group_key) {
         j = j + 1;
         packages[j] = [];
@@ -105,7 +106,6 @@ export default class Package extends Component {
       packages[j].push(packagesOrders[i]);
       packageGroupKey = packagesOrders[i].package_group_key;
     }
-    debugger;
     return (
       <div>
         <Header title={'包裹' + (Number(packageIndex) + 1)} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />

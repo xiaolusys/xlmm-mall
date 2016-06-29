@@ -308,12 +308,14 @@ export default class Detail extends Component {
     const receiver = trade.user_adress || {};
     const tradeOperation = constants.tradeOperations[trade.status] || {};
     const logisticsCompanies = express.data || [];
-    const packagesOrders = this.props.package.data || [];
+    const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
     const packages = [];
     let packageGroupKey = '';
     let j = 0;
-    packages[0] = [];
     for (let i = 0; i < packagesOrders.length; i++) {
+      if (i === 0) {
+        packages[0] = [];
+      }
       if (i > 0 && packageGroupKey !== packagesOrders[i].package_group_key) {
         j = j + 1;
         packages[j] = [];
