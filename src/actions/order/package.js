@@ -2,18 +2,20 @@ import * as constants from 'constants';
 import axios from 'axios';
 import createAction from '../createAction';
 
-export const name = 'LOGISTICS';
+export const name = 'FETCH_PACKAGES';
 
-export const fetchLogistics = (packetId, companyCode) => {
+export const fetchPackages = (tradeid) => {
   const action = createAction(name);
+  const uri = '/rest/packageskuitem';
+  const params = { params: { sale_trade_id: tradeid } };
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'wuliu/get_wuliu_by_packetid', { params: { packetid: packetId, company_code: companyCode } })
+    return axios.get(uri, params)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

@@ -31,12 +31,15 @@ import * as shareAction from 'actions/share';
 import * as refundsDetailAction from 'actions/refunds/detail';
 import * as commitOrderAction from 'actions/order/commit';
 import * as payInfoAction from 'actions/order/payInfo';
+import * as expressAction from 'actions/order/express';
+import * as updateExpressAction from 'actions/order/updateExpress';
 import * as expressInfoAction from 'actions/refunds/expressInfo';
 import * as refundsApplyAction from 'actions/refunds/apply';
 import * as shareRedpacketAction from 'actions/order/shareRedpacket';
 import * as receiveRedpacketAction from 'actions/order/receiveRedpacket';
 import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
+import * as orderPackagesAction from 'actions/order/package';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -67,11 +70,14 @@ const rootReducer = combineReducers({
   refundsDetails: createReducer(refundsDetailAction.name),
   payInfo: createReducer(payInfoAction.name),
   commitOrder: createReducer(commitOrderAction.name),
+  express: createReducer(expressAction.name),
+  updateExpress: createReducer(updateExpressAction.name),
   expressInfo: createReducer(expressInfoAction.name),
   refundsList: refundsReducer,
   refundsApply: createReducer(refundsApplyAction.names.REFUNDS_APPLY),
   refundsOrder: createReducer(refundsApplyAction.names.FETCH_ORDER),
   exam: examReducer,
+  package: createReducer(orderPackagesAction.name),
   shareRedpacket: createReducer(shareRedpacketAction.name),
   receiveRedpacket: createReducer(receiveRedpacketAction.name),
   usersRedpacket: createReducer(usersRedpacketAction.name),

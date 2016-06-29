@@ -1,0 +1,12 @@
+.logistics-content {
+  .logistics-item {
+    > img {
+      height: 30px;
+      width: auto;
+    }
+    > p {
+    	height: 30px;
+    	padding-top: 4px
+    }
+  }
+}
