@@ -248,20 +248,20 @@ export default class Detail extends Component {
               </a>
             </div>
             <ul>
-            {item.map((od, i) => {
+            {item.map((order, index) => {
               return (
-                <div key={i} className="row no-margin bottom-border">
+                <div key={index} className="row no-margin bottom-border">
                   <div className="col-xs-3 no-padding">
-                    <img src={od.pic_path + constants.image.square} />
+                    <img src={order.pic_path + constants.image.square} />
                   </div>
                   <div className="col-xs-9 no-padding">
                     <p className="row no-margin">
-                      <span className="col-xs-8 no-wrap no-padding">{od.title}</span>
-                      <span className="pull-right">{'￥' + od.payment}</span>
+                      <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
+                      <span className="pull-right">{'￥' + order.payment}</span>
                     </p>
                     <p className="row no-margin">
                       <span className="col-xs-8 no-wrap no-padding">数量</span>
-                      <span className="pull-right">{'x' + od.num}</span>
+                      <span className="pull-right">{'x' + order.num}</span>
                     </p>
                   </div>
                 </div>
