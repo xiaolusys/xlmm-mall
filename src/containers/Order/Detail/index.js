@@ -310,7 +310,6 @@ export default class Detail extends Component {
     const logisticsCompanies = express.data || [];
     const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
     const packages = _.groupBy(packagesOrders, 'package_group_key');
-    debugger;
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
