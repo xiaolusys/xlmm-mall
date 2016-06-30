@@ -21,9 +21,11 @@
       }
     }
     .cart-quantity {
-      margin-top: 6px;
-      > i,
-      span {
+      > i {
+        padding: 8px;
+        font-size: 20px;
+      }
+      >span {
         padding: 8px;
       }
     }

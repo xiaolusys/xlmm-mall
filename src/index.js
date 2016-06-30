@@ -12,6 +12,7 @@ const history = useRouterHistory(createHistory)({
   basename: '/mall/',
   queryKey: false,
 });
+
 // send pageview to ga
 history.listen((location) => {
   window.ga && window.ga('send', 'pageview', location.pathname);
