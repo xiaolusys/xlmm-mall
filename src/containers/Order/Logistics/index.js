@@ -23,6 +23,7 @@ const actionCreators = _.extend(logisticsAction, orderPackagesAction);
 )
 export default class Logistics extends Component {
   static propTypes = {
+    location: React.PropTypes.any,
     package: React.PropTypes.any,
     params: React.PropTypes.any,
     logistics: React.PropTypes.object,
@@ -41,7 +42,8 @@ export default class Logistics extends Component {
   }
 
   componentWillMount() {
-    const { packageGroupKey, companyCode } = this.props.params;
+    const { packageGroupKey } = this.props.params;
+    const companyCode = this.props.location.query.companyCode;
     if (_.isEmpty(this.props.package.data)) {
       this.props.fetchPackages(this.props.params.tradeId);
     }

@@ -79,7 +79,7 @@ export default (
     <Route path="/od.html/:tradeId" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/oc.html" component={OrderCommit} onEnter={utils.checkAuth} />
     <Route path="/order/success/:tradeId/:tid" component={OrderSuccess} onEnter={utils.checkAuth} />
-    <Route path="/order/logistics/:tradeId/:packageGroupKey/:companyCode" component={Logistics} onEnter={utils.checkAuth} />
+    <Route path="/order/logistics/:tradeId/:packageGroupKey" component={Logistics} onEnter={utils.checkAuth} />
     <Route path="/order/redpacket" component={OrderRedpacket} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
