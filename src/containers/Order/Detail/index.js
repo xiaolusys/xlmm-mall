@@ -241,7 +241,7 @@ export default class Detail extends Component {
         return (
           <div key={key}>
             <div className="row no-margin bottom-border">
-              <a href={'/order/logistics/' + tradeId + '/' + item[0].package_group_key + '/' + item[0].out_sid}>
+              <a href={'/order/logistics/' + tradeId + '/' + item[0].package_group_key + '?companyCode=' + item[0].out_sid}>
               <p className="col-xs-6 text-left font-grey">{'包裹' + key.substr(2, 1)}</p>
               <p className="col-xs-5 text-right font-orange">{item[0].assign_status_display}</p>
               <i className="col-xs-1 no-padding padding-top-xxs text-right icon-angle-right icon-grey"></i>

@@ -70,8 +70,8 @@ export default class Profile extends Component {
           <ul className="user-info-list">
             <li className="bottom-border row no-margin">
               <Link to="/user/nickname">
-                <p className="col-xs-6 text-left">账户昵称</p>
-                <p className="col-xs-6 text-right">
+                <p className="col-xs-4 text-left">账户昵称</p>
+                <p className="text-right padding-right-15">
                   <span>{profile.nick}</span>
                   <i className="icon-angle-right font-grey-light"></i>
                 </p>
