@@ -79,10 +79,12 @@ export default class A20160701 extends Component {
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent({
       success: nextProps.shareActivity.success,
-      title: nextProps.shareActivity.data.title,
-      desc: nextProps.shareActivity.data.active_dec,
-      link: nextProps.shareActivity.data.share_link,
-      imgUrl: nextProps.shareActivity.data.share_icon,
+      data: {
+        title: nextProps.shareActivity.data.title,
+        desc: nextProps.shareActivity.data.active_dec,
+        link: nextProps.shareActivity.data.share_link,
+        imgUrl: nextProps.shareActivity.data.share_icon,
+      },
     });
     if (nextProps.success) {
       Toast.show({
