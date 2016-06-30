@@ -9,15 +9,17 @@ import { Header } from 'components/Header';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as logisticsAction from 'actions/order/logistics';
 import * as orderPackagesAction from 'actions/order/package';
+import * as orderAction from 'actions/order/order';
 
 import './index.scss';
 
-const actionCreators = _.extend(logisticsAction, orderPackagesAction);
+const actionCreators = _.extend(logisticsAction, orderPackagesAction, orderAction);
 
 @connect(
   state => ({
     package: state.package,
     logistics: state.logistics,
+    order: state.order,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -30,6 +32,7 @@ export default class Logistics extends Component {
     isLoading: React.PropTypes.bool,
     fetchLogistics: React.PropTypes.func,
     fetchPackages: React.PropTypes.func,
+    fetchOrder: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -41,9 +44,17 @@ export default class Logistics extends Component {
     context.router;
   }
 
+  state = {
+    payTime: '',
+    bookTime: '',
+    assignTime: '',
+    finishTime: '',
+  }
+
   componentWillMount() {
     const { packageGroupKey } = this.props.params;
     const companyCode = this.props.location.query.companyCode;
+    this.props.fetchOrder(this.props.location.query.id);
     if (_.isEmpty(this.props.package.data)) {
       this.props.fetchPackages(this.props.params.tradeId);
     }
@@ -52,11 +63,34 @@ export default class Logistics extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { packageGroupKey } = this.props.params;
-    if (nextProps.package.isLoading || nextProps.logistics.isLoading) {
+    const fetchOrder = nextProps.order.fetchOrder;
+    const orderData = fetchOrder.data;
+    if (nextProps.package.isLoading || nextProps.logistics.isLoading || fetchOrder.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
     }
+    if (fetchOrder.success) {
+      this.setState({
+        payTime: orderData.pay_time,
+        bookTime: orderData.book_time,
+        assignTime: orderData.assign_time,
+        finishTime: orderData.finish_time,
+      });
+    }
+  }
+
+  dealTimeList() {
+    const state = this.state;
+    const { logistics } = this.props || {};
+    const logisticsInfo = logistics.data.data || [];
+    const timeList = [
+      { time: state.finishTime, content: '发货' },
+      { time: state.assignTime, content: '入仓' },
+      { time: state.bookTime, content: '订货' },
+      { time: state.payTime, content: '支付成功' },
+    ];
+    return _.union(logisticsInfo, timeList);
   }
 
   renderPackages(packages = [], packageGroupKey) {
@@ -88,7 +122,7 @@ export default class Logistics extends Component {
 
   render() {
     const { logistics, isLoading } = this.props || {};
-    const logisticsInfo = logistics.data.data || [];
+    const logisticsInfo = this.dealTimeList();
     const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
     const { packageGroupKey, tradeId } = this.props.params;
     const packages = _.groupBy(packagesOrders, 'package_group_key');
@@ -111,10 +145,14 @@ export default class Logistics extends Component {
                 <Timeline className="logistics-info">
                 {logisticsInfo.map((item, index) => {
                   return (
-                    <TimelineItem key={index} headColor="grey" tailColor="grey">
-                      <p className="font-grey">{item.time.replace('T', ' ')}</p>
-                      <p className="font-sm">{item.content}</p>
-                    </TimelineItem>
+                    <div>
+                    <If condition={item.time}>
+                      <TimelineItem key={index} headColor="yellow" tailColor="yellow">
+                        <p className="font-orange">{item.time.replace('T', ' ')}</p>
+                        <p className="font-sm font-orange">{item.content}</p>
+                      </TimelineItem>
+                    </If>
+                    </div>
                   );
                 })}
                 </Timeline>

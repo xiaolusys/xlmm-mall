@@ -105,7 +105,7 @@ export default class Detail extends Component {
 
   onLogisticsCompanyChange = (e) => {
     const { addressid } = this.state;
-    const { id } = this.props.params;
+    const id = this.props.location.query.id;
     const { value, name } = e.currentTarget.dataset;
     this.setState({
       logisticsPopupShow: false,
@@ -235,14 +235,15 @@ export default class Detail extends Component {
   renderPackages(packages = []) {
     const trade = this.props.order.fetchOrder.data || {};
     const orderOperation = orderOperations[trade.status] || {};
-    const tradeId = this.props.params.tid;
+    const tid = this.props.params.tid;
+    const id = this.props.location.query.id;
     return (
       <div className="order-list">
       {_.map(packages, function(item, key) {
         return (
           <div key={key}>
             <div className="row no-margin bottom-border">
-              <a href={'/order/logistics/' + tradeId + '/' + item[0].package_group_key + '?companyCode=' + item[0].out_sid}>
+              <a href={'/order/logistics/' + tid + '/' + item[0].package_group_key + '?companyCode=' + item[0].out_sid + '&id=' + id}>
                 <p className="col-xs-4 text-left font-grey">{'包裹' + key.substr(2, 1)}</p>
                 <p className="text-right font-orange padding-right-15">
                   <span>{item[0].assign_status_display}</span>
