@@ -76,10 +76,20 @@ export default class Redpacket extends Component {
   }
 
   onBuyNowClick = (e) => {
+    window.ga && window.ga('send', {
+      hitType: 'event',
+      eventCategory: '分享得红包',
+      eventAction: '立即使用',
+    });
     this.context.router.replace('/');
   }
 
   onDownloadClick = (e) => {
+    window.ga && window.ga('send', {
+      hitType: 'event',
+      eventCategory: '分享得红包',
+      eventAction: '下载APP',
+    });
     window.location.href = '/sale/promotion/appdownload/';
   }
 
