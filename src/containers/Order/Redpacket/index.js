@@ -94,7 +94,7 @@ export default class Redpacket extends Component {
                 <input type="number" placeholder="请输入您的手机号" value={this.state.phone} onChange={this.onInputTextChange} />
               </div>
             </If>
-            <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon}>
+            <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon && coupon.coupon_value > 0 }>
               <p className="font-red text-center">
                 <span>￥</span>
                 <span className="coupon-value">{coupon.coupon_value}</span>
@@ -109,6 +109,9 @@ export default class Redpacket extends Component {
                 <span>红包已放至账户</span>
                 <span className="font-grey-light">{coupon.nick || coupon.mobile}</span>
               </p>
+            </If>
+            <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon && Number(coupon.coupon_value) <= 0 }>
+              <p className="text-center">您来晚了，红包已经抢完了</p>
             </If>
             <div className="divider margin-top-lg margin-bottom-md"></div>
             <If condition={!usersRedpacket.isLoading && !_.isEmpty(usersRedpacket.data)}>
