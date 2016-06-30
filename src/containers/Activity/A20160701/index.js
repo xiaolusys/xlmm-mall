@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from 'actions/user/coupon';
+import * as wechatSignAction from 'actions/wechat/sign';
+import * as shareActivityAction from 'actions/share/activity';
+import * as couponAction from 'actions/user/coupon';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -11,6 +13,8 @@ import { Image } from 'components/Image';
 import activity from './activity';
 
 import './index.scss';
+
+const actionCreators = _.extend(wechatSignAction, shareActivityAction, couponAction);
 
 const setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {
@@ -35,10 +39,12 @@ const setupWebViewJavascriptBridge = function(callback) {
     isLoading: state.coupon.isLoading,
     success: state.coupon.success,
     error: state.coupon.error,
+    shareActivity: state.shareActivity,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class A20160628 extends Component {
+export default class A20160701 extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -158,7 +164,7 @@ export default class A20160628 extends Component {
             <ul>
               {activity.coupons.map((coupon, index) => {
                 return (
-                  <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
+                  <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
                     <Image className="col-xs-12 no-padding" src={coupon.pic} />
                   </li>
                 );
@@ -176,7 +182,7 @@ export default class A20160628 extends Component {
             <ul className="product-list-vertical">
               {activity.productsGroupV.map((product, index) => {
                 return (
-                  <Image className="col-xs-6" src={product.pic} key={index} data-modelid={product.modelId} onClick={this.onProductClick}/>
+                  <Image className="col-xs-6" thumbnail={352} crop="352x681" src={product.pic} key={index} data-modelid={product.modelId} onClick={this.onProductClick}/>
                 );
               })}
             </ul>

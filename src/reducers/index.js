@@ -28,6 +28,7 @@ import * as couponAction from 'actions/user/coupon';
 import * as productDetailsAction from 'actions/product/details';
 import * as promotionAction from 'actions/activity/promotion';
 import * as shareAction from 'actions/share';
+import * as shareActivityAction from 'actions/share/activity';
 import * as refundsDetailAction from 'actions/refunds/detail';
 import * as commitOrderAction from 'actions/order/commit';
 import * as payInfoAction from 'actions/order/payInfo';
@@ -40,6 +41,7 @@ import * as receiveRedpacketAction from 'actions/order/receiveRedpacket';
 import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as orderPackagesAction from 'actions/order/package';
+
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -67,6 +69,7 @@ const rootReducer = combineReducers({
   coupons: couponsReducer,
   promotion: createReducer(promotionAction.name),
   share: createReducer(shareAction.name),
+  shareActivity: createReducer(shareActivityAction.name),
   refundsDetails: createReducer(refundsDetailAction.name),
   payInfo: createReducer(payInfoAction.name),
   commitOrder: createReducer(commitOrderAction.name),
