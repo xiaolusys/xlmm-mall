@@ -11,6 +11,7 @@ import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { Image } from 'components/Image';
 import activity from './activity';
+import { WechatPopup } from 'components/WechatPopup';
 
 import './index.scss';
 
@@ -51,6 +52,8 @@ export default class A20160701 extends Component {
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
     receiveCoupon: React.PropTypes.func,
+    fetchShareActivityInfo: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
     resetCoupon: React.PropTypes.func,
   };
 
@@ -63,7 +66,24 @@ export default class A20160701 extends Component {
     context.router;
   }
 
+  state = {
+    popupActive: false,
+  }
+
+  componentWillMount() {
+    this.props.fetchWechatSign();
+    this.props.fetchShareActivityInfo(activity.activityId);
+  }
+
   componentWillReceiveProps(nextProps) {
+    utils.wechat.config(nextProps.wechatSign);
+    utils.wechat.configShareContent({
+      success: nextProps.shareActivity.success,
+      title: nextProps.shareActivity.data.title,
+      desc: nextProps.shareActivity.data.active_dec,
+      link: nextProps.shareActivity.data.share_link,
+      imgUrl: nextProps.shareActivity.data.share_icon,
+    });
     if (nextProps.success) {
       Toast.show({
         message: nextProps.data.res,
@@ -126,6 +146,11 @@ export default class A20160701 extends Component {
       active_id: activity.activityId,
     };
 
+    if (utils.detector.isWechat()) {
+      this.setState({ popupActive: true });
+      return;
+    }
+
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
       if (appVersion < 20160528) {
@@ -153,6 +178,10 @@ export default class A20160701 extends Component {
       });
       return;
     }
+  }
+
+  onCloseBtnClick = (e) => {
+    this.setState({ popupActive: false });
   }
 
   render() {
@@ -188,6 +217,7 @@ export default class A20160701 extends Component {
             </ul>
             <Image className="col-xs-6 col-xs-offset-3 margin-top-md no-padding act-share" src={activity.shareBtn} onClick={this.onShareBtnClick}/>
           </div>
+          <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>
     );
   }
