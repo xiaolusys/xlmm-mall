@@ -111,7 +111,7 @@ export default class Redpacket extends Component {
               </p>
             </If>
             <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon && !coupon.coupon_value }>
-              <p className="text-center margin-top-md">您来晚了，红包已经抢完了</p>
+              <p className="text-center margin-top-md">手快有，手慢无，对不起，您来晚了，红包已经被抢完了，下次可以快点哦~</p>
             </If>
             <div className="divider margin-top-lg margin-bottom-md"></div>
             <If condition={!usersRedpacket.isLoading && !_.isEmpty(usersRedpacket.data)}>
