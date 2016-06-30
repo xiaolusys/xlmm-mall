@@ -164,16 +164,12 @@ export default class Detail extends Component {
   }
 
   pay = (charge, trade) => {
-    // TODO: 处理订单成功
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        // window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
-        window.location.replace(constants.paymentResults.success);
-        // this.context.router.replace(paymentResults.success);
+        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
         return;
       }
       window.location.replace(constants.paymentResults.error);
-      // this.context.router.replace(paymentResults.error);
     });
   }
 

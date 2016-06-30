@@ -299,13 +299,10 @@ export default class Commit extends Component {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        // window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
-        window.location.replace(constants.paymentResults.success);
-        // this.context.router.replace(paymentResults.success);
+        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
         return;
       }
       window.location.replace(constants.paymentResults.error);
-      // this.context.router.replace(paymentResults.error);
     });
   }
 

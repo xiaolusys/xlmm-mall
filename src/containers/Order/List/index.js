@@ -102,7 +102,7 @@ export default class List extends Component {
       utils.ui.loadingSpinner.hide();
     }
     if (chargeOrder.success && chargeOrder.data.code === 0 && !_.isEmpty(chargeOrder.data.charge)) {
-      this.pay(chargeOrder.data.charge, chargeOrder.data);
+      this.pay(chargeOrder.data.charge, chargeOrder.data.trade);
       this.props.resetChargeOrder();
     } else if (chargeOrder.success && chargeOrder.data.info) {
       Toast.show(chargeOrder.data.info);
@@ -169,17 +169,13 @@ export default class List extends Component {
     window.removeEventListener('scroll', this.onScroll);
   }
 
-  pay = (charge) => {
-    // TODO: 处理订单成功
+  pay = (charge, trade) => {
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        // window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
-        window.location.replace(constants.paymentResults.success);
-        // this.context.router.replace(paymentResults.success);
+        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
         return;
       }
       window.location.replace(constants.paymentResults.error);
-      // this.context.router.replace(paymentResults.error);
     });
   }
 
