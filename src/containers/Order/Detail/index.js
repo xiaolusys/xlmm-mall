@@ -13,6 +13,7 @@ import { Toast } from 'components/Toast';
 import { Timer } from 'components/Timer';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import { LogisticsPopup } from 'components/LogisticsPopup';
+import moment from 'moment';
 import * as orderAction from 'actions/order/order';
 import * as payInfoAction from 'actions/order/logistics';
 import * as expressAction from 'actions/order/express';
@@ -158,7 +159,7 @@ export default class Detail extends Component {
   }
 
   getClosedDate = (dateString) => {
-    const date = new Date(dateString.replace('-', '/').replace('T', ' '));
+    const date = moment(dateString).toDate();
     date.setMinutes(date.getMinutes() + 20);
     return date.toISOString();
   }
