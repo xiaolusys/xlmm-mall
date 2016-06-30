@@ -52,7 +52,7 @@ export default class Logistics extends Component {
   }
 
   componentWillMount() {
-    const { packageGroupKey } = this.props.params;
+    const packageGroupKey = this.props.location.query.key;
     const companyCode = this.props.location.query.companyCode;
     this.props.fetchOrder(this.props.location.query.id);
     if (_.isEmpty(this.props.package.data)) {
@@ -62,7 +62,7 @@ export default class Logistics extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { packageGroupKey } = this.props.params;
+    const packageGroupKey = this.props.location.query.key;
     const fetchOrder = nextProps.order.fetchOrder;
     const orderData = fetchOrder.data;
     if (nextProps.package.isLoading || nextProps.logistics.isLoading || fetchOrder.isLoading) {
@@ -124,7 +124,8 @@ export default class Logistics extends Component {
     const { logistics, isLoading } = this.props || {};
     const logisticsInfo = this.dealTimeList();
     const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
-    const { packageGroupKey, tradeId } = this.props.params;
+    const { tradeId } = this.props.params;
+    const packageGroupKey = this.props.location.query.key;
     const packages = _.groupBy(packagesOrders, 'package_group_key');
     return (
       <div>
