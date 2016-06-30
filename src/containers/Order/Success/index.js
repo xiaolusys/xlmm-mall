@@ -107,7 +107,7 @@ export default class Success extends Component {
             <div className="redpacket">
               <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/redpacket-bg.jpg" />
               <div>
-                <p className="font-white redpacket-count"><span>恭喜你获得</span><span className="font-30">{15}</span><span>个红包</span></p>
+                <p className="font-white redpacket-count"><span>恭喜你获得</span><span className="font-30">{shareRedpacket.data && shareRedpacket.data.share_times_limit}</span><span>个红包</span></p>
                 <p className="font-yellow">分享红包给好友可抵扣在线支付金额</p>
                 <button className="button button-energized font-md col-xs-10 col-xs-offset-1" type="button" onClick={this.onShareRedpacketBtnClick}>分享领取红包</button>
               </div>
