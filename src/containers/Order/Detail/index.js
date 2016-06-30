@@ -71,13 +71,14 @@ export default class Detail extends Component {
   state = {
     logisticsPopupShow: false,
     logisticsCompanyName: '',
+    logisticsCompanyCode: '',
   }
 
   componentWillMount() {
     this.props.fetchOrder(this.props.location.query.id);
     this.props.fetchLogisticsCompanies();
-    if (this.props.params.tradeId) {
-      this.props.fetchPackages(this.props.params.tradeId);
+    if (this.props.params.tid) {
+      this.props.fetchPackages(this.props.params.tid);
     }
   }
 
@@ -103,13 +104,13 @@ export default class Detail extends Component {
   }
 
   onLogisticsCompanyChange = (e) => {
+    const { addressid } = this.state;
+    const id = this.props.location.query.id;
     const { value, name } = e.currentTarget.dataset;
     this.setState({
-      logisticsCompanyId: value,
-      logisticsCompanyName: name,
       logisticsPopupShow: false,
     });
-    this.props.changeLogisticsCompany(this.state.addressid);
+    this.props.changeLogisticsCompany(addressid, this.props.location.query.id, value, Number(id));
     e.preventDefault();
   }
 
@@ -234,17 +235,20 @@ export default class Detail extends Component {
   renderPackages(packages = []) {
     const trade = this.props.order.fetchOrder.data || {};
     const orderOperation = orderOperations[trade.status] || {};
-    const tradeId = this.props.params.tradeId;
+    const tid = this.props.params.tid;
+    const id = this.props.location.query.id;
     return (
       <div className="order-list">
       {_.map(packages, function(item, key) {
         return (
           <div key={key}>
             <div className="row no-margin bottom-border">
-              <a href={'/order/logistics/' + tradeId + '/' + item[0].package_group_key + '?companyCode=' + item[0].out_sid}>
-              <p className="col-xs-6 text-left font-grey">{'包裹' + key.substr(2, 1)}</p>
-              <p className="col-xs-5 text-right font-orange">{item[0].assign_status_display}</p>
-              <i className="col-xs-1 no-padding padding-top-xxs text-right icon-angle-right icon-grey"></i>
+              <a href={'/order/logistics/' + tid + '/' + item[0].package_group_key + '?companyCode=' + item[0].out_sid + '&id=' + id}>
+                <p className="col-xs-4 text-left font-grey">{'包裹' + key.substr(2, 1)}</p>
+                <p className="text-right font-orange padding-right-15">
+                  <span>{item[0].assign_status_display}</span>
+                  <i className="padding-top-xxs icon-angle-right icon-grey"></i>
+                </p>
               </a>
             </div>
             <ul>
@@ -339,10 +343,7 @@ export default class Detail extends Component {
               </div>
             </If>
             <If condition={trade.status !== 2}>
-              <div className="col-xs-7 no-padding">
-                <p className="col-xs-11 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
-                <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
-              </div>
+              <p className="col-xs-7 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
             </If>
           </div>
           <If condition={_.isEmpty(packages)}>
