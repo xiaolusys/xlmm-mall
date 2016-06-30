@@ -83,8 +83,8 @@ export default class Detail extends Component {
           <ul className="refunds-details-list">
             <li className="row col-xs-12 no-margin bottom-border">
               <p className="col-xs-9 no-margin no-padding text-left">
-                <span className="text-left">退款编号</span>
-                <span className="margin-left-xs font-grey-light">{data.refund_no}</span>
+                <span className="col-xs-5 text-left">退款编号</span>
+                <span className="col-xs-7 no-padding no-wrap font-grey-light">{data.refund_no}</span>
               </p>
               <p className="col-xs-3 no-margin no-padding text-right font-orange">
                 <span>{data.status_display}</span>
@@ -95,7 +95,7 @@ export default class Detail extends Component {
               <span>{data.created && data.created.replace('T', ' ') }</span>
             </p>
             <If condition={data.status === 4}>
-              <li className="row col-xs-12 no-margin padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
+              <li className="row col-xs-12 no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
                 <div className="col-xs-8">
                   <p className="no-wrap no-margin">
                     <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
@@ -106,7 +106,7 @@ export default class Detail extends Component {
                 <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>填写快递单</button>
               </li>
             </If>
-            <li className="row col-xs-12 no-margin margin-top-xs bottom-border">
+            <li className="row col-xs-12 no-margin bottom-border">
               <div className="col-xs-3">
                 <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={data.pic_path}/>
               </div>
