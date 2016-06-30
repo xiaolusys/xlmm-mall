@@ -76,7 +76,21 @@ export default class Redpacket extends Component {
   }
 
   onBuyNowClick = (e) => {
+    window.ga && window.ga('send', {
+      hitType: 'event',
+      eventCategory: '分享得红包',
+      eventAction: '立即使用',
+    });
     this.context.router.replace('/');
+  }
+
+  onDownloadClick = (e) => {
+    window.ga && window.ga('send', {
+      hitType: 'event',
+      eventCategory: '分享得红包',
+      eventAction: '下载APP',
+    });
+    window.location.href = '/sale/promotion/appdownload/';
   }
 
   render() {
@@ -111,7 +125,7 @@ export default class Redpacket extends Component {
               </p>
             </If>
             <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon && !coupon.coupon_value }>
-              <p className="text-center margin-top-md">手快有，手慢无，对不起，您来晚了，红包已经被抢完了，下次可以快点哦~</p>
+              <p className="text-center margin-left-xxs margin-right-xxs margin-top-md">手快有，手慢无，对不起，您来晚了，红包已经被抢完了，下次可以快点哦~</p>
             </If>
             <div className="divider margin-top-lg margin-bottom-md"></div>
             <If condition={!usersRedpacket.isLoading && !_.isEmpty(usersRedpacket.data)}>
@@ -163,7 +177,10 @@ export default class Redpacket extends Component {
           <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>领取红包</button>
         </If>
         <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon}>
-          <button className="button button-red" type="button" onClick={this.onBuyNowClick}>立即使用</button>
+          <div className="button-container">
+            <button className="button button-red" type="button" onClick={this.onBuyNowClick}>立即使用</button>
+            <button className="button button-yellow margin-top-xxs" type="button" onClick={this.onDownloadClick}>打开APP</button>
+          </div>
         </If>
       </div>
     );
