@@ -87,20 +87,30 @@
   .font-26 {
     font-size: 26px;
   }
-  > .button {
+  > .button-container {
     position: fixed;
-    bottom: 8%;
+    bottom: 2%;
     left: 10%;
     right: 10%;
     z-index: 4;
-    &.button-red {
-      width: 80%;
+    > .button-red {
+      width: 100%;
       color: #ff4225;
       background-color: #fff;
       border: 1px solid #e03015;
       font-size: 16;
       font-weight: 600;
-      height: 50px;
+      height: 46px;
+      border-radius: 4px;
+    }
+    > .button-yellow {
+      width: 100%;
+      color: #fff;
+      background-color: #fbbe01;
+      border: 1px solid #e03015;
+      font-size: 16;
+      font-weight: 600;
+      height: 46px;
       border-radius: 4px;
     }
   }
