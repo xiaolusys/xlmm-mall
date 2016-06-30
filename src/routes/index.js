@@ -76,7 +76,7 @@ export default (
     <Route path="/complaint/commit" component={ComplainCommit} onEnter={utils.checkAuth} />
     <Route path="/complaint/history" component={ComplainList} onEnter={utils.checkAuth} />
     <Route path="/ol.html" component={OrderList} onEnter={utils.checkAuth} />
-    <Route path="/od.html/:tid" component={OrderDetail} onEnter={utils.checkAuth} />
+    <Route path="/od.html" component={OrderDetail} onEnter={utils.checkAuth} />
     <Route path="/oc.html" component={OrderCommit} onEnter={utils.checkAuth} />
     <Route path="/order/success/:tradeId/:tid" component={OrderSuccess} onEnter={utils.checkAuth} />
     <Route path="/order/logistics/:tradeId" component={Logistics} onEnter={utils.checkAuth} />

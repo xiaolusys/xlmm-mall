@@ -77,7 +77,7 @@ export default class Success extends Component {
 
   onViewOrderBtnClick = (e) => {
     const { params } = this.props;
-    this.context.router.push(`/od.html?id=${params.tradeId}`);
+    this.context.router.push(`/od.html?tid=${params.tid}&id=${params.tradeId}`);
   }
 
   onShareRedpacketBtnClick = (e) => {
