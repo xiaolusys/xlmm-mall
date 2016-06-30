@@ -310,6 +310,7 @@ export default class Detail extends Component {
     const logisticsCompanies = express.data || [];
     const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
     const packages = _.groupBy(packagesOrders, 'package_group_key');
+    debugger;
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
@@ -357,7 +358,7 @@ export default class Detail extends Component {
               <If condition={trade.channel === 'wx'}>
                 <i className="pull-right icon-1x icon-wechat-pay font-green"></i>
               </If>
-              <If condition={trade.channel === 'alipay' || trade.channel === 'alipay-wap'}>
+              <If condition={trade.channel === 'alipay' || trade.channel === 'alipay_wap'}>
                 <i className="pull-right icon-1x icon-alipay-square font-blue"></i>
               </If>
               <If condition={trade.channel === 'budget'}>
