@@ -239,7 +239,7 @@ export default class Detail extends Component {
         return (
           <div key={key}>
             <div className="row no-margin bottom-border">
-              <a href={'/order/logistics/' + tid + '/' + item[0].package_group_key + '?companyCode=' + item[0].out_sid + '&id=' + id}>
+              <a href={`/order/logistics/${tid}/${item[0].package_group_key}?companyCode=${item[0].out_sid}&id=${id}`}>
                 <p className="col-xs-4 text-left font-grey">{'包裹' + key.substr(2, 1)}</p>
                 <p className="text-right font-orange padding-right-15">
                   <span>{item[0].assign_status_display}</span>
