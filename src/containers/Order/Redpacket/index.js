@@ -173,15 +173,15 @@ export default class Redpacket extends Component {
             </div>
           </div>
         </div>
-        <If condition={!receiveRedpacket.isLoading && !receiveRedpacket.data.coupon}>
-          <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>领取红包</button>
-        </If>
-        <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon}>
           <div className="button-container">
-            <button className="button button-red" type="button" onClick={this.onBuyNowClick}>立即使用</button>
-            <button className="button button-yellow margin-top-xxs" type="button" onClick={this.onDownloadClick}>打开APP</button>
+            <If condition={!receiveRedpacket.isLoading && !receiveRedpacket.data.coupon}>
+              <button className="button button-red" type="button" onClick={this.onReceiveRedPacketClick}>领取红包</button>
+            </If>
+            <If condition={!receiveRedpacket.isLoading && receiveRedpacket.data.coupon}>
+              <button className="button button-red" type="button" onClick={this.onBuyNowClick}>立即使用</button>
+              <button className="button button-yellow margin-top-xxs" type="button" onClick={this.onDownloadClick}>打开APP</button>
+            </If>
           </div>
-        </If>
       </div>
     );
   }
