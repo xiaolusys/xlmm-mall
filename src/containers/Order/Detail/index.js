@@ -75,11 +75,10 @@ export default class Detail extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchOrder(this.props.location.query.id);
+    const { tid, id } = this.props.location.query;
+    this.props.fetchOrder(id);
     this.props.fetchLogisticsCompanies();
-    if (this.props.params.tid) {
-      this.props.fetchPackages(this.props.params.tid);
-    }
+    this.props.fetchPackages(tid);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -231,8 +230,7 @@ export default class Detail extends Component {
   renderPackages(packages = []) {
     const trade = this.props.order.fetchOrder.data || {};
     const orderOperation = orderOperations[trade.status] || {};
-    const tid = this.props.params.tid;
-    const id = this.props.location.query.id;
+    const { tid, id } = this.props.location.query;
     return (
       <div className="order-list">
       {_.map(packages, function(item, key) {
