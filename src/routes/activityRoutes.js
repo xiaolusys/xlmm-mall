@@ -7,7 +7,7 @@ import { TopTen, A20160701, ExamHome, ExamQuestion, ExamResult } from 'container
 export default (
   <Route>
     <Route path="/activity/20160701" component={A20160701} />
-    <Route path="/activity/top10" component={TopTen} />
+    <Route path="/activity/topTen" component={TopTen} />
     <Route path="/activity/exam" component={ExamHome} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/question/:type/:id" component={ExamQuestion} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/result" component={ExamResult} onEnter={utils.checkAuth} />
