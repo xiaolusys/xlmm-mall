@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as shareActivityAction from 'actions/share/activity';
 import * as couponAction from 'actions/user/coupon';
-import * as activityModelAction from 'actions/activity/model';
+import * as top10ModelAction from 'actions/activity/top10';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -16,7 +16,7 @@ import { WechatPopup } from 'components/WechatPopup';
 
 import './index.scss';
 
-const actionCreators = _.extend(wechatSignAction, shareActivityAction, couponAction, activityModelAction);
+const actionCreators = _.extend(wechatSignAction, shareActivityAction, couponAction, top10ModelAction);
 
 const setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {
@@ -43,11 +43,11 @@ const setupWebViewJavascriptBridge = function(callback) {
     error: state.coupon.error,
     shareActivity: state.shareActivity,
     wechatSign: state.wechatSign,
-    activityModel: state.activityModel,
+    top10Model: state.top10Model,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class AModel extends Component {
+export default class Top10Model extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -57,8 +57,8 @@ export default class AModel extends Component {
     fetchShareActivityInfo: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     resetCoupon: React.PropTypes.func,
-    activityModel: React.PropTypes.any,
-    fetchModel: React.PropTypes.func,
+    top10Model: React.PropTypes.any,
+    fetchTop10: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -78,7 +78,7 @@ export default class AModel extends Component {
     const activityId = this.props.location.query.id;
     this.props.fetchWechatSign();
     this.props.fetchShareActivityInfo(activityId);
-    this.props.fetchModel(activityId);
+    this.props.fetchTop10(activityId);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -194,7 +194,7 @@ export default class AModel extends Component {
   }
 
   render() {
-    const modelData = this.props.activityModel.data || {};
+    const modelData = this.props.top10Model.data || {};
     return (
       <div>
         <Header title={modelData.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
