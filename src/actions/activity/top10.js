@@ -1,9 +1,9 @@
 import axios from 'axios';
 import createAction from '../createAction';
 
-export const name = 'ACTIVITYMODEL';
+export const name = 'TOP10_MODEL';
 
-export const fetchModel = (activityId) => {
+export const fetchTop10 = (activityId) => {
   const action = createAction(name);
   const params = { promotion_id: activityId };
   return (dispatch) => {

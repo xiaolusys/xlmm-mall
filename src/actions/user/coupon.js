@@ -2,7 +2,7 @@ import * as constants from 'constants';
 import axios from 'axios';
 import qs from 'qs';
 import createAction from '../createAction';
-import activityModelAction from '../activity/model';
+import top10ModelAction from '../activity/top10';
 
 export const name = 'FETCH_COUPON';
 
@@ -14,7 +14,7 @@ export const receiveCoupon = (couponIds, activityId) => {
     return axios.post(constants.baseEndpointV1 + 'usercoupons', qs.stringify({ template_id: couponIds }))
       .then((resp) => {
         dispatch(action.success(resp.data));
-        dispatch(activityModelAction.fetchModel(activityId));
+        dispatch(top10ModelAction.fetchTop10(activityId));
       })
       .catch((resp) => {
         dispatch(action.failure(resp.data));
