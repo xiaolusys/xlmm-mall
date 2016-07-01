@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as shareActivityAction from 'actions/share/activity';
 import * as couponAction from 'actions/user/coupon';
-import * as top10ModelAction from 'actions/activity/top10';
+import * as topTenAction from 'actions/activity/topTen';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -16,7 +16,7 @@ import { WechatPopup } from 'components/WechatPopup';
 
 import './index.scss';
 
-const actionCreators = _.extend(wechatSignAction, shareActivityAction, couponAction, top10ModelAction);
+const actionCreators = _.extend(wechatSignAction, shareActivityAction, couponAction, topTenAction);
 
 const setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {
