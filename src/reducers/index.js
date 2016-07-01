@@ -41,7 +41,7 @@ import * as receiveRedpacketAction from 'actions/order/receiveRedpacket';
 import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as orderPackagesAction from 'actions/order/package';
-import * as top10Action from 'actions/activity/top10';
+import * as topTenAction from 'actions/activity/topTen';
 
 
 const rootReducer = combineReducers({
@@ -86,7 +86,7 @@ const rootReducer = combineReducers({
   receiveRedpacket: createReducer(receiveRedpacketAction.name),
   usersRedpacket: createReducer(usersRedpacketAction.name),
   wechatSign: createReducer(wechatSignAction.name),
-  top10Model: createReducer(top10Action.name),
+  topTen: createReducer(topTenAction.name),
 });
 
 export default rootReducer;

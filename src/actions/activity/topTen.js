@@ -1,9 +1,9 @@
 import axios from 'axios';
 import createAction from '../createAction';
 
-export const name = 'TOP10_MODEL';
+export const name = 'TOPTEN';
 
-export const fetchTop10 = (activityId) => {
+export const fetchTopTen = (activityId) => {
   const action = createAction(name);
   const params = { promotion_id: activityId };
   return (dispatch) => {
@@ -13,7 +13,7 @@ export const fetchTop10 = (activityId) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

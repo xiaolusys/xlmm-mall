@@ -43,11 +43,11 @@ const setupWebViewJavascriptBridge = function(callback) {
     error: state.coupon.error,
     shareActivity: state.shareActivity,
     wechatSign: state.wechatSign,
-    top10Model: state.top10Model,
+    topTen: state.topTen,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class Top10Model extends Component {
+export default class TopTen extends Component {
 
   static propTypes = {
     data: React.PropTypes.any,
@@ -57,8 +57,8 @@ export default class Top10Model extends Component {
     fetchShareActivityInfo: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     resetCoupon: React.PropTypes.func,
-    top10Model: React.PropTypes.any,
-    fetchTop10: React.PropTypes.func,
+    topTen: React.PropTypes.any,
+    fetchTopTen: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -78,7 +78,7 @@ export default class Top10Model extends Component {
     const activityId = this.props.location.query.id;
     this.props.fetchWechatSign();
     this.props.fetchShareActivityInfo(activityId);
-    this.props.fetchTop10(activityId);
+    this.props.fetchTopTen(activityId);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -194,7 +194,7 @@ export default class Top10Model extends Component {
   }
 
   render() {
-    const modelData = this.props.top10Model.data || {};
+    const modelData = this.props.topTen.data || {};
     return (
       <div>
         <Header title={modelData.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
