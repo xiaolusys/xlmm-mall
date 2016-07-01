@@ -4,4 +4,4 @@ export A20160701 from './A20160701';
 export ExamHome from './Exam/Home';
 export ExamQuestion from './Exam/Question';
 export ExamResult from './Exam/Result';
-export Top10Model from './Top10Model';
+export TopTen from './TopTen';
