@@ -100,7 +100,11 @@ export default class TopTen extends Component {
       });
     }
     if (nextProps.error && !nextProps.isLoading) {
-      this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
+      if (utils.detector.isApp()) {
+        plugins.invoke({ method: 'jumpToNativeLogin' });
+      } else {
+        this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
+      }
     }
   }
 
