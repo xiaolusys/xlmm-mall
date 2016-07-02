@@ -108,7 +108,6 @@ export default class TopTen extends Component {
       } else {
         this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
       }
-      console.log(window.location.href);
     }
   }
 
