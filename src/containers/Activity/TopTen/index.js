@@ -57,7 +57,8 @@ export default class TopTen extends Component {
     fetchShareActivityInfo: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     resetCoupon: React.PropTypes.func,
-    topTen: React.PropTypes.any,
+    topTen: React.PropTypes.obejct,
+    shareActivity: React.PropTypes.obejct,
     fetchTopTen: React.PropTypes.func,
   };
 
@@ -150,9 +151,14 @@ export default class TopTen extends Component {
   }
 
   onShareBtnClick = (e) => {
-    const data = {
+    const { shareActivity } = this.props;
+    const shareData = {
+      share_title: shareActivity.data.title,
       share_to: '',
-      active_id: this.props.location.query.id,
+      share_desc: shareActivity.data.active_dec,
+      share_icon: shareActivity.data.share_icon,
+      share_type: 'link',
+      link: shareActivity.data.share_link,
     };
 
     if (utils.detector.isWechat()) {
@@ -163,13 +169,13 @@ export default class TopTen extends Component {
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
       if (appVersion < 20160528) {
-        window.AndroidBridge.callNativeUniShareFunc(data.share_to, data.active_id);
+        window.AndroidBridge.callNativeUniShareFunc(shareData);
         return;
       }
       if (utils.detector.isApp()) {
         plugins.invoke({
           method: 'callNativeUniShareFunc',
-          data: data,
+          data: shareData,
         });
         return;
       }
@@ -177,13 +183,13 @@ export default class TopTen extends Component {
     if (utils.detector.isIOS() && utils.detector.isApp()) {
       plugins.invoke({
         method: 'callNativeUniShareFunc',
-        data: data,
+        data: shareData,
       });
       return;
     }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('callNativeUniShareFunc', data, function(response) {});
+        bridge.callHandler('callNativeUniShareFunc', shareData, function(response) {});
       });
       return;
     }
