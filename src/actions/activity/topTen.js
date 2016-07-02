@@ -1,7 +1,7 @@
 import axios from 'axios';
 import createAction from '../createAction';
 
-export const name = 'TOPTEN';
+export const name = 'TOP_TEN';
 
 export const fetchTopTen = (activityId) => {
   const action = createAction(name);
