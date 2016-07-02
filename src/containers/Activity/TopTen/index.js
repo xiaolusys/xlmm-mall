@@ -102,9 +102,8 @@ export default class TopTen extends Component {
     if (nextProps.error && !nextProps.isLoading) {
       if (utils.detector.isApp() && utils.detector.isIOS()) {
         plugins.invoke({ method: 'jumpToNativeLogin' });
-
       } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
-        plugins.invoke({ method: 'callNativeLoginActivity', data: window.location.href });
+        window.AndroidBridge.callNativeLoginActivity(window.location.href);
       } else {
         this.context.router.replace(`/user/login?next=${this.props.location.pathname}`);
       }
