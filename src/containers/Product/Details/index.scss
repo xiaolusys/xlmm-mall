@@ -61,19 +61,22 @@
       }
     }
   }
-  .table {
-    font-size: 11px;
-    background-color: #fff;
-    margin-bottom: 8px;
-    > thead {
-      color: #fff;
-      background-color: #9b9b9b;
-      > tr > th {
-        border-bottom: none;
+  .table-container {
+    overflow-x: auto;
+    > .table {
+      font-size: 11px;
+      background-color: #fff;
+      margin-bottom: 8px;
+      > thead {
+        color: #fff;
+        background-color: #9b9b9b;
+        > tr > th {
+          border-bottom: none;
+        }
       }
-    }
-    > tbody {
-      color: #4a4a4a;
+      > tbody {
+        color: #4a4a4a;
+      }
     }
   }
   .shop-cart {

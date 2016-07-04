@@ -1,4 +1,10 @@
 $bar-border: #dadada !default;
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .hide {
   display: none !important;
 }
@@ -126,9 +132,11 @@ $bar-border: #dadada !default;
 .font-red {
   color: #f05050;
 }
+
 .font-green {
   color: #44AD35;
 }
+
 .font-blue {
   color: #05AAFF;
 }
