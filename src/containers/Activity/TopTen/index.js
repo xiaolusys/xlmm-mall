@@ -213,7 +213,7 @@ export default class TopTen extends Component {
         <div className="content clearfix activity-top10">
           <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={modelData.banner} />
           <If condition={!_.isEmpty(modelData.coupons)}>
-            <ul>
+            <ul className="coupon-list">
               {modelData.coupons.map((coupon, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
@@ -248,7 +248,7 @@ export default class TopTen extends Component {
             </ul>
           </If>
           <If condition={!_.isEmpty(modelData.productsHorizental)}>
-            <ul className="margin-top-xs">
+            <ul>
               {modelData.productsHorizental.map((product, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xxs" key={index} data-modelid={product.modelId} onClick={this.onProductClick}>
