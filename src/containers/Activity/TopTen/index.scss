@@ -10,6 +10,10 @@
       }
     }
   }
+  > .coupon-list {
+    padding: 0 16px;
+    background-color: #fff;
+  }
   .product-list-vertical {
     img:nth-child(2n+0) {
       padding: 0 8px 8px 4px;
