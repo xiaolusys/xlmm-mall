@@ -387,16 +387,18 @@ export default class Detail extends Component {
   renderProductSpec(rows) {
     const self = this;
     return (
-      <table className="table">
-        <thead>{self.renderRow(rows[0])}</thead>
-        <tbody>
-        {rows.map((cells, rowIndex) => {
-          if (rowIndex > 0) {
-            return self.renderRow(cells);
-          }
-        })}
-        </tbody>
-      </table>
+      <div className="table-container">
+        <table className="table">
+          <thead>{self.renderRow(rows[0])}</thead>
+          <tbody>
+          {rows.map((cells, rowIndex) => {
+            if (rowIndex > 0) {
+              return self.renderRow(cells);
+            }
+          })}
+          </tbody>
+        </table>
+      </div>
     );
   }
 
