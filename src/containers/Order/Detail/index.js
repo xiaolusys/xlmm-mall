@@ -170,6 +170,7 @@ export default class Detail extends Component {
 
   renderOrders(orders = []) {
     const trade = this.props.order.fetchOrder.data || {};
+    const self = this;
     return (
       orders.map((order, index) => {
         return (
