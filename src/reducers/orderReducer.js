@@ -66,8 +66,13 @@ export default (state = initState, action = null) => {
         fetchOrder: { isLoading: true, data: {}, error: false, success: false },
       });
     case orderAction.names.FETCH_ORDER + '_' + actionTypes.SUCCESS:
+      const payloads = action.payload;
+      _.map(payloads.orders, function(order, index) {
+        _.extend(order, (_.where(payloads.package_orders, { id: order.package_order_id })[0] || {}));
+      });
+      payloads.orders = _.groupBy(action.payload.orders, 'package_order_id');
       return _.extend({}, state, {
-        fetchOrder: { isLoading: false, data: action.payload, error: false, success: true },
+        fetchOrder: { isLoading: false, data: payloads, error: false, success: true },
       });
     case orderAction.names.FETCH_ORDER + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
