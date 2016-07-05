@@ -278,13 +278,13 @@ export default class Detail extends Component {
           </div>
           <div className="row no-margin bottom-border margin-top-xs logistics-company">
             <p className="col-xs-5 no-margin no-padding">物流配送</p>
-            <If condition={trade.status === '已付款'}>
+            <If condition={trade.status_display === '已付款'}>
               <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
                 <p className="col-xs-11 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
                 <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
               </div>
             </If>
-            <If condition={trade.status !== '已付款'}>
+            <If condition={trade.status_display !== '已付款'}>
               <p className="col-xs-7 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
             </If>
           </div>
