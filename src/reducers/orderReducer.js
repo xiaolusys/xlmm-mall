@@ -66,8 +66,20 @@ export default (state = initState, action = null) => {
         fetchOrder: { isLoading: true, data: {}, error: false, success: false },
       });
     case orderAction.names.FETCH_ORDER + '_' + actionTypes.SUCCESS:
+      const payloads = action.payload;
+      payloads.orders = _.groupBy(payloads.orders, 'package_order_id');
+      payloads.package_orders = _.groupBy(payloads.package_orders, 'id');
+      payloads.packages = _.map(payloads.orders, (order, key) => {
+        return {
+          id: key,
+          orders: order,
+          ...payloads.package_orders[key] && payloads.package_orders[key][0],
+        };
+      });
+      delete payloads.orders;
+      delete payloads.package_orders;
       return _.extend({}, state, {
-        fetchOrder: { isLoading: false, data: action.payload, error: false, success: true },
+        fetchOrder: { isLoading: false, data: payloads, error: false, success: true },
       });
     case orderAction.names.FETCH_ORDER + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {

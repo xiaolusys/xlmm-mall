@@ -18,12 +18,11 @@ import * as orderAction from 'actions/order/order';
 import * as payInfoAction from 'actions/order/logistics';
 import * as expressAction from 'actions/order/express';
 import * as updateExpressAction from 'actions/order/updateExpress';
-import * as orderPackagesAction from 'actions/order/package';
 import * as utils from 'utils';
 
 import './index.scss';
 
-const actionCreators = _.extend(payInfoAction, orderAction, expressAction, updateExpressAction, orderPackagesAction);
+const actionCreators = _.extend(payInfoAction, orderAction, expressAction, updateExpressAction);
 
 const orderOperations = {
   2: { tag: '申请退款', action: 'apply-return-money' },
@@ -36,7 +35,6 @@ const orderOperations = {
     order: state.order,
     express: state.express,
     updateExpress: state.updateExpress,
-    package: state.package,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -46,7 +44,6 @@ export default class Detail extends Component {
     location: React.PropTypes.any,
     express: React.PropTypes.any,
     updateExpress: React.PropTypes.any,
-    package: React.PropTypes.any,
     fetchLogisticsCompanies: React.PropTypes.func,
     changeLogisticsCompany: React.PropTypes.func,
     order: React.PropTypes.any,
@@ -56,7 +53,6 @@ export default class Detail extends Component {
     confirmReceivedOrder: React.PropTypes.func,
     remindShipment: React.PropTypes.func,
     resetRemindShipment: React.PropTypes.func,
-    fetchPackages: React.PropTypes.func,
     params: React.PropTypes.object,
   };
 
@@ -79,7 +75,6 @@ export default class Detail extends Component {
     const { tid, id } = this.props.location.query;
     this.props.fetchOrder(id);
     this.props.fetchLogisticsCompanies();
-    this.props.fetchPackages(tid);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -173,123 +168,76 @@ export default class Detail extends Component {
     });
   }
 
-  renderOrders(orders = []) {
+  renderOrders(packages = []) {
     const trade = this.props.order.fetchOrder.data || {};
-    const orderOperation = orderOperations[trade.status] || {};
-    return (
-      <div className="order-list">
-        {orders.map((order, index) => {
-          return (
-            <div key={order.id} className="row no-margin bottom-border">
-              <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
-                <div className="col-xs-3 no-padding">
-                  <img src={order.pic_path + constants.image.square} />
-                </div>
-                <div className="col-xs-9 no-padding">
-                  <p className="row no-margin">
-                    <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
-                    <span className="pull-right">{'￥' + order.total_fee}</span>
-                  </p>
-                  <p className="row no-margin font-grey">
-                    <span>{'尺码：' + order.sku_name}</span>
-                    <span className="pull-right">{'x' + order.num}</span>
-                  </p>
-                </div>
-              </If>
-              <If condition={order.status === 2 || order.status === 3 || order.status === 4}>
-                <div className="col-xs-3 no-padding">
-                  <img src={order.pic_path + constants.image.square} />
-                </div>
-                <div className="col-xs-6 no-padding">
-                  <p className="row no-margin">
-                    <span className="no-wrap no-padding">{order.title}</span>
-                  </p>
-                  <div className="row no-margin">
-                    <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
-                    <p className="pull-right">
-                      <span className="margin-right-xxs">{'￥' + order.total_fee}</span>
-                      <span className="font-grey">{'x' + order.num}</span>
-                    </p>
-                  </div>
-                </div>
-                <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
-                  <If condition={order.refund_status === 0}>
-                    <button className="button button-sm button-light" type="button" data-action={orderOperation.action} data-tradeid={trade.id} data-orderid={order.id} onClick={this.onOrderBtnClick}>{orderOperation.tag}</button>
-                  </If>
-                  <If condition={order.refund_status !== 0}>
-                    <div>{order.refund_status_display}</div>
-                  </If>
-                </div>
-              </If>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-
-  renderPackages(packages = []) {
-    const trade = this.props.order.fetchOrder.data || {};
-    const orderOperation = orderOperations[trade.status] || {};
     const { tid, id } = this.props.location.query;
+    const self = this;
     return (
       <div className="order-list">
       {_.map(packages, function(item, key) {
         return (
           <div key={key}>
-            <div className="row no-margin bottom-border">
-              <Link to={`/order/logistics/${tid}?key=${item[0].package_group_key}&companyCode=${item[0].out_sid}&id=${id}`}>
-                <p className="pull-left status font-grey">{'包裹' + key.substr(2, 1)}</p>
-                <p className="pull-right status font-orange">
-                  <span>{item[0].assign_status_display}</span>
-                  <i className="padding-top-xxs icon-angle-right icon-grey"></i>
-                </p>
-              </Link>
-            </div>
-            <ul>
-            {item.map((order, index) => {
+            <If condition={!(item.orders[0].status < 2 || item.assign_status_display === '已取消')}>
+              <div className="row no-margin bottom-border">
+                <Link to={`/order/logistics?key=${key}&packageId=${item.out_sid}&companyCode=${item.logistics_company && item.logistics_company.code}&id=${id}`}>
+                  <p className="pull-left status font-grey">{'包裹' + (Number(key) + 1)}</p>
+                  <p className="pull-right status font-orange">
+                    <span>{item.assign_status_display}</span>
+                    <i className="padding-top-xxs icon-angle-right icon-grey"></i>
+                  </p>
+                </Link>
+              </div>
+            </If>
+            {item.orders.map((order, index) => {
               return (
-                <div key={index} className="row no-margin bottom-border">
-                  <div className="col-xs-3 no-padding">
-                    <img src={order.pic_path + constants.image.square} />
-                  </div>
-                  <div className="col-xs-9 no-padding">
-                    <p className="row no-margin">
-                      <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
-                      <span className="pull-right">{'￥' + order.payment}</span>
-                    </p>
-                    <p className="row no-margin">
-                      <span className="col-xs-8 no-wrap no-padding">数量</span>
-                      <span className="pull-right">{'x' + order.num}</span>
-                    </p>
-                  </div>
+                <div key={order.id} className="row no-margin bottom-border">
+                  <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
+                    <div className="col-xs-3 no-padding">
+                      <img src={order.pic_path + constants.image.square} />
+                    </div>
+                    <div className="col-xs-9 no-padding">
+                      <p className="row no-margin">
+                        <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
+                        <span className="pull-right">{'￥' + order.total_fee}</span>
+                      </p>
+                      <p className="row no-margin font-grey">
+                        <span>{'尺码：' + order.sku_name}</span>
+                        <span className="pull-right">{'x' + order.num}</span>
+                      </p>
+                    </div>
+                  </If>
+                  <If condition={order.status === 2 || order.status === 3 || order.status === 4}>
+                    <div className="col-xs-3 no-padding">
+                      <img src={order.pic_path + constants.image.square} />
+                    </div>
+                    <div className="col-xs-6 no-padding">
+                      <p className="row no-margin">
+                        <span className="no-wrap no-padding">{order.title}</span>
+                      </p>
+                      <div className="row no-margin">
+                        <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
+                        <p className="pull-right">
+                          <span className="margin-right-xxs">{'￥' + order.total_fee}</span>
+                          <span className="font-grey">{'x' + order.num}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
+                      <If condition={order.refund_status === 0}>
+                        <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
+                      </If>
+                      <If condition={order.refund_status !== 0}>
+                        <div>{order.refund_status_display}</div>
+                      </If>
+                    </div>
+                  </If>
                 </div>
               );
             })}
-            </ul>
           </div>
         );
       })}
       </div>
-    );
-  }
-
-  renderLogistics() {
-    const order = this.props.order.fetchOrder.data;
-    const time = order.created || '';
-    const content = '订单创建成功';
-    return (
-      <Link to={'/order/logistics/' + order.tid}>
-      <Timeline className="logistics-info">
-        <TimelineItem className="row no-margin" headColor="yellow" tailColor="yellow">
-          <div className="col-xs-11 no-padding">
-          <p className="font-grey">{time.replace('T', ' ')}</p>
-          <p className="font-sm">{content}</p>
-          </div>
-          <i className="col-xs-1 no-padding margin-top-xs icon-angle-right icon-2x icon-grey pull-right"></i>
-        </TimelineItem>
-      </Timeline>
-      </Link>
     );
   }
 
@@ -307,8 +255,7 @@ export default class Detail extends Component {
     const receiver = trade.user_adress || {};
     const tradeOperation = constants.tradeOperations[trade.status] || {};
     const logisticsCompanies = express.data || [];
-    const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
-    const packages = _.groupBy(packagesOrders, 'package_group_key');
+    const packages = trade.packages || {};
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
@@ -331,21 +278,18 @@ export default class Detail extends Component {
           </div>
           <div className="row no-margin bottom-border margin-top-xs logistics-company">
             <p className="col-xs-5 no-margin no-padding">物流配送</p>
-            <If condition={trade.status === 2}>
+            <If condition={trade.status === '已付款'}>
               <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
                 <p className="col-xs-11 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
                 <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
               </div>
             </If>
-            <If condition={trade.status !== 2}>
+            <If condition={trade.status !== '已付款'}>
               <p className="col-xs-7 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
             </If>
           </div>
-          <If condition={_.isEmpty(packages)}>
-            {this.renderOrders(trade.orders)}
-          </If>
           <If condition={!_.isEmpty(packages)}>
-            {this.renderPackages(packages)}
+            {this.renderOrders(packages)}
           </If>
           <div className="price-info">
             <p>
