@@ -168,7 +168,60 @@ export default class Detail extends Component {
     });
   }
 
-  renderOrders(packages = []) {
+  renderOrders(orders = []) {
+    const trade = this.props.order.fetchOrder.data || {};
+    const self = this;
+    return (
+      orders.map((order, index) => {
+        return (
+          <div key={order.id} className="row no-margin bottom-border">
+            <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
+              <div className="col-xs-3 no-padding">
+                <img src={order.pic_path + constants.image.square} />
+              </div>
+              <div className="col-xs-9 no-padding">
+                <p className="row no-margin">
+                  <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
+                  <span className="pull-right">{'￥' + order.total_fee}</span>
+                </p>
+                <p className="row no-margin font-grey">
+                  <span>{'尺码：' + order.sku_name}</span>
+                  <span className="pull-right">{'x' + order.num}</span>
+                </p>
+              </div>
+            </If>
+            <If condition={order.status === 2 || order.status === 3 || order.status === 4}>
+              <div className="col-xs-3 no-padding">
+                <img src={order.pic_path + constants.image.square} />
+              </div>
+              <div className="col-xs-6 no-padding">
+                <p className="row no-margin">
+                  <span className="no-wrap no-padding">{order.title}</span>
+                </p>
+                <div className="row no-margin">
+                  <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
+                  <p className="pull-right">
+                    <span className="margin-right-xxs">{'￥' + order.total_fee}</span>
+                    <span className="font-grey">{'x' + order.num}</span>
+                  </p>
+                </div>
+              </div>
+              <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
+                <If condition={order.refund_status === 0}>
+                  <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
+                </If>
+                <If condition={order.refund_status !== 0}>
+                  <div>{order.refund_status_display}</div>
+                </If>
+              </div>
+            </If>
+          </div>
+        );
+      })
+    );
+  }
+
+  renderPackages(packages = []) {
     const trade = this.props.order.fetchOrder.data || {};
     const { tid, id } = this.props.location.query;
     const self = this;
@@ -177,7 +230,7 @@ export default class Detail extends Component {
       {_.map(packages, function(item, key) {
         return (
           <div key={key}>
-            <If condition={!(item.orders[0].status < 2 || item.assign_status_display === '已取消')}>
+            <If condition={!(item.id === '' || item.assign_status_display === '已取消')}>
               <div className="row no-margin bottom-border">
                 <Link to={`/order/logistics?key=${key}&packageId=${item.out_sid}&companyCode=${item.logistics_company && item.logistics_company.code}&id=${id}`}>
                   <p className="pull-left status font-grey">{'包裹' + (Number(key) + 1)}</p>
@@ -188,52 +241,7 @@ export default class Detail extends Component {
                 </Link>
               </div>
             </If>
-            {item.orders.map((order, index) => {
-              return (
-                <div key={order.id} className="row no-margin bottom-border">
-                  <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
-                    <div className="col-xs-3 no-padding">
-                      <img src={order.pic_path + constants.image.square} />
-                    </div>
-                    <div className="col-xs-9 no-padding">
-                      <p className="row no-margin">
-                        <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
-                        <span className="pull-right">{'￥' + order.total_fee}</span>
-                      </p>
-                      <p className="row no-margin font-grey">
-                        <span>{'尺码：' + order.sku_name}</span>
-                        <span className="pull-right">{'x' + order.num}</span>
-                      </p>
-                    </div>
-                  </If>
-                  <If condition={order.status === 2 || order.status === 3 || order.status === 4}>
-                    <div className="col-xs-3 no-padding">
-                      <img src={order.pic_path + constants.image.square} />
-                    </div>
-                    <div className="col-xs-6 no-padding">
-                      <p className="row no-margin">
-                        <span className="no-wrap no-padding">{order.title}</span>
-                      </p>
-                      <div className="row no-margin">
-                        <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
-                        <p className="pull-right">
-                          <span className="margin-right-xxs">{'￥' + order.total_fee}</span>
-                          <span className="font-grey">{'x' + order.num}</span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
-                      <If condition={order.refund_status === 0}>
-                        <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
-                      </If>
-                      <If condition={order.refund_status !== 0}>
-                        <div>{order.refund_status_display}</div>
-                      </If>
-                    </div>
-                  </If>
-                </div>
-              );
-            })}
+            {self.renderOrders(item.orders)}
           </div>
         );
       })}
@@ -278,18 +286,18 @@ export default class Detail extends Component {
           </div>
           <div className="row no-margin bottom-border margin-top-xs logistics-company">
             <p className="col-xs-5 no-margin no-padding">物流配送</p>
-            <If condition={trade.status === '已付款'}>
+            <If condition={trade.status_display === '已付款'}>
               <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
                 <p className="col-xs-11 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
                 <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
               </div>
             </If>
-            <If condition={trade.status !== '已付款'}>
+            <If condition={trade.status_display !== '已付款'}>
               <p className="col-xs-7 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
             </If>
           </div>
           <If condition={!_.isEmpty(packages)}>
-            {this.renderOrders(packages)}
+            {this.renderPackages(packages)}
           </If>
           <div className="price-info">
             <p>
