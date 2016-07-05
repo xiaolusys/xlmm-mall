@@ -40,7 +40,6 @@ import * as shareRedpacketAction from 'actions/order/shareRedpacket';
 import * as receiveRedpacketAction from 'actions/order/receiveRedpacket';
 import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
-import * as orderPackagesAction from 'actions/order/package';
 import * as topTenAction from 'actions/activity/topTen';
 
 
@@ -81,7 +80,6 @@ const rootReducer = combineReducers({
   refundsApply: createReducer(refundsApplyAction.names.REFUNDS_APPLY),
   refundsOrder: createReducer(refundsApplyAction.names.FETCH_ORDER),
   exam: examReducer,
-  package: createReducer(orderPackagesAction.name),
   shareRedpacket: createReducer(shareRedpacketAction.name),
   receiveRedpacket: createReducer(receiveRedpacketAction.name),
   usersRedpacket: createReducer(usersRedpacketAction.name),

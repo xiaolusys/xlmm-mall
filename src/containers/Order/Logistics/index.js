@@ -49,14 +49,13 @@ export default class Logistics extends Component {
   }
 
   componentWillMount() {
-    const packageGroupKey = this.props.location.query.key;
+    const packageId = this.props.location.query.packageId;
     const companyCode = this.props.location.query.companyCode;
     this.props.fetchOrder(this.props.location.query.id);
-    this.props.fetchLogistics(packageGroupKey, companyCode);
+    this.props.fetchLogistics(packageId, companyCode);
   }
 
   componentWillReceiveProps(nextProps) {
-    const packageGroupKey = this.props.location.query.key;
     const fetchOrder = nextProps.order.fetchOrder;
     const orderData = fetchOrder.data;
     if (nextProps.logistics.isLoading || fetchOrder.isLoading) {
@@ -87,13 +86,12 @@ export default class Logistics extends Component {
     return _.union(logisticsInfo, timeList);
   }
 
-  renderPackages(packages = [], packageGroupKey) {
-    const tradeId = this.props.params.tradeId;
+  renderPackages(packages = [], key) {
     return (
       <div className="margin-top-xs order-list">
-        {packages[packageGroupKey].map((order, i) => {
+        {packages[key].orders.map((order, index) => {
           return (
-            <div key={i} className="row no-margin bottom-border">
+            <div key={index} className="row no-margin bottom-border">
               <div className="col-xs-3 no-padding">
                 <img src={order.pic_path + constants.image.square} />
               </div>
@@ -117,23 +115,22 @@ export default class Logistics extends Component {
   render() {
     const { logistics, isLoading } = this.props || {};
     const logisticsInfo = this.dealTimeList();
-    const { tradeId } = this.props.params;
-    const packageGroupKey = this.props.location.query.key;
+    const key = this.props.location.query.key;
     const trade = this.props.order.fetchOrder.data || {};
-    const packages = trade.orders || {};
+    const packages = trade.packages || {};
     return (
       <div>
         <Header title="物流信息" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content package-content">
-            <If condition={!_.isEmpty(packages)}>
-              <p className="express-item bottom-border"><span>快递公司</span><span className="pull-right">{packages[packageGroupKey][0].logistics_company && packages[packageGroupKey][0].logistics_company.name || '小鹿推荐'}</span></p>
-              <If condition={packages[packageGroupKey][0].logistics_company_code}>
-                <p className="express-item bottom-border"><span>快递单号</span><span className="pull-right">{logistics.order || '暂无'}</span></p>
+            <If condition={!_.isEmpty(packages[key])}>
+              <p className="express-item bottom-border"><span>快递公司</span><span className="pull-right">{packages[key].logistics_company && packages[key].logistics_company.name || '小鹿推荐'}</span></p>
+              <If condition={logistics.data && logistics.data.order}>
+                <p className="express-item bottom-border"><span>快递单号</span><span className="pull-right">{logistics.data && logistics.data.order || '暂无'}</span></p>
               </If>
-              <If condition={!packages[packageGroupKey][0].logistics_company_code}>
-                <p className="express-item bottom-border"><span>包裹状态</span><span className="pull-right font-orange">{packages[packageGroupKey][0].assign_status_display}</span></p>
+              <If condition={!(logistics.data && logistics.data.order)}>
+                <p className="express-item bottom-border"><span>包裹状态</span><span className="pull-right font-orange">{packages[key].assign_status_display}</span></p>
               </If>
-              {this.renderPackages(packages, packageGroupKey)}
+              {this.renderPackages(packages, key)}
             </If>
             <If condition={!_.isEmpty(logisticsInfo)}>
               <div className="logistics-item margin-top-xs">

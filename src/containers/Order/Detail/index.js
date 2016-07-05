@@ -35,7 +35,6 @@ const orderOperations = {
     order: state.order,
     express: state.express,
     updateExpress: state.updateExpress,
-    package: state.package,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -45,7 +44,6 @@ export default class Detail extends Component {
     location: React.PropTypes.any,
     express: React.PropTypes.any,
     updateExpress: React.PropTypes.any,
-    package: React.PropTypes.any,
     fetchLogisticsCompanies: React.PropTypes.func,
     changeLogisticsCompany: React.PropTypes.func,
     order: React.PropTypes.any,
@@ -172,7 +170,6 @@ export default class Detail extends Component {
 
   renderOrders(packages = []) {
     const trade = this.props.order.fetchOrder.data || {};
-    const orderOperation = orderOperations[trade.status] || {};
     const { tid, id } = this.props.location.query;
     const self = this;
     return (
@@ -180,18 +177,18 @@ export default class Detail extends Component {
       {_.map(packages, function(item, key) {
         return (
           <div key={key}>
-            <If condition={item[0].status >= 2}>
+            <If condition={!(item.orders[0].status < 2 || item.assign_status_display === '已取消')}>
               <div className="row no-margin bottom-border">
-                <Link to={`/order/logistics/${tid}?key=${key}&companyCode=${item[0].out_sid}&id=${id}`}>
-                  <p className="pull-left status font-grey">{'包裹' + key}</p>
+                <Link to={`/order/logistics?key=${key}&packageId=${item.out_sid}&companyCode=${item.logistics_company && item.logistics_company.code}&id=${id}`}>
+                  <p className="pull-left status font-grey">{'包裹' + (Number(key) + 1)}</p>
                   <p className="pull-right status font-orange">
-                    <span>{item[0].assign_status_display}</span>
+                    <span>{item.assign_status_display}</span>
                     <i className="padding-top-xxs icon-angle-right icon-grey"></i>
                   </p>
                 </Link>
               </div>
             </If>
-            {item.map((order, index) => {
+            {item.orders.map((order, index) => {
               return (
                 <div key={order.id} className="row no-margin bottom-border">
                   <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
@@ -227,7 +224,7 @@ export default class Detail extends Component {
                     </div>
                     <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
                       <If condition={order.refund_status === 0}>
-                        <button className="button button-sm button-light" type="button" data-action={orderOperation.action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperation.tag}</button>
+                        <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
                       </If>
                       <If condition={order.refund_status !== 0}>
                         <div>{order.refund_status_display}</div>
@@ -241,25 +238,6 @@ export default class Detail extends Component {
         );
       })}
       </div>
-    );
-  }
-
-  renderLogistics() {
-    const order = this.props.order.fetchOrder.data;
-    const time = order.created || '';
-    const content = '订单创建成功';
-    return (
-      <Link to={'/order/logistics/' + order.tid}>
-      <Timeline className="logistics-info">
-        <TimelineItem className="row no-margin" headColor="yellow" tailColor="yellow">
-          <div className="col-xs-11 no-padding">
-          <p className="font-grey">{time.replace('T', ' ')}</p>
-          <p className="font-sm">{content}</p>
-          </div>
-          <i className="col-xs-1 no-padding margin-top-xs icon-angle-right icon-2x icon-grey pull-right"></i>
-        </TimelineItem>
-      </Timeline>
-      </Link>
     );
   }
 
@@ -277,8 +255,7 @@ export default class Detail extends Component {
     const receiver = trade.user_adress || {};
     const tradeOperation = constants.tradeOperations[trade.status] || {};
     const logisticsCompanies = express.data || [];
-    const packagesOrders = _.isEmpty(this.props.package.data) ? [] : this.props.package.data;
-    const packages = trade.orders || {};
+    const packages = trade.packages || {};
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
@@ -301,13 +278,13 @@ export default class Detail extends Component {
           </div>
           <div className="row no-margin bottom-border margin-top-xs logistics-company">
             <p className="col-xs-5 no-margin no-padding">物流配送</p>
-            <If condition={trade.status === 2}>
+            <If condition={trade.status === '已付款'}>
               <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
                 <p className="col-xs-11 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
                 <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
               </div>
             </If>
-            <If condition={trade.status !== 2}>
+            <If condition={trade.status !== '已付款'}>
               <p className="col-xs-7 no-margin no-padding text-right">{this.state.logisticsCompanyName}</p>
             </If>
           </div>
