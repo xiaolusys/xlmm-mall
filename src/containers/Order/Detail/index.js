@@ -230,7 +230,7 @@ export default class Detail extends Component {
       {_.map(packages, function(item, key) {
         return (
           <div key={key}>
-            <If condition={!(item.orders[0].status < 2 || item.assign_status_display === '已取消')}>
+            <If condition={!(item.id === '' || item.assign_status_display === '已取消')}>
               <div className="row no-margin bottom-border">
                 <Link to={`/order/logistics?key=${key}&packageId=${item.out_sid}&companyCode=${item.logistics_company && item.logistics_company.code}&id=${id}`}>
                   <p className="pull-left status font-grey">{'包裹' + (Number(key) + 1)}</p>
