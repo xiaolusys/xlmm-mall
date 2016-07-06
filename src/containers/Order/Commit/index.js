@@ -275,7 +275,7 @@ export default class Commit extends Component {
     if (totalPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       totalPrice = totalPrice - coupon.data.coupon_value;
     }
-    return totalPrice;
+    return totalPrice.toFixed(2);
   }
 
   getDiscountValue() {
