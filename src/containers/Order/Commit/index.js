@@ -79,9 +79,9 @@ export default class Commit extends Component {
   }
 
   componentWillMount() {
-    const { addressId, couponId } = this.props.location.query;
+    const { cartIds, addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
-    this.props.fetchPayInfo(this.props.location.query.cartIds);
+    this.props.fetchPayInfo(cartIds);
     if (couponId) {
       this.props.fetchCouponById(couponId);
     }
@@ -358,7 +358,7 @@ export default class Commit extends Component {
     const channels = this.props.payInfo.data.channels || [];
     const { pathname, query } = this.props.location;
     const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.couponId ? '&couponId=' + query.couponId : ''));
-    const couponLink = '/user/coupons?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.addressId ? '&addressId=' + query.addressId : ''));
+    const couponLink = '/user/coupons?cartIds=' + query.cartIds + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.addressId ? '&addressId=' + query.addressId : ''));
     return (
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
