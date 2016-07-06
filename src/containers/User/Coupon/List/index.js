@@ -35,6 +35,7 @@ export default class List extends Component {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
     dispatch: React.PropTypes.func,
+    coupon: React.PropTypes.any,
     coupons: React.PropTypes.any,
     fetchCouponsByStatus: React.PropTypes.func,
     verifyCoupon: React.PropTypes.func,
