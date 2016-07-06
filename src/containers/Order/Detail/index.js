@@ -12,6 +12,7 @@ import { BottomBar } from 'components/BottomBar';
 import { Toast } from 'components/Toast';
 import { Timer } from 'components/Timer';
 import { Timeline, TimelineItem } from 'components/Timeline';
+import { Popup } from 'components/Popup';
 import { LogisticsPopup } from 'components/LogisticsPopup';
 import moment from 'moment';
 import * as orderAction from 'actions/order/order';
@@ -69,6 +70,7 @@ export default class Detail extends Component {
     logisticsPopupShow: false,
     logisticsCompanyName: '',
     logisticsCompanyCode: '',
+    isShowPopup: false,
   }
 
   componentWillMount() {
@@ -119,6 +121,17 @@ export default class Detail extends Component {
     e.preventDefault();
   }
 
+  onShowPopupClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    this.setState({ isShowPopup: true, tradeid: dataSet.tradeid, orderid: dataSet.orderid, action: dataSet.action });
+    e.preventDefault();
+  }
+
+  onColsePopupClick = (e) => {
+    this.setState({ isShowPopup: false });
+    e.preventDefault();
+  }
+
   onTradesBtnClick = (e) => {
     const dataSet = e.currentTarget.dataset;
     const { router } = this.context;
@@ -135,17 +148,17 @@ export default class Detail extends Component {
   }
 
   onOrderBtnClick = (e) => {
-    const dataSet = e.currentTarget.dataset;
+    const state = this.state;
     const { router } = this.context;
-    switch (dataSet.action) {
+    switch (state.action) {
       case orderOperations['2'].action:
-        router.push(`/refunds/apply/${dataSet.tradeid}/${dataSet.orderid}`);
+        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}`);
         break;
       case orderOperations['3'].action:
-        this.props.confirmReceivedOrder(this.props.location.query.id, dataSet.orderid);
+        this.props.confirmReceivedOrder(this.props.location.query.id, state.orderid);
         break;
       case orderOperations['4'].action:
-        router.push(`/refunds/apply/${dataSet.tradeid}/${dataSet.orderid}`);
+        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}`);
         break;
       default:
         break;
@@ -196,7 +209,7 @@ export default class Detail extends Component {
               </div>
               <div className="col-xs-6 no-padding">
                 <p className="row no-margin">
-                  <span className="no-wrap no-padding">{order.title}</span>
+                  <span className="col-xs-12 no-wrap no-padding">{order.title}</span>
                 </p>
                 <div className="row no-margin">
                   <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
@@ -208,7 +221,7 @@ export default class Detail extends Component {
               </div>
               <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
                 <If condition={order.refund_status === 0}>
-                  <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
+                  <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onShowPopupClick}>{orderOperations[order.status].tag}</button>
                 </If>
                 <If condition={order.refund_status !== 0}>
                   <div>{order.refund_status_display}</div>
@@ -332,6 +345,27 @@ export default class Detail extends Component {
           </If>
         </div>
         </If>
+        <Popup active={this.state.isShowPopup}>
+          <div className="col-xs-12 bottom-border padding-bottom-xxs">
+            <i className="col-xs-1 margin-top-xxs no-padding icon-1x text-left icon-close font-orange" onClick={this.onColsePopupClick}></i>
+            <p className="col-xs-11 no-margin padding-top-xxs text-center font-lg">退款方式</p>
+          </div>
+          <If condition={!_.isEmpty(trade.extras && trade.extras.refund_choices)}>
+            <ul>
+            {trade.extras.refund_choices.map((item, index) => {
+              return (
+                <li className="row bottom-border" onClick={this.onOrderBtnClick}>
+                  <i className="col-xs-2 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-blue" onClick={this.onColsePopupClick}></i>
+                  <div className="col-xs-10">
+                    <p className="no-margin">{item.name}</p>
+                    <p className="no-margin font-xs font-grey">{item.desc}</p>
+                  </div>
+                </li>
+              );
+            })}
+            </ul>
+          </If>
+        </Popup>
         <LogisticsPopup active={this.state.logisticsPopupShow} companies={logisticsCompanies} onItemClick={this.onLogisticsCompanyChange} onColsePopupClick={this.onColseLogisticsPopupClick}/>
       </div>
     );
