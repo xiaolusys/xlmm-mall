@@ -2,15 +2,20 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import * as utils from 'utils';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 import { Loader } from 'components/Loader';
 import { Coupon } from 'components/Coupon';
-import * as actionCreators from 'actions/user/coupons';
+import { Toast } from 'components/Toast';
+import * as couponsAction from 'actions/user/coupons';
+import * as couponAction from 'actions/user/coupon';
 import * as constants from 'constants';
 
 import './index.scss';
+
+const actionCreators = _.extend(couponAction, couponsAction);
 const couponTypes = {
   0: '可用优惠劵',
   1: '已用优惠劵',
@@ -20,6 +25,7 @@ const couponTypes = {
 
 @connect(
   state => ({
+    coupon: state.coupon,
     coupons: state.coupons,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -29,8 +35,10 @@ export default class List extends Component {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
     dispatch: React.PropTypes.func,
+    coupon: React.PropTypes.any,
     coupons: React.PropTypes.any,
     fetchCouponsByStatus: React.PropTypes.func,
+    verifyCoupon: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -52,13 +60,32 @@ export default class List extends Component {
     this.props.fetchCouponsByStatus(couponStatus.expired);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { coupons, coupon } = nextProps;
+    const { query } = this.props.location;
+    const state = this.state;
+    if (coupon.success && coupon.data) {
+      if (coupon.data.coupon_message) {
+        Toast.show(coupon.data.coupon_message);
+      } else {
+        this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&couponId=${state.couponid}` : `${query.next}?couponId=${state.couponid}`);
+      }
+    }
+    if (coupon.isLoading || coupons.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+  }
+
   onCouponItemClick = (e) => {
     const { query } = this.props.location;
     const { status, id } = e.currentTarget.dataset;
     if (!query.next || Number(status) !== constants.couponStatus.available) {
       return;
     }
-    this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&couponId=${id}` : `${query.next}?couponId=${id}`);
+    this.setState({ couponid: id });
+    this.props.verifyCoupon(query.cartIds, id);
     e.preventDefault();
   }
 
