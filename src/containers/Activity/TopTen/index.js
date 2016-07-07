@@ -153,7 +153,7 @@ export default class TopTen extends Component {
       });
       return;
     }
-    this.context.router.push(`/product/details/${modelId}`);
+    window.location.href = `/mall/product/details/${modelId}`;
   }
 
   onShareBtnClick = (e) => {
