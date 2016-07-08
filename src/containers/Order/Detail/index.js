@@ -14,6 +14,7 @@ import { Timer } from 'components/Timer';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import { Popup } from 'components/Popup';
 import { LogisticsPopup } from 'components/LogisticsPopup';
+import { Checkbox } from 'components/Checkbox';
 import moment from 'moment';
 import * as orderAction from 'actions/order/order';
 import * as payInfoAction from 'actions/order/logistics';
@@ -71,6 +72,7 @@ export default class Detail extends Component {
     logisticsCompanyName: '',
     logisticsCompanyCode: '',
     isShowPopup: false,
+    refundChecked: false,
   }
 
   componentWillMount() {
@@ -121,9 +123,20 @@ export default class Detail extends Component {
     e.preventDefault();
   }
 
+  onRefudWayChangeClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    this.setState({ refundChannel: dataSet.channel, refundChecked: true });
+  }
+
   onShowPopupClick = (e) => {
     const dataSet = e.currentTarget.dataset;
-    this.setState({ isShowPopup: true, tradeid: dataSet.tradeid, orderid: dataSet.orderid, action: dataSet.action });
+    if (dataSet.action === 'confirm') {
+      this.setState({ isShowPopup: false });
+      this.onOrderBtnClick();
+    } else {
+      this.setState({ isShowPopup: true, tradeid: dataSet.tradeid, orderid: dataSet.orderid, action: dataSet.action });
+    }
+
     e.preventDefault();
   }
 
@@ -150,19 +163,24 @@ export default class Detail extends Component {
   onOrderBtnClick = (e) => {
     const state = this.state;
     const { router } = this.context;
+    if (!state.refundChecked) {
+      Toast.show('请选择退款方式');
+      return;
+    }
     switch (state.action) {
       case orderOperations['2'].action:
-        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}`);
+        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}?refundChannel=${state.refundChannel}`);
         break;
       case orderOperations['3'].action:
         this.props.confirmReceivedOrder(this.props.location.query.id, state.orderid);
         break;
       case orderOperations['4'].action:
-        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}`);
+        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}?refundChannel=${state.refundChannel}`);
         break;
       default:
         break;
     }
+    e.preventDefault();
   }
 
   getClosedDate = (dateString) => {
@@ -354,16 +372,22 @@ export default class Detail extends Component {
             <ul>
             {trade.extras.refund_choices.map((item, index) => {
               return (
-                <li className="row bottom-border" onClick={this.onOrderBtnClick}>
-                  <i className="col-xs-2 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-blue" onClick={this.onColsePopupClick}></i>
-                  <div className="col-xs-10">
+                <li className="row bottom-border" data-pic={item.pic} data-desc={item.desc} data-name={item.name} data-channel={item.refund_channel} onClick={this.onRefudWayChangeClick}>
+                  <i className="col-xs-2 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-blue"></i>
+                  <div className="col-xs-8 margin-top-xxs margin-bottom-xxs font-xxs">
                     <p className="no-margin">{item.name}</p>
-                    <p className="no-margin font-xs font-grey">{item.desc}</p>
+                    <p className="no-margin font-grey">{item.desc}</p>
+                  </div>
+                  <div className="col-xs-2 margin-top-xs">
+                    <Checkbox className="col-xs-4 padding-top-xs no-padding" value={item.refund_channel} checked={this.state.refundChannel === item.refund_channel}/>
                   </div>
                 </li>
               );
             })}
             </ul>
+            <div className="row no-margin">
+              <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.onOrderBtnClick} disabled={this.state.save}>确定</button>
+            </div>
           </If>
         </Popup>
         <LogisticsPopup active={this.state.logisticsPopupShow} companies={logisticsCompanies} onItemClick={this.onLogisticsCompanyChange} onColsePopupClick={this.onColseLogisticsPopupClick}/>
