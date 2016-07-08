@@ -10,6 +10,7 @@ import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import { Popup } from 'components/Popup';
 import { Toast } from 'components/Toast';
+import { Dialog } from 'components/Dialog';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as utils from 'utils';
 import * as actionCreators from 'actions/refunds/apply';
@@ -36,24 +37,15 @@ const reasons = {
 
 @connect(
   state => ({
-    order: {
-      data: state.refundsOrder.data,
-      isLoading: state.refundsOrder.isLoading,
-      error: state.refundsOrder.error,
-      success: state.refundsOrder.success,
-    },
-    apply: {
-      data: state.refundsApply.data,
-      isLoading: state.refundsApply.isLoading,
-      error: state.refundsApply.error,
-      success: state.refundsApply.success,
-    },
+    order: state.refundsOrder,
+    apply: state.refundsApply,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export default class Apply extends Component {
   static propTypes = {
     children: React.PropTypes.array,
+    location: React.PropTypes.any,
     order: React.PropTypes.any,
     apply: React.PropTypes.any,
     params: React.PropTypes.object,
@@ -83,6 +75,7 @@ export default class Apply extends Component {
     description: '',
     proof_pic: [],
     reasonChange: true,
+    isShowDialog: false,
   }
 
   componentWillMount() {
@@ -115,6 +108,7 @@ export default class Apply extends Component {
   onSubmitBtnClick = (e) => {
     const { order } = this.props;
     const state = this.state;
+    const channel = this.props.location.query.refundChannel;
     const params = {
       id: order.data.id,
       reason: state.reasonIndex,
@@ -122,8 +116,13 @@ export default class Apply extends Component {
       sum_price: order.data.sum_price,
       description: state.description,
       proof_pic: '',
+      refund_channel: channel,
     };
-    this.props.pushRefundsApply(params);
+    if (channel === 'budget') {
+      this.setState({ isShowDialog: true });
+    } else {
+      this.props.pushRefundsApply(params);
+    }
     e.preventDefault();
   }
 
@@ -136,6 +135,30 @@ export default class Apply extends Component {
 
   onDesciptionChange = (e) => {
     this.setState({ description: e.target.value });
+    e.preventDefault();
+  }
+
+  onCancelBtnClick = (e) => {
+    this.setState({ isShowDialog: false, isShowPopup: true });
+    e.preventDefault();
+  }
+
+  onAgreeBtnClick = (e) => {
+    // this.context.router.push(`/refunds/apply/${state.tradeid}/${state.orderid}?refundChannel=${state.refundChannel}`);
+    const { order } = this.props;
+    const state = this.state;
+    const channel = this.props.location.query.refundChannel;
+    const params = {
+      id: order.data.id,
+      reason: state.reasonIndex,
+      num: state.num,
+      sum_price: order.data.sum_price,
+      description: state.description,
+      proof_pic: '',
+      refund_channel: channel,
+    };
+    this.setState({ isShowDialog: false });
+    this.props.pushRefundsApply(params);
     e.preventDefault();
   }
 
@@ -165,6 +188,7 @@ export default class Apply extends Component {
 
   render() {
     const { isLoading, order, apply } = this.props;
+    const channel = this.props.location.query.refundChannel;
     let statusList = [];
     const reasonCls = classnames('col-xs-10', {
       'font-grey-light': this.state.reasonChange,
@@ -172,46 +196,57 @@ export default class Apply extends Component {
     if (!_.isEmpty(order.data.status_shaft)) {
       statusList = order.data.status_shaft.reverse();
     }
+    let refundWay = {};
+    if (order.data && order.data.extras) {
+      refundWay = _.where(order.data.extras.refund_choices, { refund_channel: channel })[0];
+    }
     return (
       <div className="refunds-apply">
-        <Header title={titles[apply.data.status] || ''} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title={'申请' + refundWay.name} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
+          <div className="row no-margin bottom-border content-white-bg">
+            <i className="col-xs-2 icon-3x text-center icon-refund-top-speed font-blue"></i>
+            <div className="col-xs-10 padding-top-xxs padding-bottom-xxs padding-left-xs">
+              <p className="no-margin">{refundWay.name}</p>
+              <p className="no-margin word-break font-grey font-xxs">{refundWay.desc}</p>
+            </div>
+          </div>
           <ul className="refunds-apply-list">
-            <li className="row col-xs-12 no-margin bottom-border">
+            <li className="row no-margin bottom-border">
               <div className="col-xs-3">
                 <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
               </div>
-              <div className="col-xs-9 no-padding">
-                <p className="row no-margin padding-top-xxs padding-bottom-xxs padding-left-xxs">
-                  <span className="col-xs-9 no-wrap padding-left-xs">{order.data.title}</span>
-                  <span className="col-xs-3 no-padding text-right">{'¥' + order.data.total_fee}</span>
+              <div className="col-xs-9">
+                <p className="row no-margin margin-top-xxs margin-bottom-xxs">
+                  <span className="col-xs-9 no-padding no-wrap">{order.data.title}</span>
+                  <span className="col-xs-3 text-right">{'¥' + order.data.total_fee}</span>
                 </p>
-                <p className="row no-margin font-grey-light padding-left-xxs">
-                  <span className="col-xs-9 padding-left-xs">尺码: {order.data.sku_name}</span>
-                  <span className="col-xs-3 no-padding text-right">x1</span>
+                <p className="row font-grey-light">
+                  <span className="col-xs-9">尺码: {order.data.sku_name}</span>
+                  <span className="col-xs-3 text-right">x1</span>
                 </p>
               </div>
             </li>
-            <li className="row col-xs-12 no-margin bottom-border">
+            <li className="row no-margin no-padding bottom-border">
               <p className="col-xs-6 no-margin">申请数量</p>
-              <p className="col-xs-6 no-margin no-padding text-right font-grey-light">
+              <p className="col-xs-6 no-margin text-right font-grey-light">
                 <i className="icon-minus padding-right-xxs font-orange" onClick={this.numMinus}></i>
                 <span className="padding-right-xxs">{this.state.num}</span>
                 <i className="icon-plus font-orange" onClick={this.numPlus}></i>
               </p>
             </li>
-            <li className="row col-xs-12 no-margin bottom-border">
+            <li className="row no-margin no-padding bottom-border">
               <p className="col-xs-4 no-margin">可退金额</p>
-              <p className="col-xs-8 no-margin no-padding text-right font-orange">{'¥' + order.data.payment}</p>
+              <p className="col-xs-8 no-margin text-right font-orange">{'¥' + order.data.payment}</p>
             </li>
-            <li className="row col-xs-12 no-margin margin-top-xs bottom-border">
+            <li className="row no-margin margin-top-xs no-padding bottom-border">
               <p className="col-xs-4 no-margin">退款原因</p>
             </li>
-            <li className="row col-xs-12 no-margin bottom-border refund-reason" onClick={this.showPopup}>
+            <li className="row no-margin no-padding bottom-border refund-reason" onClick={this.showPopup}>
               <div className={ reasonCls } onChange={this.onVerifyCodeChange}>{this.state.reason}</div>
-              <i className="col-xs-2 no-padding icon-angle-down font-grey-light text-right"></i>
+              <i className="col-xs-2 icon-angle-down font-grey-light text-right"></i>
             </li>
-            <li className="row col-xs-12 no-margin bottom-border refunds-desc">
+            <li className="row no-margin no-padding bottom-border refunds-desc">
               <textarea className="col-xs-12 border-none" type="text" placeholder="请输入退款说明" onChange={this.onDesciptionChange} />
             </li>
           </ul>
@@ -233,6 +268,7 @@ export default class Apply extends Component {
               </div>
             </div>
           </Popup>
+          <Dialog active={this.state.isShowDialog} title="小鹿极速退款说明" content="小鹿极速退款，款项将快速返回至小鹿帐户。该退款14天内只能用于购买，不可体现。" onCancelBtnClick={this.onCancelBtnClick} onAgreeBtnClick={this.onAgreeBtnClick}/>
           <div className="row no-margin">
             <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.onSubmitBtnClick}>提交</button>
           </div>
