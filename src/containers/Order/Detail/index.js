@@ -128,15 +128,14 @@ export default class Detail extends Component {
     this.setState({ refundChannel: dataSet.channel, refundChecked: true });
   }
 
-  onShowPopupClick = (e) => {
-    const dataSet = e.currentTarget.dataset;
-    if (dataSet.action === 'confirm') {
-      this.setState({ isShowPopup: false });
-      this.onOrderBtnClick();
-    } else {
-      this.setState({ isShowPopup: true, tradeid: dataSet.tradeid, orderid: dataSet.orderid, action: dataSet.action });
+  onConfirmBtnClick = (e) => {
+    const { tradeid, orderid, refundChannel, refundChecked } = this.state;
+    const { router } = this.context;
+    if (!refundChecked) {
+      Toast.show('请选择退款方式！');
+      return;
     }
-
+    router.push(`/refunds/apply/${tradeid}/${orderid}?refundChannel=${refundChannel}`);
     e.preventDefault();
   }
 
@@ -161,26 +160,21 @@ export default class Detail extends Component {
   }
 
   onOrderBtnClick = (e) => {
-    const state = this.state;
+    const { action, orderid, tradeid } = e.currentTarget.dataset;
     const { router } = this.context;
-    if (!state.refundChecked) {
-      Toast.show('请选择退款方式');
-      return;
-    }
-    switch (state.action) {
+    switch (action) {
       case orderOperations['2'].action:
-        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}?refundChannel=${state.refundChannel}`);
+        this.setState({ isShowPopup: true, tradeid: tradeid, orderid: orderid });
         break;
       case orderOperations['3'].action:
-        this.props.confirmReceivedOrder(this.props.location.query.id, state.orderid);
+        this.props.confirmReceivedOrder(tradeid, orderid);
         break;
       case orderOperations['4'].action:
-        router.push(`/refunds/apply/${state.tradeid}/${state.orderid}?refundChannel=${state.refundChannel}`);
+        this.setState({ isShowPopup: true, tradeid: tradeid, orderid: orderid });
         break;
       default:
         break;
     }
-    e.preventDefault();
   }
 
   getClosedDate = (dateString) => {
@@ -239,7 +233,7 @@ export default class Detail extends Component {
               </div>
               <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
                 <If condition={order.refund_status === 0}>
-                  <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onShowPopupClick}>{orderOperations[order.status].tag}</button>
+                  <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
                 </If>
                 <If condition={order.refund_status !== 0}>
                   <div>{order.refund_status_display}</div>
@@ -386,7 +380,7 @@ export default class Detail extends Component {
             })}
             </ul>
             <div className="row no-margin">
-              <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.onOrderBtnClick} disabled={this.state.save}>确定</button>
+              <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.onConfirmBtnClick}>确定</button>
             </div>
           </If>
         </Popup>
