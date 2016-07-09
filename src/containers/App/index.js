@@ -23,10 +23,10 @@ export class App extends Component {
     const mmLinkId = query.mm_linkid || '';
     const uFrom = query.ufrom || '';
     if (mmLinkId) {
-      window.document.cookie = `mm_linkid=${mmLinkId}; Path=/; Max-Age=${moment().add(1, 'day').toISOString()}`;
+      window.document.cookie = `mm_linkid=${mmLinkId}; Path=/; Max-Age=${(moment().add(1, 'day')).toISOString()}`;
     }
     if (uFrom) {
-      window.document.cookie = `ufrom=${uFrom}; Path=/; Max-Age=${moment().add(1, 'day').toISOString()}`;
+      window.document.cookie = `ufrom=${uFrom}; Path=/; Max-Age=${(moment().add(1, 'day')).toISOString()}`;
     }
   }
 
@@ -36,7 +36,9 @@ export class App extends Component {
   }
 
   onDownlodClick = (e) => {
-    window.location.href = constants.downloadAppUri;
+    const mmLinkId = utils.cookie.getCookie('mm_linkid') || '';
+    const uFrom = utils.cookie.getCookie('ufrom') || '';
+    window.location.href = `${constants.downloadAppUri}?mm_linkid=${mmLinkId}&ufrom=${uFrom}`;
   }
 
   render() {

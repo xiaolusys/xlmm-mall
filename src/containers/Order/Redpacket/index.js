@@ -91,7 +91,9 @@ export default class Redpacket extends Component {
       eventCategory: '分享得红包',
       eventAction: '下载APP',
     });
-    window.location.href = constants.downloadAppUri;
+    const mmLinkId = utils.cookie.getCookie('mm_linkid') || '';
+    const uFrom = utils.cookie.getCookie('ufrom') || '';
+    window.location.href = `${constants.downloadAppUri}?mm_linkid=${mmLinkId}&ufrom=${uFrom}`;
   }
 
   render() {

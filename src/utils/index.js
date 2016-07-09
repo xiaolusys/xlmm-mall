@@ -7,3 +7,4 @@ export number from './number';
 export * as ui from './ui';
 export * as string from './string';
 export wechat from './wechat';
+export * as cookie from './cookie';
