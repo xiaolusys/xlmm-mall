@@ -42,11 +42,16 @@ export class App extends Component {
     window.location.href = `${constants.downloadAppUri}?mm_linkid=${mmLinkId}&ufrom=${uFrom}`;
   }
 
+  isShowPoup = () => {
+    const { pathname } = this.props.location;
+    return this.state.popupActive && !utils.detector.isApp() && !(pathname.indexOf('redpacket') >= 0);
+  }
+
   render() {
     return (
       <div>
         {this.props.children}
-        <DownloadAppPopup active={this.state.popupActive && !utils.detector.isApp()} onClose={this.onCloseClick} onDownload={this.onDownlodClick} />
+        <DownloadAppPopup active={this.isShowPoup()} onClose={this.onCloseClick} onDownload={this.onDownlodClick} />
       </div>
     );
   }
