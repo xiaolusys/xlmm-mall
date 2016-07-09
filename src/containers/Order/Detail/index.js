@@ -135,7 +135,7 @@ export default class Detail extends Component {
       Toast.show('请选择退款方式！');
       return;
     }
-    router.push(`/refunds/apply/${tradeid}/${orderid}?refundChannel=${refundChannel}`);
+    router.push(`/refunds/apply/${tradeid}/${orderid}?refundChannel=${refundChannel}&refundType=refundMoney`);
     e.preventDefault();
   }
 
@@ -170,7 +170,7 @@ export default class Detail extends Component {
         this.props.confirmReceivedOrder(tradeid, orderid);
         break;
       case orderOperations['4'].action:
-        this.setState({ isShowPopup: true, tradeid: tradeid, orderid: orderid });
+        router.push(`/refunds/apply/${tradeid}/${orderid}?refundType=refundGoods`);
         break;
       default:
         break;
@@ -366,11 +366,16 @@ export default class Detail extends Component {
             <ul>
             {trade.extras.refund_choices.map((item, index) => {
               return (
-                <li className="row bottom-border" data-pic={item.pic} data-desc={item.desc} data-name={item.name} data-channel={item.refund_channel} onClick={this.onRefudWayChangeClick}>
-                  <i className="col-xs-2 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-blue"></i>
-                  <div className="col-xs-8 margin-top-xxs margin-bottom-xxs font-xxs">
+                <li key={index} className="row bottom-border" data-pic={item.pic} data-desc={item.desc} data-name={item.name} data-channel={item.refund_channel} onClick={this.onRefudWayChangeClick}>
+                  <If condition={item.refund_channel === 'budget'}>
+                    <i className="col-xs-3 margin-top-xs no-padding icon-3x text-center icon-refund-top-speed font-refund-top-speed"></i>
+                  </If>
+                  <If condition={item.refund_channel !== 'budget'}>
+                    <i className="col-xs-3 margin-top-xs no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
+                  </If>
+                  <div className="col-xs-7 margin-top-xxs margin-bottom-xxs no-padding">
                     <p className="no-margin">{item.name}</p>
-                    <p className="no-margin font-grey">{item.desc}</p>
+                    <p className="no-margin font-xxs font-grey">{item.desc}</p>
                   </div>
                   <div className="col-xs-2 margin-top-xs">
                     <Checkbox className="col-xs-4 padding-top-xs no-padding" value={item.refund_channel} checked={this.state.refundChannel === item.refund_channel}/>

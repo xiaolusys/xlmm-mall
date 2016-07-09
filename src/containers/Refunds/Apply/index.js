@@ -19,8 +19,9 @@ import './index.scss';
 
 const titles = {
   2: '申请退款',
-  5: '申请退货',
+  4: '申请退货',
 };
+
 const reasons = {
   0: '其他',
   1: '错拍',
@@ -187,8 +188,8 @@ export default class Apply extends Component {
   }
 
   render() {
-    const { isLoading, order, apply } = this.props;
-    const channel = this.props.location.query.refundChannel;
+    const { isLoading, order } = this.props;
+    const { refundChannel, refundType } = this.props.location.query;
     let statusList = [];
     const reasonCls = classnames('col-xs-10', {
       'font-grey-light': this.state.reasonChange,
@@ -198,19 +199,35 @@ export default class Apply extends Component {
     }
     let refundWay = {};
     if (order.data && order.data.extras) {
-      refundWay = _.where(order.data.extras.refund_choices, { refund_channel: channel })[0];
+      refundWay = _.where(order.data.extras.refund_choices, { refund_channel: refundChannel })[0];
     }
     return (
       <div className="refunds-apply">
-        <Header title={'申请' + refundWay.name} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title={titles[order.data.status] || ''} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
-          <div className="row no-margin bottom-border content-white-bg">
-            <i className="col-xs-2 icon-3x text-center icon-refund-top-speed font-blue"></i>
-            <div className="col-xs-10 padding-top-xxs padding-bottom-xxs padding-left-xs">
-              <p className="no-margin">{refundWay.name}</p>
-              <p className="no-margin word-break font-grey font-xxs">{refundWay.desc}</p>
+          <If condition={refundType === 'refundMoney'}>
+            <div className="row no-margin bottom-border content-white-bg">
+              <If condition={refundWay.refund_channel === 'budget'}>
+                <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-refund-top-speed"></i>
+              </If>
+              <If condition={refundWay.refund_channel !== 'budget'}>
+                <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
+              </If>
+              <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
+                <p className="row no-margin">{refundWay.name}</p>
+                <p className="row no-margin padding-right-xxs font-xxs font-grey">{refundWay.desc}</p>
+              </div>
             </div>
-          </div>
+          </If>
+          <If condition={refundType === 'refundGoods'}>
+            <div className="row no-margin bottom-border content-white-bg">
+              <i className="col-xs-3 no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
+              <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
+                <p className="row no-margin">退货退款</p>
+                <p className="row no-margin margin-top-xxs padding-right-xxs font-xxs font-grey">已收到货，需要退商品。</p>
+              </div>
+            </div>
+          </If>
           <ul className="refunds-apply-list">
             <li className="row no-margin bottom-border">
               <div className="col-xs-3">
