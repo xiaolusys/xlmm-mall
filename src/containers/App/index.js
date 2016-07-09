@@ -23,7 +23,6 @@ export class App extends Component {
     const mmLinkId = query.mm_linkid || '';
     const uFrom = query.ufrom || '';
     if (mmLinkId) {
-      console.log(moment().add(1, 'day').toISOString());
       window.document.cookie = `mm_linkid=${mmLinkId}; Path=/; Max-Age=${moment().add(1, 'day').toISOString()}`;
     }
     if (uFrom) {
@@ -37,7 +36,6 @@ export class App extends Component {
   }
 
   onDownlodClick = (e) => {
-    console.log(e);
     window.location.href = constants.downloadAppUri;
   }
 
