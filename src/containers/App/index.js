@@ -3,7 +3,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { DownloadAppPopup } from 'components/DownloadAppPopup';
 import * as utils from 'utils';
 import * as constants from 'constants';
-import moment from 'moment';
 
 // global styles for app
 import './styles/app.scss';
@@ -22,11 +21,13 @@ export class App extends Component {
     const { query } = this.props.location;
     const mmLinkId = query.mm_linkid || '';
     const uFrom = query.ufrom || '';
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
     if (mmLinkId) {
-      window.document.cookie = `mm_linkid=${mmLinkId}; Path=/; Max-Age=${(moment().add(1, 'day')).toISOString()}`;
+      window.document.cookie = `mm_linkid=${mmLinkId}; Path=/; expires=${expires.toGMTString()};`;
     }
     if (uFrom) {
-      window.document.cookie = `ufrom=${uFrom}; Path=/; Max-Age=${(moment().add(1, 'day')).toISOString()}`;
+      window.document.cookie = `ufrom=${uFrom}; Path=/; expires=${expires.toGMTString()};`;
     }
   }
 
