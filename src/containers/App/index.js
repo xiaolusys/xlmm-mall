@@ -43,7 +43,7 @@ export class App extends Component {
     return (
       <div>
         {this.props.children}
-        <DownloadAppPopup active={this.state.popupActive} onClose={this.onCloseClick} onDownload={this.onDownlodClick} />
+        <DownloadAppPopup active={this.state.popupActive && !utils.detector.isApp()} onClose={this.onCloseClick} onDownload={this.onDownlodClick} />
       </div>
     );
   }
