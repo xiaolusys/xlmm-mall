@@ -12,6 +12,7 @@ import * as shareRedpacketAction from 'actions/order/shareRedpacket';
 import * as receiveRedpacketAction from 'actions/order/receiveRedpacket';
 import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
+import * as constants from 'constants';
 
 import './index.scss';
 
@@ -90,7 +91,7 @@ export default class Redpacket extends Component {
       eventCategory: '分享得红包',
       eventAction: '下载APP',
     });
-    window.location.href = '/sale/promotion/appdownload/';
+    window.location.href = constants.downloadAppUri;
   }
 
   render() {
