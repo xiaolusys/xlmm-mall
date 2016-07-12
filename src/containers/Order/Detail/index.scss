@@ -1,5 +1,18 @@
 .trade {
   .trade-detail {
+    .trade-status-list {
+      overflow-x: auto;
+      padding: 16px;
+      > table {
+        overflow-x: auto;
+        > thead {
+          > tr > th {
+            border-bottom: none;
+            min-width: 80px;
+          }
+        }
+      }
+    }
     color: #626262;
     .trade-status {
       background: #fff;
