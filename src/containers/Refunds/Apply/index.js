@@ -204,30 +204,28 @@ export default class Apply extends Component {
       <div className="refunds-apply">
         <Header title={titles[order.data.status] || ''} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
-          <If condition={refundType === 'refundMoney'}>
-            <div className="row no-margin bottom-border content-white-bg">
-              <If condition={refundWay.refund_channel === 'budget'}>
-                <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-refund-top-speed"></i>
-              </If>
-              <If condition={refundWay.refund_channel !== 'budget'}>
-                <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
-              </If>
-              <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
-                <p className="row no-margin">{refundWay.name}</p>
-                <p className="row no-margin padding-right-xxs font-xxs font-grey">{refundWay.desc}</p>
-              </div>
-            </div>
-          </If>
-          <If condition={refundType === 'refundGoods'}>
-            <div className="row no-margin bottom-border content-white-bg">
-              <i className="col-xs-3 no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
-              <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
-                <p className="row no-margin">退货退款</p>
-                <p className="row no-margin margin-top-xxs padding-right-xxs font-xxs font-grey">已收到货，需要退商品。</p>
-              </div>
-            </div>
-          </If>
           <ul className="refunds-apply-list">
+            <li className="row no-margin bottom-border">
+              <If condition={refundType === 'refundMoney'}>
+                <If condition={refundWay.refund_channel === 'budget'}>
+                  <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-refund-top-speed"></i>
+                </If>
+                <If condition={refundWay.refund_channel !== 'budget'}>
+                  <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
+                </If>
+                <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
+                  <p className="row no-margin">{refundWay.name}</p>
+                  <p className="row no-margin padding-right-xxs font-xxs font-grey">{refundWay.desc}</p>
+                </div>
+              </If>
+              <If condition={refundType === 'refundGoods'}>
+                <i className="col-xs-3 no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
+                <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
+                  <p className="row no-margin">退货退款</p>
+                  <p className="row no-margin margin-top-xxs padding-right-xxs font-xxs font-grey">已收到货，需要退商品。</p>
+                </div>
+              </If>
+            </li>
             <li className="row no-margin bottom-border">
               <div className="col-xs-3">
                 <Image className="border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
@@ -235,7 +233,7 @@ export default class Apply extends Component {
               <div className="col-xs-9">
                 <p className="row no-margin margin-top-xxs margin-bottom-xxs">
                   <span className="col-xs-9 no-padding no-wrap">{order.data.title}</span>
-                  <span className="col-xs-3 text-right">{'¥' + order.data.total_fee}</span>
+                  <span className="col-xs-3 no-padding text-right">{'¥' + order.data.total_fee}</span>
                 </p>
                 <p className="row font-grey-light">
                   <span className="col-xs-9">尺码: {order.data.sku_name}</span>
