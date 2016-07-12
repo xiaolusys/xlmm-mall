@@ -145,7 +145,6 @@ export default class Apply extends Component {
   }
 
   onAgreeBtnClick = (e) => {
-    // this.context.router.push(`/refunds/apply/${state.tradeid}/${state.orderid}?refundChannel=${state.refundChannel}`);
     const { order } = this.props;
     const state = this.state;
     const channel = this.props.location.query.refundChannel;
@@ -231,7 +230,7 @@ export default class Apply extends Component {
           <ul className="refunds-apply-list">
             <li className="row no-margin bottom-border">
               <div className="col-xs-3">
-                <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
+                <Image className="border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
               </div>
               <div className="col-xs-9">
                 <p className="row no-margin margin-top-xxs margin-bottom-xxs">
