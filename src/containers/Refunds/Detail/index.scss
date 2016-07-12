@@ -1,4 +1,17 @@
 .refunds {
+  .refund-status-list {
+    overflow-x: scroll;
+    padding: 16px;
+    > table {
+      overflow-x: auto;
+      > thead {
+        > tr > th {
+          border-bottom: none;
+          min-width: 80px;
+        }
+      }
+    }
+  }
   .refunds-details-list {
     > li {
       display: block;

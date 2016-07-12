@@ -12,6 +12,7 @@ import { BottomBar } from 'components/BottomBar';
 import { Toast } from 'components/Toast';
 import { Timer } from 'components/Timer';
 import { Timeline, TimelineItem } from 'components/Timeline';
+import { Statusline, StatuslineItem } from 'components/Statusline';
 import { Popup } from 'components/Popup';
 import { LogisticsPopup } from 'components/LogisticsPopup';
 import { Checkbox } from 'components/Checkbox';
@@ -289,11 +290,63 @@ export default class Detail extends Component {
     const tradeOperation = constants.tradeOperations[trade.status] || {};
     const logisticsCompanies = express.data || [];
     const packages = trade.packages || {};
+    const refundStatusList = {
+      0: { display: '订单创建' },
+      1: { display: '等待支付' },
+      2: { display: '支付成功' },
+      3: { display: '产品发货' },
+      4: { display: '产品签收' },
+      5: { display: '交易成功' },
+    };
     return (
       <div className="trade">
         <Header title="订单详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <If condition={!_.isEmpty(trade)}>
         <div className="content trade-detail">
+          <If condition={trade.status !== 6 && trade.status !== 7}>
+          <div className="trade-status-list">
+            <table className="margin-bottom-xxs">
+              <thead><tr>
+                {_.map(refundStatusList, function(item, key) {
+                  const index = Number(key);
+                  return (
+                    <div>
+                      <If condition={index === trade.status}>
+                        <th key={index} className="font-xxs font-weight-200 font-orange text-center">
+                          {item.display}
+                        </th>
+                      </If>
+                      <If condition={index !== trade.status}>
+                        <th key={index} className="font-xxs font-weight-200 text-center">
+                          {item.display}
+                        </th>
+                      </If>
+                    </div>
+                  );
+                })}
+              </tr></thead>
+            </table>
+            <Statusline width={480 + 'px'}>
+              {_.map(refundStatusList, function(item, key) {
+                const index = Number(key);
+                return (
+                  <div className="inline-block">
+                    <If condition={index === trade.status}>
+                      <StatuslineItem key={index} headColor="yellow" tailColor="yellow">
+                        <p/>
+                      </StatuslineItem>
+                    </If>
+                    <If condition={index !== trade.status}>
+                      <StatuslineItem key={index} headColor="grey" tailColor="grey">
+                        <p/>
+                      </StatuslineItem>
+                    </If>
+                  </div>
+                );
+              })}
+            </Statusline>
+          </div>
+          </If>
           <p className="no-margin trade-status">
             <sapn>订单编号</sapn>
             <sapn className="margin-left-xxs font-grey">{trade.tid}</sapn>

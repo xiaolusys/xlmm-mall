@@ -8,6 +8,7 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import { Timeline, TimelineItem } from 'components/Timeline';
+import { Statusline, StatuslineItem } from 'components/Statusline';
 import * as utils from 'utils';
 import * as actionCreators from 'actions/refunds/detail';
 
@@ -67,9 +68,29 @@ export default class Detail extends Component {
 
   render() {
     const { isLoading, data } = this.props;
+    let refundStatusList = {};
     let statusList = [];
+    let statuslineWidth = '';
     if (!_.isEmpty(data.status_shaft)) {
       statusList = data.status_shaft.reverse();
+    }
+    if (data && data.has_good_return) {
+      refundStatusList = {
+        3: { display: '申请退货' },
+        4: { display: '同意申请' },
+        5: { display: '填写快递单' },
+        6: { display: '等待返款' },
+        7: { display: '退款成功' },
+      };
+      statuslineWidth = 400 + 'px';
+    } else if (data && !data.has_good_return) {
+      refundStatusList = {
+        3: { display: '申请退款' },
+        4: { display: '同意申请' },
+        6: { display: '等待返款' },
+        7: { display: '退款成功' },
+      };
+      statuslineWidth = 320 + 'px';
     }
     if (isLoading) {
       utils.ui.loadingSpinner.show();
@@ -80,6 +101,50 @@ export default class Detail extends Component {
       <div className="refunds-details">
         <Header title="退货详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
+          <If condition={data.status}>
+            <div className="refund-status-list">
+              <table className="margin-bottom-xxs">
+                <thead><tr>
+                  {_.map(refundStatusList, function(item, key) {
+                    const index = Number(key);
+                    return (
+                      <div>
+                        <If condition={index === data.status}>
+                          <th key={index} className="font-xxs font-weight-200 font-orange text-center">
+                            {item.display}
+                          </th>
+                        </If>
+                        <If condition={index !== data.status}>
+                          <th key={index} className="font-xxs font-weight-200 text-center">
+                            {item.display}
+                          </th>
+                        </If>
+                      </div>
+                    );
+                  })}
+                </tr></thead>
+              </table>
+              <Statusline width={statuslineWidth}>
+                {_.map(refundStatusList, function(item, key) {
+                  const index = Number(key);
+                  return (
+                    <div className="inline-block">
+                      <If condition={index === data.status}>
+                        <StatuslineItem key={index} headColor="yellow" tailColor="yellow">
+                          <p/>
+                        </StatuslineItem>
+                      </If>
+                      <If condition={index !== data.status}>
+                        <StatuslineItem key={index} headColor="grey" tailColor="grey">
+                          <p/>
+                        </StatuslineItem>
+                      </If>
+                    </div>
+                  );
+                })}
+              </Statusline>
+            </div>
+          </If>
           <ul className="refunds-details-list">
             <li className="row col-xs-12 no-margin bottom-border">
               <p className="col-xs-9 no-margin no-padding text-left">
