@@ -208,7 +208,7 @@ export default class Apply extends Component {
             <li className="row no-margin bottom-border">
               <If condition={refundType === 'refundMoney'}>
                 <If condition={refundWay.refund_channel === 'budget'}>
-                  <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-top-speed font-refund-top-speed"></i>
+                  <i className="col-xs-3 margin-top-xxs icon-3x text-left icon-refund-top-speed font-refund-top-speed"></i>
                 </If>
                 <If condition={refundWay.refund_channel !== 'budget'}>
                   <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
