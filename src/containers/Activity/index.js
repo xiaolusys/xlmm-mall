@@ -5,3 +5,4 @@ export ExamHome from './Exam/Home';
 export ExamQuestion from './Exam/Question';
 export ExamResult from './Exam/Result';
 export TopTen from './TopTen';
+export OpeningShop from './OpeningShop';
