@@ -128,7 +128,7 @@ export default class List extends Component {
                           <span className="font-md padding-right-xs">小鹿美美</span>
                           <span className="no-margin no-padding font-xs font-grey-light">{complaint.created_time}</span>
                         </p>
-                        <p className="col-xs-12 no-margin no-padding padding-top-xxs padding-bottom-xxs font-md text-left text-range">{complaint.com_content}</p>
+                        <p className="col-xs-12 no-margin no-padding padding-top-xxs padding-bottom-xxs font-md text-left text-range">{complaint.reply}</p>
                       </div>
                     </If>
                   </li>
