@@ -204,66 +204,64 @@ export default class Apply extends Component {
       <div className="refunds-apply">
         <Header title={titles[order.data.status] || ''} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
-          <ul className="refunds-apply-list">
-            <li className="row no-margin bottom-border">
-              <If condition={refundType === 'refundMoney'}>
-                <If condition={refundWay.refund_channel === 'budget'}>
-                  <i className="col-xs-3 margin-top-xxs icon-3x text-left icon-refund-top-speed font-refund-top-speed"></i>
-                </If>
-                <If condition={refundWay.refund_channel !== 'budget'}>
-                  <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
-                </If>
-                <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
-                  <p className="row no-margin">{refundWay.name}</p>
-                  <p className="row no-margin padding-right-xxs font-xxs font-grey">{refundWay.desc}</p>
-                </div>
+          <div className="row no-margin bottom-border">
+            <If condition={refundType === 'refundMoney'}>
+              <If condition={refundWay.refund_channel === 'budget'}>
+                <i className="col-xs-3 margin-top-xxs icon-3x text-left icon-refund-top-speed font-refund-top-speed"></i>
               </If>
-              <If condition={refundType === 'refundGoods'}>
-                <i className="col-xs-3 no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
-                <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
-                  <p className="row no-margin">退货退款</p>
-                  <p className="row no-margin margin-top-xxs padding-right-xxs font-xxs font-grey">已收到货，需要退商品。</p>
-                </div>
+              <If condition={refundWay.refund_channel !== 'budget'}>
+                <i className="col-xs-3 margin-top-xxs no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
               </If>
-            </li>
-            <li className="row no-margin bottom-border">
-              <div className="col-xs-3">
-                <Image className="border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
+              <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
+                <p className="row no-margin">{refundWay.name}</p>
+                <p className="row no-margin padding-right-xxs font-xxs font-grey">{refundWay.desc}</p>
               </div>
-              <div className="col-xs-9">
-                <p className="row no-margin margin-top-xxs margin-bottom-xxs">
-                  <span className="col-xs-9 no-padding no-wrap">{order.data.title}</span>
-                  <span className="col-xs-3 no-padding text-right">{'¥' + order.data.total_fee}</span>
-                </p>
-                <p className="row font-grey-light">
-                  <span className="col-xs-9">尺码: {order.data.sku_name}</span>
-                  <span className="col-xs-3 text-right">x1</span>
-                </p>
+            </If>
+            <If condition={refundType === 'refundGoods'}>
+              <i className="col-xs-3 no-padding icon-3x text-center icon-refund-common font-refund-common"></i>
+              <div className="col-xs-9 margin-top-xxs margin-bottom-xxs no-padding">
+                <p className="row no-margin">退货退款</p>
+                <p className="row no-margin margin-top-xxs padding-right-xxs font-xxs font-grey">已收到货，需要退商品。</p>
               </div>
-            </li>
-            <li className="row no-margin no-padding bottom-border">
-              <p className="col-xs-6 no-margin">申请数量</p>
-              <p className="col-xs-6 no-margin text-right font-grey-light">
-                <i className="icon-minus padding-right-xxs font-orange" onClick={this.numMinus}></i>
-                <span className="padding-right-xxs">{this.state.num}</span>
-                <i className="icon-plus font-orange" onClick={this.numPlus}></i>
+            </If>
+          </div>
+          <div className="row no-margin bottom-border">
+            <div className="col-xs-3">
+              <Image className="border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
+            </div>
+            <div className="col-xs-9">
+              <p className="row no-margin margin-top-xxs margin-bottom-xxs">
+                <span className="col-xs-9 no-padding no-wrap">{order.data.title}</span>
+                <span className="col-xs-3 no-padding text-right">{'¥' + order.data.total_fee}</span>
               </p>
-            </li>
-            <li className="row no-margin no-padding bottom-border">
-              <p className="col-xs-4 no-margin">可退金额</p>
-              <p className="col-xs-8 no-margin text-right font-orange">{'¥' + order.data.payment}</p>
-            </li>
-            <li className="row no-margin margin-top-xs no-padding bottom-border">
-              <p className="col-xs-4 no-margin">退款原因</p>
-            </li>
-            <li className="row no-margin no-padding bottom-border refund-reason" onClick={this.showPopup}>
-              <div className={ reasonCls } onChange={this.onVerifyCodeChange}>{this.state.reason}</div>
-              <i className="col-xs-2 icon-angle-down font-grey-light text-right"></i>
-            </li>
-            <li className="row no-margin no-padding bottom-border refunds-desc">
-              <textarea className="col-xs-12 border-none" type="text" placeholder="请输入退款说明" onChange={this.onDesciptionChange} />
-            </li>
-          </ul>
+              <p className="row font-grey-light">
+                <span className="col-xs-9">尺码: {order.data.sku_name}</span>
+                <span className="col-xs-3 text-right">x1</span>
+              </p>
+            </div>
+          </div>
+          <div className="row no-margin no-padding bottom-border">
+            <p className="col-xs-6 no-margin">申请数量</p>
+            <p className="col-xs-6 no-margin text-right font-grey-light">
+              <i className="icon-minus padding-right-xxs font-orange" onClick={this.numMinus}></i>
+              <span className="padding-right-xxs">{this.state.num}</span>
+              <i className="icon-plus font-orange" onClick={this.numPlus}></i>
+            </p>
+          </div>
+          <div className="row no-margin no-padding bottom-border">
+            <p className="col-xs-4 no-margin">可退金额</p>
+            <p className="col-xs-8 no-margin text-right font-orange">{'¥' + order.data.payment}</p>
+          </div>
+          <div className="row no-margin margin-top-xs no-padding bottom-border">
+            <p className="col-xs-4 no-margin">退款原因</p>
+          </div>
+          <div className="row no-margin no-padding bottom-border refund-reason" onClick={this.showPopup}>
+            <div className={ reasonCls } onChange={this.onVerifyCodeChange}>{this.state.reason}</div>
+            <i className="col-xs-2 icon-angle-down font-grey-light text-right"></i>
+          </div>
+          <div className="row no-margin no-padding bottom-border refunds-desc">
+            <textarea className="col-xs-12 border-none" type="text" placeholder="请输入退款说明" onChange={this.onDesciptionChange} />
+          </div>
           <Popup className="popup" active={this.state.showPopup}>
             <div className="refunds-address-info">
               <p className="no-margin text-center bottom-border" data-reason-index="1" onClick={this.onReasonChange}>{reasons[1]}</p>

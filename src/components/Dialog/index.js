@@ -62,10 +62,10 @@ export class Dialog extends Component {
           </div>
           <div className="row no-margin text-center font-deep-blue">
             <div className="btn-cancel col-xs-6 padding-top-xxs padding-bottom-xxs">
-              <button type="button" onClick={onCancelBtnClick}>取消</button>
+              <button className="border-none content-white-bg" type="button" onClick={onCancelBtnClick}>取消</button>
             </div>
             <div className="col-xs-6 padding-top-xxs padding-bottom-xxs">
-              <button type="button" onClick={onAgreeBtnClick}>同意</button>
+              <button className="border-none content-white-bg" type="button" onClick={onAgreeBtnClick}>同意</button>
             </div>
           </div>
         </div>

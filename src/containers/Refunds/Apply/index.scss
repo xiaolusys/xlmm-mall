@@ -1,12 +1,10 @@
 .refunds {
-  .refunds-apply-list {
+  > div {
     display: inline-block;
-    > li {
-      width: 100%;
-      padding-top: 16px;
-      padding-bottom: 16px;
-      background-color: #fff;
-    }
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #fff;
     img {
       border: 1px solid #9B9B9B;
       border-radius: 5px;
