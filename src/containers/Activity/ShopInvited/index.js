@@ -66,6 +66,12 @@ export default class ShopInvited extends Component {
     this.setState({ activeTab: activeTab });
     this.props.fetchInvited(activeTab);
     this.props.fetchInviteSharing(shareType[activeTab]);
+    plugins.invoke({
+      method: 'changeId',
+      data: {
+        id: shareType[activeTab],
+      },
+    });
   }
 
   onShareClick = (e) => {
