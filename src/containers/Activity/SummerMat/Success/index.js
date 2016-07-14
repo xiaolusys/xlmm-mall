@@ -40,7 +40,7 @@ export default class Success extends Component {
 
   render() {
     const windowHeight = utils.dom.windowHeight();
-    const data = this.props.summerMat && this.props.summerMat.data || [];
+    const data = this.props.summerMat.signUp && this.props.summerMat.signUp.data || [];
     return (
       <div>
         <Header title="活动报名成功" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />

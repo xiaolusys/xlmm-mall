@@ -8,6 +8,7 @@ import shopBagReducer from './shopBagReducer';
 import verifyCodeReducer from './verifyCodeReducer';
 import refundsReducer from './refundsReducer';
 import examReducer from './examReducer';
+import summerMatReducer from './summerMatReducer';
 import complaintsReducer from './complaintsReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
@@ -42,8 +43,6 @@ import * as receiveRedpacketAction from 'actions/order/receiveRedpacket';
 import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as topTenAction from 'actions/activity/topTen';
-import * as summerMatAction from 'actions/activity/summerMat';
-
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -88,7 +87,7 @@ const rootReducer = combineReducers({
   usersRedpacket: createReducer(usersRedpacketAction.name),
   wechatSign: createReducer(wechatSignAction.name),
   topTen: createReducer(topTenAction.name),
-  summerMat: createReducer(summerMatAction.name),
+  summerMat: summerMatReducer,
 });
 
 export default rootReducer;

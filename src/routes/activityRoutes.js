@@ -14,6 +14,7 @@ import {
   ShopInvited,
   SummerMatHome,
   SummerMatSuccess,
+  SummerMatRegistration,
 } from 'containers/Activity';
 // /mall/activity/shop/charge
 
@@ -30,5 +31,6 @@ export default (
     <Route path="/activity/shop/invited" component={ShopInvited} />
     <Route path="/activity/summer/mat/home" component={SummerMatHome} />
     <Route path="/activity/summer/mat/success" component={SummerMatSuccess} />
+    <Route path="/activity/summer/mat/register" component={SummerMatRegistration} />
   </Route>
 );
