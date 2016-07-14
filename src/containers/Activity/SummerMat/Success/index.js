@@ -34,7 +34,8 @@ export default class Success extends Component {
   }
 
   componentWillMount() {
-    this.props.signUp();
+    const administratorId = this.props.location.query.id || '';
+    this.props.signUp(administratorId);
   }
 
   render() {
