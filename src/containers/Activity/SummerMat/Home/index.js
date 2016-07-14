@@ -40,7 +40,8 @@ export default class Home extends Component {
   }
 
   onSignUpClick = (e) => {
-    this.props.signUp();
+    const administratorId = this.props.location.query.id || '';
+    this.props.signUp(administratorId);
     e.preventDefault();
   }
 
