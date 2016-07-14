@@ -5,4 +5,7 @@ export ExamHome from './Exam/Home';
 export ExamQuestion from './Exam/Question';
 export ExamResult from './Exam/Result';
 export TopTen from './TopTen';
-export OpeningShop from './OpeningShop';
+export ShopOpening from './ShopOpening';
+export ShopAgreement from './ShopAgreement';
+export ShopOpeningSucceed from './ShopOpeningSucceed';
+export ShopInvited from './ShopInvited';

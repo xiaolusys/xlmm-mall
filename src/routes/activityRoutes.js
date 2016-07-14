@@ -8,9 +8,12 @@ import {
   ExamHome,
   ExamQuestion,
   ExamResult,
-  OpeningShop,
+  ShopOpening,
+  ShopAgreement,
+  ShopOpeningSucceed,
+  ShopInvited,
 } from 'containers/Activity';
-
+// /mall/activity/shop/charge
 export default (
   <Route>
     <Route path="/activity/20160701" component={A20160701} />
@@ -18,6 +21,9 @@ export default (
     <Route path="/activity/exam" component={ExamHome} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/question/:type/:id" component={ExamQuestion} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/result" component={ExamResult} onEnter={utils.checkAuth} />
-    <Route path="/activity/shop/open" component={OpeningShop} onEnter={utils.checkAuth} />
+    <Route path="/activity/shop/open" component={ShopOpening} />
+    <Route path="/activity/shop/agreement" component={ShopAgreement} />
+    <Route path="/activity/shop/open/succeed" component={ShopOpeningSucceed} />
+    <Route path="/activity/shop/invited" component={ShopInvited} />
   </Route>
 );
