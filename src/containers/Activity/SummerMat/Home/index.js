@@ -32,8 +32,9 @@ export default class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const administratorId = this.props.location.query.id || '';
     if (nextProps.summerMat.success && nextProps.summerMat.data) {
-      this.context.router.push('/activity/summer/mat/success');
+      this.context.router.push(`/activity/summer/mat/success?id=${administratorId}`);
     } else if (nextProps.summerMat.error) {
       Toast.show('' + nextProps.summerMat.data);
     }
