@@ -26,7 +26,7 @@ export default class ShopOpeningSucceed extends Component {
   }
 
   componentWillMount() {
-    
+
   }
 
   componentDidMount() {

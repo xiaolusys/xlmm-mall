@@ -26,7 +26,7 @@ export default class OpeningShop extends Component {
   }
 
   componentWillMount() {
-    
+
   }
 
   render() {
