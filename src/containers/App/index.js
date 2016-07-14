@@ -3,6 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { DownloadAppPopup } from 'components/DownloadAppPopup';
 import * as utils from 'utils';
 import * as constants from 'constants';
+import _ from 'underscore';
 
 // global styles for app
 import './styles/app.scss';
@@ -44,7 +45,7 @@ export class App extends Component {
 
   isShowPoup = () => {
     const { pathname } = this.props.location;
-    return this.state.popupActive && !utils.detector.isApp() && !(pathname.indexOf('redpacket') >= 0);
+    return this.state.popupActive && !utils.detector.isApp() && !_.contains(constants.disabledDownloadApp, pathname);
   }
 
   render() {

@@ -203,7 +203,7 @@ export default class Apply extends Component {
     return (
       <div className="refunds-apply">
         <Header title={titles[order.data.status] || ''} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
-        <div className="content refunds">
+        <div className="content refunds-apply">
           <div className="row no-margin bottom-border">
             <If condition={refundType === 'refundMoney'}>
               <If condition={refundWay.refund_channel === 'budget'}>
@@ -225,7 +225,7 @@ export default class Apply extends Component {
               </div>
             </If>
           </div>
-          <div className="row no-margin bottom-border">
+          <div className="row no-margin padding-top-xxs padding-bottom-xxs bottom-border">
             <div className="col-xs-3">
               <Image className="border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={order.data.pic_path}/>
             </div>
@@ -240,7 +240,7 @@ export default class Apply extends Component {
               </p>
             </div>
           </div>
-          <div className="row no-margin no-padding bottom-border">
+          <div className="row no-margin padding-top-xxs padding-bottom-xxs bottom-border">
             <p className="col-xs-6 no-margin">申请数量</p>
             <p className="col-xs-6 no-margin text-right font-grey-light">
               <i className="icon-minus padding-right-xxs font-orange" onClick={this.numMinus}></i>
@@ -248,18 +248,18 @@ export default class Apply extends Component {
               <i className="icon-plus font-orange" onClick={this.numPlus}></i>
             </p>
           </div>
-          <div className="row no-margin no-padding bottom-border">
+          <div className="row no-margin padding-top-xxs padding-bottom-xxs bottom-border">
             <p className="col-xs-4 no-margin">可退金额</p>
             <p className="col-xs-8 no-margin text-right font-orange">{'¥' + order.data.payment}</p>
           </div>
-          <div className="row no-margin margin-top-xs no-padding bottom-border">
+          <div className="row no-margin margin-top-xs padding-top-xxs padding-bottom-xxs bottom-border">
             <p className="col-xs-4 no-margin">退款原因</p>
           </div>
-          <div className="row no-margin no-padding bottom-border refund-reason" onClick={this.showPopup}>
+          <div className="row no-margin padding-top-xxs padding-bottom-xxs bottom-border refund-reason" onClick={this.showPopup}>
             <div className={ reasonCls } onChange={this.onVerifyCodeChange}>{this.state.reason}</div>
             <i className="col-xs-2 icon-angle-down font-grey-light text-right"></i>
           </div>
-          <div className="row no-margin no-padding bottom-border refunds-desc">
+          <div className="row no-margin padding-top-xxs padding-bottom-xxs bottom-border refunds-desc">
             <textarea className="col-xs-12 border-none" type="text" placeholder="请输入退款说明" onChange={this.onDesciptionChange} />
           </div>
           <Popup className="popup" active={this.state.showPopup}>
