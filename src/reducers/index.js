@@ -42,6 +42,7 @@ import * as receiveRedpacketAction from 'actions/order/receiveRedpacket';
 import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as topTenAction from 'actions/activity/topTen';
+import * as summerMatAction from 'actions/activity/summerMat';
 
 
 const rootReducer = combineReducers({
@@ -87,6 +88,7 @@ const rootReducer = combineReducers({
   usersRedpacket: createReducer(usersRedpacketAction.name),
   wechatSign: createReducer(wechatSignAction.name),
   topTen: createReducer(topTenAction.name),
+  summerMat: createReducer(summerMatAction.name),
 });
 
 export default rootReducer;
