@@ -75,7 +75,7 @@ export default class ShopInvited extends Component {
       data: {
         share_title: shareInfo.title,
         share_to: '',
-        share_desc: shareInfo.desc,
+        share_desc: shareInfo.active_dec,
         share_icon: shareInfo.share_icon,
         share_type: 'link',
         link: shareInfo.share_link,
