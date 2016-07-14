@@ -45,6 +45,9 @@ import * as topTenAction from 'actions/activity/topTen';
 import * as summerMatAction from 'actions/activity/summerMat';
 import * as invitedAction from 'actions/activity/invited';
 import * as inviteSharingAction from 'actions/activity/inviteSharing';
+import * as mamaInfoAction from 'actions/activity/mamaInfo';
+import * as mamaOrderAction from 'actions/activity/mamaOrder';
+import * as mamaChargeAction from 'actions/activity/mamaCharge';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -92,6 +95,9 @@ const rootReducer = combineReducers({
   summerMat: createReducer(summerMatAction.name),
   invited: createReducer(invitedAction.name),
   inviteSharing: createReducer(inviteSharingAction.name),
+  mamaInfo: createReducer(mamaInfoAction.name),
+  mamaOrder: createReducer(mamaOrderAction.name),
+  mamaCharge: createReducer(mamaChargeAction.name),
 });
 
 export default rootReducer;

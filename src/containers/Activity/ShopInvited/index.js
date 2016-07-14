@@ -49,8 +49,15 @@ export default class ShopInvited extends Component {
   state = { activeTab: 'full' }
 
   componentWillMount() {
-    this.props.fetchInvited(this.state.activeTab);
-    this.props.fetchInviteSharing(shareType[this.state.activeTab]);
+    const { activeTab } = this.state;
+    this.props.fetchInvited(activeTab);
+    this.props.fetchInviteSharing(shareType[activeTab]);
+    plugins.invoke({
+      method: 'changeId',
+      data: {
+        id: shareType[activeTab],
+      },
+    });
   }
 
   componentDidMount() {
