@@ -39,13 +39,14 @@ export default class Success extends Component {
   }
 
   render() {
-    const windowHeight = utils.dom.windowHeight();
+    const height = utils.dom.windowWidth() / 0.48;
+    console.log(height);
     const data = this.props.summerMat.signUp && this.props.summerMat.signUp.data || [];
     return (
       <div>
         <Header title="活动报名成功" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <If condition={data && data.weixin_qr_img}>
-          <div className="content activity-mat-success" style={{ height: windowHeight }}>
+          <div className="content activity-mat-success" style={{ height: height }}>
             <Image className="col-xs-12 no-padding" src={data.weixin_qr_img} />
           </div>
         </If>
