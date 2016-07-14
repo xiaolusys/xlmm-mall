@@ -11,7 +11,7 @@ export default (
     <Route path="/activity/exam" component={ExamHome} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/question/:type/:id" component={ExamQuestion} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/result" component={ExamResult} onEnter={utils.checkAuth} />
-    <Route path="/activity/summerMat/home" component={SummerMatHome} />
-    <Route path="/activity/summerMat/success" component={SummerMatSuccess} />
+    <Route path="/activity/summer/mat/home" component={SummerMatHome} />
+    <Route path="/activity/summer/mat/success" component={SummerMatSuccess} />
   </Route>
 );

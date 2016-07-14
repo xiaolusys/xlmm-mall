@@ -3,6 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { DownloadAppPopup } from 'components/DownloadAppPopup';
 import * as utils from 'utils';
 import * as constants from 'constants';
+import _ from 'underscore';
 
 // global styles for app
 import './styles/app.scss';
@@ -42,11 +43,16 @@ export class App extends Component {
     window.location.href = `${constants.downloadAppUri}?mm_linkid=${mmLinkId}&ufrom=${uFrom}`;
   }
 
+  isShowPoup = () => {
+    const { pathname } = this.props.location;
+    return this.state.popupActive && !utils.detector.isApp() && !_.contains(constants.disabledDownloadApp, pathname);
+  }
+
   render() {
     return (
       <div>
         {this.props.children}
-        <DownloadAppPopup active={this.state.popupActive && !utils.detector.isApp()} onClose={this.onCloseClick} onDownload={this.onDownlodClick} />
+        <DownloadAppPopup active={this.isShowPoup()} onClose={this.onCloseClick} onDownload={this.onDownlodClick} />
       </div>
     );
   }

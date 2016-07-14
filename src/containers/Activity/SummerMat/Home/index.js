@@ -33,7 +33,7 @@ export default class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.summerMat.success && nextProps.summerMat.data) {
-      this.context.router.push('/activity/summerMat/success');
+      this.context.router.push('/activity/summer/mat/success');
     } else if (nextProps.summerMat.error) {
       Toast.show('' + nextProps.summerMat.data);
     }
