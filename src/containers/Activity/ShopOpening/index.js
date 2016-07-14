@@ -6,14 +6,27 @@ import _ from 'underscore';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
+import { Toast } from 'components/Toast';
+import * as verifyCodeAction from 'actions/user/verifyCode';
 
 import './index.scss';
 
 const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg';
+const actionCreators = _.extend(verifyCodeAction);
 
+@connect(
+  state => ({
+    verifyCode: state.verifyCode,
+  }),
+  dispatch => bindActionCreators(actionCreators, dispatch),
+)
 export default class OpeningShop extends Component {
   static propTypes = {
     children: React.PropTypes.array,
+    fetchVerifyCode: React.PropTypes.func,
+    verify: React.PropTypes.func,
+    resetVerifyState: React.PropTypes.func,
+    resetFetchState: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -25,8 +38,40 @@ export default class OpeningShop extends Component {
     context.router;
   }
 
+  state = {
+    phone: '',
+    code: '',
+  }
+
   componentWillMount() {
 
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { fetch, verify } = nextProps.verifyCode;
+    if ((fetch.success || fetch.error) && !fetch.isLoading && !this.state.verifyCode) {
+      Toast.show(fetch.data.msg);
+    }
+    if ((verify.success || verify.error) && !verify.isLoading && !this.state.password) {
+      Toast.show(verify.data.msg);
+    }
+  }
+
+  onPhoneChange = (val) => {
+    this.setState({ phone: val });
+  }
+
+  onVerifyCodeChange = (e) => {
+    this.setState({ code: e.target.value });
+  }
+
+  onVerifyCodeBlur = () => {
+    this.props.resetFetchState();
+    this.props.verify(this.state.phone, this.state.code, 'bind');
+  }
+
+  onGetVerifyCodeBtnClick = () => {
+    this.props.fetchVerifyCode(this.state.phone, 'bind');
   }
 
   render() {
@@ -42,7 +87,7 @@ export default class OpeningShop extends Component {
           <button className="col-xs-10 col-xs-offset-1 button button-energized">马上一元开店</button>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
-          <Checkbox className="margin-bottom-xs" checked="true">勾选代同意一元体验15天</Checkbox>
+          <Checkbox className="margin-bottom-xs" defaultChecked>勾选代同意一元体验15天</Checkbox>
           <Link to="/activity/shop/agreement">小鹿妈妈服务条款！</Link>
         </div>
       </div>

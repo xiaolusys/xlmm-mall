@@ -43,7 +43,8 @@ import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as topTenAction from 'actions/activity/topTen';
 import * as summerMatAction from 'actions/activity/summerMat';
-
+import * as invitedAction from 'actions/activity/invited';
+import * as inviteSharingAction from 'actions/activity/inviteSharing';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -89,6 +90,8 @@ const rootReducer = combineReducers({
   wechatSign: createReducer(wechatSignAction.name),
   topTen: createReducer(topTenAction.name),
   summerMat: createReducer(summerMatAction.name),
+  invited: createReducer(invitedAction.name),
+  inviteSharing: createReducer(inviteSharingAction.name),
 });
 
 export default rootReducer;
