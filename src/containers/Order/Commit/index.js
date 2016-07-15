@@ -274,6 +274,9 @@ export default class Commit extends Component {
     let totalPrice = payInfo.data.total_fee || 0;
     if (totalPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       totalPrice = totalPrice - coupon.data.coupon_value;
+      if (totalPrice < 0) {
+        totalPrice = 0;
+      }
     }
     return totalPrice.toFixed(2);
   }
