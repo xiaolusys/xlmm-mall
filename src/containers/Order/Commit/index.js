@@ -294,16 +294,16 @@ export default class Commit extends Component {
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
   }
 
-  pay = (charge, trade) => {
-    this.togglePayTypePopupActive();
-    window.pingpp.createPayment(charge, (result, error) => {
-      if (result === 'success') {
-        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
-        return;
-      }
-      window.location.replace(constants.paymentResults.error);
-    });
-  }
+  // pay = (charge, trade) => {
+  //   this.togglePayTypePopupActive();
+  //   window.pingpp.createPayment(charge, (result, error) => {
+  //     if (result === 'success') {
+  //       window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
+  //       return;
+  //     }
+  //     window.location.replace(constants.paymentResults.error);
+  //   });
+  // }
 
   renderProducts(products = []) {
     const { prefixCls } = this.props;

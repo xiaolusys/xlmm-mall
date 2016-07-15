@@ -43,4 +43,8 @@ export const disabledDownloadApp = [
   'activity/summer/mat/home',
   'activity/summer/mat/success',
   'order/redpacket',
+  'activity/shop/invited',
+  'activity/shop/open',
+  'activity/shop/agreement',
+  'activity/shop/open/succeed',
 ];
