@@ -159,7 +159,7 @@ export default class Question extends Component {
     const { type, id } = this.props.params;
     const { selected } = this.state;
     return (
-      <div className={`${prefixCls} col-xs-12 col-sm-8 col-sm-offset-2 no-padding`}>
+      <div className={`${prefixCls} col-xs-12 col-sm-8 col-sm-offset-2 no-padding clearfix`}>
         <div className="question-header">
           <Image src={`${staticBase}red-bg.png`} />
           <img className="exit-btn" src={`${staticBase}exit-btn.png`} onClick={this.onExitBtnClick} />

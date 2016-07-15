@@ -75,7 +75,7 @@ export default class Result extends Component {
     const { prefixCls, exam } = this.props;
     const result = exam.result.data.exam_result || {};
     return (
-      <div className={`${prefixCls}`}>
+      <div className={`${prefixCls} clearfix`}>
         <img className="exit-btn" src={`${staticBase}exit-btn.png`} onClick={this.onExitBtnClick} />
         <div className="score-container">
           <Image src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/result-bg.png" />
