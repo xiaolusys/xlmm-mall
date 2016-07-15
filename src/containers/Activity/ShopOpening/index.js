@@ -78,6 +78,11 @@ export default class OpeningShop extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetFetchState();
+    this.props.resetVerifyState();
+  }
+
   onPhoneChange = (val) => {
     this.setState({ phone: val });
   }
