@@ -21,6 +21,12 @@ const initState = {
     success: false,
     data: {},
   },
+  register: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -51,15 +57,29 @@ export default (state = initState, action = null) => {
       });
     case summerMatAction.names.FETCH_REGISTERS + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
-        fetchRegisters: { isLoading: true, data: {}, error: false, success: false },
+        fetchRegisters: { isLoading: true, data: state.fetchRegisters.data || {}, error: false, success: false },
       });
     case summerMatAction.names.FETCH_REGISTERS + '_' + actionTypes.SUCCESS:
+      const payload = action.payload;
+      payload.results = _.chain(state.fetchRegisters.data && state.fetchRegisters.data.results || []).union(payload.results || []).unique('id').value();
       return _.extend({}, state, {
-        fetchRegisters: { isLoading: false, data: action.payload, error: false, success: true },
+        fetchRegisters: { isLoading: false, data: payload, error: false, success: true },
       });
     case summerMatAction.names.FETCH_REGISTERS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         fetchRegisters: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case summerMatAction.names.REGISTER + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        register: { isLoading: true, data: {}, error: false, success: false },
+      });
+    case summerMatAction.names.REGISTER + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        register: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case summerMatAction.names.REGISTER + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        register: { isLoading: false, data: action.payload, error: true, success: false },
       });
     default:
       return state;
