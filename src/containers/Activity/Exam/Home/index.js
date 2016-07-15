@@ -107,7 +107,7 @@ export default class Home extends Component {
     const { prefixCls, exam } = this.props;
     const examInfo = exam.info.data.exam_info || {};
     return (
-      <div className={`${prefixCls}`}>
+      <div className={`${prefixCls} clearfix`}>
         <Header title="🚄✨VIP2考试✨💪💯" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <Image className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding" src={`${staticBase}banner-1.png`} />
         <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding exam-date">
