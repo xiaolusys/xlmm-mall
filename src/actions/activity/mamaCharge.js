@@ -9,7 +9,7 @@ export const fetchMamaCharge = (params) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(`${constants.baseEndpointV1}pmt/xlmm/mama_register_pay`, qs.stringify({
+    return axios.post(`${constants.baseEndpointV1}pmt/xlmm/mama_register_pay`, qs.stringify({
         ...params,
       }))
       .then((resp) => {
