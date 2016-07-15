@@ -8,6 +8,7 @@ export TopTen from './TopTen';
 export ShopOpening from './ShopOpening';
 export ShopAgreement from './ShopAgreement';
 export ShopOpeningSucceed from './ShopOpeningSucceed';
+export ShopOpeningFailed from './ShopOpeningFailed';
 export ShopInvited from './ShopInvited';
 export SummerMatHome from './SummerMat/Home';
 export SummerMatSuccess from './SummerMat/Success';
