@@ -12,3 +12,4 @@ export ShopOpeningFailed from './ShopOpeningFailed';
 export ShopInvited from './ShopInvited';
 export SummerMatHome from './SummerMat/Home';
 export SummerMatSuccess from './SummerMat/Success';
+export SummerMatRegistration from './SummerMat/Registration';
