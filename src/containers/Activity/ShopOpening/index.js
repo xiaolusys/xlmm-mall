@@ -87,6 +87,9 @@ export default class OpeningShop extends Component {
   }
 
   onVerifyCodeBlur = () => {
+    if (_.isEmpty(this.state.code)) {
+      return;
+    }
     this.props.resetFetchState();
     this.props.verify(this.state.phone, this.state.code, 'bind');
   }
@@ -156,10 +159,10 @@ export default class OpeningShop extends Component {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        // window.location.replace('/mall/activity/shop/open/succeed');
+        window.location.replace('/mall/activity/shop/open/succeed');
         return;
       }
-      // window.location.replace('/mall/activity/shop/open/failed');
+      window.location.replace('/mall/activity/shop/open/failed');
     });
   }
 

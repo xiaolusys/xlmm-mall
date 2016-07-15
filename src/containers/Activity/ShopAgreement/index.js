@@ -32,7 +32,7 @@ export default class OpeningShop extends Component {
   render() {
     return (
       <div>
-        <Header title="小鹿妈妈一元体验条款" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} />
+        <Header title="小鹿妈妈一元体验条款" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="col-xs-12 col-sm-8 col-sm-offset-2 content">
           <h5 >小鹿美美特惠一元体验妈妈条款</h5>
           <p>服务提供方：上海己美网络科技有限公司</p>
