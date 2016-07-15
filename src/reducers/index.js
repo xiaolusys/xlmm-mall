@@ -8,6 +8,7 @@ import shopBagReducer from './shopBagReducer';
 import verifyCodeReducer from './verifyCodeReducer';
 import refundsReducer from './refundsReducer';
 import examReducer from './examReducer';
+import summerMatReducer from './summerMatReducer';
 import complaintsReducer from './complaintsReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
@@ -92,7 +93,7 @@ const rootReducer = combineReducers({
   usersRedpacket: createReducer(usersRedpacketAction.name),
   wechatSign: createReducer(wechatSignAction.name),
   topTen: createReducer(topTenAction.name),
-  summerMat: createReducer(summerMatAction.name),
+  summerMat: summerMatReducer,
   invited: createReducer(invitedAction.name),
   inviteSharing: createReducer(inviteSharingAction.name),
   mamaInfo: createReducer(mamaInfoAction.name),
