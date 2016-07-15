@@ -52,16 +52,22 @@ export default class ShopInvited extends Component {
     const { activeTab } = this.state;
     this.props.fetchInvited(activeTab);
     this.props.fetchInviteSharing(shareType[activeTab]);
-    plugins.invoke({
-      method: 'changeId',
-      data: {
-        id: shareType[activeTab],
-      },
-    });
   }
 
   componentDidMount() {
     document.body.style.backgroundColor = '#FFCB00';
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { inviteSharing } = nextProps;
+    const { activeTab } = this.state;
+    plugins.invoke({
+      method: 'changeId',
+      data: {
+        id: shareType[activeTab],
+        title: inviteSharing.data.title || '邀请您加入小鹿正式会员',
+      },
+    });
   }
 
   componentWillUnmount() {
@@ -70,6 +76,7 @@ export default class ShopInvited extends Component {
 
   onTabItemClick = (e) => {
     const activeTab = e.currentTarget.id;
+    const { inviteSharing } = this.props;
     this.setState({ activeTab: activeTab });
     this.props.fetchInvited(activeTab);
     this.props.fetchInviteSharing(shareType[activeTab]);
@@ -77,6 +84,7 @@ export default class ShopInvited extends Component {
       method: 'changeId',
       data: {
         id: shareType[activeTab],
+        title: inviteSharing.data.title || '邀请您加入小鹿正式会员',
       },
     });
   }
