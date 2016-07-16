@@ -42,6 +42,7 @@ export const downloadAppUri = '/sale/promotion/appdownload/';
 export const disabledDownloadApp = [
   'activity/summer/mat/home',
   'activity/summer/mat/success',
+  'activity/summer/mat/register',
   'order/redpacket',
   'activity/shop/invited',
   'activity/shop/open',
