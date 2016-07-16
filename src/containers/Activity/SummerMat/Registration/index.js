@@ -118,6 +118,10 @@ export default class Registration extends Component {
                 <span>{fetchMumInfo.data.mama_id}</span>
               </p>
               <p className="col-xs-6 text-left padding-left-xs">
+                <span className="text-left">粉丝编号：</span>
+                <span>{fetchMumInfo.data.id}</span>
+              </p>
+              <p className="col-xs-12 text-center padding-left-xs">
                 <span className="text-left">签到人数：</span>
                 <span>{fetchRegisters.data.count}</span>
               </p>
