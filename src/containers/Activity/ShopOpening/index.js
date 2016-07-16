@@ -130,7 +130,7 @@ export default class OpeningShop extends Component {
       Toast.show('请先验证手机号');
       return;
     }
-    if (!_.isEmpty(mamaInfo.data)) {
+    if (mamaInfo.success && !_.isEmpty(mamaInfo.data)) {
       Toast.show('您已经是小鹿妈妈');
       return;
     }
