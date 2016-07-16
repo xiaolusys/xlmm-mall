@@ -27,7 +27,7 @@ export const fetchMumInfo = (groupId) => {
   const action = createAction(names.FETCH_MUM_INFO);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get('/sale/weixingroup/liangxi/' + groupId + '/detail')
+    return axios.get('/sale/weixingroup/mamagroups/' + groupId + '/detail')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

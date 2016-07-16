@@ -8,6 +8,7 @@ import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { Image } from 'components/Image';
 import { Dialog } from 'components/Dialog';
+import { BottomBar } from 'components/BottomBar';
 import * as constants from 'constants';
 
 import './index.scss';
@@ -86,7 +87,7 @@ export default class Registration extends Component {
   }
 
   onDownloadClick = (e) => {
-    Toast.show('下载App领取100元红包！');
+    Toast.show('首次下载App领取100元新人大礼包！');
     _.delay(function() {
       const uFrom = utils.cookie.getCookie('ufrom') || '';
       window.location.href = `${constants.downloadAppUri}?ufrom=${uFrom}`;
@@ -114,7 +115,7 @@ export default class Registration extends Component {
             <div className="row no-margin margin-top-xs font-xs">
               <p className="col-xs-6 text-right padding-right-xs">
                 <span>妈妈编号：</span>
-                <span>{fetchMumInfo.data.group && fetchMumInfo.data.group.mama_id}</span>
+                <span>{fetchMumInfo.data.mama_id}</span>
               </p>
               <p className="col-xs-6 text-left padding-left-xs">
                 <span className="text-left">签到人数：</span>
@@ -143,10 +144,10 @@ export default class Registration extends Component {
               </If>
             </ul>
           </div>
-          <div className="row no-margin text-center">
-            <button className="col-xs-10 col-xs-offset-1 button button-energized  margin-bottom-xs margin-top-xs" onClick={this.onDownloadClick}>去领100元红包</button>
-          </div>
         </div>
+        <BottomBar size="medium">
+          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onDownloadClick}>去领100元红包</button>
+        </BottomBar>
       </div>
     );
   }
