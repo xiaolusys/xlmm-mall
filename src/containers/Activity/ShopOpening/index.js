@@ -9,15 +9,18 @@ import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 import { Popup } from 'components/Popup';
 import { If } from 'jsx-control-statements';
+import * as utils from 'utils';
 import * as verifyCodeAction from 'actions/user/verifyCode';
 import * as mamaInfoAction from 'actions/activity/mamaInfo';
 import * as mamaOrderAction from 'actions/activity/mamaOrder';
 import * as mamaChargeAction from 'actions/activity/mamaCharge';
+import * as inviteSharingAction from 'actions/activity/inviteSharing';
+import * as wechatSignAction from 'actions/wechat/sign';
 
 import './index.scss';
 
 const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg';
-const actionCreators = _.extend(verifyCodeAction, mamaInfoAction, mamaOrderAction, mamaChargeAction);
+const actionCreators = _.extend(verifyCodeAction, mamaInfoAction, mamaOrderAction, mamaChargeAction, inviteSharingAction, wechatSignAction);
 
 @connect(
   state => ({
@@ -25,6 +28,8 @@ const actionCreators = _.extend(verifyCodeAction, mamaInfoAction, mamaOrderActio
     mamaInfo: state.mamaInfo,
     mamaOrder: state.mamaOrder,
     mamaCharge: state.mamaCharge,
+    inviteSharing: state.inviteSharing,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -40,10 +45,14 @@ export default class OpeningShop extends Component {
     saveMamaInfo: React.PropTypes.func,
     fetchMamaOrder: React.PropTypes.func,
     fetchMamaCharge: React.PropTypes.func,
+    fetchInviteSharing: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
     mamaOrder: React.PropTypes.any,
     mamaCharge: React.PropTypes.any,
     verifyCode: React.PropTypes.any,
+    inviteSharing: React.PropTypes.object,
+    wechatSign: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -64,15 +73,32 @@ export default class OpeningShop extends Component {
   componentWillMount() {
     this.props.fetchMamaInfo();
     this.props.fetchMamaOrder();
+    this.props.fetchInviteSharing(27);
+    this.props.fetchWechatSign();
   }
 
   componentWillReceiveProps(nextProps) {
     const { fetch, verify } = nextProps.verifyCode;
-    const { mamaCharge } = nextProps;
+    const { mamaCharge, wechatSign, inviteSharing } = nextProps;
+    utils.wechat.config(wechatSign);
+
+    if (!inviteSharing.isLoading && inviteSharing.success) {
+      const shareInfo = {
+        success: inviteSharing.success,
+        data: {
+          title: inviteSharing.data.title,
+          desc: inviteSharing.data.active_dec,
+          share_link: inviteSharing.data.share_link,
+          share_img: inviteSharing.data.share_icon,
+        },
+      };
+      utils.wechat.configShareContent(shareInfo);
+    }
+
     if ((fetch.success || fetch.error) && !fetch.isLoading && !this.state.verifyCode) {
       Toast.show(fetch.data.msg);
     }
-    if ((verify.success || verify.error) && !verify.isLoading && !this.state.password) {
+    if (verify.error && !verify.isLoading && !this.state.password) {
       Toast.show(verify.data.msg);
     }
     if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
@@ -83,6 +109,7 @@ export default class OpeningShop extends Component {
   componentWillUnmount() {
     this.props.resetFetchState();
     this.props.resetVerifyState();
+    this.props.fetchInviteSharing(27);
   }
 
   onPhoneChange = (val) => {
@@ -94,10 +121,10 @@ export default class OpeningShop extends Component {
   }
 
   onVerifyCodeBlur = () => {
+    this.props.resetFetchState();
     if (_.isEmpty(this.state.code)) {
       return;
     }
-    this.props.resetFetchState();
     this.props.verify(this.state.phone, this.state.code, 'bind');
   }
 
