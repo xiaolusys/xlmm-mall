@@ -31,11 +31,13 @@ const actionCreators = _.extend(verifyCodeAction, mamaInfoAction, mamaOrderActio
 export default class OpeningShop extends Component {
   static propTypes = {
     children: React.PropTypes.array,
+    location: React.PropTypes.object,
     fetchVerifyCode: React.PropTypes.func,
     verify: React.PropTypes.func,
     resetVerifyState: React.PropTypes.func,
     resetFetchState: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
+    saveMamaInfo: React.PropTypes.func,
     fetchMamaOrder: React.PropTypes.func,
     fetchMamaCharge: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
@@ -124,6 +126,7 @@ export default class OpeningShop extends Component {
   }
 
   togglePayTypePopupActive = () => {
+    const { mama_id } = this.props.location.query;
     const { verify } = this.props.verifyCode;
     const { mamaInfo } = this.props;
     if (!verify.success) {
@@ -135,6 +138,10 @@ export default class OpeningShop extends Component {
       return;
     }
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
+    this.props.saveMamaInfo({
+      mama_mobile: this.state.phone,
+      mama_id: mama_id,
+    });
   }
 
   payInfo = () => {
