@@ -1,4 +1,5 @@
 .summer-mat-register {
+  background-color: #fff;
   >.top {
     background-color: #FDCB0E;
     color: #fff;
@@ -11,14 +12,13 @@
     }
   }
   > .register-center {
-    background-color: #fff;
     min-height: 300px;
     >p {
       padding: 12px 20px;
     }
     > .register-list {
       >li {
-        padding: 8px 12px 0 12px;
+        padding: 8px 12px 0 16px;
         img {
           border-radius: 25px;
           width: 50px;
