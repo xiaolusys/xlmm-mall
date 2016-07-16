@@ -96,7 +96,8 @@ const rootReducer = combineReducers({
   summerMat: summerMatReducer,
   invited: createReducer(invitedAction.name),
   inviteSharing: createReducer(inviteSharingAction.name),
-  mamaInfo: createReducer(mamaInfoAction.name),
+  mamaInfo: createReducer(mamaInfoAction.names.FETCH_MAMA_INFO),
+  savedMamaInfo: createReducer(mamaInfoAction.names.SAVE_MAMA_INFO),
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
 });
