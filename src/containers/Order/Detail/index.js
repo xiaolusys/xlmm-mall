@@ -163,9 +163,14 @@ export default class Detail extends Component {
   onOrderBtnClick = (e) => {
     const { action, orderid, tradeid } = e.currentTarget.dataset;
     const { router } = this.context;
+    const trade = this.props.order.fetchOrder.data || {};
     switch (action) {
       case orderOperations['2'].action:
-        this.setState({ isShowPopup: true, tradeid: tradeid, orderid: orderid });
+        if (trade && trade.extras && trade.extras.refund_choices.length === 1) {
+          router.push(`/refunds/apply/${tradeid}/${orderid}?refundChannel=${trade.extras.refund_choices[0].refund_channel}&refundType=refundMoney`);
+        } else {
+          this.setState({ isShowPopup: true, tradeid: tradeid, orderid: orderid });
+        }
         break;
       case orderOperations['3'].action:
         this.props.confirmReceivedOrder(tradeid, orderid);
