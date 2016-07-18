@@ -194,7 +194,7 @@ export default class OpeningShop extends Component {
   }
 
   pay = (charge) => {
-    this.togglePayTypePopupActive();
+    this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
         window.location.replace('/mall/activity/shop/open/succeed');
