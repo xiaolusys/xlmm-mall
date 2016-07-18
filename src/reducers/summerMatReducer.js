@@ -87,15 +87,15 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, {
         register: { isLoading: false, data: action.payload, error: true, success: false },
       });
-    case summerMatAction.names.FETCHUSERINFO + '_' + actionTypes.REQUEST:
+    case summerMatAction.names.FETCH_USER_INFO + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         fetchUserInfo: { isLoading: true, data: {}, error: false, success: false },
       });
-    case summerMatAction.names.FETCHUSERINFO + '_' + actionTypes.SUCCESS:
+    case summerMatAction.names.FETCH_USER_INFO + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         fetchUserInfo: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case summerMatAction.names.FETCHUSERINFO + '_' + actionTypes.FAILURE:
+    case summerMatAction.names.FETCH_USER_INFO + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         fetchUserInfo: { isLoading: false, data: action.payload, error: true, success: false },
       });

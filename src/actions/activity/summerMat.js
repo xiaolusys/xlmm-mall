@@ -7,7 +7,7 @@ export const names = {
   FETCH_MUM_INFO: 'FETCH_MUM_INFO',
   FETCH_REGISTERS: 'FETCH_REGISTERS',
   REGISTER: 'REGISTER',
-  FETCHUSERINFO: 'FETCHUSERINFO',
+  FETCH_USER_INFO: 'FETCH_USER_INFO',
 };
 
 export const signUp = (administratorId) => {
@@ -67,7 +67,7 @@ export const register = (groupId) => {
 };
 
 export const fetchUserInfo = () => {
-  const action = createAction(names.FETCHUSERINFO);
+  const action = createAction(names.FETCH_USER_INFO);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get('/sale/weixingroup/mamagroups/get_self_info')
