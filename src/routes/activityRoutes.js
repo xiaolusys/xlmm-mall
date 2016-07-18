@@ -31,7 +31,7 @@ export default (
     <Route path="/activity/shop/open/succeed" component={ShopOpeningSucceed} />
     <Route path="/activity/shop/open/failed" component={ShopOpeningFailed} />
     <Route path="/activity/shop/invited" component={ShopInvited} />
-    <Route path="/activity/summer/mat/home" component={SummerMatHome} />
+    <Route path="/activity/summer/mat/home" component={SummerMatHome} onEnter={utils.checkAuth}/>
     <Route path="/activity/summer/mat/success" component={SummerMatSuccess} />
     <Route path="/activity/summer/mat/register" component={SummerMatRegistration} />
   </Route>

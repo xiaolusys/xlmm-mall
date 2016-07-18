@@ -43,7 +43,9 @@ export default class Home extends Component {
     } else if (nextProps.summerMat.error) {
       Toast.show('' + nextProps.summerMat.data);
     }
-    if (nextProps.summerMat.fetchUserInfo.success && nextProps.summerMat.fetchUserInfo.data && nextProps.summerMat.fetchUserInfo.data.join === true) {
+    if (nextProps.summerMat.fetchUserInfo.error) {
+      Toast.show(nextProps.summerMat.fetchUserInfo.data[0]);
+    } else if (nextProps.summerMat.fetchUserInfo.success && nextProps.summerMat.fetchUserInfo.data && nextProps.summerMat.fetchUserInfo.data.join === true) {
       window.location.href = nextProps.summerMat.fetchUserInfo.data.url;
     }
   }
