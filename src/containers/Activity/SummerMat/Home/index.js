@@ -44,7 +44,7 @@ export default class Home extends Component {
       Toast.show('' + nextProps.summerMat.data);
     }
     if (nextProps.summerMat.fetchUserInfo.success && nextProps.summerMat.fetchUserInfo.data && nextProps.summerMat.fetchUserInfo.data.join === true) {
-      window.location.href = 'http://m.xiaolumeimei.com' + nextProps.summerMat.fetchUserInfo.data.url;
+      window.location.href = nextProps.summerMat.fetchUserInfo.data.url;
     }
   }
 
