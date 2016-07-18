@@ -27,6 +27,12 @@ const initState = {
     success: false,
     data: {},
   },
+  fetchUserInfo: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -80,6 +86,18 @@ export default (state = initState, action = null) => {
     case summerMatAction.names.REGISTER + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         register: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case summerMatAction.names.FETCHUSERINFO + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        fetchUserInfo: { isLoading: true, data: {}, error: false, success: false },
+      });
+    case summerMatAction.names.FETCHUSERINFO + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        fetchUserInfo: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case summerMatAction.names.FETCHUSERINFO + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        fetchUserInfo: { isLoading: false, data: action.payload, error: true, success: false },
       });
     default:
       return state;
