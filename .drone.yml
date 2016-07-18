@@ -38,4 +38,5 @@ deploy:
     commands:
       - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall
       - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall cp -rf mall /data/mall
+      - docker run --rm --volumes-from=static --volume /etc/qiniu:/data/qiniu registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall qshell qupload 2 /data/qiniu/qupload.conf
 
