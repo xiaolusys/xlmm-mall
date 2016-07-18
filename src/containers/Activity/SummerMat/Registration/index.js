@@ -50,7 +50,7 @@ export default class Registration extends Component {
     const fansId = this.props.location.query.fansId || '';
     const { pageIndex, pageSize } = this.state;
     this.addScrollListener();
-    if (fansId) {
+    if (groupId && fansId) {
       this.props.fetchMumInfo(fansId);
       this.props.fetchRegisters(groupId, pageIndex, pageSize);
       this.props.register(groupId);
