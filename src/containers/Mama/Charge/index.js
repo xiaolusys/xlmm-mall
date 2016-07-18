@@ -11,15 +11,27 @@ import { Popup } from 'components/Popup';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
 import * as verifyCodeAction from 'actions/user/verifyCode';
-import * as mamaInfoAction from 'actions/activity/mamaInfo';
-import * as mamaOrderAction from 'actions/activity/mamaOrder';
-import * as mamaChargeAction from 'actions/activity/mamaCharge';
-import * as inviteSharingAction from 'actions/activity/inviteSharing';
+import * as mamaInfoAction from 'actions/mama/mamaInfo';
+import * as mamaOrderAction from 'actions/mama/mamaOrder';
+import * as mamaChargeAction from 'actions/mama/mamaCharge';
+import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as wechatSignAction from 'actions/wechat/sign';
 
 import './index.scss';
 
-const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg';
+const pageInfos = {
+  'mct.html': {
+    banner: 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg',
+    id: 2,
+    shareId: 27,
+  },
+  'mcf.html': {
+    banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXWJK2s0NyM0F3A_1500_3528.png',
+    id: 0,
+    shareId: 26,
+  },
+};
+
 const actionCreators = _.extend(verifyCodeAction, mamaInfoAction, mamaOrderAction, mamaChargeAction, inviteSharingAction, wechatSignAction);
 
 @connect(
@@ -33,7 +45,7 @@ const actionCreators = _.extend(verifyCodeAction, mamaInfoAction, mamaOrderActio
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class OpeningShop extends Component {
+export default class Charge extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
@@ -71,9 +83,15 @@ export default class OpeningShop extends Component {
   }
 
   componentWillMount() {
+    const { location } = this.props;
+    const pageInfo = pageInfos[location.pathname];
+    console.log(pageInfo);
+    if (pageInfo) {
+      this.setState({ pageInfo: pageInfo });
+    }
     this.props.fetchMamaInfo();
     this.props.fetchMamaOrder();
-    this.props.fetchInviteSharing(27);
+    this.props.fetchInviteSharing(pageInfo.shareId);
     this.props.fetchWechatSign();
   }
 
@@ -136,18 +154,19 @@ export default class OpeningShop extends Component {
     const { paytype } = e.currentTarget.dataset;
     this.setState({ payChannel: paytype });
     const mamaOrder = this.props.mamaOrder.data || {};
+    const { id } = this.state.pageInfo;
     this.props.fetchMamaCharge({
       product_id: mamaOrder.product.id,
-      sku_id: mamaOrder.product.normal_skus[2].id,
-      payment: mamaOrder.payinfos[2].total_payment,
+      sku_id: mamaOrder.product.normal_skus[id].id,
+      payment: mamaOrder.payinfos[id].total_payment,
       channel: paytype,
       num: 1,
       post_fee: 0,
       discount_fee: 0,
       uuid: mamaOrder.uuid,
-      total_fee: mamaOrder.payinfos[2].total_payment,
-      success_url: '/mall/activity/shop/open/succeed',
-      cancel_url: '/mall/activity/shop/open/failed',
+      total_fee: mamaOrder.payinfos[id].total_payment,
+      success_url: '/mall/mama/open/succeed',
+      cancel_url: '/mall/mama/open/failed',
     });
   }
 
@@ -171,9 +190,10 @@ export default class OpeningShop extends Component {
   }
 
   payInfo = () => {
+    const { id } = this.state.pageInfo;
     let payInfo = { total_payment: 0 };
     if (!_.isEmpty(this.props.mamaOrder.data.payinfos)) {
-      payInfo = this.props.mamaOrder.data.payinfos[2];
+      payInfo = this.props.mamaOrder.data.payinfos[id];
       payInfo.channels = [];
       if (payInfo.weixin_payable) {
         payInfo.channels.push({
@@ -197,14 +217,15 @@ export default class OpeningShop extends Component {
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        window.location.replace('/mall/activity/shop/open/succeed');
+        window.location.replace('/mall/mama/open/succeed');
         return;
       }
-      window.location.replace('/mall/activity/shop/open/failed');
+      window.location.replace('/mall/mama/open/failed');
     });
   }
 
   render() {
+    const { banner } = this.state.pageInfo;
     const payInfo = this.payInfo();
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg opening-shop">

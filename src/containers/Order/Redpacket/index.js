@@ -155,7 +155,7 @@ export default class Redpacket extends Component {
               <h4 className="text-center font-red">红包领取规则</h4>
               <div className="row no-margin">
                 <p className="col-xs-1 no-padding"><span className="badge">1</span></p>
-                <p className="col-xs-11 no-padding">发放至手机号的红包需在App用手机号注册，或将手机号绑定的小鹿美美账户后才可使用。</p>
+                <p className="col-xs-11 no-padding">发放至手机号的红包需在App用手机号注册，或将手机号绑定小鹿美美账户后即可使用。</p>
               </div>
               <div className="row no-margin">
                 <p className="col-xs-1 no-padding"><span className="badge">2</span></p>

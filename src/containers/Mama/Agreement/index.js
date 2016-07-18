@@ -7,11 +7,9 @@ import { Header } from 'components/Header';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
 
-// import './index.scss';
-
 const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg';
 
-export default class OpeningShop extends Component {
+export default class Agreement extends Component {
   static propTypes = {
     children: React.PropTypes.array,
   };

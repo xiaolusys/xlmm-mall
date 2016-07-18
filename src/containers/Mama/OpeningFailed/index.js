@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-failed.png';
 
-export default class ShopOpeningFailed extends Component {
+export default class Failed extends Component {
   static propTypes = {
     children: React.PropTypes.array,
   };

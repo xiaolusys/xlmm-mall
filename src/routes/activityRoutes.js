@@ -8,16 +8,10 @@ import {
   ExamHome,
   ExamQuestion,
   ExamResult,
-  ShopOpening,
-  ShopAgreement,
-  ShopOpeningSucceed,
-  ShopInvited,
   SummerMatHome,
   SummerMatSuccess,
   SummerMatRegistration,
-  ShopOpeningFailed,
 } from 'containers/Activity';
-// /mall/activity/shop/charge
 
 export default (
   <Route>
@@ -26,11 +20,6 @@ export default (
     <Route path="/activity/exam" component={ExamHome} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/question/:type/:id" component={ExamQuestion} onEnter={utils.checkAuth} />
     <Route path="/activity/exam/result" component={ExamResult} onEnter={utils.checkAuth} />
-    <Route path="/aos.html" component={ShopOpening} />
-    <Route path="/activity/shop/agreement" component={ShopAgreement} />
-    <Route path="/activity/shop/open/succeed" component={ShopOpeningSucceed} />
-    <Route path="/activity/shop/open/failed" component={ShopOpeningFailed} />
-    <Route path="/activity/shop/invited" component={ShopInvited} />
     <Route path="/activity/summer/mat/home" component={SummerMatHome} onEnter={utils.checkAuth}/>
     <Route path="/activity/summer/mat/success" component={SummerMatSuccess} />
     <Route path="/activity/summer/mat/register" component={SummerMatRegistration} />
