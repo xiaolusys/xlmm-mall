@@ -45,7 +45,7 @@ export const disabledDownloadApp = [
   'activity/summer/mat/register',
   'order/redpacket',
   'activity/shop/invited',
-  'activity/shop/open',
+  'aos.html',
   'activity/shop/agreement',
   'activity/shop/open/succeed',
 ];
