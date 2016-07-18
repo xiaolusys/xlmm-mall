@@ -136,7 +136,6 @@ export default class OpeningShop extends Component {
     const { paytype } = e.currentTarget.dataset;
     this.setState({ payChannel: paytype });
     const mamaOrder = this.props.mamaOrder.data || {};
-    console.log(mamaOrder);
     this.props.fetchMamaCharge({
       product_id: mamaOrder.product.id,
       sku_id: mamaOrder.product.normal_skus[2].id,
@@ -160,7 +159,7 @@ export default class OpeningShop extends Component {
       Toast.show('请先验证手机号');
       return;
     }
-    if (mamaInfo.success && !_.isEmpty(mamaInfo.data)) {
+    if (mamaInfo.success && !_.isEmpty(mamaInfo.data) && !mamaInfo.data[0].can_trial) {
       Toast.show('您已经是小鹿妈妈');
       return;
     }
