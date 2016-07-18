@@ -10,7 +10,7 @@ const action = createAction(name);
 export const fetchMamaInfo = () => {
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(`${constants.baseEndpointV1}pmt/xlmm/fill_mama_info`)
+    return axios.get(`${constants.baseEndpointV1}pmt/xlmm`)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
