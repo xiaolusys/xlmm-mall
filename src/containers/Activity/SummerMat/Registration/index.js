@@ -47,10 +47,11 @@ export default class Registration extends Component {
 
   componentWillMount() {
     const groupId = this.props.location.query.groupId || '';
+    const fansId = this.props.location.query.fansId || '';
     const { pageIndex, pageSize } = this.state;
     this.addScrollListener();
-    if (groupId) {
-      this.props.fetchMumInfo(groupId);
+    if (groupId && fansId) {
+      this.props.fetchMumInfo(fansId);
       this.props.fetchRegisters(groupId, pageIndex, pageSize);
       this.props.register(groupId);
     }
@@ -115,7 +116,7 @@ export default class Registration extends Component {
             <div className="row no-margin margin-top-xs font-xs">
               <p className="col-xs-6 text-right padding-right-xs">
                 <span>妈妈编号：</span>
-                <span>{fetchMumInfo.data.mama_id}</span>
+                <span>{fetchMumInfo.data.mama && fetchMumInfo.data.mama.id}</span>
               </p>
               <p className="col-xs-6 text-left padding-left-xs">
                 <span className="text-left">粉丝编号：</span>

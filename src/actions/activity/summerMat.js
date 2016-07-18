@@ -7,6 +7,7 @@ export const names = {
   FETCH_MUM_INFO: 'FETCH_MUM_INFO',
   FETCH_REGISTERS: 'FETCH_REGISTERS',
   REGISTER: 'REGISTER',
+  FETCHUSERINFO: 'FETCHUSERINFO',
 };
 
 export const signUp = (administratorId) => {
@@ -23,11 +24,11 @@ export const signUp = (administratorId) => {
   };
 };
 
-export const fetchMumInfo = (groupId) => {
+export const fetchMumInfo = (fansId) => {
   const action = createAction(names.FETCH_MUM_INFO);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get('/sale/weixingroup/mamagroups/' + groupId + '/detail')
+    return axios.get('/sale/weixingroup/liangxi/' + fansId + '/detail')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -56,6 +57,20 @@ export const register = (groupId) => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get('/sale/weixingroup/liangxi/join', { params: { group_id: groupId } })
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchUserInfo = () => {
+  const action = createAction(names.FETCHUSERINFO);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get('/sale/weixingroup/mamagroups/get_self_info')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
