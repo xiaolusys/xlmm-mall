@@ -7,8 +7,8 @@ import { If } from 'jsx-control-statements';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
-import * as invitedAction from 'actions/activity/invited';
-import * as inviteSharingAction from 'actions/activity/inviteSharing';
+import * as invitedAction from 'actions/mama/invited';
+import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import moment from 'moment';
 import * as plugins from 'plugins';
 
@@ -28,7 +28,7 @@ const shareType = {
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class ShopInvited extends Component {
+export default class Invited extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     invited: React.PropTypes.object,

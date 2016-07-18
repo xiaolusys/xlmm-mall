@@ -57,6 +57,14 @@ import {
   ComplainList,
 } from 'containers/Complaint';
 
+import {
+  MamaCharge,
+  MamaInvited,
+  MamaOpeningFailed,
+  MamaOpeningSucceed,
+  MamaAgreement,
+} from 'containers/Mama';
+
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home} />
@@ -92,6 +100,12 @@ export default (
     <Route path="/refunds" component={RefundsList} />
     <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} onEnter={utils.checkAuth} />
     <Route path="/alipay" component={Alipay} />
+    <Route path="/mcf.html" component={MamaCharge} />
+    <Route path="/mct.html" component={MamaCharge} />
+    <Route path="/mama/agreement" component={MamaAgreement} />
+    <Route path="/mama/open/succeed" component={MamaOpeningSucceed} />
+    <Route path="/mama/open/failed" component={MamaOpeningFailed} />
+    <Route path="/mama/invited" component={MamaInvited} />
     {activityRoutes}
     <Route status={404} path="*" component={Home} />
   </Route>

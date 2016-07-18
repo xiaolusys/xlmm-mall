@@ -44,11 +44,11 @@ import * as usersRedpacketAction from 'actions/order/usersRedpacket';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as topTenAction from 'actions/activity/topTen';
 import * as summerMatAction from 'actions/activity/summerMat';
-import * as invitedAction from 'actions/activity/invited';
-import * as inviteSharingAction from 'actions/activity/inviteSharing';
-import * as mamaInfoAction from 'actions/activity/mamaInfo';
-import * as mamaOrderAction from 'actions/activity/mamaOrder';
-import * as mamaChargeAction from 'actions/activity/mamaCharge';
+import * as invitedAction from 'actions/mama/invited';
+import * as inviteSharingAction from 'actions/mama/inviteSharing';
+import * as mamaInfoAction from 'actions/mama/mamaInfo';
+import * as mamaOrderAction from 'actions/mama/mamaOrder';
+import * as mamaChargeAction from 'actions/mama/mamaCharge';
 
 const rootReducer = combineReducers({
   form: formReducer,

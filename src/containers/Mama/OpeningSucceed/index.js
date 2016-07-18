@@ -8,12 +8,12 @@ import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
 import { WechatPopup } from 'components/WechatPopup';
 import * as utils from 'utils';
-import * as inviteSharingAction from 'actions/activity/inviteSharing';
+import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as wechatSignAction from 'actions/wechat/sign';
 
-// import './index.scss';
 const actionCreators = _.extend(inviteSharingAction, wechatSignAction);
 const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-succeed.png';
+
 @connect(
   state => ({
     inviteSharing: state.inviteSharing,
@@ -21,7 +21,7 @@ const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-succeed.
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class ShopOpeningSucceed extends Component {
+export default class Succeed extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     fetchInviteSharing: React.PropTypes.func,
