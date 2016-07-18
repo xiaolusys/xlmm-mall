@@ -20,6 +20,7 @@ export default class Home extends Component {
     isLoading: React.PropTypes.bool,
     location: React.PropTypes.object,
     signUp: React.PropTypes.func,
+    fetchUserInfo: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -31,12 +32,19 @@ export default class Home extends Component {
     context.router;
   }
 
+  componentWillMount() {
+    this.props.fetchUserInfo();
+  }
+
   componentWillReceiveProps(nextProps) {
     const administratorId = this.props.location.query.id || '';
     if (nextProps.summerMat.signUp.success && nextProps.summerMat.signUp.data) {
       this.context.router.push(`/activity/summer/mat/success?id=${administratorId}`);
     } else if (nextProps.summerMat.error) {
       Toast.show('' + nextProps.summerMat.data);
+    }
+    if (nextProps.summerMat.fetchUserInfo.success && nextProps.summerMat.fetchUserInfo.data) {
+      window.location.href = 'http://m.xiaolumeimei.com' + nextProps.summerMat.fetchUserInfo.data.url;
     }
   }
 
