@@ -38,15 +38,16 @@ export default class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     const administratorId = this.props.location.query.id || '';
-    if (nextProps.summerMat.signUp.success && nextProps.summerMat.signUp.data) {
+    const { summerMat } = nextProps;
+    if (summerMat.signUp.success && summerMat.signUp.data) {
       this.context.router.push(`/activity/summer/mat/success?id=${administratorId}`);
-    } else if (nextProps.summerMat.error) {
-      Toast.show('' + nextProps.summerMat.data);
+    } else if (summerMat.error) {
+      Toast.show('' + summerMat.data);
     }
-    if (nextProps.summerMat.fetchUserInfo.error) {
-      Toast.show(nextProps.summerMat.fetchUserInfo.data[0]);
-    } else if (nextProps.summerMat.fetchUserInfo.success && nextProps.summerMat.fetchUserInfo.data && nextProps.summerMat.fetchUserInfo.data.join === true) {
-      window.location.href = nextProps.summerMat.fetchUserInfo.data.url;
+    if (summerMat.fetchUserInfo.error) {
+      Toast.show(summerMat.fetchUserInfo.data[0]);
+    } else if (summerMat.fetchUserInfo.success && summerMat.fetchUserInfo.data && summerMat.fetchUserInfo.data.join === true) {
+      window.location.href = summerMat.fetchUserInfo.data.url;
     }
   }
 
