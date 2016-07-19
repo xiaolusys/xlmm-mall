@@ -136,7 +136,7 @@ export default class Invited extends Component {
               return (
                 <li className="row no-margin">
                   <img className="pull-left avatar" src={item.thumbnail} />
-                  <div style={{ display: 'inline-block', maxWidth: '180px' }} className="no-wrap">
+                  <div style={{ display: 'inline-block', maxWidth: '70%' }} className="no-wrap">
                     <p style={{ color: '#666' }}>{moment(item.charge_time).format('YYYY-MM-DD hh:mm:ss')}</p>
                     <p>
                       <span style={{ color: '#0095FF' }}>{item.nick}</span>

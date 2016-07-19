@@ -135,13 +135,17 @@ export default class Registration extends Component {
                 {fetchRegisters.data.results.map((item, index) => {
                   return (
                     <li className="col-xs-12 col-md-6 col-md-offset-3 bottom-border" key={index} >
-                      <Image className="col-xs-4 no-padding" src={item.head_img_url} />
-                      <div className="col-xs-8">
+                      <Image className="col-xs-3 no-padding" src={item.head_img_url} />
+                      <div className="col-xs-9">
                         <p>
                           <span>昵称：</span>
                           <span>{item.nick}</span>
                         </p>
-                        <p>{item.created.substr(0, 10)}</p>
+                        <p className="col-xs-6 no-padding font-xxs">
+                          <span>粉丝编号：</span>
+                          <span>{item.id}</span>
+                        </p>
+                        <p className="col-xs-6 no-padding font-xxs">{item.created.substr(0, 10)}</p>
                       </div>
                     </li>
                   );
