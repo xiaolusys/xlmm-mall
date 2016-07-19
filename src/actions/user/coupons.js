@@ -12,7 +12,7 @@ export const fetchCouponsByStatus = (status) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpointV1 + 'usercoupons/get_user_coupons?status=' + status)
       .then((resp) => {
-        const data = resp.data;
+        const data = {};
         data.status = status;
         data.coupons = resp.data;
         dispatch(action.success(data));
