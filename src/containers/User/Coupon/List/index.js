@@ -17,12 +17,6 @@ import * as constants from 'constants';
 import './index.scss';
 
 const actionCreators = _.extend(couponAction, couponsAction, verifyCouponAction);
-const couponTypes = {
-  0: '可用优惠劵',
-  1: '已用优惠劵',
-  2: '不可用优惠劵',
-  3: '过期优惠劵',
-};
 
 @connect(
   state => ({
@@ -53,14 +47,20 @@ export default class List extends Component {
     context.router;
   }
 
-  state = {}
+  state = {
+    activeTab: 0,
+    sticky: false,
+  }
 
   componentWillMount() {
     const { couponStatus } = constants;
     this.props.fetchCouponsByStatus(couponStatus.available);
     this.props.fetchCouponsByStatus(couponStatus.used);
-    this.props.fetchCouponsByStatus(couponStatus.unavailable);
     this.props.fetchCouponsByStatus(couponStatus.expired);
+  }
+
+  componentDidMount() {
+    this.addScrollListener();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,6 +81,20 @@ export default class List extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.removeScrollListener();
+  }
+
+  onScroll = (e) => {
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const tabsOffsetTop = utils.dom.offsetTop('.coupon-tabs');
+    if (scrollTop > tabsOffsetTop) {
+      this.setState({ sticky: true });
+    } else {
+      this.setState({ sticky: false });
+    }
+  }
+
   onCouponItemClick = (e) => {
     const { query } = this.props.location;
     const { status, id } = e.currentTarget.dataset;
@@ -98,33 +112,76 @@ export default class List extends Component {
     e.preventDefault();
   }
 
+  onTabItemClick = (e) => {
+    const { couponStatus } = constants;
+    const { id } = e.currentTarget;
+    this.setState({
+      activeTab: couponStatus[id],
+    });
+    e.preventDefault();
+  }
+
+  getCoupons(type) {
+    const { available, used, unavailable, expired } = this.props.coupons;
+    const { activeTab } = this.state;
+    let coupons = [];
+    switch (activeTab) {
+      case 0:
+        coupons = available;
+        break;
+      case 1:
+        coupons = used;
+        break;
+      case 3:
+        coupons = expired;
+        break;
+      default:
+    }
+    return coupons;
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
   render() {
     const { query } = this.props.location;
     const { available, used, unavailable, expired } = this.props.coupons;
+    const { sticky, activeTab } = this.state;
+    const hasHeader = !utils.detector.isApp();
+    const { couponStatus } = constants;
+    const coupons = this.getCoupons(activeTab);
     return (
       <div>
         <Header title="优惠劵" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content coupons-container">
-        {_(this.props.coupons).map((coupon) => {
-            return (
-              <div>
-                <If condition={coupon.isLoading}>
-                  <Loader/>
-                </If>
-                <If condition={!_.isEmpty(coupon.data)}>
-                  <p>{couponTypes[coupon.data.status]}</p>
-                  <ul className="coupon-list">
-                    {coupon.data.map((item, index) => {
-                      return (
-                        <Coupon status={item.status} couponItem={item} key={index} data-status={item.status} data-id={item.id} onClick={this.onCouponItemClick}/>
-                      );
-                    })}
-                  </ul>
-                </If>
-              </div>
-            );
-          })}
-          <If condition={_.isEmpty(available.data) && _.isEmpty(used.data) && _.isEmpty(unavailable.data) && _.isEmpty(expired.data) || available.isLoading || used.isLoading || unavailable.isLoading || expired.isLoading}>
+        <div className={'coupon-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
+          <ul className="row no-margin">
+            <li id="available" className={'col-xs-4' + (activeTab === couponStatus.available ? ' active' : '')} onClick={this.onTabItemClick}>
+              <div>未使用({available.data && available.data.coupons && available.data.coupons.length})</div>
+            </li>
+            <li id="used" className={'col-xs-4' + (activeTab === couponStatus.used ? ' active' : '')} onClick={this.onTabItemClick}>
+              <div>已使用({used.data && used.data.coupons && used.data.coupons.length})</div>
+            </li>
+            <li id="expired" className={'col-xs-4' + (activeTab === couponStatus.expired ? ' active' : '')} onClick={this.onTabItemClick}>
+              <div>已过期({expired.data && expired.data.coupons && expired.data.coupons.length})</div>
+            </li>
+          </ul>
+        </div>
+        <If condition={!_.isEmpty(coupons.data && coupons.data.coupons)}>
+          <ul className="coupon-list">
+            {coupons.data.coupons.map((item, index) => {
+              return (
+                <Coupon status={item.status} couponItem={item} key={index} data-status={item.status} data-id={item.id} onClick={this.onCouponItemClick}/>
+              );
+            })}
+          </ul>
+        </If>
+          <If condition={_.isEmpty(coupons.data && coupons.data.coupons) || available.isLoading || used.isLoading || unavailable.isLoading || expired.isLoading}>
             <div className="text-center padding-top-sm">
               <i className="icon-coupon-o icon-5x"/>
               <p>您暂时还没有优惠劵哦～</p>
