@@ -26,6 +26,7 @@ const actionCreators = _.extend(couponAction, couponsAction, verifyCouponAction)
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
+
 export default class List extends Component {
   static propTypes = {
     children: React.PropTypes.array,
