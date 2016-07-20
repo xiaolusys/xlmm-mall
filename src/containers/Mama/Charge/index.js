@@ -24,11 +24,13 @@ const pageInfos = {
     banner: 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg',
     id: 2,
     shareId: 27,
+    btn: '马上一元开店',
   },
   'mcf.html': {
     banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXWJK2s0NyM0F3A_1500_3528.png',
     id: 0,
     shareId: 26,
+    btn: '支付押金',
   },
 };
 
@@ -97,9 +99,14 @@ export default class Charge extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { fetch, verify } = nextProps.verifyCode;
-    const { mamaCharge, wechatSign, inviteSharing } = nextProps;
+    const { mamaInfo, mamaOrder, mamaCharge, inviteSharing, wechatSign } = nextProps;
+    if (fetch.isLoading || verify.isLoading || mamaInfo.isLoading ||
+      mamaOrder.isLoading || mamaCharge.isLoading || inviteSharing.isLoading || wechatSign.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
     utils.wechat.config(wechatSign);
-
     if (!inviteSharing.isLoading && inviteSharing.success) {
       const shareInfo = {
         success: inviteSharing.success,
@@ -113,11 +120,8 @@ export default class Charge extends Component {
       utils.wechat.configShareContent(shareInfo);
     }
 
-    if ((fetch.success || fetch.error) && !fetch.isLoading && !this.state.verifyCode) {
+    if ((fetch.success || fetch.error) && !fetch.isLoading && fetch.data.code !== 0) {
       Toast.show(fetch.data.msg);
-    }
-    if (verify.error && !verify.isLoading && !this.state.password) {
-      Toast.show(verify.data.msg);
     }
     if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
       this.pay(mamaCharge.data);
@@ -227,7 +231,7 @@ export default class Charge extends Component {
   }
 
   render() {
-    const { banner } = this.state.pageInfo;
+    const { banner, btn } = this.state.pageInfo;
     const payInfo = this.payInfo();
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg opening-shop">
@@ -238,7 +242,7 @@ export default class Charge extends Component {
           <button className="col-xs-4 button button-sm button-light" type="button" onClick={this.onGetVerifyCodeBtnClick}>获取验证码</button>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.togglePayTypePopupActive}>马上一元开店</button>
+          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.togglePayTypePopupActive}>{btn}</button>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
           <Checkbox className="margin-bottom-xs" checked>同意一元体验15天</Checkbox>
