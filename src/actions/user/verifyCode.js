@@ -45,13 +45,13 @@ export const verify = (phone, verifyCode, requestAction) => {
 export const resetVerifyState = () => {
   const action = createAction(names.VERIFY);
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(action.reset());
   };
 };
 
 export const resetFetchState = () => {
   const action = createAction(names.FETCH_VERIFY_CODE);
   return (dispatch) => {
-    dispatch(action.request());
+    dispatch(action.reset());
   };
 };
