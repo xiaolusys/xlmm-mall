@@ -29,8 +29,14 @@ $side-menu-border: #000 !default;
     > li {
       padding: 8px 16px;
       font-size: 16px;
-      > a > span {
-        margin-left: 8px;
+      > a {
+        > span {
+          margin-left: 16px;
+        }
+        > i {
+          font-size: 22px;
+          line-height: 22px;
+        }
       }
     }
   }
