@@ -222,8 +222,8 @@ export default class List extends Component {
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.onBackClick} />
         <div className="content order-list">
           <If condition={_.isEmpty(trades) && this.props.order.fetchOrders.success && !this.props.order.fetchOrders.isLoading}>
-            <div className="text-center margin-top-xlg margin-bottom-lg">
-              <i className="icon-order-o icon-4x icon-grey"></i>
+            <div className="text-center order-list-empty">
+              <i className="icon-order-o icon-6x icon-grey"></i>
               <p>您暂时还没有订单哦～快去看看吧</p>
               <p className="font-grey font-xs margin-bottom-xs">再不抢购，宝贝就卖光啦～</p>
               <Link className="button button-stable" to="/" >快去抢购</Link>
