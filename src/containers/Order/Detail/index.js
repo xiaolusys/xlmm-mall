@@ -210,14 +210,12 @@ export default class Detail extends Component {
               <div className="col-xs-3 no-padding">
                 <img src={order.pic_path + constants.image.square} />
               </div>
-              <div className="col-xs-9 no-padding">
-                <p className="row no-margin">
-                  <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
-                  <span className="pull-right">{'￥' + order.total_fee}</span>
-                </p>
-                <p className="row no-margin font-grey">
-                  <span>{'尺码：' + order.sku_name}</span>
-                  <span className="pull-right">{'x' + order.num}</span>
+              <div className="col-xs-9 no-padding padding-top-xxs font-xs">
+                <p className="row no-margin no-wrap">{order.title}</p>
+                <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + order.sku_name}</p>
+                <p className="row no-margin margin-top-xxxs">
+                  <span className="">{'￥' + order.payment}</span>
+                  <span className="padding-left-xs">{'x' + order.num}</span>
                 </p>
               </div>
             </If>
@@ -225,17 +223,13 @@ export default class Detail extends Component {
               <div className="col-xs-3 no-padding">
                 <img src={order.pic_path + constants.image.square} />
               </div>
-              <div className="col-xs-6 no-padding">
-                <p className="row no-margin">
-                  <span className="col-xs-12 no-wrap no-padding">{order.title}</span>
+              <div className="col-xs-6 no-padding padding-top-xxs font-xs">
+                <p className="row no-margin no-wrap">{order.title}</p>
+                <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + order.sku_name}</p>
+                <p className="row no-margin margin-top-xxxs">
+                  <span className="">{'￥' + order.payment}</span>
+                  <span className="padding-left-xs">{'x' + order.num}</span>
                 </p>
-                <div className="row no-margin">
-                  <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
-                  <p className="pull-right">
-                    <span className="margin-right-xxs">{'￥' + order.total_fee}</span>
-                    <span className="font-grey">{'x' + order.num}</span>
-                  </p>
-                </div>
               </div>
               <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
                 <If condition={order.refund_status === 0}>
