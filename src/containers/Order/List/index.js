@@ -30,6 +30,11 @@ const types = [{
   title: '退换货',
   requestAction: '',
 }];
+const tabs = {
+  all: 0,
+  waitpay: 1,
+  waitsend: 2,
+};
 
 @connect(
   state => ({
@@ -65,6 +70,8 @@ export default class List extends Component {
     pageIndex: 0,
     pageSize: 20,
     hasMore: true,
+    activeTab: 0,
+    sticky: false,
   }
 
   componentWillMount() {
@@ -72,6 +79,7 @@ export default class List extends Component {
     const requestAction = types[query.type].requestAction;
     const { pageIndex, pageSize } = this.state;
     this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
+    this.setState({ activeTab: Number(query.type) || 0 });
     if (query.paid && query.paid === 'true') {
       window.ga && window.ga('send', {
         hitType: 'event',
@@ -140,14 +148,31 @@ export default class List extends Component {
     }
   }
 
+  onTabItemClick = (e) => {
+    const { pageSize, pageIndex, activeTab } = this.state;
+    const { id } = e.currentTarget;
+    this.setState({
+      activeTab: tabs[id],
+      pageIndex: 0,
+    });
+    this.props.resetOrders();
+    this.props.fetchOrders(types[tabs[id]].requestAction, 1, pageSize);
+  }
+
   onScroll = (e) => {
     const requestAction = types[this.props.location.query.type].requestAction;
-    const { pageSize, pageIndex } = this.state;
+    const { pageSize, pageIndex, activeTab } = this.state;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
+    const tabsOffsetTop = utils.dom.offsetTop('.order-tabs');
     if (scrollTop === documentHeight - windowHeight && !this.props.order.fetchOrders.isLoading && this.state.hasMore) {
-      this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
+      this.props.fetchOrders(types[activeTab].requestAction, pageIndex + 1, pageSize);
+    }
+    if (scrollTop > tabsOffsetTop) {
+      this.setState({ sticky: true });
+    } else {
+      this.setState({ sticky: false });
     }
   }
 
@@ -206,10 +231,25 @@ export default class List extends Component {
   render() {
     const type = types[this.props.location.query.type];
     const trades = this.props.order.fetchOrders.data.results || [];
+    const { activeTab, sticky } = this.state;
+    const hasHeader = !utils.detector.isApp();
     return (
       <div>
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.onBackClick} />
         <div className="content order-list">
+          <div className={'order-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
+            <ul className="row no-margin">
+              <li id="all" className={'col-xs-4' + (activeTab === tabs.all ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>全部订单</div>
+              </li>
+              <li id="waitpay" className={'col-xs-4' + (activeTab === tabs.waitpay ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>待支付</div>
+              </li>
+              <li id="waitsend" className={'col-xs-4' + (activeTab === tabs.waitsend ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>待收货</div>
+              </li>
+            </ul>
+          </div>
           <If condition={_.isEmpty(trades) && this.props.order.fetchOrders.success && !this.props.order.fetchOrders.isLoading}>
             <div className="text-center order-list-empty">
               <i className="icon-order-o icon-6x icon-grey"></i>

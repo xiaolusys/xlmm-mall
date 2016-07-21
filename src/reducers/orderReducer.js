@@ -59,7 +59,7 @@ export default (state = initState, action = null) => {
       });
     case orderAction.names.FETCH_ORDERS + '_' + actionTypes.RESET:
       return _.extend({}, state, {
-        fetchOrders: { isLoading: false, data: action.payload, error: false, success: false },
+        fetchOrders: { isLoading: false, data: {}, error: false, success: false },
       });
     case orderAction.names.FETCH_ORDER + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {

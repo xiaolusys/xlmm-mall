@@ -54,4 +54,27 @@
       }
     }
   }
+  .order-tabs {
+    background-color: #fff;
+    &.sticky {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      right: 0;
+      z-index: 9;
+      &.has-header {
+        top: 44px;
+      }
+    }
+    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
+        }
+      }
+    }
+  }
 }
