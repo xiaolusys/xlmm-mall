@@ -189,7 +189,7 @@ export default class List extends Component {
                 <img src={product.pic_path + constants.image.square} />
               </div>
               <div className="col-xs-9 no-padding padding-top-xxs font-xs">
-                <p className="row no-margin">{product.title}</p>
+                <p className="row no-margin no-wrap">{product.title}</p>
                 <p className="row no-margin margin-top-xxxs font-grey">{'尺码:' + product.sku_name}</p>
                 <p className="row no-margin margin-top-xxxs">
                   <span className="">{'￥' + product.payment}</span>
