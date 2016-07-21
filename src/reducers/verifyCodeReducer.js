@@ -26,7 +26,7 @@ export default (state = initState, action = null) => {
     case verifyCodeAction.names.FETCH_VERIFY_CODE + '_' + actionTypes.FAILURE:
       return _.extend({}, state, { fetch: { isLoading: false, data: action.payload, success: false, error: true, status: action.status } });
     case verifyCodeAction.names.FETCH_VERIFY_CODE + '_' + actionTypes.RESET:
-      return _.extend({}, state, { verify: { isLoading: false, data: {}, success: false, error: false, status: action.status } });
+      return _.extend({}, state, { fetch: { isLoading: false, data: {}, success: false, error: false, status: action.status } });
     case verifyCodeAction.names.VERIFY + '_' + actionTypes.REQUEST:
       return _.extend({}, state, { verify: { isLoading: true, success: false, error: false } });
     case verifyCodeAction.names.VERIFY + '_' + actionTypes.SUCCESS:
