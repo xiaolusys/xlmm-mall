@@ -28,7 +28,7 @@ export class DownloadAppPopup extends Component {
           <div className="close-btn text-center">
             <i className="icon-close-o icon-2x icon-white" onClick={onClose}></i>
           </div>
-          <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/download-popup.png" />
+          <img src="http://7xogkj.com1.z0.glb.clouddn.com/lALOXz80Pc0IMM0FuA_1464_2096.png" />
           <button className="download-btn text-center" type="button" onClick={onDownload} >立即下载</button>
         </div>
       </Popup>
