@@ -29,7 +29,7 @@ const pageInfos = {
   },
   'mcf.html': {
     type: 'full',
-    banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXWJK2s0NyM0F3A_1500_3528.png',
+    banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXzkR8s0NxM0F3A_1500_3524.png',
     id: 0,
     shareId: 26,
     btn: '支付押金',
