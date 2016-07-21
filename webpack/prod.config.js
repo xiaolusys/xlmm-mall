@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ReplacePlugin = require('replace-webpack-plugin');
 
-const publicPath = '/mall/';
+const publicPath = '//s.xiaolumeimei.com/mall/';
 
 module.exports = {
 
