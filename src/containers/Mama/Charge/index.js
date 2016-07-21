@@ -21,12 +21,14 @@ import './index.scss';
 
 const pageInfos = {
   'mct.html': {
+    type: 'trail',
     banner: 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg',
     id: 2,
     shareId: 27,
     btn: '马上一元开店',
   },
   'mcf.html': {
+    type: 'full',
     banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXWJK2s0NyM0F3A_1500_3528.png',
     id: 0,
     shareId: 26,
@@ -231,7 +233,7 @@ export default class Charge extends Component {
   }
 
   render() {
-    const { banner, btn } = this.state.pageInfo;
+    const { banner, btn, type } = this.state.pageInfo;
     const payInfo = this.payInfo();
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg opening-shop">
@@ -244,10 +246,18 @@ export default class Charge extends Component {
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.togglePayTypePopupActive}>{btn}</button>
         </div>
-        <div className="row no-margin text-center margin-bottom-xs">
-          <Checkbox className="margin-bottom-xs" checked>同意一元体验15天</Checkbox>
-          <Link to="/activity/shop/agreement">小鹿妈妈服务条款！</Link>
-        </div>
+          <If condition={type === 'trail'}>
+            <div className="row no-margin text-center margin-bottom-xs">
+              <Checkbox className="margin-bottom-xs" checked>同意</Checkbox>
+              <Link to="/mama/agreement">一元体验15天小鹿妈妈服务条款！</Link>
+            </div>
+          </If>
+          <If condition={type === 'full'}>
+            <div className="row no-margin text-center margin-bottom-xs">
+              <Checkbox className="margin-bottom-xs" checked>同意</Checkbox>
+              <a href="/static/tiaokuan.html">小鹿妈妈服务条款！</a>
+            </div>
+          </If>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className="row no-margin bottom-border">
             <i className="col-xs-1 no-padding icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
