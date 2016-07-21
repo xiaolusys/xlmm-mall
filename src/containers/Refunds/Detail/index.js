@@ -145,22 +145,18 @@ export default class Detail extends Component {
               </Statusline>
             </div>
           </If>
-          <ul className="refunds-details-list">
-            <li className="row col-xs-12 no-margin bottom-border">
-              <p className="col-xs-9 no-margin no-padding text-left">
+          <div className="refunds-details-list">
+            <div className="row no-margin bottom-border">
+              <p className="col-xs-8 no-margin no-padding text-left">
                 <span className="col-xs-5 text-left">退款编号</span>
                 <span className="col-xs-7 no-padding no-wrap font-grey-light">{data.refund_no}</span>
               </p>
-              <p className="col-xs-3 no-margin no-padding text-right font-orange">
+              <p className="col-xs-4 no-margin text-right font-orange">
                 <span>{data.status_display}</span>
               </p>
-            </li>
-            <p className="row col-xs-12 no-margin bottom-border text-right font-grey-light font-xs refunds-created">
-              <span>下单时间: </span>
-              <span>{data.created && data.created.replace('T', ' ') }</span>
-            </p>
+            </div>
             <If condition={data.status === 4}>
-              <li className="row col-xs-12 no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
+              <div className="row no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
                 <div className="col-xs-8">
                   <p className="no-wrap no-margin">
                     <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
@@ -169,47 +165,45 @@ export default class Detail extends Component {
                   <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
                 </div>
                 <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>填写快递单</button>
-              </li>
+              </div>
             </If>
-            <li className="row col-xs-12 no-margin bottom-border">
+            <div className="row no-margin bottom-border">
               <div className="col-xs-3">
-                <Image className="login-banner border" thumbnail={70} crop={70 + 'x' + 70} quality={100} src={data.pic_path}/>
+                <Image className="login-banner border" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={data.pic_path}/>
               </div>
               <div className="col-xs-9">
-                <p className="row no-padding padding-top-xxs padding-bottom-xxs">
-                  <span className="col-xs-9 no-wrap">{data.title}</span>
-                  <span className="col-xs-3 no-padding text-right">{data.total_fee}</span>
+                <p className="row no-margin padding-top-xxs padding-bottom-xxs">
+                  <span className="col-xs-12 no-padding no-wrap">{data.title}</span>
                 </p>
-                <p className="row no-margin no-padding font-grey-light">
-                  <span className="margin-right-xs">尺码: {data.sku_name}</span>
-                  <span className=""></span>
+                <p className="row no-margin font-grey-light">
+                  <span className="col-xs-4 no-padding">尺码: {data.sku_name}</span>
+                  <span className="padding-left-xs">{'¥' + data.total_fee + ' x' + data.refund_num}</span>
                 </p>
               </div>
-            </li>
-            <li className="row col-xs-12 no-margin bottom-border">
+            </div>
+            <div className="row no-margin bottom-border">
               <p className="col-xs-8 no-margin">申请数量</p>
-              <p className="col-xs-4 no-margin no-padding text-right font-grey-light">{data.refund_num}</p>
-            </li>
-            <li className="row col-xs-12 no-margin bottom-border">
-              <p className="col-xs-4 no-margin">退款金额</p>
-              <p className="col-xs-8 no-margin no-padding text-right">¥{data.refund_fee}</p>
-            </li>
-            <li className="row col-xs-12 no-margin margin-top-xs bottom-border">
+              <p className="col-xs-4 no-margin text-right font-grey-light">{data.refund_num}</p>
+            </div>
+            <div className="row no-margin bottom-border">
+              <p className="col-xs-4 no-margin">可退金额</p>
+              <p className="col-xs-8 no-margin text-right font-orange">¥{data.refund_fee}</p>
+            </div>
+            <div className="row no-margin bottom-border">
               <p className="col-xs-4 no-margin">退款原因</p>
-              <p className="col-xs-8 no-margin no-padding text-right font-grey-light">{data.reason}</p>
-            </li>
-            <li className="row col-xs-12 no-margin bottom-border">
-              <p className="col-xs-12 no-margin margin-bottom-xxs">{data.desc}</p>
-              <If condition={!_.isEmpty(data.proof_pic)}>
+              <p className="col-xs-8 no-margin text-right font-grey-light">{data.reason}</p>
+            </div>
+            <If condition={!_.isEmpty(data.proof_pic)}>
+              <div className="row no-margin bottom-border">
                 {data.proof_pic.map((item, index) => {
                   return (
                     <Image className="login-banner border margin-left-xs margin-bottom-xxs" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={item}/>
                   );
                 })}
-              </If>
-            </li>
+              </div>
+            </If>
             <If condition={!_.isEmpty(statusList)}>
-              <li className="row col-xs-12 no-margin margin-top-xs padding-left-xs bottom-border">
+              <div className="row no-margin margin-top-xs padding-left-xs bottom-border">
               <Timeline className="logistics-info margin-left-xxs">
                 {statusList.map((item, index) => {
                   return (
@@ -220,9 +214,9 @@ export default class Detail extends Component {
                   );
                 })}
                 </Timeline>
-              </li>
+              </div>
             </If>
-          </ul>
+          </div>
         </div>
       </div>
     );

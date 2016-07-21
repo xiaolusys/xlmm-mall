@@ -184,7 +184,7 @@ export default class List extends Component {
       <div className="order-content">
         {products.map((product, index) => {
           return (
-            <div key={product.id} className="row no-margin bottom-border">
+            <div key={product.id} className="row no-margin padding-left-xxs bottom-border">
               <div className="col-xs-3 no-padding">
                 <img src={product.pic_path + constants.image.square} />
               </div>
@@ -222,7 +222,7 @@ export default class List extends Component {
             return (
               <div className="order-item" key={item.id}>
                 <div className="order-header bottom-border clearfix">
-                  <p className="pull-left margin-left-xxs">
+                  <p className="pull-left margin-left-xs">
                     <span className="margin-right-xs font-yellow">{item.status_display}</span>
                     <span>实付金额: </span>
                     <span>{'￥' + item.payment}</span>

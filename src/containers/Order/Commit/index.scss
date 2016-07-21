@@ -7,6 +7,9 @@
     }
   }
   .order-confirm-product-list {
+    > div {
+      padding: 8px;
+    }
     background-color: #fff;
     img {
       margin: 8px;
@@ -17,7 +20,7 @@
     }
   }
   .order-confirm-row {
-    padding:  16px 8px;
+    padding:  16px 16px;
     background-color: #fff;
     &.transparent {
       background-color: transparent;

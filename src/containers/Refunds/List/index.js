@@ -106,34 +106,44 @@ export default class List extends Component {
                 return (
                   <Link to={'/refunds/details/' + refund.id}>
                     <li className="bottom-border row no-margin margin-top-xs" key={refund.order_id}>
-                      <div className="row col-xs-12 no-margin padding-top-xxs padding-bottom-xxs bottom-border refund-item">
-                        <p className="col-xs-9 no-margin no-padding text-left">
-                          <span className="col-xs-4 text-left">退款编号</span>
-                          <span className="col-xs-8 font-grey-light no-wrap">{refund.refund_no}</span>
-                        </p>
-                        <p className="col-xs-3 no-margin no-padding text-right font-orange">
+                      <div className="row no-margin padding-top-xxs padding-bottom-xxs bottom-border">
+                        <If condition={refund.has_good_return}>
+                          <p className="col-xs-8 no-margin text-left">
+                            <i className="icon-refund-goods font-refund-goods"></i>
+                            <span className="padding-left-xxs font-grey-light no-wrap">{'退货'}</span>
+                          </p>
+                        </If>
+                        <If condition={!refund.has_good_return && refund.refund_channel === 'budget'}>
+                          <p className="col-xs-8 no-margin text-left">
+                            <i className="icon-refund-top-speed font-refund-top-speed"></i>
+                            <span className="padding-left-xxs font-grey-light no-wrap">{'极速退款'}</span>
+                          </p>
+                        </If>
+                        <If condition={!refund.has_good_return && refund.refund_channel !== 'budget'}>
+                          <p className="col-xs-8 no-margin text-left">
+                            <i className="icon-refund-common font-refund-common"></i>
+                            <span className="padding-left-xxs font-grey-light no-wrap">{'退款'}</span>
+                          </p>
+                        </If>
+                        <p className="col-xs-4 no-margin text-right font-orange">
                           <span>{refund.status_display}</span>
                         </p>
                       </div>
                       <div className="row no-margin bottom-border">
-                        <div className="col-xs-3 padding-top-xxs padding-bottom-xxs">
-                          <Image className="border" thumbnail={70} crop="70x70" quality={100} src={refund.pic_path} />
+                        <div className="col-xs-3 padding-top-xs padding-bottom-xs">
+                          <Image className="border" thumbnail={60} crop="60x60" quality={100} src={refund.pic_path} />
                         </div>
-                        <div className="col-xs-9 padding-top-xxs padding-bottom-xxs refund-item">
-                          <p className="row no-margin no-padding padding-top-xxs padding-bottom-xxs">
-                            <span className="col-xs-9 no-wrap">{refund.title}</span>
-                            <span className="col-xs-3 no-padding text-right">{'¥' + refund.total_fee}</span>
-                          </p>
-                          <p className="row no-margin no-padding padding-top-xxs padding-bottom-xxs">
-                            <span className="col-xs-9 text-left">{'尺码: ' + refund.sku_name}</span>
-                            <span className="col-xs-3 no-padding text-right">{'x' + refund.refund_num}</span>
+                        <div className="col-xs-9 padding-top-xs padding-bottom-xs padding-left-xs font-xs">
+                          <p className="row no-margin no-wrap">{refund.title}</p>
+                          <p className="row no-margin margin-top-xxxs font-grey">{'尺寸:' + refund.sku_name}</p>
+                          <p className="row no-margin margin-top-xxxs">
+                            <span>交易金额:</span>
+                            <span>{'￥' + refund.total_fee}</span>
+                            <span className="padding-left-xs">退款金额:</span>
+                            <span>{'¥' + refund.refund_fee}</span>
                           </p>
                         </div>
                       </div>
-                      <p className="row no-margin no-padding padding-top-xxs padding-bottom-xxs bottom-border">
-                        <span className="col-xs-9">退款金额</span>
-                        <span className="col-xs-3 text-right font-orange">{'¥' + refund.refund_fee}</span>
-                      </p>
                     </li>
                   </Link>
                 );

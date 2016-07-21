@@ -7,15 +7,16 @@
       display: block;
       width: 100%;
       background-color: #fff;
-      .refund-item {
-        padding-left: 0px;
+      i {
+        font-size: 20px;
+        line-height: 20px;
       }
     }
     img {
       border: 1px solid #9B9B9B;
       border-radius: 5px;
-      height: 70px;
-      width: 70px;
+      height: 60px;
+      width: 60px;
     }
     > a,
     a:hover,
