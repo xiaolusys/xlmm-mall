@@ -30,6 +30,11 @@ const types = [{
   title: '退换货',
   requestAction: '',
 }];
+const tabs = {
+  all: 0,
+  waitpay: 1,
+  waitsend: 2,
+};
 
 @connect(
   state => ({
@@ -65,6 +70,8 @@ export default class List extends Component {
     pageIndex: 0,
     pageSize: 20,
     hasMore: true,
+    activeTab: 0,
+    sticky: false,
   }
 
   componentWillMount() {
@@ -72,6 +79,7 @@ export default class List extends Component {
     const requestAction = types[query.type].requestAction;
     const { pageIndex, pageSize } = this.state;
     this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
+    this.setState({ activeTab: Number(query.type) || 0 });
     if (query.paid && query.paid === 'true') {
       window.ga && window.ga('send', {
         hitType: 'event',
@@ -140,14 +148,31 @@ export default class List extends Component {
     }
   }
 
+  onTabItemClick = (e) => {
+    const { pageSize, pageIndex, activeTab } = this.state;
+    const { id } = e.currentTarget;
+    this.setState({
+      activeTab: tabs[id],
+      pageIndex: 0,
+    });
+    this.props.resetOrders();
+    this.props.fetchOrders(types[tabs[id]].requestAction, 1, pageSize);
+  }
+
   onScroll = (e) => {
     const requestAction = types[this.props.location.query.type].requestAction;
-    const { pageSize, pageIndex } = this.state;
+    const { pageSize, pageIndex, activeTab } = this.state;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
+    const tabsOffsetTop = utils.dom.offsetTop('.order-tabs');
     if (scrollTop === documentHeight - windowHeight && !this.props.order.fetchOrders.isLoading && this.state.hasMore) {
-      this.props.fetchOrders(requestAction, pageIndex + 1, pageSize);
+      this.props.fetchOrders(types[activeTab].requestAction, pageIndex + 1, pageSize);
+    }
+    if (scrollTop > tabsOffsetTop) {
+      this.setState({ sticky: true });
+    } else {
+      this.setState({ sticky: false });
     }
   }
 
@@ -182,34 +207,23 @@ export default class List extends Component {
   renderOrders(products = []) {
     return (
       <div className="order-content">
-        <If condition={products.length === 1}>
-          {products.map((product, index) => {
-            return (
-              <div key={product.id} className="row no-margin">
-                <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path + constants.image.square} />
-                </div>
-                <div className="col-xs-9 no-padding">
-                  <p className="row no-margin">
-                    <span className="col-xs-9 no-wrap no-padding">{product.title}</span>
-                    <span className="col-xs-3 no-padding">{'￥' + product.payment}</span>
-                  </p>
-                  <p className="row no-margin font-grey">
-                    <span className="col-xs-10 no-padding">{'尺码：' + product.sku_name}</span>
-                    <span className="col-xs-2 no-padding">{'x' + product.num}</span>
-                  </p>
-                </div>
+        {products.map((product, index) => {
+          return (
+            <div key={product.id} className="row no-margin padding-left-xxs bottom-border">
+              <div className="col-xs-3 no-padding">
+                <img src={product.pic_path + constants.image.square} />
               </div>
+              <div className="col-xs-9 no-padding padding-top-xxs font-xs">
+                <p className="row no-margin no-wrap">{product.title}</p>
+                <p className="row no-margin margin-top-xxxs font-grey">{'尺码:' + product.sku_name}</p>
+                <p className="row no-margin margin-top-xxxs">
+                  <span className="">{'￥' + product.payment}</span>
+                  <span className="padding-left-xs">{'x' + product.num}</span>
+                </p>
+              </div>
+            </div>
             );
           })}
-        </If>
-        <If condition={products.length > 1}>
-          {products.map((product, index) => {
-            return (
-              <img key={product.id} src={product.pic_path + constants.image.square} />
-            );
-          })}
-        </If>
       </div>
     );
   }
@@ -217,13 +231,28 @@ export default class List extends Component {
   render() {
     const type = types[this.props.location.query.type];
     const trades = this.props.order.fetchOrders.data.results || [];
+    const { activeTab, sticky } = this.state;
+    const hasHeader = !utils.detector.isApp();
     return (
       <div>
         <Header title={type.title} leftIcon="icon-angle-left" onLeftBtnClick={this.onBackClick} />
         <div className="content order-list">
+          <div className={'order-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
+            <ul className="row no-margin">
+              <li id="all" className={'col-xs-4' + (activeTab === tabs.all ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>全部订单</div>
+              </li>
+              <li id="waitpay" className={'col-xs-4' + (activeTab === tabs.waitpay ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>待支付</div>
+              </li>
+              <li id="waitsend" className={'col-xs-4' + (activeTab === tabs.waitsend ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>待收货</div>
+              </li>
+            </ul>
+          </div>
           <If condition={_.isEmpty(trades) && this.props.order.fetchOrders.success && !this.props.order.fetchOrders.isLoading}>
-            <div className="text-center margin-top-xlg margin-bottom-lg">
-              <i className="icon-order-o icon-4x icon-grey"></i>
+            <div className="text-center order-list-empty">
+              <i className="icon-order-o icon-6x icon-grey"></i>
               <p>您暂时还没有订单哦～快去看看吧</p>
               <p className="font-grey font-xs margin-bottom-xs">再不抢购，宝贝就卖光啦～</p>
               <Link className="button button-stable" to="/" >快去抢购</Link>
@@ -233,20 +262,11 @@ export default class List extends Component {
             return (
               <div className="order-item" key={item.id}>
                 <div className="order-header bottom-border clearfix">
-                  <p className="pull-left margin-left-xxs">
-                    <span>实付金额</span>
-                    <span className="font-yellow">{'￥' + item.payment}</span>
+                  <p className="pull-left margin-left-xs">
+                    <span className="margin-right-xs font-yellow">{item.status_display}</span>
+                    <span>实付金额: </span>
+                    <span>{'￥' + item.payment}</span>
                   </p>
-                  <div className="pull-right">
-                    <If condition={item.status === 1}>
-                      <span>剩余时间</span>
-                      <Timer endDateString={this.getClosedDate(item.created)} format="mm:ss" />
-                    </If>
-                    <span className="margin-left-xxs margin-right-xxs">{item.status_display}</span>
-                    <If condition={item.status === 1 || item.status === 2}>
-                      <button type="button" data-action={constants.tradeOperations[item.status].action} data-orderid={item.id} onClick={this.onBtnClick}>{constants.tradeOperations[item.status].tag}</button>
-                    </If>
-                  </div>
                 </div>
                 <Link to={`/od.html?tid=${item.tid}&id=${item.id}`}>
                   {this.renderOrders(item.orders)}

@@ -16,20 +16,20 @@
     color: #626262;
     .trade-status {
       background: #fff;
-      padding: 8px;
+      padding: 8px 16px;
     }
     .order-createTime {
-      padding: 4px 8px 4px;
+      padding: 4px 16px 4px;
     }
     .receiver-info {
       background: #fff;
-      padding: 8px;
+      padding: 8px 0;
     }
     .logistics-info {
-      padding: 8px;
+      padding: 8px 16px;
     }
     .logistics-company {
-      padding: 8px;
+      padding: 8px 16px;
       background-color: #fff;
       &.transparent {
         background-color: transparent;
@@ -40,10 +40,6 @@
     }
     .order-list {
       background: #fff;
-      p {
-        margin-bottom: 0px;
-        padding: 8px 8px 8px 0px;
-      }
       .status {
         padding: 8px;
       }
@@ -57,9 +53,7 @@
       }
     }
     .price-info {
-      margin-top: 16px;
-      background: #fff;
-      padding: 4px 8px;
+      padding: 4px 16px;
       p {
         margin: 10px 0px;
       }

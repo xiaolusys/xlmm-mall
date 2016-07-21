@@ -5,6 +5,9 @@
   .font-grey {
     color: #9b9b9b;
   }
+  > .order-list-empty {
+    margin-top: 50%;
+  }
   .order-item {
     margin-bottom: 16px;
     background-color: #fff;
@@ -31,10 +34,6 @@
       }
     }
     .order-content {
-      p {
-        margin-bottom: 0px;
-        padding: 8px;
-      }
       img {
         margin: 8px;
         // border: 1px solid #979797;
@@ -52,6 +51,29 @@
       :visited {
         color: #4a4a4a;
         text-decoration: none !important;
+      }
+    }
+  }
+  .order-tabs {
+    background-color: #fff;
+    &.sticky {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      right: 0;
+      z-index: 9;
+      &.has-header {
+        top: 44px;
+      }
+    }
+    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
+        }
       }
     }
   }

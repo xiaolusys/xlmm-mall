@@ -2,7 +2,7 @@
   > div {
     display: inline-block;
     width: 100%;
-    background-color: #fff;
+    // background-color: #fff;
     img {
       border: 1px solid #9B9B9B;
       border-radius: 5px;
@@ -10,12 +10,11 @@
       overflow: hidden;
       height: 60px;
     }
-    >.refund-reason {
-      padding-top: 4px;
-      padding-bottom: 4px;
-      i {
-        margin-top: 3px;
-      }
+  }
+  >.refund-reason {
+    padding: 16px 0;
+    i {
+      margin-top: 3px;
     }
   }
   .refunds-desc {

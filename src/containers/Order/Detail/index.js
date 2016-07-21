@@ -205,19 +205,17 @@ export default class Detail extends Component {
     return (
       orders.map((order, index) => {
         return (
-          <div key={order.id} className="row no-margin bottom-border">
+          <div key={order.id} className="row no-margin bottom-border padding-left-xxs padding-right-xxs">
             <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
               <div className="col-xs-3 no-padding">
                 <img src={order.pic_path + constants.image.square} />
               </div>
-              <div className="col-xs-9 no-padding">
-                <p className="row no-margin">
-                  <span className="col-xs-8 no-wrap no-padding">{order.title}</span>
-                  <span className="pull-right">{'￥' + order.total_fee}</span>
-                </p>
-                <p className="row no-margin font-grey">
-                  <span>{'尺码：' + order.sku_name}</span>
-                  <span className="pull-right">{'x' + order.num}</span>
+              <div className="col-xs-9 no-padding padding-top-xxs font-xs">
+                <p className="row no-margin no-wrap">{order.title}</p>
+                <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + order.sku_name}</p>
+                <p className="row no-margin margin-top-xxxs">
+                  <span className="">{'￥' + order.payment}</span>
+                  <span className="padding-left-xs">{'x' + order.num}</span>
                 </p>
               </div>
             </If>
@@ -225,17 +223,13 @@ export default class Detail extends Component {
               <div className="col-xs-3 no-padding">
                 <img src={order.pic_path + constants.image.square} />
               </div>
-              <div className="col-xs-6 no-padding">
-                <p className="row no-margin">
-                  <span className="col-xs-12 no-wrap no-padding">{order.title}</span>
+              <div className="col-xs-6 no-padding padding-top-xxs font-xs">
+                <p className="row no-margin no-wrap">{order.title}</p>
+                <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + order.sku_name}</p>
+                <p className="row no-margin margin-top-xxxs">
+                  <span className="">{'￥' + order.payment}</span>
+                  <span className="padding-left-xs">{'x' + order.num}</span>
                 </p>
-                <div className="row no-margin">
-                  <p className="pull-left  font-grey">{'尺码：' + order.sku_name}</p>
-                  <p className="pull-right">
-                    <span className="margin-right-xxs">{'￥' + order.total_fee}</span>
-                    <span className="font-grey">{'x' + order.num}</span>
-                  </p>
-                </div>
               </div>
               <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
                 <If condition={order.refund_status === 0}>
@@ -264,8 +258,8 @@ export default class Detail extends Component {
             <If condition={!(item.id === '' || item.assign_status_display === '已取消')}>
               <div className="row no-margin bottom-border">
                 <Link to={`/order/logistics?key=${key}&packageId=${item.out_sid}&companyCode=${item.logistics_company && item.logistics_company.code}&id=${id}`}>
-                  <p className="pull-left status font-grey">{'包裹' + (Number(key) + 1)}</p>
-                  <p className="pull-right status font-orange">
+                  <p className="pull-left padding-top-xxs padding-left-xs font-grey">{'包裹' + (Number(key) + 1)}</p>
+                  <p className="pull-right padding-top-xxs padding-right-xs font-orange">
                     <span>{item.assign_status_display}</span>
                     <i className="padding-top-xxs icon-angle-right icon-grey"></i>
                   </p>
@@ -382,7 +376,7 @@ export default class Detail extends Component {
           <If condition={!_.isEmpty(packages)}>
             {this.renderPackages(packages)}
           </If>
-          <div className="price-info">
+          <div className="price-info bottom-border">
             <p>
               <span>支付方式</span>
               <If condition={trade.channel === 'wx'}>
@@ -399,7 +393,7 @@ export default class Detail extends Component {
             <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(trade.discount_fee).toFixed(2)}</span></p>
             <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(trade.post_fee).toFixed(2)}</span></p>
           </div>
-           <p className="pull-right margin-top-xxs margin-right-xxs"><span>总金额 ：</span><span className="font-yellow font-lg">{'￥' + Number(trade.payment).toFixed(2)}</span></p>
+          <p className="margin-top-xxs margin-left-xs margin-right-xs"><span className="pull-left">实付款</span><span className="pull-right font-yellow font-lg">{'￥' + Number(trade.payment).toFixed(2)}</span></p>
           <If condition={trade.status === 1 || trade.status === 2}>
             <BottomBar>
               <If condition={trade.status === 1}>

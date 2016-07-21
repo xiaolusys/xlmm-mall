@@ -7,11 +7,10 @@
     }
   }
   .order-confirm-product-list {
-    background-color: #fff;
-    p {
-      margin-bottom: 0px;
+    > div {
       padding: 8px;
     }
+    background-color: #fff;
     img {
       margin: 8px;
       border-radius: 10px;
@@ -21,7 +20,7 @@
     }
   }
   .order-confirm-row {
-    padding: 8px;
+    padding:  16px;
     background-color: #fff;
     &.transparent {
       background-color: transparent;

@@ -319,14 +319,12 @@ export default class Commit extends Component {
                 <div className="col-xs-3 no-padding">
                   <img src={product.pic_path + constants.image.square} />
                 </div>
-                <div className="col-xs-9 no-padding">
-                  <p className="row no-margin">
-                    <span className="col-xs-8 no-padding no-wrap">{product.title}</span>
-                    <span className="pull-right">{'￥' + product.price}</span>
-                  </p>
-                  <p className="row no-margin font-grey-light">
-                    <span>{'尺码：' + product.sku_name}</span>
-                    <span className="pull-right">{'x' + product.num}</span>
+                <div className="col-xs-9 no-padding padding-top-xxs font-xs">
+                  <p className="row no-margin no-wrap">{product.title}</p>
+                  <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + product.sku_name}</p>
+                  <p className="row no-margin margin-top-xxxs">
+                    <span className="">{'￥' + product.payment}</span>
+                    <span className="padding-left-xs">{'x' + product.num}</span>
                   </p>
                 </div>
               </If>
@@ -334,15 +332,10 @@ export default class Commit extends Component {
                 <div className="col-xs-3 no-padding">
                   <img src={product.pic_path + constants.image.square} />
                 </div>
-                <div className="col-xs-9 no-padding">
-                  <p className="row no-margin">
-                    <span className="col-xs-8 no-padding no-wrap">{product.title}</span>
-                    <span className="pull-right">{'￥' + product.price}</span>
-                  </p>
-                  <p className="row no-margin font-grey-light">
-                    <span>{'尺码：' + product.sku_name}</span>
-                    <span className="pull-right">{'x' + product.num}</span>
-                  </p>
+                <div className="col-xs-9 no-padding padding-top-xxs font-xs">
+                  <p className="row no-margin">{product.title}</p>
+                  <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + product.sku_name}</p>
+                  <p className="row no-margin margin-top-xxxs">{'x' + product.num}</p>
                 </div>
               </If>
             </div>
@@ -421,9 +414,13 @@ export default class Commit extends Component {
                 break;
             }
           })}
+          <div className={`row no-margin bottom-border ${prefixCls}-row`}>
+            <p className="col-xs-5 no-padding">APP支付优惠</p>
+            <p className="col-xs-7 no-padding text-right">- ¥2.0</p>
+          </div>
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
-            <p className="col-xs-5 no-padding" onClick={this.onShowPurchaseItermsClick}>同意购买条款</p>
-            <Checkbox className="col-xs-7 no-padding text-right" checked={this.state.agreePurchaseTerms} onChange={this.onAgreePurchaseTermsChange}/>
+            <p className="col-xs-8 no-padding" onClick={this.onShowPurchaseItermsClick}>我已阅读并同意购买条款</p>
+            <Checkbox className="col-xs-4 no-padding text-right" checked={this.state.agreePurchaseTerms} onChange={this.onAgreePurchaseTermsChange}/>
           </div>
           <div className={`row no-margin ${prefixCls}-row transparent`}>
             <p className="col-xs-12 no-padding">

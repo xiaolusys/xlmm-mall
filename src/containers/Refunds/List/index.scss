@@ -1,23 +1,29 @@
-.refunds-list {
-  li {
-    display: block;
-    width: 100%;
-    background-color: #fff;
-    .refund-item {
-      padding-left: 0px;
+.refunds {
+  >.refunds-empty {
+    margin-top: 50%;
+  }
+  >.refunds-list {
+    li {
+      display: block;
+      width: 100%;
+      background-color: #fff;
+      i {
+        font-size: 20px;
+        line-height: 20px;
+      }
     }
-  }
-  img {
-    border: 1px solid #9B9B9B;
-    border-radius: 5px;
-    height: 70px;
-    width: 70px;
-  }
-  > a,
-  a:hover,
-  a:active,
-  a:focus,
-  a:visited {
-    color: #26262e;
+    img {
+      border: 1px solid #9B9B9B;
+      border-radius: 5px;
+      height: 60px;
+      width: 60px;
+    }
+    > a,
+    a:hover,
+    a:active,
+    a:focus,
+    a:visited {
+      color: #26262e;
+    }
   }
 }
