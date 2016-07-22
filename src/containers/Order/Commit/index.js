@@ -441,12 +441,12 @@ export default class Commit extends Component {
           <button className="button button-energized col-xs-12" type="button" onClick={this.onCommitOrderClick}>购买</button>
         </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
-          <div className={`row no-margin bottom-border ${prefixCls}-row`}>
-            <i className="col-xs-1 no-padding icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
-            <p className="col-xs-11 no-padding text-center">
-              <span className="font-xs">应付款金额</span>
-              <span className="font-lg font-orange">{'￥' + this.getDisplayPrice(payInfo.data.total_payment)}</span>
-            </p>
+          <div className={`row no-margin bottom-border `}>
+            <i className="col-xs-1 padding-left-xxs padding-top-xxs icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
+            <div className="col-xs-11">
+              <p className="no-margin text-center font-xs">应付款金额</p>
+              <p className="no-margin text-center font-lg font-orange">{'￥' + this.getDisplayPrice(payInfo.data.total_payment)}</p>
+            </div>
           </div>
           {channels.map((channel) => {
             if (!channel.payable) {
