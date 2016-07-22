@@ -204,7 +204,7 @@ export default class Question extends Component {
           <img className="pull-right next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
         </div>
         <Popup active={this.state.popupOpened && Number(id) === -1} maxHeight="none" onPopupOverlayClick={this.onClosePopupClick}>
-          <img className="popup-bg" src={`${staticBase}popup-red-bg.png`} />
+          <img className="popup-bg" src={`${staticBase}popup-red-bg.png`} onClick={this.onClosePopupClick} />
           <img className="popup-text col-xs-12 no-padding" src={`${staticBase}title-part-${type}.png`} />
         </Popup>
         <Popup active={this.state.finishedPopupOpend} maxHeight="none">
