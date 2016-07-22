@@ -17,6 +17,7 @@ import { Side } from 'components/Side';
 import { Product } from 'components/Product';
 import { Image } from 'components/Image';
 import { ShopBag } from 'components/ShopBag';
+import { BackTop } from 'components/BackTop';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 
@@ -259,6 +260,7 @@ export class Home extends Component {
             </div>
             {product.isLoading ? <Loader/> : null}
             <ShopBag />
+            <BackTop />
             <Footer />
           </div>
         </div>
