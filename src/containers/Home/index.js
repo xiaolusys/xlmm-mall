@@ -174,7 +174,7 @@ export class Home extends Component {
     const activities = portal.data.activitys || [];
     const categories = portal.data.categorys || [];
     const posters = portal.data.posters || [];
-    const brands  = portal.data.promotion_brands || [];
+    const brands = portal.data.promotion_brands || [];
     const products = product.data.results || [];
     const { activeTab, sticky } = this.state;
     const mainCls = classnames({
