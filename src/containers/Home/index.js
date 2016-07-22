@@ -15,6 +15,7 @@ import { Footer } from 'components/Footer';
 import { Timer } from 'components/Timer';
 import { Side } from 'components/Side';
 import { Product } from 'components/Product';
+import { Brand } from 'components/Brand';
 import { Image } from 'components/Image';
 import { ShopBag } from 'components/ShopBag';
 import { BackTop } from 'components/BackTop';
@@ -173,6 +174,7 @@ export class Home extends Component {
     const activities = portal.data.activitys || [];
     const categories = portal.data.categorys || [];
     const posters = portal.data.posters || [];
+    const brands  = portal.data.promotion_brands || [];
     const products = product.data.results || [];
     const { activeTab, sticky } = this.state;
     const mainCls = classnames({
@@ -217,17 +219,27 @@ export class Home extends Component {
               </div>
             </If>
             <If condition={ portal.isLoading || !_.isEmpty(activities)}>
-              <div className="home-activities bottom-border">
+              <div className="home-activities">
                 {portal.isLoading ? <Loader/> : null}
                 <ul className="row no-margin">
                   {activities.map((item, index) => {
                     return (
                       <li key={item.id}>
                         <a href={item.act_link}>
-                          <Image className="col-xs-12 no-padding" src={item.act_img} />
+                          <Image style={{ padding: '10px 0px' }} className="col-xs-12 no-padding bottom-border" src={item.act_img} />
                         </a>
                       </li>
                     );
+                  })}
+                </ul>
+              </div>
+            </If>
+            <If condition={ portal.isLoading || !_.isEmpty(brands)}>
+              <div className="home-brands">
+                {portal.isLoading ? <Loader/> : null}
+                <ul className="row no-margin">
+                  {brands.map((brand) => {
+                    return (<Brand data={brand} />);
                   })}
                 </ul>
               </div>
