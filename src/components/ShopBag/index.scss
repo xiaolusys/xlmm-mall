@@ -1,15 +1,16 @@
 .shop-bag {
   position: fixed;
-  left: 15px;
+  left: 10px;
   bottom: 10px;
-  height: 48px;
-  width: 48px;
+  height: 40px;
+  width: 40px;
   background-color: #4a4a4a;
   border: 1px solid #26262e;
-  border-radius: 40px;
+  border-radius: 20px;
   padding: 4px;
   text-align: center;
   color: transparent;
+  font-size: 24px;
   &:hover,
   :active,
   :focus,
