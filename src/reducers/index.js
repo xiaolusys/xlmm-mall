@@ -10,13 +10,13 @@ import refundsReducer from './refundsReducer';
 import examReducer from './examReducer';
 import summerMatReducer from './summerMatReducer';
 import complaintsReducer from './complaintsReducer';
+import pointLogReducer from './pointLogReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
 import * as loginAction from 'actions/user/login';
 import * as passwordAction from 'actions/user/password';
 import * as pointAction from 'actions/user/point';
-import * as pointLogAction from 'actions/user/pointLog';
 import * as complaintCommitAction from 'actions/complaint/commit';
 import * as complaintHostoryAction from 'actions/complaint/list';
 import * as portalAction from 'actions/home/portal';
@@ -60,7 +60,7 @@ const rootReducer = combineReducers({
   verifyCode: verifyCodeReducer,
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
-  pointLog: createReducer(pointLogAction.name),
+  pointLog: pointLogReducer,
   complaintCommit: createReducer(complaintCommitAction.name),
   complaintHistory: complaintsReducer,
   portal: createReducer(portalAction.name),

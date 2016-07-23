@@ -1,8 +1,11 @@
 .point-container {
   .bonus-point {
-  	background-color: white;
-    > p {
+    background-color: white;
+    .bonus-point-value {
       font-size: 36px;
     }
+  }
+  .point-list-empty {
+    margin-top: 50%;
   }
 }

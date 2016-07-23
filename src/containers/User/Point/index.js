@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import * as utils from 'utils';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
@@ -51,52 +52,104 @@ export default class Point extends Component {
     context.router;
   }
 
+  state = {
+    pageIndex: 0,
+    pageSize: 20,
+    hasMore: true,
+  }
+
   componentWillMount() {
+    const { pageIndex, pageSize } = this.state;
     this.props.fetchPoint();
-    this.props.fetchPointLogs();
+    this.props.fetchPointLogs(pageIndex + 1, pageSize);
+  }
+
+  componentDidMount() {
+    this.addScrollListener();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const pointLog = nextProps.pointLog;
+    let count = 0;
+    let size = 0;
+    if (pointLog.success && pointLog.data && pointLog.data.count) {
+      count = pointLog.data.count;
+      size = pointLog.data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
+      this.setState({ hasMore: count > size });
+    }
+  }
+
+  componentWillUnmount() {
+    this.removeScrollListener();
+  }
+
+  onScroll = (e) => {
+    const { pageSize, pageIndex } = this.state;
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    if (scrollTop === documentHeight - windowHeight && !this.props.pointLog.isLoading && this.state.hasMore) {
+      this.props.fetchPointLogs(pageIndex + 1, pageSize);
+    }
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   render() {
     const { point, pointLog } = this.props;
     const logs = pointLog.data.results || [];
+    debugger;
     return (
       <div>
         <Header title="我的积分" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content point-container">
           {point.isLoading || pointLog.isLoading ? <Loader/> : null}
-          <div className="row bonus-point padding-bottom-xxs">
-            <p className="text-center no-margin font-orange">{point.data.integral_value || 0}</p>
-            <span className="col-xs-12 text-center">我的积分</span>
-          </div>
+          <If condition={point.data && point.data.integral_value}>
+            <div className="row bonus-point padding-bottom-xxs">
+              <p className="col-xs-12 no-margin margin-top-sm text-center no-margin font-orange bonus-point-value">{point.data.integral_value || 0}</p>
+              <p className="col-xs-12 no-margin margin-bottom-sm text-center font-sm">我的积分</p>
+            </div>
+          </If>
           <If condition={!_.isEmpty(logs)}>
             <ul className="point-list">
               {logs.map((log, index) => {
                 return (
                   <li key={log.id} className="row no-margin padding-top-xs padding-bottom-xs bottom-border">
-                    <div className="col-xs-12">
-                      <p className="col-xs-12">{log.created.replace(/T/, ' ')}</p>
+                    <div className="row no-margin">
+                      <p className="col-xs-12 no-margin font-xs font-grey-light">{log.created.replace(/T/, ' ')}</p>
                       <If condition={log.log_value > 0}>
-                        <p className="col-xs-8">购物订单完成奖励积分</p>
-                        <span className="col-xs-4 font-orange">+{log.log_value}分</span>
+                        <p className="col-xs-12 no-margin">
+                          <span className="col-xs-8 no-padding">购物订单完成奖励积分</span>
+                          <span className="col-xs-4 no-padding text-right font-orange">+{log.log_value}分</span>
+                        </p>
                       </If>
                       <If condition={log.log_value < 0}>
-                        <p className="col-xs-8">实物抵换</p>
-                        <span className="col-xs-4">{log.log_value}分</span>
+                        <p className="col-xs-12 no-margin">
+                          <span className="col-xs-8 no-padding">实物抵换</span>
+                          <span className="col-xs-4 no-padding font-orange">{log.log_value}分</span>
+                        </p>
                       </If>
-                      <If condition={!_.isEmpty(log.order_info)}>
-                        <p className="col-xs-12">订单编号 {log.order_info.id}</p>
-                      </If>
-                      <If condition={_.isEmpty(log.order_info)}>
-                        <p className="col-xs-12 hide">订单编号 {log.order_info.id}</p>
-                      </If>
+                      <p className="col-xs-12 no-margin">
+                        <span>订单编号</span>
+                        <If condition={!_.isEmpty(log.order_info)}>
+                          <span className="padding-left-xs">{log.order_info.id}</span>
+                        </If>
+                      </p>
                     </div>
                   </li>
                 );
               })}
             </ul>
           </If>
-          <If condition={_.isEmpty(logs) || pointLog.isLoading}>
-            <div className="text-center padding-top-sm">
+          <If condition={_.isEmpty(logs) && !(point.data && point.data.integral_value) || pointLog.isLoading}>
+            <div className="text-center point-list-empty">
               <i className="icon-database icon-5x"/>
               <p>您暂时还没有积分纪录哦～</p>
               <p className="font-xs font-grey-light">快去下单赚取积分吧～</p>
