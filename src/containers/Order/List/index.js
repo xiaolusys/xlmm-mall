@@ -268,7 +268,7 @@ export default class List extends Component {
                     <span>{'￥' + item.payment}</span>
                   </p>
                 </div>
-                <Link to={`/od.html?tid=${item.tid}&id=${item.id}`}>
+                <Link to={`/od.html?tid=${item.tid}&id=${item.id}&type=${activeTab}`}>
                   {this.renderOrders(item.orders)}
                 </Link>
               </div>

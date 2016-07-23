@@ -289,6 +289,7 @@ export default class Detail extends Component {
     const tradeOperation = constants.tradeOperations[trade.status] || {};
     const logisticsCompanies = express.data || [];
     const packages = trade.packages || {};
+    const type = Number(this.props.location.query.type);
     const refundStatusList = {
       0: { display: '订单创建' },
       1: { display: '等待支付' },
@@ -393,7 +394,20 @@ export default class Detail extends Component {
             <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(trade.discount_fee).toFixed(2)}</span></p>
             <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(trade.post_fee).toFixed(2)}</span></p>
           </div>
-          <p className="margin-top-xxs margin-left-xs margin-right-xs"><span className="pull-left">实付款</span><span className="pull-right font-yellow font-lg">{'￥' + Number(trade.payment).toFixed(2)}</span></p>
+          <div>
+            <If condition={type === 1}>
+              <p className="margin-top-xxs margin-left-xs margin-right-xs">
+                <span>应付金额</span>
+                <span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span>
+              </p>
+            </If>
+            <If condition={type === 0 || type === 2}>
+              <p className="margin-top-xxs margin-left-xs margin-right-xs">
+                <span>实付金额</span>
+                <span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span>
+              </p>
+            </If>
+          </div>
           <If condition={trade.status === 1 || trade.status === 2}>
             <BottomBar>
               <If condition={trade.status === 1}>
