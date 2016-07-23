@@ -105,7 +105,6 @@ export default class Point extends Component {
   render() {
     const { point, pointLog } = this.props;
     const logs = pointLog.data.results || [];
-    debugger;
     return (
       <div>
         <Header title="我的积分" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
