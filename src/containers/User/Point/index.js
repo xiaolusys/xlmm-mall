@@ -138,7 +138,7 @@ export default class Point extends Component {
                       <p className="col-xs-12 no-margin">
                         <span>订单编号</span>
                         <If condition={!_.isEmpty(log.order_info)}>
-                          <span className="padding-left-xs">{log.order_info.id}</span>
+                          <span className="padding-left-xxs">{log.order_info.order_id}</span>
                         </If>
                       </p>
                     </div>
