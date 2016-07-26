@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { DownloadAppPopup } from 'components/DownloadAppPopup';
 import * as utils from 'utils';
 import * as constants from 'constants';
 import _ from 'underscore';
@@ -13,10 +12,6 @@ export class App extends Component {
     children: React.PropTypes.any,
     location: React.PropTypes.any,
   };
-
-  state = {
-    popupActive: !window.sessionStorage.hideDowloadAppPopup,
-  }
 
   componentWillMount() {
     const { query } = this.props.location;
@@ -43,16 +38,10 @@ export class App extends Component {
     window.location.href = `${constants.downloadAppUri}?mm_linkid=${mmLinkId}&ufrom=${uFrom}`;
   }
 
-  isShowPoup = () => {
-    const { pathname } = this.props.location;
-    return this.state.popupActive && !utils.detector.isApp() && !_.contains(constants.disabledDownloadApp, pathname);
-  }
-
   render() {
     return (
       <div>
         {this.props.children}
-        <DownloadAppPopup active={this.isShowPoup()} onClose={this.onCloseClick} onDownload={this.onDownlodClick} />
       </div>
     );
   }
