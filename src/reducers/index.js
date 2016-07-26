@@ -49,6 +49,7 @@ import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
+import * as mamaActivityAction from 'actions/mama/mamaActivity';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -99,6 +100,7 @@ const rootReducer = combineReducers({
   mamaInfo: createReducer(mamaInfoAction.name),
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
+  mamaActivity: createReducer(mamaActivityAction.name),
 });
 
 export default rootReducer;
