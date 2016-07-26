@@ -414,10 +414,6 @@ export default class Commit extends Component {
                 break;
             }
           })}
-          <div className={`row no-margin bottom-border ${prefixCls}-row`}>
-            <p className="col-xs-5 no-padding">APP支付优惠</p>
-            <p className="col-xs-7 no-padding text-right">- ¥2.0</p>
-          </div>
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
             <p className="col-xs-8 no-padding" onClick={this.onShowPurchaseItermsClick}>我已阅读并同意购买条款</p>
             <Checkbox className="col-xs-4 no-padding text-right" checked={this.state.agreePurchaseTerms} onChange={this.onAgreePurchaseTermsChange}/>
