@@ -108,6 +108,10 @@ export default (
     <Route path="/mama/open/failed" component={MamaOpeningFailed} />
     <Route path="/mama/invited" component={MamaInvited} />
     <Route path="/mama/activity/list" component={MamaActivityList} />
+<<<<<<< HEAD
+=======
+    <Route path="/mama/activity/rank" component={MamaActivityRank} />
+>>>>>>> 8807fb43f2b38e5b7187f7b1b1a3d1575db8f3de
     {activityRoutes}
     <Route status={404} path="*" component={Home} />
   </Route>
