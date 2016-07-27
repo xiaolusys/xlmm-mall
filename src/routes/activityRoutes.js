@@ -11,6 +11,7 @@ import {
   SummerMatHome,
   SummerMatSuccess,
   SummerMatRegistration,
+  EntrepreneurshipRank,
 } from 'containers/Activity';
 
 export default (
@@ -23,5 +24,6 @@ export default (
     <Route path="/activity/summer/mat/home" component={SummerMatHome} onEnter={utils.checkAuth}/>
     <Route path="/activity/summer/mat/success" component={SummerMatSuccess} />
     <Route path="/activity/summer/mat/register" component={SummerMatRegistration} />
+    <Route path="/activity/20160729/rank" component={EntrepreneurshipRank} />
   </Route>
 );

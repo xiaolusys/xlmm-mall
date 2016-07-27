@@ -4,4 +4,3 @@ export MamaOpeningFailed from './OpeningFailed';
 export MamaOpeningSucceed from './OpeningSucceed';
 export MamaAgreement from './Agreement';
 export MamaActivityList from './Activity/List';
-export MamaActivityRank from './Activity/Rank';

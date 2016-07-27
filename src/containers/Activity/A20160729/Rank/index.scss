@@ -1,0 +1,56 @@
+.entrepreneurship-container {
+  >.rank-tabs {
+    background-color: #fff;
+    &.sticky {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      right: 0;
+      z-index: 9;
+      &.has-header {
+        top: 44px;
+      }
+    }
+    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
+        }
+      }
+    }
+  }
+  > div {
+    background-color: #fff;
+  }
+  > .rank-list {
+    >li {
+      background-color: #fff;
+      > p {
+        padding-top: 8px;
+        padding-right: 15px;
+        padding-left: 0;
+      }
+      img {
+        border-radius: 18px;
+        width: 36px;
+        overflow: hidden;
+        height: 36px;
+      }
+    }
+  }
+  .entrepreneurship-top {
+    background-color: #73a3e1;
+    color: #fff;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    img {
+      border-radius: 18px;
+      width: 36px;
+      overflow: hidden;
+      height: 36px;
+    }
+  }
+}

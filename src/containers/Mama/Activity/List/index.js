@@ -52,7 +52,6 @@ export default class List extends Component {
 
   render() {
     const data = this.props.mamaActivityList.data || [];
-    console.log(data);
     return (
       <div>
         <Header title="参加活动" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
