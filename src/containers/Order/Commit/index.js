@@ -315,29 +315,17 @@ export default class Commit extends Component {
         {products.map((product, index) => {
           return (
             <div key={product.id} className="row no-margin bottom-border">
-              <If condition={product.status === 1}>
-                <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path + constants.image.square} />
-                </div>
-                <div className="col-xs-9 no-padding padding-top-xxs font-xs">
-                  <p className="row no-margin no-wrap">{product.title}</p>
-                  <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + product.sku_name}</p>
-                  <p className="row no-margin margin-top-xxxs">
-                    <span className="">{'￥' + product.payment}</span>
-                    <span className="padding-left-xs">{'x' + product.num}</span>
-                  </p>
-                </div>
-              </If>
-              <If condition={product.status !== 1}>
-                <div className="col-xs-3 no-padding">
-                  <img src={product.pic_path + constants.image.square} />
-                </div>
-                <div className="col-xs-9 no-padding padding-top-xxs font-xs">
-                  <p className="row no-margin">{product.title}</p>
-                  <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + product.sku_name}</p>
-                  <p className="row no-margin margin-top-xxxs">{'x' + product.num}</p>
-                </div>
-              </If>
+              <div className="col-xs-3 no-padding">
+                <img src={product.pic_path + constants.image.square} />
+              </div>
+              <div className="col-xs-9 no-padding padding-top-xxs font-xs">
+                <p className="row no-margin no-wrap">{product.title}</p>
+                <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + product.sku_name}</p>
+                <p className="row no-margin margin-top-xxxs">
+                  <span className="">{'￥' + product.price.toFixed(2)}</span>
+                  <span className="padding-left-xs">{'x' + product.num}</span>
+                </p>
+              </div>
             </div>
           );
         })}
