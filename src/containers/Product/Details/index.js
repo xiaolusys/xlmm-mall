@@ -197,7 +197,12 @@ export default class Detail extends Component {
   }
 
   onAddToShopBagClick = (e) => {
-    const skus = this.props.details.sku_info;
+    const { details } = this.props;
+    const skus = details.sku_info;
+    if (details.detail_content.is_flatten) {
+      this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, 1);
+      return;
+    }
     let defaultSku = {};
     for (const skuIndex in skus) {
       let sum = 0;
@@ -362,14 +367,13 @@ export default class Detail extends Component {
     );
   }
 
-  renderProductProps(info) {
+  renderProductProps(attributes = []) {
     return (
       <div className="product-spec bg-white margin-top-xxs">
         <p className="font-md font-weight-700">商品参数</p>
-        <p><span>商品编号</span><span className="margin-left-xxs font-grey-light">{info.model_code}</span></p>
-        <p><span>商品材质</span><span className="margin-left-xxs font-grey-light">{info.properties.material}</span></p>
-        <p><span>可选颜色</span><span className="margin-left-xxs font-grey-light">{info.properties.color}</span></p>
-        <p><span>洗涤说明</span><span className="margin-left-xxs font-grey-light">{info.properties.wash_instructions}</span></p>
+        {attributes.map((attribute) => (
+          <p><span>{attribute.name}</span><span className="margin-left-xxs font-grey-light">{attribute.value}</span></p>
+        ))}
       </div>
     );
   }
@@ -509,7 +513,7 @@ export default class Detail extends Component {
             {this.renderCarousel(details.detail_content.head_imgs)}
             {this.renderProductInfo(details.detail_content)}
             {this.renderPromotion()}
-            {this.renderProductProps(details.detail_content)}
+            {this.renderProductProps(details.comparison.attributes)}
             <If condition={!_.isEmpty(details.comparison)}>
               {details.comparison.tables.map((spec, tableIndex) => {
                 return self.renderProductSpec(spec.table);
