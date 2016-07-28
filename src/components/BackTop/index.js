@@ -48,13 +48,11 @@ export class BackTop extends Component {
   state = {}
 
   componentDidMount() {
-    this.scrollEvent = window.addEventListener('scroll', this.onScroll);
+    window.addEventListener('scroll', this.onScroll);
   }
 
   componentWillUnmount() {
-    if (this.scrollEvent) {
-      this.scrollEvent.remove();
-    }
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   onScroll = () => {
