@@ -87,7 +87,7 @@ export default class Rank extends Component {
             </p>
           </div>
           <div className="row no-margin">
-            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-1.png'} />
+            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v2/banner-1.png'} />
           </div>
           <Link to="">
             <div className="row no-margin">
