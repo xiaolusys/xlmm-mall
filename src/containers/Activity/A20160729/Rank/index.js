@@ -79,7 +79,12 @@ export default class Rank extends Component {
         <div className="content entrepreneurship-container">
           <div className="row no-margin entrepreneurship-top">
             <div className="col-xs-2 col-xs-offset-1">
-              <img src={mamaInfo.data.thumbnail} />
+              <If condition={mamaInfo.data.thumbnail}>
+                <img src={mamaInfo.data.thumbnail} />
+              </If>
+              <If condition={!mamaInfo.data.thumbnail}>
+                <i className="icon-xiaolu font-grey-light"></i>
+              </If>
             </div>
             <p className="col-xs-8 no-margin no-padding">{mamaInfo.data.mama_nick}</p>
             <p className="col-xs-8 col-xs-offset-2 no-margin no-padding">
@@ -143,7 +148,12 @@ export default class Rank extends Component {
                       <p className="col-xs-2 no-margin padding-top-xxs text-left">{item.rank}</p>
                     </If>
                     <div className="col-xs-3 no-padding">
-                      <img src={item.thumbnail + constants.image.square} />
+                      <If condition={item.thumbnail}>
+                        <img src={item.thumbnail + constants.image.square} />
+                      </If>
+                      <If condition={!item.thumbnail}>
+                        <i className="icon-xiaolu font-grey-light"></i>
+                      </If>
                     </div>
                     <p className="no-margin padding-top-xxs no-wrap text-left">{item.mama_nick}</p>
                   </div>
