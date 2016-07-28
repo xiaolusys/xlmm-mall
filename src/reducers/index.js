@@ -50,7 +50,8 @@ import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
-import * as mamaActivityListAction from 'actions/mama/activity/list';
+import * as mamaActivityAction from 'actions/mama/activity';
+import * as mamaCourseAction from 'actions/mama/course';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -101,8 +102,9 @@ const rootReducer = combineReducers({
   mamaInfo: createReducer(mamaInfoAction.name),
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
-  mamaActivityList: createReducer(mamaActivityListAction.name),
+  mamaActivity: createReducer(mamaActivityAction.name),
   entrepreneurship: entrepreneurshipReducer,
+  mamaCourse: createReducer(mamaCourseAction.name),
 });
 
 export default rootReducer;
