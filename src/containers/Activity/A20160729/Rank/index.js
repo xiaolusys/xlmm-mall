@@ -50,7 +50,14 @@ export default class Rank extends Component {
     this.props.fetchTeamRank();
   }
 
-  componentWillReceiveProps(nextProps) {}
+  componentWillReceiveProps(nextProps) {
+    const { mamaInfo, mamaRank, teamRank } = nextProps.entrepreneurship;
+    if (mamaInfo.isLoading || mamaRank.isLoading || teamRank.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
+  }
 
   onTabItemClick = (e) => {
     const { type } = e.currentTarget;
@@ -58,7 +65,6 @@ export default class Rank extends Component {
   }
 
   render() {
-    const hasHeader = !utils.detector.isApp();
     const { activeTab } = this.state;
     const { mamaInfo, mamaRank, teamRank } = this.props.entrepreneurship;
     let rankData = [];
@@ -81,9 +87,17 @@ export default class Rank extends Component {
             </p>
           </div>
           <div className="row no-margin">
-            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com//mall/activity/20160729/v1/banner.png'} />
+            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-1.png'} />
           </div>
-          <div className={'rank-tabs text-center bottom-border ' + (hasHeader ? 'has-header' : '')}>
+          <Link to="">
+            <div className="row no-margin">
+              <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-2.png'} />
+            </div>
+          </Link>
+          <div className="row no-margin">
+            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-3.png'} />
+          </div>
+          <div className="rank-tabs text-center bottom-border">
             <ul className="row no-margin">
               <li type="mama" className={'col-xs-6' + (activeTab === 'mama' ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>个人业绩</div>
@@ -98,16 +112,36 @@ export default class Rank extends Component {
             <p className="col-xs-6 no-margin padding-top-xs padding-bottom-xs font-orange text-right">{mamaInfo.data && Number(mamaInfo.data.duration_total_display).toFixed(2)}</p>
           </div>
           <div className="row no-margin margin-top-xs bottom-border">
-            <p className="col-xs-12 no-margin padding-top-xs padding-bottom-xs text-center">{activeTab === 'mama' ? '个人' : '团队'}收益排行榜</p>
+            <div className="col-xs-5 padding-left-xxs">
+              <img className="pull-right rank" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-rank.png'} />
+            </div>
+            <p className="col-xs-7 no-margin no-padding padding-top-xs padding-bottom-xs">{activeTab === 'mama' ? '个人' : '团队'}收益排行榜</p>
           </div>
           <If condition={!_.isEmpty(rankData)}>
             <ul className="rank-list">
             {rankData.map((item, index) => {
               return (
                 <li key={index} className="row no-margin bottom-border padding-bottom-xxs padding-top-xxs">
-                  <div className="col-xs-9">
-                    <p className="col-xs-2 no-margin no-padding padding-top-xxs text-left">{item.rank}</p>
-                    <div className="col-xs-4 no-padding">
+                  <div className="col-xs-9 no-padding">
+                    <If condition={item.rank === 1}>
+                      <div className="col-xs-2 padding-left-xxs">
+                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-1.png'} />
+                      </div>
+                    </If>
+                    <If condition={item.rank === 2}>
+                      <div className="col-xs-2 padding-left-xxs">
+                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-2.png'} />
+                      </div>
+                    </If>
+                    <If condition={item.rank === 3}>
+                      <div className="col-xs-2 padding-left-xxs">
+                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-3.png'} />
+                      </div>
+                    </If>
+                    <If condition={item.rank !== 1 && item.rank !== 2 && item.rank !== 3}>
+                      <p className="col-xs-2 no-margin padding-top-xxs text-left">{item.rank}</p>
+                    </If>
+                    <div className="col-xs-3 no-padding">
                       <img src={item.thumbnail + constants.image.square} />
                     </div>
                     <p className="no-margin padding-top-xxs no-wrap text-left">{item.mama_nick}</p>
