@@ -11,6 +11,7 @@ import examReducer from './examReducer';
 import summerMatReducer from './summerMatReducer';
 import complaintsReducer from './complaintsReducer';
 import pointLogReducer from './pointLogReducer';
+import entrepreneurshipReducer from './entrepreneurshipReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -49,7 +50,7 @@ import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
-import * as mamaActivityAction from 'actions/mama/mamaActivity';
+import * as mamaActivityListAction from 'actions/mama/activity/list';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -100,7 +101,8 @@ const rootReducer = combineReducers({
   mamaInfo: createReducer(mamaInfoAction.name),
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
-  mamaActivity: createReducer(mamaActivityAction.name),
+  mamaActivityList: createReducer(mamaActivityListAction.name),
+  entrepreneurship: entrepreneurshipReducer,
 });
 
 export default rootReducer;

@@ -8,25 +8,25 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
-import * as actionCreators from 'actions/mama/mamaActivity';
+import * as actionCreators from 'actions/mama/activity/list';
 
 import './index.scss';
 
 @connect(
   state => ({
-    mamaActivity: state.mamaActivity,
+    mamaActivityList: state.mamaActivityList,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 
-export default class Point extends Component {
+export default class List extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
-    mamaActivity: React.PropTypes.any,
-    fetchActivities: React.PropTypes.func,
+    mamaActivityList: React.PropTypes.any,
+    fetchActivityList: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -39,11 +39,11 @@ export default class Point extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchActivities();
+    this.props.fetchActivityList();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.mamaActivity.isLoading) {
+    if (nextProps.mamaActivityList.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
@@ -51,8 +51,7 @@ export default class Point extends Component {
   }
 
   render() {
-    const data = this.props.mamaActivity.data || [];
-    console.log(data);
+    const data = this.props.mamaActivityList.data || [];
     return (
       <div>
         <Header title="参加活动" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
