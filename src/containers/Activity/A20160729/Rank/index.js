@@ -81,15 +81,16 @@ export default class Rank extends Component {
             <div className="col-xs-2 col-xs-offset-1">
               <img src={mamaInfo.data.thumbnail} />
             </div>
-            <p className="col-xs-8 no-margin no-padding padding-top-xxs">
-              <span className="col-xs-6 no-padding no-wrap">{mamaInfo.data.mama_nick}</span>
-              <span className="col-xs-6 padding-left-xs">个人推荐:{mamaInfo.data.recommended_quantity}</span>
+            <p className="col-xs-8 no-margin no-padding">{mamaInfo.data.mama_nick}</p>
+            <p className="col-xs-8 col-xs-offset-2 no-margin no-padding">
+              <span className="col-xs-6 no-padding">个人推荐: {mamaInfo.data.recommended_quantity}</span>
+              <span className="col-xs-6 no-padding">激活人数: {mamaInfo.data.activite_num}</span>
             </p>
           </div>
           <div className="row no-margin">
-            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-1.png'} />
+            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v2/banner-1.png'} />
           </div>
-          <Link to="">
+          <Link to="/activity/20160729/introduce">
             <div className="row no-margin">
               <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-2.png'} />
             </div>
