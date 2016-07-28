@@ -14,7 +14,7 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
-const base = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/';
+const base = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/v3/';
 const actionCreators = _.extend(invitedAction, inviteSharingAction);
 const shareType = {
   full: 26,
@@ -110,12 +110,12 @@ export default class Invited extends Component {
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding invited">
         <ul className="row no-margin text-center tabs">
-          <li id="full" className={'col-xs-6 no-padding' + (activeTab === 'full' ? ' active' : '')} style={{ marginTop: '16px' }} onClick={this.onTabItemClick}>
-            <img style={{ width: '16%', marginBottom: '10px' }} src={`${base}full-icon.png`} />
+          <li id="full" className="col-xs-6 no-padding" style={{ marginTop: '16px' }} onClick={this.onTabItemClick}>
+            <img style={{ width: '24px', marginBottom: '10px' }} src={`${base}full-icon${activeTab === 'full' ? '-active' : ''}.png`} />
             <div>正式会员</div>
           </li>
-          <li id="trial" className={'col-xs-6 no-padding' + (activeTab === 'trial' ? ' active' : '')} style={{ marginTop: '16px' }} onClick={this.onTabItemClick}>
-            <img style={{ width: '16%', marginBottom: '10px' }} src={`${base}trial-icon.png`} />
+          <li id="trial" className="col-xs-6 no-padding" style={{ marginTop: '16px' }} onClick={this.onTabItemClick}>
+            <img style={{ width: '24px', marginBottom: '10px' }} src={`${base}trial-icon${activeTab === 'trial' ? '-active' : ''}.png`} />
             <div>一元体验</div>
           </li>
         </ul>
@@ -126,7 +126,7 @@ export default class Invited extends Component {
           </If>
           <If condition={this.state.activeTab === 'trial'}>
             <h5>1元体验：</h5>
-            <p>获得15天的小鹿妈妈功能使用权限，期间享有推荐奖最高110元/人，销售佣金8-30%，点击补贴0.1-1元你所得到的收入可以用于支付购买衣服。也可续费后把你的资金进行提现。</p>
+            <p>获得15天的小鹿妈妈功能使用权限，期间享有推荐奖最高110元/人，销售佣金8-30%，点击补贴0.1-1元你所得到的收入。我们希望你用这种方式先全面了解小鹿美美模式，然后再续费为正式会员！</p>
           </If>
         </div>
         <div className="invited-list text-center">
@@ -134,7 +134,7 @@ export default class Invited extends Component {
           <ul>
             {_.map(invited.data.results, (item) => {
               return (
-                <li className="row no-margin">
+                <li className="row no-margin margin-top-xxs">
                   <img className="pull-left avatar" src={item.thumbnail} />
                   <div style={{ display: 'inline-block', maxWidth: '70%' }} className="no-wrap">
                     <p style={{ color: '#666' }}>{moment(item.charge_time).format('YYYY-MM-DD hh:mm:ss')}</p>

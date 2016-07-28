@@ -10,7 +10,7 @@ export const fetchInvited = (type) => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(
-        constants.baseEndpointV1 + 'pmt/xlmm/get_referal_mama', { params: { last_renew_type: type } }
+        constants.baseEndpointV1 + 'pmt/xlmm/get_referal_mama', { params: { last_renew_type: type, page_size: 1000, page: 1 } }
       )
       .then((resp) => {
         dispatch(action.success(resp.data));
