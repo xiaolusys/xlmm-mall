@@ -19,7 +19,7 @@ export default class Introduce extends Component {
         <Header title="活动简介" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content introduce-container">
           <div className="row no-margin">
-            <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png"/>
+            <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/20160729/v2/banner.png"/>
           </div>
         </div>
       </div>
