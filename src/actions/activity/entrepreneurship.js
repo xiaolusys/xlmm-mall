@@ -27,7 +27,7 @@ export const fetchMamaRank = () => {
   const action = createAction(names.FETCH_MAMA_RANK);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'mama/teamrank/activity_carry_total_rank')
+    return axios.get(constants.baseEndpoint + 'mama/rank/activity_carry_total_rank')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -41,7 +41,7 @@ export const fetchTeamRank = () => {
   const action = createAction(names.FETCH_TEAM_RANK);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'mama/rank/activity_carry_total_rank')
+    return axios.get(constants.baseEndpoint + 'mama/teamrank/activity_carry_total_rank')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
