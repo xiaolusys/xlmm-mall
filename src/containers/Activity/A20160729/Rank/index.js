@@ -75,7 +75,7 @@ export default class Rank extends Component {
     }
     const rankNum = (activeTab === 'mama' ? mamaInfo.data.rank : mamaInfo.data.team_rank);
 
-    const income = (activeTab === 'mama') ? Number(mamaInfo.data.duration_total_display).toFixed(2) : Number(mamaInfo.data.team_total_display).toFixed(2);
+    const income = (activeTab === 'mama') ? Number(mamaInfo.data.duration_total_display) : Number(mamaInfo.data.team_total_display);
     return (
       <div>
         <Header title="一元开店大赛" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
@@ -118,7 +118,7 @@ export default class Rank extends Component {
           </div>
           <div className="row no-margin">
             <p className="col-xs-6 no-margin padding-top-xs padding-bottom-xs padding-left-xs text-center">我的排名: {rankNum === 0 ? '' : rankNum }</p>
-            <p className="col-xs-6 no-margin padding-top-xs padding-bottom-xs font-orange text-right">{income}</p>
+            <p className="col-xs-6 no-margin padding-top-xs padding-bottom-xs font-orange text-right">{income.toFixed(2)}</p>
           </div>
           <div className="row no-margin margin-top-xs bottom-border">
             <div className="col-xs-5 padding-left-xxs">
