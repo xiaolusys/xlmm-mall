@@ -1,29 +1,58 @@
 .university-container {
-  .activity-container {
-    > ul > a,
-    a:hover,
-    a:active,
-    a:focus,
-    a:visited {
-      color: #26262e;
-      text-decoration: none;
+  .activity-container {}
+  .course-container {
+    > div > img {
+      width: 100%;
     }
     .tab {
       width: 100%;
-      position: fixed;
-      bottom: 0;
       left: 0;
       z-index: 10;
       background-color: #fff;
+      > div {
+        p {
+          &.active {
+            color: #faac14;
+          }
+          padding-top: 16px;
+          padding-bottom: 16px;
+        }
+      }
+    }
+    .course-list {
+      > li {
+        padding-top: 16px;
+        padding-bottom: 16px;
+        img {
+          width: 100px;
+          height: 66px;
+        }
+      }
+    }
+  }
+  >.tab {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background-color: #fff;
+    > div {
       p {
+        &.active {
+          color: #faac14;
+        }
         padding-top: 16px;
         padding-bottom: 16px;
       }
     }
   }
-  .course-container {
-    > div > img {
-      width: 100%;
-    }
+  a,
+  a:hover,
+  a:active,
+  a:focus,
+  a:visited {
+    color: #26262e;
+    text-decoration: none;
   }
 }
