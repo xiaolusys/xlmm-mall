@@ -17,7 +17,7 @@ import './index.scss';
 const base = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/v3/';
 const actionCreators = _.extend(invitedAction, inviteSharingAction);
 const shareType = {
-  full: 26,
+  full: 38,
   trial: 27,
 };
 
