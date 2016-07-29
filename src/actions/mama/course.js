@@ -2,7 +2,9 @@ import * as constants from 'constants';
 import axios from 'axios';
 import createAction from 'actions/createAction';
 import qs from 'qs';
+
 export const name = 'FETCH_COURSE';
+
 export const fetchCourse = (lessonType, orderingBy) => {
   const action = createAction(name);
   return (dispatch) => {

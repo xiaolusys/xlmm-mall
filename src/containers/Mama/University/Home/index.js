@@ -47,7 +47,7 @@ export default class List extends Component {
 
   componentWillMount() {
     this.props.fetchActivity();
-    this.props.fetchCourse();
+    this.props.fetchCourse('', 'num_attender');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,12 +64,25 @@ export default class List extends Component {
       this.setState({
         topTab: id,
       });
-    } else if (type === 'base') {
-      this.setState({
-        bottomTab: id,
-      });
+      switch (id) {
+        case 'newb':
+          this.props.fetchCourse(3, '');
+          break;
+        case 'hot':
+          this.props.fetchCourse('', 'num_attender');
+          break;
+        case 'newest':
+          this.props.fetchCourse('', 'created');
+          break;
+        default:
+      }
+      if (type === 'base') {
+        this.setState({
+          bottomTab: id,
+        });
+      }
+      e.preventDefault();
     }
-    e.preventDefault();
   }
 
   renderActivities(activities) {
@@ -97,7 +110,7 @@ export default class List extends Component {
       <ul className="course-list">
         {courses.map((course, index) => {
           return (
-            <a key={index} href={course.content_link}>
+            <Link key={index} to={'/mama/university/course/detail?link=' + encodeURIComponent(course.content_link)}>
             <li className="row no-margin bottom-border content-white-bg">
               <div className="col-xs-4">
                 <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png'}/>
@@ -110,7 +123,7 @@ export default class List extends Component {
                 </p>
               </div>
             </li>
-            </a>
+            </Link>
             );
         })}
       </ul>
