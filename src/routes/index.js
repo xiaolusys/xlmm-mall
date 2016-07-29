@@ -110,7 +110,6 @@ export default (
     <Route path="/mama/invited" component={MamaInvited} />
     <Route path="/mama/university/home" component={MamaUniversityHome} />
     <Route path="/mama/university/course/detail" component={MamaUniversityCourseDetail} />
-    {activityRoutes}
     <Route status={404} path="*" component={Home} />
   </Route>
 );
