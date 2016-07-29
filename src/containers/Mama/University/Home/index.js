@@ -76,13 +76,13 @@ export default class List extends Component {
           break;
         default:
       }
-      if (type === 'base') {
-        this.setState({
-          bottomTab: id,
-        });
-      }
-      e.preventDefault();
     }
+    if (type === 'base') {
+      this.setState({
+        bottomTab: id,
+      });
+    }
+    e.preventDefault();
   }
 
   renderActivities(activities) {
