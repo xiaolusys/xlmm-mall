@@ -136,7 +136,7 @@ export default class List extends Component {
     const courseData = this.props.mamaCourse.data && this.props.mamaCourse.data.results || [];
     return (
       <div>
-        <Header title="参加活动" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title="小鹿大学" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content university-container">
           <If condition={bottomTab === 'activity'}>
             <div className="activity-container">
