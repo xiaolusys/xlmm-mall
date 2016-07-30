@@ -2,10 +2,8 @@ import * as constants from 'constants';
 import axios from 'axios';
 import createAction from 'actions/createAction';
 import qs from 'qs';
-
-export const name = 'FETCH_ACTIVITY_LIST';
-
-export const fetchActivityList = (type) => {
+export const name = 'FETCH_ACTIVITY';
+export const fetchActivity = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());

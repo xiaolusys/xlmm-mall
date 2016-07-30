@@ -63,7 +63,8 @@ import {
   MamaOpeningFailed,
   MamaOpeningSucceed,
   MamaAgreement,
-  MamaActivityList,
+  MamaUniversityHome,
+  MamaUniversityCourseDetail,
 } from 'containers/Mama';
 
 export default (
@@ -107,8 +108,9 @@ export default (
     <Route path="/mama/open/succeed" component={MamaOpeningSucceed} />
     <Route path="/mama/open/failed" component={MamaOpeningFailed} />
     <Route path="/mama/invited" component={MamaInvited} />
-    <Route path="/mama/activity/list" component={MamaActivityList} />
     {activityRoutes}
+    <Route path="/mama/university/home" component={MamaUniversityHome} />
+    <Route path="/mama/university/course/detail" component={MamaUniversityCourseDetail} />
     <Route status={404} path="*" component={Home} />
   </Route>
 );
