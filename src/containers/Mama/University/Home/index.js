@@ -210,8 +210,7 @@ export default class List extends Component {
               </div>
             </li>
             </Link>
-            );
-        })}
+        );})}
       </ul>
     );
   }
