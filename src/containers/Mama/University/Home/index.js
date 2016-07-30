@@ -35,9 +35,11 @@ export default class List extends Component {
     fetchCourse: React.PropTypes.func,
     resetCourse: React.PropTypes.func,
   };
+
   static contextTypes = {
     router: React.PropTypes.object,
   };
+
   constructor(props, context) {
     super(props);
     context.router;
@@ -208,8 +210,7 @@ export default class List extends Component {
               </div>
             </li>
             </Link>
-            );
-        })}
+        );})}
       </ul>
     );
   }
