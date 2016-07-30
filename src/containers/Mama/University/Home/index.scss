@@ -17,7 +17,7 @@
           top: 44px;
         }
       }
-      > ul > li {
+      > ul li {
         p {
           &.active {
             color: #faac14;
@@ -45,7 +45,7 @@
     left: 0;
     z-index: 10;
     background-color: #fff;
-    > ul >li {
+    > ul li {
       p {
         &.active {
           color: #faac14;
