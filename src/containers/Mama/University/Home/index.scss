@@ -4,12 +4,20 @@
     > div > img {
       width: 100%;
     }
-    .tab {
-      width: 100%;
-      left: 0;
-      z-index: 10;
+    .course-tab {
       background-color: #fff;
-      > div {
+      &.sticky {
+        width: 100%;
+        z-index: 10;
+        position: fixed;
+        top: 0px;
+        left: 0;
+        right: 0;
+        &.has-header {
+          top: 44px;
+        }
+      }
+      > ul > li {
         p {
           &.active {
             color: #faac14;
@@ -30,20 +38,23 @@
       }
     }
   }
-  >.tab {
+  >.base-tab {
     width: 100%;
     position: fixed;
     bottom: 0;
     left: 0;
     z-index: 10;
     background-color: #fff;
-    > div {
+    > ul >li {
       p {
         &.active {
           color: #faac14;
         }
         padding-top: 16px;
         padding-bottom: 16px;
+        > i {
+          font-size: 18px;
+        }
       }
     }
   }

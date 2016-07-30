@@ -31,6 +31,7 @@ export default class List extends Component {
     mamaCourse: React.PropTypes.any,
     fetchActivity: React.PropTypes.func,
     fetchCourse: React.PropTypes.func,
+    resetCourse: React.PropTypes.func,
   };
   static contextTypes = {
     router: React.PropTypes.object,
@@ -41,38 +42,92 @@ export default class List extends Component {
   }
 
   state = {
+    pageIndex: 1,
+    pageSize: 20,
+    sticky: false,
+    hasMore: false,
     topTab: 'hot',
     bottomTab: 'course',
+    lessonType: '',
+    orderingBy: 'num_attender',
   }
 
   componentWillMount() {
-    this.props.fetchActivity();
-    this.props.fetchCourse('', 'num_attender');
+    const { pageIndex, pageSize, lessonType, orderingBy } = this.state;
+    this.props.fetchCourse(pageIndex, pageSize, lessonType, orderingBy);
+  }
+
+  componentDidMount() {
+    this.addScrollListener();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.mamaActivity.isLoading || nextProps.mamaCourse.isLoading) {
+    const { mamaActivity, mamaCourse } = nextProps;
+    if (mamaActivity.isLoading || mamaCourse.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
     }
+    if (mamaCourse.success) {
+      const count = mamaCourse.data.count;
+      const size = mamaCourse.data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
+      this.setState({ hasMore: count > size });
+    }
+  }
+
+  componentWillUnmount() {
+    this.removeScrollListener();
+  }
+
+  onScroll = (e) => {
+    const { pageIndex, pageSize, lessonType, orderingBy, activeTab, sticky, bottomTab } = this.state;
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    let courseTabOffsetTop = 0;
+    if (scrollTop === documentHeight - windowHeight && !this.props.mamaCourse.isLoading && this.state.hasMore) {
+      this.props.fetchCourse(pageIndex + 1, pageSize, lessonType, orderingBy);
+    }
+    if (bottomTab === 'course') {
+      courseTabOffsetTop = utils.dom.offsetTop('.course-tab');
+    }
+    if (scrollTop > courseTabOffsetTop) {
+      this.setState({ sticky: true });
+    } else {
+      this.setState({ sticky: false });
+    }
   }
 
   onTabClick = (e) => {
+    const { pageIndex, pageSize, lessonType, orderingBy } = this.state;
     const { id, type } = e.currentTarget.dataset;
     if (type === 'course') {
-      this.setState({
-        topTab: id,
-      });
+      this.props.resetCourse();
       switch (id) {
         case 'newb':
-          this.props.fetchCourse(3, '');
+          this.setState({
+            topTab: id,
+            lessonType: 3,
+            orderingBy: '',
+          });
+          this.props.fetchCourse(1, pageSize, 3, '');
           break;
         case 'hot':
-          this.props.fetchCourse('', 'num_attender');
+          this.setState({
+            topTab: id,
+            lessonType: '',
+            orderingBy: 'num_attender',
+          });
+          this.props.fetchCourse(1, pageSize, '', 'num_attender');
           break;
         case 'newest':
-          this.props.fetchCourse('', 'created');
+          this.setState({
+            topTab: id,
+            lessonType: '',
+            orderingBy: 'created',
+          });
+          this.props.fetchCourse(1, pageSize, '', 'created');
           break;
         default:
       }
@@ -82,7 +137,24 @@ export default class List extends Component {
         bottomTab: id,
       });
     }
+    switch (id) {
+      case 'course':
+        this.props.fetchCourse(1, pageSize, 3, '');
+        break;
+      case 'activity':
+        this.props.fetchActivity();
+        break;
+      default:
+    }
     e.preventDefault();
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   renderActivities(activities) {
@@ -113,7 +185,7 @@ export default class List extends Component {
             <Link key={index} to={'/mama/university/course/detail?link=' + encodeURIComponent(course.content_link)}>
             <li className="row no-margin bottom-border content-white-bg">
               <div className="col-xs-4">
-                <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png'}/>
+                <Image className="col-xs-12 no-padding" src={course.cover_image || 'http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png'}/>
               </div>
               <div className="col-xs-8">
                 <p className="col-xs-12 no-margin no-padding no-wrap padding-top-xxs">{course.title}</p>
@@ -131,9 +203,10 @@ export default class List extends Component {
   }
 
   render() {
-    const { topTab, bottomTab } = this.state;
+    const { topTab, bottomTab, sticky } = this.state;
     const activityData = this.props.mamaActivity.data || [];
     const courseData = this.props.mamaCourse.data && this.props.mamaCourse.data.results || [];
+    const hasHeader = !utils.detector.isApp();
     return (
       <div>
         <Header title="小鹿大学" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
@@ -150,39 +223,45 @@ export default class List extends Component {
               <div className="row no-margin">
                 <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png"/>
               </div>
-              <div className="row no-margin text-center bottom-border tab">
-                <div data-type="course" data-id="newb" onClick={this.onTabClick}>
-                  <p className={'col-xs-4 no-margin no-padding' + (topTab === 'newb' ? ' active' : '')}>
-                    <span>新人</span>
-                  </p>
-                </div>
-                <div data-type="course" data-id="hot" onClick={this.onTabClick}>
-                  <p className={'col-xs-4 no-margin no-padding' + (topTab === 'hot' ? ' active' : '')}>
-                    <span>热门</span>
-                  </p>
-                </div>
-                <div data-type="course" data-id="newest" onClick={this.onTabClick}>
-                  <p className={'col-xs-4 no-margin no-padding' + (topTab === 'newest' ? ' active' : '')}>
-                    <span>最新</span>
-                  </p>
-                </div>
+              <div className={'text-center bottom-border course-tab ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
+                <ul className="row no-margin">
+                  <li key={1} data-type="course" data-id="newb" onClick={this.onTabClick}>
+                    <p className={'col-xs-4 no-margin no-padding' + (topTab === 'newb' ? ' active' : '')}>
+                      <span>新人</span>
+                    </p>
+                  </li>
+                  <li key={2} data-type="course" data-id="hot" onClick={this.onTabClick}>
+                    <p className={'col-xs-4 no-margin no-padding' + (topTab === 'hot' ? ' active' : '')}>
+                      <span>热门</span>
+                    </p>
+                  </li>
+                  <li key={3} data-type="course" data-id="newest" onClick={this.onTabClick}>
+                    <p className={'col-xs-4 no-margin no-padding' + (topTab === 'newest' ? ' active' : '')}>
+                      <span>最新</span>
+                    </p>
+                  </li>
+                </ul>
               </div>
               <If condition={!_.isEmpty(courseData)}>
                 {this.renderCourses(courseData)}
               </If>
             </div>
           </If>
-          <div className="row no-margin text-center top-border tab">
-            <div data-type="base" data-id="course" onClick={this.onTabClick}>
-              <p className={'col-xs-6 no-margin no-padding' + (bottomTab === 'course' ? ' active' : '')}>
-                <span>课堂知识</span>
-              </p>
-            </div>
-            <div data-type="base" data-id="activity" onClick={this.onTabClick}>
-              <p className={'col-xs-6 no-margin no-padding' + (bottomTab === 'activity' ? ' active' : '')}>
-                <span>参加活动</span>
-              </p>
-            </div>
+          <div className="row no-margin text-center top-border base-tab">
+            <ul className="row no-margin">
+              <li key={1} data-type="base" data-id="course" onClick={this.onTabClick}>
+                <p className={'col-xs-6 no-margin no-padding' + (bottomTab === 'course' ? ' active' : '')}>
+                  <i className="icon-course"></i>
+                  <span className="padding-left-xxs">课堂知识</span>
+                </p>
+              </li>
+              <li key={2} data-type="base" data-id="activity" onClick={this.onTabClick}>
+                <p className={'col-xs-6 no-margin no-padding' + (bottomTab === 'activity' ? ' active' : '')}>
+                  <i className="icon-activity"></i>
+                  <span className="padding-left-xxs">参加活动</span>
+                </p>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
