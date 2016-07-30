@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
@@ -14,6 +15,7 @@ import * as courseAction from 'actions/mama/course';
 import './index.scss';
 
 const actionCreators = _.extend(activityAction, courseAction);
+
 @connect(
   state => ({
     mamaActivity: state.mamaActivity,
@@ -97,6 +99,16 @@ export default class List extends Component {
     } else {
       this.setState({ sticky: false });
     }
+  }
+
+  onLeftBtnClick = (e) => {
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeBack',
+      });
+      return;
+    }
+    this.context.router.goBack();
   }
 
   onTabClick = (e) => {
@@ -209,7 +221,7 @@ export default class List extends Component {
     const hasHeader = !utils.detector.isApp();
     return (
       <div>
-        <Header title="小鹿大学" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title="小鹿大学" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="content university-container">
           <If condition={bottomTab === 'activity'}>
             <div className="activity-container">
