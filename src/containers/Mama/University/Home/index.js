@@ -163,6 +163,18 @@ export default class List extends Component {
     e.preventDefault();
   }
 
+  onCourseItemClick = (e) => {
+    const { to } = e.currentTarget.dataset;
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'jumpToNativeLocation',
+        data: 'com.jiemei.xlmm://app/v1/webview?is_native=1&url=' + decodeURIComponent(to),
+      });
+      return;
+    }
+    e.preventDefault();
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -196,8 +208,7 @@ export default class List extends Component {
       <ul className="course-list">
         {courses.map((course, index) => {
           return (
-            <Link key={index} to={'/mama/university/course/detail?link=' + encodeURIComponent(course.content_link)}>
-            <li className="row no-margin bottom-border content-white-bg">
+            <li className="row no-margin bottom-border content-white-bg" data-to={encodeURIComponent(course.content_link)} onClick={this.onCourseItemClick}>
               <div className="col-xs-4">
                 <Image className="col-xs-12 no-padding" src={course.cover_image || 'http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png'}/>
               </div>
@@ -209,7 +220,6 @@ export default class List extends Component {
                 </p>
               </div>
             </li>
-            </Link>
         );})}
       </ul>
     );
