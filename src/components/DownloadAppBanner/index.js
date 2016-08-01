@@ -38,7 +38,7 @@ export class DownloadAppBanner extends Component {
   render() {
     const { prefixCls } = this.props;
     return (
-      <If condition={this.state.visible === 1}>
+      <If condition={this.state.visible === 1 && !utils.detector.isApp()}>
         <div className={`${prefixCls} clearfix`}>
           <div className="pull-left" style={{ lineHeight: '48px' }}>
             <i className="icon-close" onClick={this.onCloseClick}></i>
