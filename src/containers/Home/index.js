@@ -19,6 +19,7 @@ import { Brand } from 'components/Brand';
 import { Image } from 'components/Image';
 import { ShopBag } from 'components/ShopBag';
 import { BackTop } from 'components/BackTop';
+import { DownloadAppBanner } from 'components/DownloadAppBanner';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 
@@ -188,7 +189,8 @@ export class Home extends Component {
         <div className="home-container">
           <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} hide={!hasHeader}/>
           <div className="content content-white-bg">
-            <div className="home-poster">
+            <DownloadAppBanner />
+            <div className="home-poster  clearfix">
               {portal.isLoading ? <Loader/> : null}
               <Carousel>
                 {posters.map((item, index) => {
