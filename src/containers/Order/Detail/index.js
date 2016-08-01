@@ -274,14 +274,6 @@ export default class Detail extends Component {
     );
   }
 
-  renderCreatedTime() {
-    const order = this.props.order.fetchOrder.data;
-    const time = order.created || '';
-    return (
-      <p className="no-margin font-grey font-xs text-right order-createTime">{time.replace('T', ' ') + '下单'}</p>
-    );
-  }
-
   render() {
     const { express } = this.props;
     const trade = this.props.order.fetchOrder.data || {};
@@ -347,12 +339,6 @@ export default class Detail extends Component {
             </Statusline>
           </div>
           </If>
-          <p className="no-margin trade-status">
-            <sapn>订单编号</sapn>
-            <sapn className="margin-left-xxs font-grey">{trade.tid}</sapn>
-            <sapn className="pull-right font-yellow">{trade.status_display}</sapn>
-          </p>
-          {this.renderCreatedTime()}
           <div className="row no-margin margin-bottom-xs receiver-info">
             <div className="col-xs-2 no-padding text-center margin-top-xxs">
               <i className="icon-location icon-2x icon-yellow-light"></i>
@@ -378,6 +364,7 @@ export default class Detail extends Component {
             {this.renderPackages(packages)}
           </If>
           <div className="price-info bottom-border">
+            <p><sapn>订单编号</sapn><sapn className="pull-right">{trade.tid}</sapn></p>
             <p>
               <span>支付方式</span>
               <If condition={trade.channel === 'wx'}>
