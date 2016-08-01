@@ -260,19 +260,19 @@ export default class List extends Component {
               </If>
             </div>
           </If>
-          <div className="row no-margin text-center top-border base-tab">
+          <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">
               <li key={1} data-type="base" data-id="course" onClick={this.onTabClick}>
-                <p className={'col-xs-6 no-margin no-padding' + (bottomTab === 'course' ? ' active' : '')}>
-                  <i className="icon-course"></i>
-                  <span className="padding-left-xxs">课堂知识</span>
-                </p>
+                <div className={'col-xs-6 no-margin' + (bottomTab === 'course' ? ' active' : '')}>
+                  <i className="col-xs-4 text-right icon-course"></i>
+                  <p className="no-margin padding-left-xxs padding-top-xxs">课堂知识</p>
+                </div>
               </li>
               <li key={2} data-type="base" data-id="activity" onClick={this.onTabClick}>
-                <p className={'col-xs-6 no-margin no-padding' + (bottomTab === 'activity' ? ' active' : '')}>
-                  <i className="icon-activity"></i>
-                  <span className="padding-left-xxs">参加活动</span>
-                </p>
+                <div className={'col-xs-6 no-margin' + (bottomTab === 'activity' ? ' active' : '')}>
+                  <i className="col-xs-4 text-right icon-activity"></i>
+                  <p className="no-margin padding-left-xxs padding-top-xxs">参加活动</p>
+                </div>
               </li>
             </ul>
           </div>

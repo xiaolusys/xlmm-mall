@@ -46,14 +46,14 @@
     z-index: 10;
     background-color: #fff;
     > ul li {
-      p {
+      div {
         &.active {
           color: #faac14;
         }
-        padding-top: 16px;
-        padding-bottom: 16px;
+        padding-top: 8px;
+        padding-bottom: 8px;
         > i {
-          font-size: 18px;
+          font-size: 24px;
         }
       }
     }
