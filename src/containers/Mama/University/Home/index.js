@@ -168,7 +168,7 @@ export default class List extends Component {
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'jumpToNativeLocation',
-        data: 'com.jiemei.xlmm://app/v1/webview?is_native=1&url=' + decodeURIComponent(to),
+        data: `com.jiemei.xlmm://app/v1/webview?is_native=1&url=${to}`,
       });
       return;
     }
@@ -208,7 +208,7 @@ export default class List extends Component {
       <ul className="course-list">
         {courses.map((course, index) => {
           return (
-            <li className="row no-margin bottom-border content-white-bg" data-to={encodeURIComponent(course.content_link)} onClick={this.onCourseItemClick}>
+            <li className="row no-margin bottom-border content-white-bg" data-to={course.content_link} onClick={this.onCourseItemClick}>
               <div className="col-xs-4">
                 <Image className="col-xs-12 no-padding" src={course.cover_image || 'http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png'}/>
               </div>
