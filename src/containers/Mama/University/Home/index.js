@@ -15,22 +15,6 @@ import * as courseAction from 'actions/mama/course';
 import './index.scss';
 
 const actionCreators = _.extend(activityAction, courseAction);
-const setupWebViewJavascriptBridge = function(callback) {
-  if (window.WebViewJavascriptBridge) {
-    return callback(window.WebViewJavascriptBridge);
-  }
-  if (window.WVJBCallbacks) {
-    return window.WVJBCallbacks.push(callback);
-  }
-  window.WVJBCallbacks = [callback];
-  const WVJBIframe = document.createElement('iframe');
-  WVJBIframe.style.display = 'none';
-  WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
-  document.documentElement.appendChild(WVJBIframe);
-  setTimeout(function() {
-    document.documentElement.removeChild(WVJBIframe);
-  }, 0);
-};
 
 @connect(
   state => ({
@@ -190,10 +174,10 @@ export default class List extends Component {
       return;
     }
     if (utils.detector.isIOS()) {
-      setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('jumpToNativeLocation', {
-          target_url: appUrl,
-        }, function(response) {});
+      plugins.invoke({
+        method: 'jumpToNativeLocation',
+        data: { target_url: appUrl },
+        callback: (resp) => {},
       });
       return;
     }
