@@ -67,6 +67,10 @@ import {
   MamaUniversityCourseDetail,
 } from 'containers/Mama';
 
+import {
+  FavoriteList,
+} from 'containers/Favorite';
+
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home} />
@@ -99,7 +103,7 @@ export default (
     <Route path="/refunds/details/:refundsid" component={RefundsDetail} onEnter={utils.checkAuth} />
     <Route path="/refunds/express/order/:refundsid/:orderid/:name" component={ExpressOrder} onEnter={utils.checkAuth} />
     <Route path="/refunds/express/company/:refundsid/:orderid" component={ExpressCompany} onEnter={utils.checkAuth} />
-    <Route path="/refunds" component={RefundsList} />
+    <Route path="/refunds" component={RefundsList} onEnter={utils.checkAuth} />
     <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} onEnter={utils.checkAuth} />
     <Route path="/alipay" component={Alipay} />
     <Route path="/mcf.html" component={MamaCharge} />
@@ -111,6 +115,7 @@ export default (
     {activityRoutes}
     <Route path="/mama/university/home" component={MamaUniversityHome} />
     <Route path="/mama/university/course/detail" component={MamaUniversityCourseDetail} />
+    <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>
 );
