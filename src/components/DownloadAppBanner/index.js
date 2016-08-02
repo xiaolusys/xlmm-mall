@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import * as utils from 'utils';
 import _ from 'underscore';
-import constants from 'constants';
+import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 
 import './index.scss';
