@@ -30,7 +30,7 @@ export const readCourse = (courseId) => {
   const action = createAction(names.READ_COURSE);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.patch(constants.baseEndpointV1 + 'lesson/lessontopic/' + courseId, { params: { num_attender: 1 } })
+    return axios.patch(constants.baseEndpointV1 + 'lesson/lessontopic/' + courseId, { num_attender: 1 })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
