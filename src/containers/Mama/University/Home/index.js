@@ -50,6 +50,7 @@ export default class List extends Component {
     fetchActivity: React.PropTypes.func,
     fetchCourse: React.PropTypes.func,
     resetCourse: React.PropTypes.func,
+    readCourse: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -83,14 +84,15 @@ export default class List extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { mamaActivity, mamaCourse } = nextProps;
-    if (mamaActivity.isLoading || mamaCourse.isLoading) {
+    const { fetchCourse, readCourse } = mamaCourse;
+    if (mamaActivity.isLoading || fetchCourse.isLoading || readCourse.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
     }
-    if (mamaCourse.success) {
-      const count = mamaCourse.data.count;
-      const size = mamaCourse.data.results.length;
+    if (fetchCourse.success) {
+      const count = fetchCourse.data.count;
+      const size = fetchCourse.data.results.length;
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
     }
@@ -106,7 +108,7 @@ export default class List extends Component {
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
     let courseTabOffsetTop = 0;
-    if (scrollTop === documentHeight - windowHeight && !this.props.mamaCourse.isLoading && this.state.hasMore) {
+    if (scrollTop === documentHeight - windowHeight && !this.props.mamaCourse.fetchCourse.isLoading && this.state.hasMore) {
       this.props.fetchCourse(pageIndex + 1, pageSize, lessonType, orderingBy);
     }
     if (bottomTab === 'course') {
@@ -180,8 +182,9 @@ export default class List extends Component {
   }
 
   onCourseItemClick = (e) => {
-    const { to } = e.currentTarget.dataset;
+    const { id, to } = e.currentTarget.dataset;
     const appUrl = `com.jimei.xlmm://app/v1/webview?is_native=1&url=${to}`;
+    this.props.readCourse(id);
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       window.AndroidBridge.jumpToNativeLocation(appUrl);
       return;
@@ -230,7 +233,7 @@ export default class List extends Component {
       <ul className="course-list">
         {courses.map((course, index) => {
           return (
-            <li className="row no-margin bottom-border content-white-bg" data-to={course.content_link} onClick={this.onCourseItemClick}>
+            <li className="row no-margin bottom-border content-white-bg" data-id={course.id} data-to={course.content_link} onClick={this.onCourseItemClick}>
               <div className="col-xs-4">
                 <Image className="col-xs-12 no-padding" src={course.cover_image || 'http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png'}/>
               </div>
@@ -250,7 +253,7 @@ export default class List extends Component {
   render() {
     const { topTab, bottomTab, sticky } = this.state;
     const activityData = this.props.mamaActivity.data || [];
-    const courseData = this.props.mamaCourse.data && this.props.mamaCourse.data.results || [];
+    const courseData = this.props.mamaCourse.fetchCourse.data && this.props.mamaCourse.fetchCourse.data.results || [];
     const hasHeader = !utils.detector.isApp();
     return (
       <div>
