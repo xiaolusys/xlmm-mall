@@ -130,7 +130,6 @@ export default class Commit extends Component {
       Toast.show('请勾选购买条款！');
       return;
     }
-
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
