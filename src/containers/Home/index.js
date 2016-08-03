@@ -190,7 +190,7 @@ export class Home extends Component {
           <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} hide={!hasHeader}/>
           <div className="content content-white-bg">
             <DownloadAppBanner />
-            <div className="home-poster  clearfix">
+            <div className="home-poster">
               {portal.isLoading ? <Loader/> : null}
               <Carousel>
                 {posters.map((item, index) => {
