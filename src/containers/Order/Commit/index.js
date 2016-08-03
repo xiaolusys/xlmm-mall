@@ -412,7 +412,7 @@ export default class Commit extends Component {
           <div className={`row no-margin ${prefixCls}-row transparent`}>
             <p className="col-xs-12 no-padding">
               <span className="col-xs-5 no-padding text-left">商品金额</span>
-              <span className="col-xs-7 no-padding text-right font-orange">{'￥' + this.getTotalPrice()}</span>
+              <span className="col-xs-7 no-padding text-right font-orange">{'￥' + payInfo.data.total_fee.toFixed(2)}</span>
             </p>
             <p className="col-xs-12 margin-top-xxs no-padding">
               <span className="col-xs-5 no-padding text-left">运费</span>
