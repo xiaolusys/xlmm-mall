@@ -120,7 +120,7 @@ export default class Commit extends Component {
   }
 
   onCommitOrderClick = (e) => {
-    const { address, payInfo } = this.props;
+    const { address, payInfo, coupon } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
@@ -130,6 +130,7 @@ export default class Commit extends Component {
       Toast.show('请勾选购买条款！');
       return;
     }
+
     if (walletChecked && walletBalance >= payInfo.data.total_fee) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
@@ -142,11 +143,25 @@ export default class Commit extends Component {
         channel: this.getPayType(),
         logistics_company_id: logisticsCompanyId,
       });
-
-    } else if (walletBalance < payInfo.data.total_fee) {
-      this.togglePayTypePopupActive();
+      return;
     }
-    e.preventDefault();
+    if (coupon.data.coupon_value >= payInfo.data.total_fee) {
+      this.props.commitOrder({
+        uuid: payInfo.data.uuid,
+        cart_ids: payInfo.data.cart_ids,
+        payment: this.getpPaymentPrice(payInfo.data.total_payment),
+        post_fee: payInfo.data.post_fee,
+        discount_fee: this.getDiscountValue(),
+        total_fee: payInfo.data.total_fee,
+        addr_id: address.data.id,
+        channel: this.getPayType(),
+        logistics_company_id: logisticsCompanyId,
+        pay_extras: this.getPayExtras(),
+      });
+      return;
+    }
+    this.togglePayTypePopupActive();
+    return;
   }
 
   onPayTypeClick = (e) => {
@@ -237,8 +252,11 @@ export default class Commit extends Component {
   }
 
   getPayType = (payType) => {
-    const { payInfo } = this.props;
+    const { coupon, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
+    if (coupon.data.coupon_value >= payInfo.data.total_fee) {
+      return 'budget';
+    }
     if (walletChecked && payInfo.data.total_fee <= walletBalance) {
       return walletPayType;
     }
@@ -248,6 +266,9 @@ export default class Commit extends Component {
   getpPaymentPrice = (totalPrice) => {
     const { coupon, payInfo } = this.props;
     let value = totalPrice || 0;
+    if (coupon.data.coupon_value >= payInfo.data.total_fee) {
+      return 0;
+    }
     if (value > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       value = value - coupon.data.coupon_value;
     }
@@ -260,14 +281,15 @@ export default class Commit extends Component {
     let displayPrice = payInfo.data.total_fee || 0;
     if (totalPrice && walletChecked && walletBalance >= payInfo.data.total_fee) {
       displayPrice = 0;
-    } else if (totalPrice && walletChecked && walletBalance < payInfo.data.total_fee) {
+    }
+    if (totalPrice && walletChecked && walletBalance < payInfo.data.total_fee) {
       displayPrice = displayPrice - walletBalance;
     }
     if (displayPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       displayPrice = displayPrice - coupon.data.coupon_value;
-      if (displayPrice < 0) {
-        displayPrice = 0;
-      }
+    }
+    if (displayPrice < 0) {
+      displayPrice = 0;
     }
     return displayPrice.toFixed(2);
   }
@@ -287,6 +309,9 @@ export default class Commit extends Component {
   getDiscountValue() {
     const { coupon, payInfo } = this.props;
     let discount = 0;
+    if (coupon.data.coupon_value >= payInfo.data.total_fee) {
+      return payInfo.data.total_fee;
+    }
     if (coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       discount = coupon.data.coupon_value;
     } else if (coupon.success && (coupon.data.status !== 0 || payInfo.data.total_fee < coupon.data.use_fee)) {
