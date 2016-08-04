@@ -56,6 +56,10 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, {
         addFavorite: { isLoading: false, data: action.payload, error: true, success: false },
       });
+    case courseAction.names.ADD_FAVORITE + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        addFavorite: { isLoading: false, data: {}, error: false, success: false },
+      });
 
     case courseAction.names.UN_FAVORITE + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
@@ -68,6 +72,10 @@ export default (state = initState, action = null) => {
     case courseAction.names.UN_FAVORITE + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         unFavorite: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case courseAction.names.UN_FAVORITE + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        unFavorite: { isLoading: false, data: {}, error: false, success: false },
       });
 
     default:

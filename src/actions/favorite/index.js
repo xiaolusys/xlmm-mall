@@ -10,11 +10,11 @@ export const names = {
   UN_FAVORITE: 'UN_FAVORITE',
 };
 
-export const fetchFavoriteList = (shelfStatus) => {
+export const fetchFavoriteList = (pageIndex, pageSize, shelfStatus) => {
   const action = createAction(names.FETCH_FAVORITE_LIST);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'favorites', { shelf_status: shelfStatus })
+    return axios.get(constants.baseEndpointV1 + 'favorites', { params: { page: pageIndex, page_size: pageSize, shelf_status: shelfStatus } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -35,7 +35,7 @@ export const addFavorite = (modelId) => {
   const action = createAction(names.ADD_FAVORITE);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'favorites', { params: { model_id: modelId } })
+    return axios.post(constants.baseEndpointV1 + 'favorites', qs.stringify({ model_id: modelId }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -45,16 +45,34 @@ export const addFavorite = (modelId) => {
   };
 };
 
-export const unFavorite = (modelId) => {
+export const resetAddFavorite = () => {
+  const action = createAction(names.ADD_FAVORITE);
+  return (dispatch) => {
+    dispatch(action.reset());
+  };
+};
+
+export const unFavorite = (modelId, isFromFavoriteList) => {
   const action = createAction(names.UN_FAVORITE);
+  const fetchFavoritesAction = createAction(names.FETCH_FAVORITE_LIST);
   return (dispatch) => {
     dispatch(action.request());
     return axios.delete(constants.baseEndpointV1 + 'favorites', { params: { model_id: modelId } })
       .then((resp) => {
         dispatch(action.success(resp.data));
+        if (isFromFavoriteList) {
+          dispatch(fetchFavoriteList(1, 20, 1));
+        }
       })
       .catch((resp) => {
         dispatch(action.failure(resp.data));
       });
+  };
+};
+
+export const resetUnFavorite = () => {
+  const action = createAction(names.UN_FAVORITE);
+  return (dispatch) => {
+    dispatch(action.reset());
   };
 };
