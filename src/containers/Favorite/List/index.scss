@@ -22,4 +22,32 @@
       }
     }
   }
+  .product {
+    margin-left: 4px;
+    margin-right: 4px;
+    background-color: #fff;
+    .product-picture {
+      min-height: 160px;
+      background: url("/Product/images/placeholder-vertical.png") center center no-repeat;
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+    .product-info {
+      padding: 8px;
+      margin-bottom: 8px;
+      > p {
+        height: 22px;
+        line-height: 22px;
+        text-align: left;
+        i {
+          color: #FF3840;
+        }
+      }
+    }
+    .font-grey {
+      color: #a0a0a0 !important;
+    }
+  }
 }
