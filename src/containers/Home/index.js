@@ -18,6 +18,7 @@ import { Product } from 'components/Product';
 import { Brand } from 'components/Brand';
 import { Image } from 'components/Image';
 import { ShopBag } from 'components/ShopBag';
+import { Favorite } from 'components/Favorite';
 import { BackTop } from 'components/BackTop';
 import { DownloadAppBanner } from 'components/DownloadAppBanner';
 import * as portalAction from 'actions/home/portal';
@@ -273,6 +274,7 @@ export class Home extends Component {
               })}
             </div>
             {product.isLoading ? <Loader/> : null}
+            <Favorite />
             <ShopBag />
             <BackTop />
             <Footer />
