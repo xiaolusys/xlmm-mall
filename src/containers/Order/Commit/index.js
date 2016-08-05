@@ -176,7 +176,6 @@ export default class Commit extends Component {
     }
     this.togglePayTypePopupActive();
     return;
-    }
   }
 
   onPayTypeClick = (e) => {
