@@ -61,6 +61,8 @@ export default class List extends Component {
 
   componentDidMount() {
     this.props.resetFavorite();
+    this.props.resetUnFavorite();
+    this.props.resetAddFavorite();
     this.addScrollListener();
   }
 
@@ -75,7 +77,6 @@ export default class List extends Component {
       this.setState({ hasMore: count > size });
     }
     if (unFavorite.success && unFavorite.data.code >= 0) {
-      // this.props.fetchFavoriteList(pageIndex + 1, pageSize, (activeTab === 'onSale' ? 1 : 0));
       Toast.show(unFavorite.data.info);
     }
   }
