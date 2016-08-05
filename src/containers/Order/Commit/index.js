@@ -309,6 +309,9 @@ export default class Commit extends Component {
     }
     if (displayPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       displayPrice = displayPrice - coupon.data.coupon_value;
+      if (displayPrice < 0) {
+        displayPrice = 0;
+      }
     }
     if (displayPrice < 0) {
       displayPrice = 0;

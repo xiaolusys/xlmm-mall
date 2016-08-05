@@ -353,7 +353,11 @@ export default class Detail extends Component {
         <div className="product-info bottom-border bg-white">
           <div className="row no-margin">
             <p className="col-xs-8 no-padding no-wrap font-md">{info.name}</p>
+<<<<<<< HEAD
             <div className="col-xs-4 no-padding icon-favorite" onClick={this.onFavoriteBtnClick}>
+=======
+            <div className="col-xs-4 no-padding favorite" onClick={this.onFavoriteBtnClick}>
+>>>>>>> 3646719bfa099b5097c9eba6c7a101cbe3bf9c2a
               <If condition={favoriteStatus}>
                 <i className="col-xs-3 icon-favorite-yes font-lg text-left"></i>
               </If>
