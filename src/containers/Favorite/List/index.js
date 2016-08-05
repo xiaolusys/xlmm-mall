@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as constants from 'constants';
+
 import { Image } from 'components/Image';
 import { Product } from 'components/Product';
 import { Loader } from 'components/Loader';
