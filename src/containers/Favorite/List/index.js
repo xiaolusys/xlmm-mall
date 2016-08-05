@@ -108,6 +108,12 @@ export default class List extends Component {
     e.preventDefault();
   }
 
+  onProductClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    window.location.href = `/mall/product/details/${dataSet.modelid}?modelid=${dataSet.modelid}`;
+    e.preventDefault();
+  }
+
   onScroll = (e) => {
     const { pageSize, pageIndex, activeTab } = this.state;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
@@ -139,7 +145,7 @@ export default class List extends Component {
         return (
           <div key={index} className="col-xs-6 col-sm-3 col-md-2 no-padding">
             <div className="product">
-              <div className="product-picture">
+              <div className="product-picture" data-modelid={item.modelproduct.id} onClick={this.onProductClick}>
                 <LazyLoad throttle={200}>
                   <Image className={''} src={item.modelproduct.head_img} thumbnail={200}/>
                 </LazyLoad>
