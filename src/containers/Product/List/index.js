@@ -92,7 +92,7 @@ export default class List extends Component {
 
   onItemClick = (e) => {
     const dataSet = e.currentTarget.dataset;
-    window.location.href = `/mall/product/details/${dataSet.modelid}?modelid=${dataSet.modelid}`;
+    window.location.href = `/mall/product/details/${dataSet.modelid}`;
   }
 
   onScroll = (e) => {

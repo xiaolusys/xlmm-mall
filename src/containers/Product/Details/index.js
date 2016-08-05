@@ -288,13 +288,13 @@ export default class Detail extends Component {
   }
   onFavoriteBtnClick = (e) => {
     const { favoriteStatus } = this.state;
-    const { modelid } = this.props.location.query;
+    const { id } = this.props.params;
     if (favoriteStatus) {
       this.props.resetAddFavorite();
-      this.props.unFavorite(modelid);
+      this.props.unFavorite(id);
     } else {
       this.props.resetUnFavorite();
-      this.props.addFavorite(modelid);
+      this.props.addFavorite(id);
     }
     this.setState({ favoriteStatus: !favoriteStatus });
     e.preventDefault();
