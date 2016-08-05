@@ -102,8 +102,9 @@ export default class List extends Component {
 
   onFavoriteBtnClick = (e) => {
     const { modelid } = e.currentTarget.dataset;
+    const { activeTab } = this.state;
     this.props.resetFavorite();
-    this.props.unFavorite(Number(modelid), true);
+    this.props.unFavorite(Number(modelid), true, (activeTab === 'onSale' ? 1 : 0));
     e.preventDefault();
   }
 

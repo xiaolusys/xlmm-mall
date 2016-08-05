@@ -52,7 +52,7 @@ export const resetAddFavorite = () => {
   };
 };
 
-export const unFavorite = (modelId, isFromFavoriteList) => {
+export const unFavorite = (modelId, isFromFavoriteList, shelfStatus) => {
   const action = createAction(names.UN_FAVORITE);
   const fetchFavoritesAction = createAction(names.FETCH_FAVORITE_LIST);
   return (dispatch) => {
@@ -61,7 +61,7 @@ export const unFavorite = (modelId, isFromFavoriteList) => {
       .then((resp) => {
         dispatch(action.success(resp.data));
         if (isFromFavoriteList) {
-          dispatch(fetchFavoriteList(1, 20, 1));
+          dispatch(fetchFavoriteList(1, 20, shelfStatus));
         }
       })
       .catch((resp) => {
