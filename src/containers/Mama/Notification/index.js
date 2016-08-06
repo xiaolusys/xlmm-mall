@@ -143,13 +143,12 @@ export default class Notification extends Component {
 
   render() {
     const { activeTab, sticky, favoriteStatus } = this.state;
-    const hasHeader = !utils.detector.isApp();
     const { fetchNotification } = this.props.notification;
     const data = fetchNotification.data.results || [];
     const unReadCount = fetchNotification.data.count || 0;
     return (
       <div>
-        <Header title="通知" leftIcon="icon-angle-left" rightText={`${unReadCount}条未读`} onLeftBtnClick={this.context.router.goBack} hide={!hasHeader} />
+        <Header title="通知" leftIcon="icon-angle-left" rightText={`${unReadCount}条未读`} onLeftBtnClick={this.context.router.goBack} />
           <div className="content favorite-container">
             <If condition={!_.isEmpty(data)}>
               {this.renderNotifications(data)}
