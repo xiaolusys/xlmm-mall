@@ -91,14 +91,14 @@ export default class Notification extends Component {
   onNotificationClick = (e) => {
     const { id, to, read } = e.currentTarget.dataset;
     const appUrl = `com.jimei.xlmm://app/v1/webview?is_native=1&url=${to}`;
-    if (read) {
+    if (read === 'false') {
       this.props.readNotification(id);
     }
-    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined' && utils.detector.isApp()) {
+    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       window.AndroidBridge.jumpToNativeLocation(appUrl);
       return;
     }
-    if (utils.detector.isIOS() && utils.detector.isApp()) {
+    if (utils.detector.isIOS()) {
       plugins.invoke({
         method: 'jumpToNativeLocation',
         data: { target_url: appUrl },
@@ -144,10 +144,12 @@ export default class Notification extends Component {
   render() {
     const { activeTab, sticky, favoriteStatus } = this.state;
     const hasHeader = !utils.detector.isApp();
-    const data = this.props.notification.fetchNotification.data.results || [];
+    const { fetchNotification } = this.props.notification;
+    const data = fetchNotification.data.results || [];
+    const unReadCount = fetchNotification.data.count || 0;
     return (
       <div>
-        <Header title="通知" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={!hasHeader} />
+        <Header title="通知" leftIcon="icon-angle-left" rightText={`${unReadCount}条未读`} onLeftBtnClick={this.context.router.goBack} hide={!hasHeader} />
           <div className="content favorite-container">
             <If condition={!_.isEmpty(data)}>
               {this.renderNotifications(data)}

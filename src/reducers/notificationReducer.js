@@ -21,7 +21,7 @@ export default (state = initState, action = null) => {
   switch (action.type) {
     case notificationAction.names.FETCH_NOTIFICATIONS + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
-        fetchNotification: { isLoading: true, data: {}, error: false, success: false },
+        fetchNotification: { isLoading: true, data: state.fetchNotification.data, error: false, success: false },
       });
     case notificationAction.names.FETCH_NOTIFICATIONS + '_' + actionTypes.SUCCESS:
       const payload = action.payload;
@@ -40,7 +40,7 @@ export default (state = initState, action = null) => {
 
     case notificationAction.names.READ_NOTIFICATION + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
-        readNotification: { isLoading: true, data: {}, error: false, success: false },
+        readNotification: { isLoading: true, data: state.readNotification.data, error: false, success: false },
       });
     case notificationAction.names.READ_NOTIFICATION + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
