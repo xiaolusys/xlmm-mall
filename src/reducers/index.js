@@ -13,6 +13,7 @@ import complaintsReducer from './complaintsReducer';
 import pointLogReducer from './pointLogReducer';
 import courseReducer from './courseReducer';
 import favoriteReducer from './favoriteReducer';
+import notificationReducer from './notificationReducer';
 import entrepreneurshipReducer from './entrepreneurshipReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
@@ -107,6 +108,7 @@ const rootReducer = combineReducers({
   entrepreneurship: entrepreneurshipReducer,
   mamaCourse: courseReducer,
   favorite: favoriteReducer,
+  notification: notificationReducer,
 });
 
 export default rootReducer;
