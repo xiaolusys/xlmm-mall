@@ -116,7 +116,7 @@ export default (
     {activityRoutes}
     <Route path="/mama/university/home" component={MamaUniversityHome} />
     <Route path="/mama/university/course/detail" component={MamaUniversityCourseDetail} />
-    <Route path="/mama/notification" component={MamaNotification} />
+    <Route path="/mama/notification" component={MamaNotification} onEnter={utils.checkAuth} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>
