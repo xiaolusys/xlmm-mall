@@ -57,7 +57,7 @@ export default class List extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize, activeTab } = this.state;
-    this.props.fetchFavoriteList(pageIndex + 1, pageSize, (activeTab === 'onSale' ? 1 : 0));
+    this.props.fetchFavoriteList(pageIndex + 1, pageSize, (activeTab === 'onSale' ? 'on' : 'off'));
   }
 
   componentDidMount() {
@@ -92,11 +92,11 @@ export default class List extends Component {
     this.setState({ activeTab: id });
     if (id === 'onSale') {
       this.props.resetFavorite();
-      this.props.fetchFavoriteList(pageIndex + 1, pageSize, 1);
+      this.props.fetchFavoriteList(1, pageSize, 'on');
     }
     if (id === 'soldOut') {
       this.props.resetFavorite();
-      this.props.fetchFavoriteList(pageIndex + 1, pageSize, 0);
+      this.props.fetchFavoriteList(1, pageSize, 'off');
     }
     e.preventDefault();
   }
@@ -122,7 +122,7 @@ export default class List extends Component {
     const windowHeight = utils.dom.windowHeight();
     const tabsOffsetTop = utils.dom.offsetTop('.favorite-tabs');
     if (scrollTop === documentHeight - windowHeight && !this.props.favorite.fetchfavorite.isLoading && this.state.hasMore) {
-      this.props.fetchFavoriteList(pageIndex + 1, pageSize, (activeTab === 'onSale' ? 1 : 0));
+      this.props.fetchFavoriteList(pageIndex + 1, pageSize, (activeTab === 'onSale' ? 'on' : 'off'));
     }
     if (scrollTop > tabsOffsetTop) {
       this.setState({ sticky: true });
