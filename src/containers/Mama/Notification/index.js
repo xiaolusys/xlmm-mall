@@ -49,7 +49,7 @@ export default class Notification extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    this.props.fetchNotifications(pageIndex + 1, pageSize);
+    this.props.fetchNotifications(pageIndex + 1, pageSize, (new Date()).valueOf());
   }
 
   componentDidMount() {
@@ -84,7 +84,7 @@ export default class Notification extends Component {
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
     if (scrollTop === documentHeight - windowHeight && !this.props.notification.fetchNotification.isLoading && this.state.hasMore) {
-      this.props.fetchNotifications(pageIndex + 1, pageSize);
+      this.props.fetchNotifications(pageIndex + 1, pageSize, (new Date()).valueOf());
     }
   }
 

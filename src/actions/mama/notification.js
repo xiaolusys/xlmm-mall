@@ -8,11 +8,11 @@ export const names = {
   READ_NOTIFICATION: 'READ_NOTIFICATION',
 };
 
-export const fetchNotifications = (pageIndex, pageSize) => {
+export const fetchNotifications = (pageIndex, pageSize, timeStamp) => {
   const action = createAction(names.FETCH_NOTIFICATIONS);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(`${constants.baseEndpoint}mama/message/self_list`, { params: { page: pageIndex, page_size: pageSize } })
+    return axios.get(`${constants.baseEndpoint}mama/message/self_list`, { params: { page: pageIndex, page_size: pageSize, t: timeStamp } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
