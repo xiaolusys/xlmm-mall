@@ -14,6 +14,7 @@ import { Timer } from 'components/Timer';
 import { Product } from 'components/Product';
 import { Image } from 'components/Image';
 import { ShopBag } from 'components/ShopBag';
+import { Favorite } from 'components/Favorite';
 import { BackTop } from 'components/BackTop';
 import * as actionCreators from 'actions/home/product';
 
@@ -128,6 +129,7 @@ export default class List extends Component {
             })}
           </div>
           {product.isLoading ? <Loader/> : null}
+          <Favorite />
           <ShopBag />
           <BackTop />
         </div>

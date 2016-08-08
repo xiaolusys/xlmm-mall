@@ -124,10 +124,16 @@ export class Side extends Component {
               <span>投诉建议</span>
             </Link>
           </li>
-          <li>
+          <li className="bottom-border-black">
             <Link to="/faq">
               <i className="icon-faq icon-gold"></i>
               <span>常见问题</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/favorite/list">
+              <i className="icon-favorite-no icon-gold"></i>
+              <span>我的收藏</span>
             </Link>
           </li>
         </ul>

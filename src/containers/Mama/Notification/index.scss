@@ -1,0 +1,17 @@
+.favorite-container {
+  .notification-item {
+    background-color: #fff;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    img {
+        border-radius: 10px;
+        width: 60px;
+        overflow: hidden;
+        height: 60px;
+      }
+    .time-created {
+      padding-top:4px;
+    }
+  }
+}

@@ -27,6 +27,14 @@
       border: 1px solid #f5b123;
       border-radius: 4px;
     }
+    .icon-favorite {
+      >i {
+        color: #FF3840;
+      }
+      >p {
+        padding-top: 3px;
+      }
+    }
   }
   .on-shelf-countdown {
     padding: 8px;

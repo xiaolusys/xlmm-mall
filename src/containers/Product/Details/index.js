@@ -15,6 +15,7 @@ import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
 import * as shareAction from 'actions/share';
 import * as wechatSignAction from 'actions/wechat/sign';
+import * as favoriteAction from 'actions/favorite/index';
 import * as constants from 'constants';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -22,7 +23,7 @@ import _ from 'underscore';
 
 import './index.scss';
 
-const actionCreators = _.extend(detailsAction, shopBagAction, shareAction, wechatSignAction);
+const actionCreators = _.extend(detailsAction, shopBagAction, shareAction, wechatSignAction, favoriteAction);
 const tabs = {
   details: 0,
   faq: 1,
@@ -37,6 +38,7 @@ const tabs = {
     shopBag: state.shopBag,
     share: state.share,
     wechatSign: state.wechatSign,
+    favorite: state.favorite,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -59,6 +61,10 @@ export default class Detail extends Component {
     resetAddProductToShopBag: React.PropTypes.func,
     fetchShopBagQuantity: React.PropTypes.func,
     fetchShareInfo: React.PropTypes.func,
+    addFavorite: React.PropTypes.func,
+    unFavorite: React.PropTypes.func,
+    resetAddFavorite: React.PropTypes.func,
+    resetUnFavorite: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -83,6 +89,7 @@ export default class Detail extends Component {
     num: 1,
     productId: 0,
     skuId: 0,
+    favoriteStatus: false,
   }
 
   componentWillMount() {
@@ -102,6 +109,7 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { addFavorite, unFavorite } = nextProps.favorite;
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
     if (nextProps.isLoading) {
@@ -132,6 +140,57 @@ export default class Detail extends Component {
           Toast.show(nextProps.shopBag.addProduct.data.detail);
           break;
       }
+    }
+    if (addFavorite.error) {
+      switch (addFavorite.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          return;
+        case 500:
+          Toast.show(addFavorite.data.detail);
+          break;
+        default:
+          Toast.show(addFavorite.data.detail);
+          break;
+      }
+    }
+    if (unFavorite.error) {
+      switch (addFavorite.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          return;
+        case 500:
+          Toast.show(unFavorite.data.detail);
+          break;
+        default:
+          Toast.show(unFavorite.data.detail);
+          break;
+      }
+    }
+    if (addFavorite.success && addFavorite.data.code >= 0) {
+      Toast.show(addFavorite.data.info);
+      if (addFavorite.data.code === 0) {
+        this.setState({ favoriteStatus: true });
+      }
+      return;
+    }
+    if (unFavorite.success && unFavorite.data.code >= 0) {
+      Toast.show(unFavorite.data.info);
+      if (unFavorite.data.code === 0) {
+        this.setState({ favoriteStatus: false });
+      }
+      return;
+    }
+    if (!_.isEmpty(nextProps.details)) {
+      this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
   }
 
@@ -272,6 +331,19 @@ export default class Detail extends Component {
     this.props.addProductToShopBag(productId, skuId, num);
     e.preventDefault();
   }
+  onFavoriteBtnClick = (e) => {
+    const { favoriteStatus } = this.state;
+    const { id } = this.props.params;
+    if (favoriteStatus) {
+      this.props.resetAddFavorite();
+      this.props.unFavorite(id);
+    } else {
+      this.props.resetUnFavorite();
+      this.props.addFavorite(id);
+    }
+    this.setState({ favoriteStatus: !favoriteStatus });
+    e.preventDefault();
+  }
 
   getProduct = (productId) => {
     const skus = this.props.details.sku_info;
@@ -320,11 +392,21 @@ export default class Detail extends Component {
   }
 
   renderProductInfo(info) {
+    const { favoriteStatus } = this.state;
     return (
       <div>
         <div className="product-info bottom-border bg-white">
           <div className="row no-margin">
-            <p className="font-md">{info.name}</p>
+            <p className="col-xs-8 no-padding no-wrap font-md">{info.name}</p>
+            <div className="col-xs-4 no-padding icon-favorite" onClick={this.onFavoriteBtnClick}>
+              <If condition={favoriteStatus}>
+                <i className="col-xs-3 icon-favorite-yes font-lg text-left"></i>
+              </If>
+              <If condition={!favoriteStatus}>
+                <i className="col-xs-3 icon-favorite-no font-lg text-left"></i>
+              </If>
+              <p className="no-margin margin-left-xxs text-center">{favoriteStatus ? '取消收藏' : '收藏'}</p>
+            </div>
           </div>
           <div className="row no-margin">
             <p className="col-xs-6 no-padding">
