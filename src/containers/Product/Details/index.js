@@ -143,9 +143,20 @@ export default class Detail extends Component {
     }
     if (addFavorite.success && addFavorite.data.code >= 0) {
       Toast.show(addFavorite.data.info);
+      if (addFavorite.data.code === 0) {
+        this.setState({ favoriteStatus: true });
+      }
+      return;
     }
     if (unFavorite.success && unFavorite.data.code >= 0) {
       Toast.show(unFavorite.data.info);
+      if (unFavorite.data.code === 0) {
+        this.setState({ favoriteStatus: false });
+      }
+      return;
+    }
+    if (!_.isEmpty(nextProps.details)) {
+      this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
   }
 
