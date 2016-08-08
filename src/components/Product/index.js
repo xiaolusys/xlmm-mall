@@ -53,7 +53,7 @@ export class Product extends Component {
           <div className="product-info">
             <p className="product-name">{product.name}</p>
             <p>
-              <span className="font-lg">{'￥' + product.agent_price}</span>
+              <span className="font-lg">{'￥' + product.lowest_price}</span>
               <span className="font-grey">/</span>
               <span className="font-grey text-line-through">{'￥' + product.std_sale_price}</span>
             </p>
