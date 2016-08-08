@@ -142,20 +142,38 @@ export default class Detail extends Component {
       }
     }
     if (addFavorite.error) {
-      if (utils.detector.isApp()) {
-        plugins.invoke({ method: 'jumpToNativeLogin' });
-        return;
+      switch (addFavorite.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          return;
+        case 500:
+          Toast.show(addFavorite.data.detail);
+          break;
+        default:
+          Toast.show(addFavorite.data.detail);
+          break;
       }
-      this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
-      return;
     }
     if (unFavorite.error) {
-      if (utils.detector.isApp()) {
-        plugins.invoke({ method: 'jumpToNativeLogin' });
-        return;
+      switch (addFavorite.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          return;
+        case 500:
+          Toast.show(unFavorite.data.detail);
+          break;
+        default:
+          Toast.show(unFavorite.data.detail);
+          break;
       }
-      this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
-      return;
     }
     if (addFavorite.success && addFavorite.data.code >= 0) {
       Toast.show(addFavorite.data.info);
