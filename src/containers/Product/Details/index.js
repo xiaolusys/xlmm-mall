@@ -141,6 +141,22 @@ export default class Detail extends Component {
           break;
       }
     }
+    if (addFavorite.error) {
+      if (utils.detector.isApp()) {
+        plugins.invoke({ method: 'jumpToNativeLogin' });
+        return;
+      }
+      this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+      return;
+    }
+    if (unFavorite.error) {
+      if (utils.detector.isApp()) {
+        plugins.invoke({ method: 'jumpToNativeLogin' });
+        return;
+      }
+      this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+      return;
+    }
     if (addFavorite.success && addFavorite.data.code >= 0) {
       Toast.show(addFavorite.data.info);
       if (addFavorite.data.code === 0) {

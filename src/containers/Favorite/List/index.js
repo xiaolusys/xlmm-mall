@@ -181,10 +181,10 @@ export default class List extends Component {
             <div className={'favorite-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
               <ul className="row no-margin">
                 <li id="onSale" className={'col-xs-6' + (activeTab === 'onSale' ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <p className="no-margin">热售商品</p>
+                  <p className="no-margin">热销商品</p>
                 </li>
                 <li id="soldOut" className={'col-xs-6' + (activeTab === 'soldOut' ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <p className="no-margin">下架商品</p>
+                  <p className="no-margin">未上架商品</p>
                 </li>
               </ul>
             </div>

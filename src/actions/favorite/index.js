@@ -19,7 +19,7 @@ export const fetchFavoriteList = (pageIndex, pageSize, shelfStatus) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -40,7 +40,7 @@ export const addFavorite = (modelId) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -65,7 +65,7 @@ export const unFavorite = (modelId, isFromFavoriteList, shelfStatus) => {
         }
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

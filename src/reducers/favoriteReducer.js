@@ -1,6 +1,6 @@
 import * as actionTypes from 'actions/actionTypes';
 import _ from 'underscore';
-import * as courseAction from 'actions/favorite/index';
+import * as favoriteAction from 'actions/favorite/index';
 
 const initState = {
   fetchfavorite: {
@@ -25,55 +25,55 @@ const initState = {
 
 export default (state = initState, action = null) => {
   switch (action.type) {
-    case courseAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.REQUEST:
+    case favoriteAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         fetchfavorite: { isLoading: true, data: state.fetchfavorite.data, error: false, success: false },
       });
-    case courseAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.SUCCESS:
+    case favoriteAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.SUCCESS:
       const payload = action.payload;
       payload.results = _.chain(state.fetchfavorite.data.results || []).union(payload.results || []).unique('id').value();
       return _.extend({}, state, {
         fetchfavorite: { isLoading: false, data: payload, error: false, success: true },
       });
-    case courseAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.FAILURE:
+    case favoriteAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         fetchfavorite: { isLoading: false, data: action.payload, error: true, success: false },
       });
-    case courseAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.RESET:
+    case favoriteAction.names.FETCH_FAVORITE_LIST + '_' + actionTypes.RESET:
       return _.extend({}, state, {
         fetchfavorite: { isLoading: false, data: {}, error: false, success: false },
       });
 
-    case courseAction.names.ADD_FAVORITE + '_' + actionTypes.REQUEST:
+    case favoriteAction.names.ADD_FAVORITE + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         addFavorite: { isLoading: true, data: state.addFavorite.data, error: false, success: false },
       });
-    case courseAction.names.ADD_FAVORITE + '_' + actionTypes.SUCCESS:
+    case favoriteAction.names.ADD_FAVORITE + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         addFavorite: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case courseAction.names.ADD_FAVORITE + '_' + actionTypes.FAILURE:
+    case favoriteAction.names.ADD_FAVORITE + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
-        addFavorite: { isLoading: false, data: action.payload, error: true, success: false },
+        addFavorite: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
       });
-    case courseAction.names.ADD_FAVORITE + '_' + actionTypes.RESET:
+    case favoriteAction.names.ADD_FAVORITE + '_' + actionTypes.RESET:
       return _.extend({}, state, {
         addFavorite: { isLoading: false, data: {}, error: false, success: false },
       });
 
-    case courseAction.names.UN_FAVORITE + '_' + actionTypes.REQUEST:
+    case favoriteAction.names.UN_FAVORITE + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         unFavorite: { isLoading: true, data: state.unFavorite.data, error: false, success: false },
       });
-    case courseAction.names.UN_FAVORITE + '_' + actionTypes.SUCCESS:
+    case favoriteAction.names.UN_FAVORITE + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         unFavorite: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case courseAction.names.UN_FAVORITE + '_' + actionTypes.FAILURE:
+    case favoriteAction.names.UN_FAVORITE + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
-        unFavorite: { isLoading: false, data: action.payload, error: true, success: false },
+        unFavorite: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
       });
-    case courseAction.names.UN_FAVORITE + '_' + actionTypes.RESET:
+    case favoriteAction.names.UN_FAVORITE + '_' + actionTypes.RESET:
       return _.extend({}, state, {
         unFavorite: { isLoading: false, data: {}, error: false, success: false },
       });
