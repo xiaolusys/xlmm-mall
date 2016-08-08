@@ -14,7 +14,7 @@ export const fetchProfile = () => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp));
+        dispatch(action.failure(resp.data));
       });
   };
 };
@@ -28,7 +28,7 @@ export const saveNickname = (id, nickname) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp));
+        dispatch(action.failure(resp.data));
       });
   };
 };
@@ -42,7 +42,7 @@ export const logout = () => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp));
+        dispatch(action.failure(resp.data));
       });
   };
 };
