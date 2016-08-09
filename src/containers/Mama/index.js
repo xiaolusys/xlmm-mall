@@ -5,4 +5,5 @@ export MamaOpeningSucceed from './OpeningSucceed';
 export MamaAgreement from './Agreement';
 export MamaUniversityHome from './University/Home';
 export MamaUniversityCourseDetail from './University/Course';
-export MamaNotification from './Notification';
+export MamaNotificationList from './Notification/List';
+export MamaNotificationDetail from './Notification/Detail';

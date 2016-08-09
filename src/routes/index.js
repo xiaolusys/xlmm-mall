@@ -65,7 +65,8 @@ import {
   MamaAgreement,
   MamaUniversityHome,
   MamaUniversityCourseDetail,
-  MamaNotification,
+  MamaNotificationList,
+  MamaNotificationDetail,
 } from 'containers/Mama';
 
 import {
@@ -116,7 +117,8 @@ export default (
     {activityRoutes}
     <Route path="/mama/university/home" component={MamaUniversityHome} />
     <Route path="/mama/university/course/detail" component={MamaUniversityCourseDetail} />
-    <Route path="/mama/notification" component={MamaNotification} onEnter={utils.checkAuth} />
+    <Route path="/mama/notification/list" component={MamaNotificationList} onEnter={utils.checkAuth} />
+    <Route path="/mama/notification/detail" component={MamaNotificationDetail} onEnter={utils.checkAuth} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>
