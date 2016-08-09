@@ -95,6 +95,12 @@ export default class Winners extends Component {
               </li>
             </ul>
           </div>
+          <If condition={activeTab === 'income'}>
+            <p className="row no-margin margin-top-xs text-center">前50名奖励一罐花果茶</p>
+          </If>
+          <If condition={activeTab === 'team'}>
+            <p className="row no-margin margin-top-xs text-center">前50名奖励一罐花果茶和一张凉席</p>
+          </If>
           <If condition={!_.isEmpty(awardData)}>
             <ul className="winner-list">
               <li key={-1} className="row no-margin bottom-border padding-bottom-xxs padding-top-xxs">
