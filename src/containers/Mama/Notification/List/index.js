@@ -108,7 +108,7 @@ export default class List extends Component {
         return;
       }
     } else {
-      this.context.router.push(`/mama/notification/detail?content=${content}`);
+      this.context.router.push(`/mama/notification/detail?content=${encodeURIComponent(content)}`);
     }
     // window.location.href = `/mama/university/course/detail?link=${encodeURIComponent(to)}`;
     e.preventDefault();
