@@ -11,7 +11,7 @@ export class Image extends Component {
   };
 
   static defaultProps = {
-    quality: 100,
+    quality: 90,
     interlace: 1,
   }
 
