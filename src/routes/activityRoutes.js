@@ -13,6 +13,7 @@ import {
   SummerMatRegistration,
   EntrepreneurshipRank,
   EntrepreneurshipIntroduce,
+  EntrepreneurshipWinners,
 } from 'containers/Activity';
 
 export default (
@@ -27,5 +28,6 @@ export default (
     <Route path="/activity/summer/mat/register" component={SummerMatRegistration} />
     <Route path="/activity/20160729/rank" component={EntrepreneurshipRank} />
     <Route path="/activity/20160729/introduce" component={EntrepreneurshipIntroduce} />
+    <Route path="/activity/20160729/winner/list" component={EntrepreneurshipWinners} />
   </Route>
 );

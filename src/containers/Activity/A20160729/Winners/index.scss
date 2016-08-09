@@ -1,0 +1,48 @@
+.entrepreneurship-winner-container {
+  >.winner-tabs {
+    background-color: #fff;
+    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
+        }
+      }
+    }
+  }
+  .rank {
+    width: 24px;
+    padding-top: 12px;
+  }
+  > div {
+    background-color: #fff;
+  }
+  > .winner-list {
+    margin-top: 16px;
+    >li {
+      background-color: #fff;
+      > p {
+        padding-top: 8px;
+        padding-right: 15px;
+        padding-left: 0;
+      }
+      img {
+        border-radius: 18px;
+        width: 36px;
+        overflow: hidden;
+        height: 36px;
+      }
+      i {
+        font-size: 28px;
+      }
+      .rank-icon {
+        padding-top: 5px;
+        width: 22px;
+        overflow: hidden;
+        height: 30px;
+      }
+    }
+  }
+}

@@ -7,6 +7,9 @@ export const names = {
   FETCH_MAMA_INFO: 'FETCH_MAMA_INFO',
   FETCH_MAMA_RANK: 'FETCH_MAMA_RANK',
   FETCH_TEAM_RANK: 'FETCH_TEAM_RANK',
+  FETCH_INVITE_AWARD: 'FETCH_INVITE_AWARD',
+  FETCH_INCOME_AWARD: 'FETCH_INCOME_AWARD',
+  FETCH_TEAM_AWARD: 'FETCH_TEAM_AWARD',
 };
 
 export const fetchMamaInfo = () => {
@@ -42,6 +45,48 @@ export const fetchTeamRank = () => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'mama/teamrank/activity_carry_total_rank')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchInviteAward = () => {
+  const action = createAction(names.FETCH_INVITE_AWARD);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'mama/award/get_invite_award')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchIncomeAward = () => {
+  const action = createAction(names.FETCH_INCOME_AWARD);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'mama/award/get_income_award')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchTeamAward = () => {
+  const action = createAction(names.FETCH_TEAM_AWARD);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'mama/award/get_team_award')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
