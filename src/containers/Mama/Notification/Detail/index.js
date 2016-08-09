@@ -24,7 +24,7 @@ export default class Detail extends Component {
       <div>
         <Header title="通知详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content notification-detail-container">
-          <p>{content}</p>
+          <p>{decodeURIComponent(content)}</p>
         </div>
       </div>
     );
