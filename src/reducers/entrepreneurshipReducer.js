@@ -22,6 +22,24 @@ const initState = {
     success: false,
     data: [],
   },
+  inviteAward: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
+  incomeAward: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
+  teamAward: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -64,6 +82,46 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, {
         teamRank: { isLoading: false, data: action.payload, error: true, success: false },
       });
+
+    case entrepreneurshipAction.names.FETCH_INVITE_AWARD + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        inviteAward: { isLoading: true, data: {}, error: false, success: false },
+      });
+    case entrepreneurshipAction.names.FETCH_INVITE_AWARD + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        inviteAward: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case entrepreneurshipAction.names.FETCH_INVITE_AWARD + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        inviteAward: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+    case entrepreneurshipAction.names.FETCH_INCOME_AWARD + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        incomeAward: { isLoading: true, data: {}, error: false, success: false },
+      });
+    case entrepreneurshipAction.names.FETCH_INCOME_AWARD + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        incomeAward: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case entrepreneurshipAction.names.FETCH_INCOME_AWARD + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        incomeAward: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+    case entrepreneurshipAction.names.FETCH_TEAM_AWARD + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        teamAward: { isLoading: true, data: {}, error: false, success: false },
+      });
+    case entrepreneurshipAction.names.FETCH_TEAM_AWARD + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        teamAward: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case entrepreneurshipAction.names.FETCH_TEAM_AWARD + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        teamAward: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
     default:
       return state;
   }
