@@ -21,7 +21,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class Notification extends Component {
+export default class List extends Component {
   static propTypes = {
     location: React.PropTypes.any,
     params: React.PropTypes.any,
@@ -89,22 +89,26 @@ export default class Notification extends Component {
   }
 
   onNotificationClick = (e) => {
-    const { id, to, read } = e.currentTarget.dataset;
+    const { id, to, read, content } = e.currentTarget.dataset;
     const appUrl = `com.jimei.xlmm://app/v1/webview?is_native=1&url=${to}`;
-    if (read === 'false') {
-      this.props.readNotification(id);
-    }
-    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      window.AndroidBridge.jumpToNativeLocation(appUrl);
-      return;
-    }
-    if (utils.detector.isIOS()) {
-      plugins.invoke({
-        method: 'jumpToNativeLocation',
-        data: { target_url: appUrl },
-        callback: (resp) => {},
-      });
-      return;
+    if (to) {
+      if (read === 'false') {
+        this.props.readNotification(id);
+      }
+      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+        window.AndroidBridge.jumpToNativeLocation(appUrl);
+        return;
+      }
+      if (utils.detector.isIOS()) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: appUrl },
+          callback: (resp) => {},
+        });
+        return;
+      }
+    } else {
+      this.context.router.push(`/mama/notification/detail?content=${encodeURIComponent(content)}`);
     }
     // window.location.href = `/mama/university/course/detail?link=${encodeURIComponent(to)}`;
     e.preventDefault();
@@ -122,7 +126,7 @@ export default class Notification extends Component {
     return (
       data.map((item, index) => {
         return (
-          <div key={index} className="row no-margin notification-item" data-id={item.id} data-to={item.content_link} data-read={item.read} onClick={this.onNotificationClick}>
+          <div key={index} className="row no-margin notification-item" data-id={item.id} data-to={item.content_link} data-read={item.read} data-content={item.content} onClick={this.onNotificationClick}>
             <div className="col-xs-3" data-modelid={item.id} onClick={this.onProductClick}>
               <LazyLoad throttle={200}>
                 <Image className={''} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/mama/v1/notification.png'} thumbnail={200}/>
