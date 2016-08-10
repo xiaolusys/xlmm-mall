@@ -91,10 +91,10 @@ export default class List extends Component {
   onNotificationClick = (e) => {
     const { id, to, read, content } = e.currentTarget.dataset;
     const appUrl = `com.jimei.xlmm://app/v1/webview?is_native=1&url=${to}`;
+    if (read === 'false') {
+      this.props.readNotification(id);
+    }
     if (to) {
-      if (read === 'false') {
-        this.props.readNotification(id);
-      }
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         window.AndroidBridge.jumpToNativeLocation(appUrl);
         return;
