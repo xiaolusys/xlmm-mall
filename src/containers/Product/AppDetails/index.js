@@ -118,7 +118,7 @@ export default class AppDetail extends Component {
     const { prefixCls, details } = this.props;
     return (
       <div>
-        <Header title="商品详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
+        <Header title="商品详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
         <div className={`content ${prefixCls}`}>
           <If condition={!_.isEmpty(details.detail_content)}>
             <If condition={!_.isEmpty(details.comparison)}>
