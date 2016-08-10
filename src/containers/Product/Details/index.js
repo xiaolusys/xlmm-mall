@@ -590,16 +590,14 @@ export default class Detail extends Component {
     }
     return (
       <div className={`${prefixCls}`}>
-        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} hide={utils.detector.isApp()} />
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
-            <If condition={!utils.detector.isApp()}>
-              {this.renderCarousel(details.detail_content.head_imgs)}
-              <DownloadAppBanner />
-              {this.renderProductInfo(details.detail_content)}
-              {this.renderPromotion()}
-              {this.renderProductProps(details.comparison.attributes)}
-            </If>
+            {this.renderCarousel(details.detail_content.head_imgs)}
+            <DownloadAppBanner />
+            {this.renderProductInfo(details.detail_content)}
+            {this.renderPromotion()}
+            {this.renderProductProps(details.comparison.attributes)}
             <If condition={!_.isEmpty(details.comparison)}>
               {details.comparison.tables.map((spec, tableIndex) => {
                 return self.renderProductSpec(spec.table);
@@ -607,21 +605,19 @@ export default class Detail extends Component {
             </If>
             {this.renderDetails(details.detail_content.content_imgs)}
           </div>
-          <If condition={!utils.detector.isApp()}>
-            <BottomBar className="clearfix" size="medium">
-              <div className="col-xs-2 no-padding shop-cart">
-                <div onClick={this.onShopbagClick}>
-                  <i className="icon-cart icon-yellow"></i>
-                  <If condition={badge > 0}>
-                    <span className="shop-cart-badge no-wrap">{badge}</span>
-                  </If>
-                </div>
+          <BottomBar className="clearfix" size="medium">
+            <div className="col-xs-2 no-padding shop-cart">
+              <div onClick={this.onShopbagClick}>
+                <i className="icon-cart icon-yellow"></i>
+                <If condition={badge > 0}>
+                  <span className="shop-cart-badge no-wrap">{badge}</span>
+                </If>
               </div>
-              <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out || !details.detail_content.is_saleopen}>
-                {this.getAddToShopBagBtnText(details.detail_content)}
-              </button>
-            </BottomBar>
-          </If>
+            </div>
+            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out || !details.detail_content.is_saleopen}>
+              {this.getAddToShopBagBtnText(details.detail_content)}
+            </button>
+          </BottomBar>
           <If condition={activeSkuPopup}>
             <Popup className={`${skuPopupPrefixCls}`} active={activeSkuPopup} onPopupOverlayClick={this.onPopupOverlayClick}>
               {this.renderSkuHeader()}
