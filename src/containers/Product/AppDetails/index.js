@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Header } from 'components/Header';
 import { Image } from 'components/Image';
 import classnames from 'classnames';
 import * as actionCreators from 'actions/product/details';
@@ -100,7 +99,6 @@ export default class AppDetail extends Component {
   }
 
   renderDetails(images) {
-    const { stickyTab, activeTab } = this.state;
     return (
       <div className="bg-white">
         <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">商品展示</div>
@@ -118,7 +116,6 @@ export default class AppDetail extends Component {
     const { prefixCls, details } = this.props;
     return (
       <div>
-        <Header title="商品详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()} />
         <div className={`content ${prefixCls}`}>
           <If condition={!_.isEmpty(details.detail_content)}>
             <If condition={!_.isEmpty(details.comparison)}>
