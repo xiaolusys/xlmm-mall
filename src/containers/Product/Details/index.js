@@ -598,8 +598,8 @@ export default class Detail extends Component {
               <DownloadAppBanner />
               {this.renderProductInfo(details.detail_content)}
               {this.renderPromotion()}
+              {this.renderProductProps(details.comparison.attributes)}
             </If>
-            {this.renderProductProps(details.comparison.attributes)}
             <If condition={!_.isEmpty(details.comparison)}>
               {details.comparison.tables.map((spec, tableIndex) => {
                 return self.renderProductSpec(spec.table);
