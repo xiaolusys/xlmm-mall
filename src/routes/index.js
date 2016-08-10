@@ -42,6 +42,7 @@ import {
 import {
   ProductDetails,
   ProductList,
+  ProductAppDetails,
 } from 'containers/Product';
 
 import {
@@ -99,6 +100,7 @@ export default (
     <Route path="/order/redpacket" component={OrderRedpacket} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
+    <Route path="/product/details/app/:id" component={ProductAppDetails} />
     <Route path="/product/list/:type" component={ProductList} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
