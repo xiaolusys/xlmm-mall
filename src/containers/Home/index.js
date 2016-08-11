@@ -21,14 +21,17 @@ import { ShopBag } from 'components/ShopBag';
 import { Favorite } from 'components/Favorite';
 import { BackTop } from 'components/BackTop';
 import { DownloadAppBanner } from 'components/DownloadAppBanner';
+import { Toast } from 'components/Toast';
 import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
+import * as mamaInfoAction from 'actions/mama/mamaInfo';
+import * as mamaFocusAction from 'actions/mama/focus';
 
 import logo from './images/logo.png';
 
 import './index.scss';
 
-const actionCreators = _.extend(portalAction, productAction);
+const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction);
 const requestAction = {
   yesterday: 'yesterday',
   today: '',
@@ -54,16 +57,23 @@ const tabs = {
       error: state.products.error,
       success: state.products.success,
     },
+    mamaFocus: state.mamaFocus,
+    mamaInfo: state.mamaInfo,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export class Home extends Component {
   static propTypes = {
+    location: React.PropTypes.any,
     children: React.PropTypes.any,
     fetchPortal: React.PropTypes.func,
     fetchProduct: React.PropTypes.func,
+    fetchMamaInfoById: React.PropTypes.func,
+    focusMamaById: React.PropTypes.func,
     portal: React.PropTypes.any,
     product: React.PropTypes.any,
+    mamaFocus: React.PropTypes.any,
+    mamaInfo: React.PropTypes.any,
   };
 
   static contextTypes = {
@@ -86,8 +96,12 @@ export class Home extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
+    const { mamaId } = this.props.location.query;
     this.props.fetchPortal();
     this.props.fetchProduct(requestAction.today, pageIndex + 1, pageSize);
+    if (mamaId) {
+      this.props.fetchMamaInfoById(mamaId);
+    }
   }
 
   componentDidMount() {
@@ -102,6 +116,9 @@ export class Home extends Component {
       size = nextProps.product.data.results.length;
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
+    }
+    if (nextProps.mamaFocus.success) {
+      Toast.show(nextProps.mamaFocus.data.info);
     }
   }
 
@@ -126,6 +143,12 @@ export class Home extends Component {
     });
     const { pageSize, pageIndex } = this.state;
     this.props.fetchProduct(requestAction[e.currentTarget.id], 1, pageSize);
+  }
+
+  onFocusClick = (e) => {
+    const { mamaId } = this.props.location.query;
+    this.props.focusMamaById(mamaId);
+    e.preventDefault();
   }
 
   onScroll = (e) => {
@@ -172,7 +195,7 @@ export class Home extends Component {
   }
 
   render() {
-    const { portal, product, children } = this.props;
+    const { portal, product, children, mamaInfo } = this.props;
     const activities = portal.data.activitys || [];
     const categories = portal.data.categorys || [];
     const posters = portal.data.posters || [];
@@ -191,6 +214,17 @@ export class Home extends Component {
           <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} hide={!hasHeader}/>
           <div className="content content-white-bg">
             <DownloadAppBanner />
+            <If condition={!_.isEmpty(mamaInfo && mamaInfo.data)}>
+              <div className="row no-margin focus-container">
+                <div className="col-xs-2 no-padding">
+                  <img src={`${mamaInfo.data.thumbnail}${constants.image.square}`} />
+                </div>
+                <p className="no-margin margin-top-xs col-xs-6 no-padding no-wrap">{mamaInfo.data.nick}</p>
+                <div className="pull-right">
+                  <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onFocusClick}>+关注</button>
+                </div>
+              </div>
+            </If>
             <div className="home-poster">
               {portal.isLoading ? <Loader/> : null}
               <Carousel>

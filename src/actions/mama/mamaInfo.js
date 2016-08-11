@@ -20,6 +20,19 @@ export const fetchMamaInfo = () => {
   };
 };
 
+export const fetchMamaInfoById = (mamaId) => {
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(`${constants.baseEndpointV1}pmt/xlmm/${mamaId}/base_info`)
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
 export const saveMamaInfo = (params) => {
   return (dispatch) => {
     dispatch(action.request());

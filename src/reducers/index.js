@@ -54,6 +54,7 @@ import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
 import * as mamaActivityAction from 'actions/mama/activity';
+import * as mamaFocusAction from 'actions/mama/focus';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -105,6 +106,7 @@ const rootReducer = combineReducers({
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
   mamaActivity: createReducer(mamaActivityAction.name),
+  mamaFocus: createReducer(mamaFocusAction.name),
   entrepreneurship: entrepreneurshipReducer,
   mamaCourse: courseReducer,
   favorite: favoriteReducer,
