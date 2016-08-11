@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import classnames from 'classnames';
 import * as utils from 'utils';
 import * as constants from 'constants';
+import * as plugins from 'plugins';
 import { If } from 'jsx-control-statements';
 import { Carousel } from 'components/Carousel';
 import { Loader } from 'components/Loader';
@@ -70,6 +71,7 @@ export class Home extends Component {
     fetchProduct: React.PropTypes.func,
     fetchMamaInfoById: React.PropTypes.func,
     focusMamaById: React.PropTypes.func,
+    resetDeleteOrder: React.PropTypes.func,
     portal: React.PropTypes.any,
     product: React.PropTypes.any,
     mamaFocus: React.PropTypes.any,
@@ -120,6 +122,23 @@ export class Home extends Component {
     if (nextProps.mamaFocus.success) {
       Toast.show(nextProps.mamaFocus.data.info);
     }
+    if (nextProps.mamaFocus.error) {
+      switch (nextProps.mamaFocus.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          return;
+        case 500:
+          Toast.show(nextProps.mamaFocus.data.info);
+          break;
+        default:
+          Toast.show(nextProps.mamaFocus.data.info);
+          break;
+      }
+    }
   }
 
   componentDidUpdate() {
@@ -129,6 +148,7 @@ export class Home extends Component {
   componentWillUnmount() {
     this.removeScrollListener();
     this.setState({ pageIndex: 0 });
+    this.props.resetDeleteOrder();
   }
 
   onItemClick = (e) => {

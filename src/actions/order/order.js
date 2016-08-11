@@ -14,7 +14,7 @@ export const names = {
 
 const fetchOrdersAction = createAction(names.FETCH_ORDERS);
 const remindShipmentAction = createAction(names.REMIND_SHIPMENT);
-
+const deleteOrderAction = createAction(names.DELETE_ORDER);
 const chargeOrderaction = createAction(names.CHARGE_ORDER);
 
 export const fetchOrders = (type, pageIndex, pageSize) => {
@@ -53,17 +53,21 @@ export const fetchOrder = (tradeId) => {
 };
 
 export const deleteOrder = (tradeId) => {
-  const action = createAction(names.DELETE_ORDER);
   return (dispatch) => {
-    dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'trades/' + tradeId + '/undisplay')
+    dispatch(deleteOrderAction.request());
+    return axios.delete(constants.baseEndpoint + 'trades/' + tradeId)
       .then((resp) => {
-        dispatch(action.success(resp.data));
-        dispatch(fetchOrders());
+        dispatch(deleteOrderAction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(deleteOrderAction.failure(resp.data));
       });
+  };
+};
+
+export const resetDeleteOrder = () => {
+  return (dispatch) => {
+    dispatch(deleteOrderAction.reset());
   };
 };
 
