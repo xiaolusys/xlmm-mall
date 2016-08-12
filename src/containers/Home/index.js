@@ -27,12 +27,13 @@ import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaFocusAction from 'actions/mama/focus';
+import * as wechatSignAction from 'actions/wechat/sign';
 
 import logo from './images/logo.png';
 
 import './index.scss';
 
-const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction);
+const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction);
 const requestAction = {
   yesterday: 'yesterday',
   today: '',
@@ -60,6 +61,7 @@ const tabs = {
     },
     mamaFocus: state.mamaFocus,
     mamaInfo: state.mamaInfo,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -72,10 +74,12 @@ export class Home extends Component {
     fetchMamaInfoById: React.PropTypes.func,
     focusMamaById: React.PropTypes.func,
     resetFocusMama: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
     portal: React.PropTypes.any,
     product: React.PropTypes.any,
     mamaFocus: React.PropTypes.any,
     mamaInfo: React.PropTypes.any,
+    wechatSign: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -104,6 +108,7 @@ export class Home extends Component {
     if (mmLinkId) {
       this.props.fetchMamaInfoById(mmLinkId);
     }
+    this.props.fetchWechatSign();
   }
 
   componentDidMount() {
@@ -113,6 +118,7 @@ export class Home extends Component {
   componentWillReceiveProps(nextProps) {
     let count = 0;
     let size = 0;
+    utils.wechat.config(nextProps.wechatSign);
     if (nextProps.product.success) {
       count = nextProps.product.data.count;
       size = nextProps.product.data.results.length;
@@ -239,7 +245,7 @@ export class Home extends Component {
                 <div className="col-xs-2 no-padding">
                   <img src={`${mamaInfo.data.thumbnail}${constants.image.square}`} />
                 </div>
-                <p className="no-margin margin-top-xs col-xs-6 no-padding no-wrap">{mamaInfo.data.nick}</p>
+                <p className="no-margin margin-top-xs col-xs-7 no-padding no-wrap">{`${mamaInfo.data.nick}的店铺`}</p>
                 <div className="pull-right">
                   <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onFocusClick}>+关注</button>
                 </div>
