@@ -11,9 +11,7 @@ import { Timeline, TimelineItem } from 'components/Timeline';
 import { Statusline, StatuslineItem } from 'components/Statusline';
 import * as utils from 'utils';
 import * as actionCreators from 'actions/refunds/detail';
-
 import './index.scss';
-
 @connect(
   state => ({
     data: state.refundsDetails.data,
@@ -33,11 +31,9 @@ export default class Detail extends Component {
     error: React.PropTypes.bool,
     fetchRefundsDetail: React.PropTypes.func,
   };
-
   static contextTypes = {
     router: React.PropTypes.object,
   };
-
   constructor(props, context) {
     super(props);
     context.router;
@@ -45,27 +41,22 @@ export default class Detail extends Component {
   state = {
     refundsInfoIsShow: false,
   }
-
   componentWillMount() {
     this.props.fetchRefundsDetail(this.props.params.refundsid);
   }
-
   onRefundsInfoBtnClick = (e) => {
     this.setState({ refundsInfoIsShow: true });
     e.preventDefault();
   }
-
   onExpressBtnClick = (e) => {
     const { refundsid, orderid } = e.currentTarget.dataset;
     this.context.router.push(`/refunds/express/order/${refundsid}/${orderid}/${encodeURIComponent('请选择物流公司')}`);
     e.preventDefault();
   }
-
   toggleRefundsInfoIsShowState = (e) => {
     this.setState({ refundsInfoIsShow: false });
     e.preventDefault();
   }
-
   render() {
     const { isLoading, data } = this.props;
     let refundStatusList = {};
@@ -148,17 +139,8 @@ export default class Detail extends Component {
                 <span className="col-xs-9 no-padding no-wrap font-grey-light">{data.refund_no}</span>
               </p>
             </div>
-            <div className="row no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
-              <If condition={(data.status < 4 && data.has_good_return) || !data.has_good_return}>
-                <div className="col-xs-12">
-                  <p className="no-wrap no-margin">
-                    <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
-                    <span>{data.return_address.split('，')[1]}</span>
-                  </p>
-                  <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
-                </div>
-              </If>
-              <If condition={data.status >= 4 && data.has_good_return}>
+            <If condition={data.status === 4}>
+              <div className="row no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
                 <div className="col-xs-8">
                   <p className="no-wrap no-margin">
                     <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
@@ -166,9 +148,9 @@ export default class Detail extends Component {
                   </p>
                   <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
                 </div>
-                <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>{data.status === 4 ? '填写快递单' : '查看物流'}</button>
-              </If>
-            </div>
+                <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>填写快递单</button>
+              </div>
+            </If>
             <div className="row no-margin bottom-border">
               <div className="col-xs-3">
                 <Image className="login-banner border" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={data.pic_path}/>
