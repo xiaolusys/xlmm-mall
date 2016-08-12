@@ -105,7 +105,7 @@ export default class Detail extends Component {
       Toast.show(deleteOrder.data.info);
     }
     if (deleteOrder.success && deleteOrder.data.code === 0) {
-      this.context.router.push(`/ol.html?type=${this.props.location.query.type}`);
+      this.context.router.push(`/ol.html?type=1`);
     }
   }
 
