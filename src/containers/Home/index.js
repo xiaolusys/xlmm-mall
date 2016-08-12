@@ -98,11 +98,11 @@ export class Home extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    const { mm_linkid } = this.props.location.query;
+    const mmLinkId = this.props.location.query.mm_linkid;
     this.props.fetchPortal();
     this.props.fetchProduct(requestAction.today, pageIndex + 1, pageSize);
-    if (mm_linkid) {
-      this.props.fetchMamaInfoById(mm_linkid);
+    if (mmLinkId) {
+      this.props.fetchMamaInfoById(mmLinkId);
     }
   }
 
@@ -166,8 +166,8 @@ export class Home extends Component {
   }
 
   onFocusClick = (e) => {
-    const { mm_linkid } = this.props.location.query;
-    this.props.focusMamaById(mm_linkid);
+    const mmLinkId = this.props.location.query.mm_linkid;
+    this.props.focusMamaById(mmLinkId);
     e.preventDefault();
   }
 

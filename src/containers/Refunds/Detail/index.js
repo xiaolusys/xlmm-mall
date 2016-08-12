@@ -66,7 +66,7 @@ export default class Detail extends Component {
     this.setState({ refundsInfoIsShow: false });
     e.preventDefault();
   }
-  
+
   render() {
     const { isLoading, data } = this.props;
     let refundStatusList = {};
