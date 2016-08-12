@@ -71,7 +71,7 @@ export class Home extends Component {
     fetchProduct: React.PropTypes.func,
     fetchMamaInfoById: React.PropTypes.func,
     focusMamaById: React.PropTypes.func,
-    resetDeleteOrder: React.PropTypes.func,
+    resetFocusMama: React.PropTypes.func,
     portal: React.PropTypes.any,
     product: React.PropTypes.any,
     mamaFocus: React.PropTypes.any,
@@ -148,7 +148,7 @@ export class Home extends Component {
   componentWillUnmount() {
     this.removeScrollListener();
     this.setState({ pageIndex: 0 });
-    this.props.resetDeleteOrder();
+    this.props.resetFocusMama();
   }
 
   onItemClick = (e) => {

@@ -52,7 +52,6 @@ export default class Detail extends Component {
     order: React.PropTypes.any,
     fetchOrder: React.PropTypes.func,
     deleteOrder: React.PropTypes.func,
-    resetDeleteOrder: React.PropTypes.func,
     chargeOrder: React.PropTypes.func,
     confirmReceivedOrder: React.PropTypes.func,
     remindShipment: React.PropTypes.func,

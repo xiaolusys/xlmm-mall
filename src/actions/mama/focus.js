@@ -19,3 +19,9 @@ export const focusMamaById = (mamaId) => {
       });
   };
 };
+
+export const resetFocusMama = () => {
+  return (dispatch) => {
+    dispatch(action.reset());
+  };
+};
