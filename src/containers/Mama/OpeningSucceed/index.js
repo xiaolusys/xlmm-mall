@@ -12,7 +12,7 @@ import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as wechatSignAction from 'actions/wechat/sign';
 
 const actionCreators = _.extend(inviteSharingAction, wechatSignAction);
-const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-succeed.png';
+const banner = 'http://img.xiaolumeimei.com/top101470982118078succeed.jpg';
 
 @connect(
   state => ({
@@ -91,7 +91,7 @@ export default class Succeed extends Component {
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop">
         <Image style={{ width: '100%' }} src={banner} />
         <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友一元开店</button>
+          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
         </div>
         <WechatPopup active={this.state.sharePopupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>

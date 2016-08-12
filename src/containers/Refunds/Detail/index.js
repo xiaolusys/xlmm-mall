@@ -147,12 +147,9 @@ export default class Detail extends Component {
           </If>
           <div className="refunds-details-list">
             <div className="row no-margin bottom-border">
-              <p className="col-xs-8 no-margin no-padding text-left">
-                <span className="col-xs-5 text-left">退款编号</span>
-                <span className="col-xs-7 no-padding no-wrap font-grey-light">{data.refund_no}</span>
-              </p>
-              <p className="col-xs-4 no-margin text-right font-orange">
-                <span>{data.status_display}</span>
+              <p className="col-xs-12 no-margin text-left">
+                <span className="col-xs-3 no-padding text-left">退款编号</span>
+                <span className="col-xs-9 no-padding no-wrap font-grey-light">{data.refund_no}</span>
               </p>
             </div>
             <If condition={data.status === 4}>
@@ -176,7 +173,7 @@ export default class Detail extends Component {
                   <span className="col-xs-12 no-padding no-wrap">{data.title}</span>
                 </p>
                 <p className="row no-margin font-grey-light">
-                  <span className="col-xs-4 no-padding">尺码: {data.sku_name}</span>
+                  <span className="col-xs-8 no-padding no-wrap">尺码: {data.sku_name}</span>
                   <span className="padding-left-xs">{'¥' + data.total_fee + ' x' + data.refund_num}</span>
                 </p>
               </div>
