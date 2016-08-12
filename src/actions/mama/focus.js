@@ -3,9 +3,9 @@ import axios from 'axios';
 import createAction from '../createAction';
 import qs from 'qs';
 
-export const name = 'FOCUS_MAMA';
+export const names = { FOCUS_MAMA: 'FOCUS_MAMA' };
 
-const action = createAction(name);
+const action = createAction(names.FOCUS_MAMA);
 
 export const focusMamaById = (mamaId) => {
   return (dispatch) => {

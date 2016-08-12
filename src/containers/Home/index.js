@@ -131,17 +131,13 @@ export class Home extends Component {
     if (nextProps.mamaFocus.error) {
       switch (nextProps.mamaFocus.status) {
         case 403:
-          if (utils.detector.isApp()) {
-            plugins.invoke({ method: 'jumpToNativeLogin' });
-            return;
-          }
           this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
           return;
         case 500:
-          Toast.show(nextProps.mamaFocus.data.info);
+          Toast.show(nextProps.mamaFocus.data.detail);
           break;
         default:
-          Toast.show(nextProps.mamaFocus.data.info);
+          Toast.show(nextProps.mamaFocus.data.detail);
           break;
       }
     }
