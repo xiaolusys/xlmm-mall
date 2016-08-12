@@ -101,6 +101,12 @@ export default class Detail extends Component {
       addressId = fetchOrder.data && fetchOrder.data.user_adress.id;
       this.setState({ logisticsCompanyName: logisticsCompany, addressid: addressId });
     }
+    if (deleteOrder.success) {
+      Toast.show(deleteOrder.data.info);
+    }
+    if (deleteOrder.success && deleteOrder.data.code === 0) {
+      this.context.router.push(`/ol.html?type=1`);
+    }
   }
 
   onLogisticsCompanyChange = (e) => {
@@ -154,6 +160,9 @@ export default class Detail extends Component {
         break;
       case constants.tradeOperations['2'].action:
         this.props.remindShipment(dataSet.tradeid);
+        break;
+      case 'cancel':
+        this.props.deleteOrder(dataSet.tradeid);
         break;
       default:
         break;
@@ -404,6 +413,9 @@ export default class Detail extends Component {
                 </div>
               </If>
               <div className="pull-right">
+                <If condition={trade.status === 1}>
+                  <button className="button button-md button-light margin-right-xxs" type="button" data-action="cancel" data-tradeid={trade.id} onClick={this.onTradesBtnClick}>取消订单</button>
+                </If>
                 <button className="button button-md button-energized" type="button" data-action={tradeOperation.action} data-tradeid={trade.id} onClick={this.onTradesBtnClick}>{tradeOperation.tag}</button>
               </div>
             </BottomBar>
