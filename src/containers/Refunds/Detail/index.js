@@ -42,6 +42,7 @@ export default class Detail extends Component {
     super(props);
     context.router;
   }
+
   state = {
     refundsInfoIsShow: false,
   }
@@ -65,11 +66,15 @@ export default class Detail extends Component {
     this.setState({ refundsInfoIsShow: false });
     e.preventDefault();
   }
-
+  
   render() {
     const { isLoading, data } = this.props;
     let refundStatusList = {};
+    let statusList = [];
     let statuslineWidth = '';
+    if (!_.isEmpty(data.status_shaft)) {
+      statusList = data.status_shaft.reverse();
+    }
     if (data && data.has_good_return) {
       refundStatusList = {
         3: { display: '申请退货' },
@@ -143,22 +148,16 @@ export default class Detail extends Component {
           </If>
           <div className="refunds-details-list">
             <div className="row no-margin bottom-border">
-              <p className="col-xs-12 no-margin text-left">
-                <span className="col-xs-3 no-padding text-left">退款编号</span>
-                <span className="col-xs-9 no-padding no-wrap font-grey-light">{data.refund_no}</span>
+              <p className="col-xs-8 no-margin no-padding text-left">
+                <span className="col-xs-5 text-left">退款编号</span>
+                <span className="col-xs-7 no-padding no-wrap font-grey-light">{data.refund_no}</span>
+              </p>
+              <p className="col-xs-4 no-margin text-right font-orange">
+                <span>{data.status_display}</span>
               </p>
             </div>
-            <div className="row no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
-              <If condition={(data.status < 4 && data.has_good_return) || !data.has_good_return}>
-                <div className="col-xs-12">
-                  <p className="no-wrap no-margin">
-                    <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
-                    <span>{data.return_address.split('，')[1]}</span>
-                  </p>
-                  <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
-                </div>
-              </If>
-              <If condition={data.status >= 4 && data.has_good_return}>
+            <If condition={data.status === 4}>
+              <div className="row no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
                 <div className="col-xs-8">
                   <p className="no-wrap no-margin">
                     <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
@@ -166,9 +165,9 @@ export default class Detail extends Component {
                   </p>
                   <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
                 </div>
-                <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>{data.status === 4 ? '填写快递单' : '查看物流'}</button>
-              </If>
-            </div>
+                <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>填写快递单</button>
+              </div>
+            </If>
             <div className="row no-margin bottom-border">
               <div className="col-xs-3">
                 <Image className="login-banner border" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={data.pic_path}/>
@@ -178,7 +177,7 @@ export default class Detail extends Component {
                   <span className="col-xs-12 no-padding no-wrap">{data.title}</span>
                 </p>
                 <p className="row no-margin font-grey-light">
-                  <span className="col-xs-8 no-padding no-wrap">尺码: {data.sku_name}</span>
+                  <span className="col-xs-4 no-padding">尺码: {data.sku_name}</span>
                   <span className="padding-left-xs">{'¥' + data.total_fee + ' x' + data.refund_num}</span>
                 </p>
               </div>
@@ -202,6 +201,20 @@ export default class Detail extends Component {
                     <Image className="login-banner border margin-left-xs margin-bottom-xxs" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={item}/>
                   );
                 })}
+              </div>
+            </If>
+            <If condition={!_.isEmpty(statusList)}>
+              <div className="row no-margin margin-top-xs padding-left-xs bottom-border">
+              <Timeline className="logistics-info margin-left-xxs">
+                {statusList.map((item, index) => {
+                  return (
+                    <TimelineItem key={index} headColor="grey" tailColor="grey">
+                      <p className="font-grey">{item.time.replace('T', ' ')}</p>
+                      <p className="font-sm">{item.status_display}</p>
+                    </TimelineItem>
+                  );
+                })}
+                </Timeline>
               </div>
             </If>
           </div>
