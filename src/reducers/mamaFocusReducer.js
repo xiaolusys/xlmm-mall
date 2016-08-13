@@ -42,7 +42,6 @@ export default (state = initState, action = null) => {
         error: false,
         success: false,
       });
-
     default:
       return state;
   }
