@@ -70,11 +70,7 @@ export default class Detail extends Component {
   render() {
     const { isLoading, data } = this.props;
     let refundStatusList = {};
-    let statusList = [];
     let statuslineWidth = '';
-    if (!_.isEmpty(data.status_shaft)) {
-      statusList = data.status_shaft.reverse();
-    }
     if (data && data.has_good_return) {
       refundStatusList = {
         3: { display: '申请退货' },
@@ -148,12 +144,9 @@ export default class Detail extends Component {
           </If>
           <div className="refunds-details-list">
             <div className="row no-margin bottom-border">
-              <p className="col-xs-8 no-margin no-padding text-left">
-                <span className="col-xs-5 text-left">退款编号</span>
-                <span className="col-xs-7 no-padding no-wrap font-grey-light">{data.refund_no}</span>
-              </p>
-              <p className="col-xs-4 no-margin text-right font-orange">
-                <span>{data.status_display}</span>
+              <p className="col-xs-12 no-margin text-left">
+                <span className="col-xs-3 no-padding text-left">退款编号</span>
+                <span className="col-xs-9 no-padding no-wrap font-grey-light">{data.refund_no}</span>
               </p>
             </div>
             <If condition={data.status === 4}>
@@ -177,7 +170,7 @@ export default class Detail extends Component {
                   <span className="col-xs-12 no-padding no-wrap">{data.title}</span>
                 </p>
                 <p className="row no-margin font-grey-light">
-                  <span className="col-xs-4 no-padding">尺码: {data.sku_name}</span>
+                  <span className="col-xs-8 no-padding no-wrap">尺码: {data.sku_name}</span>
                   <span className="padding-left-xs">{'¥' + data.total_fee + ' x' + data.refund_num}</span>
                 </p>
               </div>
@@ -201,20 +194,6 @@ export default class Detail extends Component {
                     <Image className="login-banner border margin-left-xs margin-bottom-xxs" thumbnail={60} crop={60 + 'x' + 60} quality={100} src={item}/>
                   );
                 })}
-              </div>
-            </If>
-            <If condition={!_.isEmpty(statusList)}>
-              <div className="row no-margin margin-top-xs padding-left-xs bottom-border">
-              <Timeline className="logistics-info margin-left-xxs">
-                {statusList.map((item, index) => {
-                  return (
-                    <TimelineItem key={index} headColor="grey" tailColor="grey">
-                      <p className="font-grey">{item.time.replace('T', ' ')}</p>
-                      <p className="font-sm">{item.status_display}</p>
-                    </TimelineItem>
-                  );
-                })}
-                </Timeline>
               </div>
             </If>
           </div>
