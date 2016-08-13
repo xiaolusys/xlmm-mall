@@ -118,6 +118,7 @@ export class Home extends Component {
   componentWillReceiveProps(nextProps) {
     let count = 0;
     let size = 0;
+    const mmLinkId = this.props.location.query.mm_linkid;
     utils.wechat.config(nextProps.wechatSign);
     if (nextProps.product.success) {
       count = nextProps.product.data.count;
@@ -131,7 +132,7 @@ export class Home extends Component {
     if (nextProps.mamaFocus.error) {
       switch (nextProps.mamaFocus.status) {
         case 403:
-          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}?mm_linkid=${mmLinkId}`);
           return;
         case 500:
           Toast.show(nextProps.mamaFocus.data.detail);

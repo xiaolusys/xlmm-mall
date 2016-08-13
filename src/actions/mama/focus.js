@@ -15,7 +15,7 @@ export const focusMamaById = (mamaId) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp));
+        dispatch(action.failure(resp.response));
       });
   };
 };
