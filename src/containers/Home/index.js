@@ -27,12 +27,13 @@ import * as portalAction from 'actions/home/portal';
 import * as productAction from 'actions/home/product';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaFocusAction from 'actions/mama/focus';
+import * as wechatSignAction from 'actions/wechat/sign';
 
 import logo from './images/logo.png';
 
 import './index.scss';
 
-const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction);
+const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction);
 const requestAction = {
   yesterday: 'yesterday',
   today: '',
@@ -60,6 +61,7 @@ const tabs = {
     },
     mamaFocus: state.mamaFocus,
     mamaInfo: state.mamaInfo,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -72,10 +74,12 @@ export class Home extends Component {
     fetchMamaInfoById: React.PropTypes.func,
     focusMamaById: React.PropTypes.func,
     resetFocusMama: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
     portal: React.PropTypes.any,
     product: React.PropTypes.any,
     mamaFocus: React.PropTypes.any,
     mamaInfo: React.PropTypes.any,
+    wechatSign: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -98,12 +102,13 @@ export class Home extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    const { mamaId } = this.props.location.query;
+    const mmLinkId = this.props.location.query.mm_linkid;
     this.props.fetchPortal();
     this.props.fetchProduct(requestAction.today, pageIndex + 1, pageSize);
-    if (mamaId) {
-      this.props.fetchMamaInfoById(mamaId);
+    if (mmLinkId) {
+      this.props.fetchMamaInfoById(mmLinkId);
     }
+    this.props.fetchWechatSign();
   }
 
   componentDidMount() {
@@ -113,6 +118,8 @@ export class Home extends Component {
   componentWillReceiveProps(nextProps) {
     let count = 0;
     let size = 0;
+    const mmLinkId = this.props.location.query.mm_linkid;
+    utils.wechat.config(nextProps.wechatSign);
     if (nextProps.product.success) {
       count = nextProps.product.data.count;
       size = nextProps.product.data.results.length;
@@ -125,17 +132,13 @@ export class Home extends Component {
     if (nextProps.mamaFocus.error) {
       switch (nextProps.mamaFocus.status) {
         case 403:
-          if (utils.detector.isApp()) {
-            plugins.invoke({ method: 'jumpToNativeLogin' });
-            return;
-          }
-          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}?mm_linkid=${mmLinkId}`);
           return;
         case 500:
-          Toast.show(nextProps.mamaFocus.data.info);
+          Toast.show(nextProps.mamaFocus.data.detail);
           break;
         default:
-          Toast.show(nextProps.mamaFocus.data.info);
+          Toast.show(nextProps.mamaFocus.data.detail);
           break;
       }
     }
@@ -166,8 +169,8 @@ export class Home extends Component {
   }
 
   onFocusClick = (e) => {
-    const { mamaId } = this.props.location.query;
-    this.props.focusMamaById(mamaId);
+    const mmLinkId = this.props.location.query.mm_linkid;
+    this.props.focusMamaById(mmLinkId);
     e.preventDefault();
   }
 
@@ -239,7 +242,7 @@ export class Home extends Component {
                 <div className="col-xs-2 no-padding">
                   <img src={`${mamaInfo.data.thumbnail}${constants.image.square}`} />
                 </div>
-                <p className="no-margin margin-top-xs col-xs-6 no-padding no-wrap">{mamaInfo.data.nick}</p>
+                <p className="no-margin margin-top-xs col-xs-7 no-padding no-wrap">{`${mamaInfo.data.nick}的店铺`}</p>
                 <div className="pull-right">
                   <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onFocusClick}>+关注</button>
                 </div>

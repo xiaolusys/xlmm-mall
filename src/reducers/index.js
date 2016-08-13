@@ -15,6 +15,7 @@ import courseReducer from './courseReducer';
 import favoriteReducer from './favoriteReducer';
 import notificationReducer from './notificationReducer';
 import entrepreneurshipReducer from './entrepreneurshipReducer';
+import mamaFocusReducer from './mamaFocusReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -106,7 +107,7 @@ const rootReducer = combineReducers({
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
   mamaActivity: createReducer(mamaActivityAction.name),
-  mamaFocus: createReducer(mamaFocusAction.name),
+  mamaFocus: mamaFocusReducer,
   entrepreneurship: entrepreneurshipReducer,
   mamaCourse: courseReducer,
   favorite: favoriteReducer,
