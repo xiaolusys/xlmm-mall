@@ -56,7 +56,7 @@ export default class Order extends Component {
     const { type, packageId, companyName } = this.props.location.query;
     const { refundsid } = this.props.params;
     if (_.isEmpty(this.props.refundsDetails.data)) {
-      this.props.fetchRefundsDetail(this.props.params.refundsid);
+      this.props.fetchRefundsDetail(refundsid);
     }
     if (refundsid && packageId && companyName) {
       this.props.fetchRefundsLogistics(refundsid, packageId, companyName);
@@ -68,7 +68,7 @@ export default class Order extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { express, refundsDetails, refundsLogistics } = nextProps;
+    const { express } = nextProps;
     if (express.success) {
       Toast.show(express.data.info);
     }
