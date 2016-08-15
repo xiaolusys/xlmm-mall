@@ -126,17 +126,18 @@ export default class TopTen extends Component {
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
-      if (appVersion < 20160528 || appVersion >= 20160815) {
+      console.log(appVersion);
+      // if (appVersion < 20160528 || appVersion >= 20160815) {
         window.AndroidBridge.jumpToNativeLocation(appUrl);
         return;
-      }
-      if (utils.detector.isApp()) {
-        plugins.invoke({
-          method: 'jumpToNativeLocation',
-          data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substr(0, window.location.href.indexOf('/mall/')) + '/mall/product/details/' + modelId },
-        });
-        return;
-      }
+      // }
+      // if (utils.detector.isApp()) {
+      //   plugins.invoke({
+      //     method: 'jumpToNativeLocation',
+      //     data: { target_url: 'com.jimei.xlmm://app/v1/products?product_id=' + window.location.href.substr(0, window.location.href.indexOf('/mall/')) + '/mall/product/details/' + modelId },
+      //   });
+      //   return;
+      // }
     }
     if (utils.detector.isIOS() && utils.detector.isApp()) {
       plugins.invoke({
