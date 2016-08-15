@@ -128,7 +128,7 @@ export default class TopTen extends Component {
       const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
       console.log(appVersion);
       // if (appVersion < 20160528 || appVersion >= 20160815) {
-        window.AndroidBridge.jumpToNativeLocation(appUrl);
+        window.AndroidBridge.test(appUrl);
         return;
       // }
       // if (utils.detector.isApp()) {
