@@ -57,14 +57,88 @@ export default class Detail extends Component {
   }
 
   onExpressBtnClick = (e) => {
-    const { refundsid, orderid } = e.currentTarget.dataset;
-    this.context.router.push(`/refunds/express/order/${refundsid}/${orderid}/${encodeURIComponent('请选择物流公司')}`);
+    const data = this.props.data;
+    const { refundsid, orderid, type } = e.currentTarget.dataset;
+    this.context.router.push(`/refunds/express/order/${refundsid}/${orderid}/${encodeURIComponent('请选择物流公司')}?packageId=${data.sid}&companyName=${data.company_name}&type=${type}`);
     e.preventDefault();
   }
 
   toggleRefundsInfoIsShowState = (e) => {
     this.setState({ refundsInfoIsShow: false });
     e.preventDefault();
+  }
+
+  renderRefundsList = (refundStatusList, statuslineWidth, data) => {
+    return (
+      <div className="refund-status-list">
+        <table className="margin-bottom-xxs">
+          <thead><tr>
+            {_.map(refundStatusList, function(item, key) {
+              const index = Number(key);
+              return (
+                <div>
+                  <If condition={index === data.status}>
+                    <th key={index} className="font-xxs font-weight-200 font-orange text-center">
+                      {item.display}
+                    </th>
+                  </If>
+                  <If condition={index !== data.status}>
+                    <th key={index} className="font-xxs font-weight-200 text-center">
+                      {item.display}
+                    </th>
+                  </If>
+                </div>
+              );
+            })}
+          </tr></thead>
+        </table>
+        <Statusline width={statuslineWidth}>
+          {_.map(refundStatusList, function(item, key) {
+            const index = Number(key);
+            return (
+              <div className="inline-block">
+                <If condition={index === data.status}>
+                  <StatuslineItem key={index} headColor="yellow" tailColor="yellow">
+                    <p/>
+                  </StatuslineItem>
+                </If>
+                <If condition={index !== data.status}>
+                  <StatuslineItem key={index} headColor="grey" tailColor="grey">
+                    <p/>
+                  </StatuslineItem>
+                </If>
+              </div>
+            );
+          })}
+        </Statusline>
+      </div>
+    );
+  }
+
+  renderRefundsAddress = (data) => {
+    return (
+      <div className="row no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
+        <If condition={(data.has_good_return && data.status < 4) || !data.has_good_return}>
+          <div className="col-xs-12">
+            <p className="no-wrap no-margin">
+              <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
+              <span>{data.return_address.split('，')[1]}</span>
+            </p>
+            <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
+          </div>
+        </If>
+        <If condition={data.has_good_return && data.status >= 4}>
+          <div className="col-xs-8">
+            <p className="no-wrap no-margin">
+              <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
+              <span>{data.return_address.split('，')[1]}</span>
+            </p>
+            <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
+          </div>
+          <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} data-type={data.status === 4 ? 'fill' : 'find'} onClick={this.onExpressBtnClick}>{data.status === 4 ? '填写快递单' : '查看物流'}</button>
+        </If>
+      </div>
+    );
   }
 
   render() {
@@ -89,77 +163,25 @@ export default class Detail extends Component {
       };
       statuslineWidth = 320 + 'px';
     }
-    if (isLoading) {
-      utils.ui.loadingSpinner.show();
-    } else {
-      utils.ui.loadingSpinner.hide();
-    }
     return (
       <div className="refunds-details">
         <Header title="退货详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
           <If condition={data.status}>
-            <div className="refund-status-list">
-              <table className="margin-bottom-xxs">
-                <thead><tr>
-                  {_.map(refundStatusList, function(item, key) {
-                    const index = Number(key);
-                    return (
-                      <div>
-                        <If condition={index === data.status}>
-                          <th key={index} className="font-xxs font-weight-200 font-orange text-center">
-                            {item.display}
-                          </th>
-                        </If>
-                        <If condition={index !== data.status}>
-                          <th key={index} className="font-xxs font-weight-200 text-center">
-                            {item.display}
-                          </th>
-                        </If>
-                      </div>
-                    );
-                  })}
-                </tr></thead>
-              </table>
-              <Statusline width={statuslineWidth}>
-                {_.map(refundStatusList, function(item, key) {
-                  const index = Number(key);
-                  return (
-                    <div className="inline-block">
-                      <If condition={index === data.status}>
-                        <StatuslineItem key={index} headColor="yellow" tailColor="yellow">
-                          <p/>
-                        </StatuslineItem>
-                      </If>
-                      <If condition={index !== data.status}>
-                        <StatuslineItem key={index} headColor="grey" tailColor="grey">
-                          <p/>
-                        </StatuslineItem>
-                      </If>
-                    </div>
-                  );
-                })}
-              </Statusline>
-            </div>
+            {this.renderRefundsList(refundStatusList, statuslineWidth, data)}
           </If>
           <div className="refunds-details-list">
             <div className="row no-margin bottom-border">
-              <p className="col-xs-12 no-margin text-left">
-                <span className="col-xs-3 no-padding text-left">退款编号</span>
-                <span className="col-xs-9 no-padding no-wrap font-grey-light">{data.refund_no}</span>
+              <p className="col-xs-8 no-margin no-padding text-left">
+                <span className="col-xs-5 text-left">退款编号</span>
+                <span className="col-xs-7 no-padding no-wrap font-grey-light">{data.refund_no}</span>
+              </p>
+              <p className="col-xs-4 no-margin text-right font-orange">
+                <span>{data.status_display}</span>
               </p>
             </div>
-            <If condition={data.status === 4}>
-              <div className="row no-margin margin-bottom-xs padding-right-xs padding-top-xxs padding-bottom-xxs bottom-border">
-                <div className="col-xs-8">
-                  <p className="no-wrap no-margin">
-                    <span className="margin-right-xxs">{data.return_address.split('，')[2]}</span>
-                    <span>{data.return_address.split('，')[1]}</span>
-                  </p>
-                  <p className="no-wrap no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
-                </div>
-                <button className="margin-top-xxs button button-light button-sm pull-right" type="button" data-orderid={data.order_id} data-refundsid={this.props.params.refundsid} onClick={this.onExpressBtnClick}>填写快递单</button>
-              </div>
+            <If condition={data.status}>
+              {this.renderRefundsAddress(data)}
             </If>
             <div className="row no-margin bottom-border">
               <div className="col-xs-3">
