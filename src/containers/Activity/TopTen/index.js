@@ -126,7 +126,7 @@ export default class TopTen extends Component {
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
-      if (appVersion < 20160528) {
+      if (appVersion < 20160528 || appVersion >= 20160815) {
         window.AndroidBridge.jumpToNativeLocation(appUrl);
         return;
       }
@@ -145,7 +145,7 @@ export default class TopTen extends Component {
       });
       return;
     }
-    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+    if (utils.detector.isIOS() && utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
