@@ -125,7 +125,7 @@ export default class TopTen extends Component {
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
+      const appVersion = Number(window.AndroidBridge.appVersion || window.AndroidBridge.appVersion()) || 0;
       if (appVersion < 20160528 || appVersion >= 20160815) {
         window.AndroidBridge.jumpToNativeLocation(appUrl);
         return;
