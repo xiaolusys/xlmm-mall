@@ -131,7 +131,7 @@ export default class Rank extends Component {
             {rankData.map((item, index) => {
               return (
                 <li key={index} className="row no-margin bottom-border padding-bottom-xxs padding-top-xxs">
-                  <div className="col-xs-9 no-padding">
+                  <div className="col-xs-8 no-padding">
                     <If condition={item.rank === 1}>
                       <div className="col-xs-2 padding-left-xxs">
                         <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-1.png'} />
@@ -160,7 +160,7 @@ export default class Rank extends Component {
                     </div>
                     <p className="no-margin padding-top-xxs no-wrap text-left">{item.mama_nick}</p>
                   </div>
-                  <p className="col-xs-3 no-margin no-wrap text-right font-orange">{Number(item.duration_total_display).toFixed(2)}</p>
+                  <p className="col-xs-4 no-margin no-wrap text-right font-orange">{Number(item.duration_total_display).toFixed(2)}</p>
                 </li>
               );
             })}
