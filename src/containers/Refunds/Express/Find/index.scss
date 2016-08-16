@@ -1,0 +1,28 @@
+.find-logistics-info {
+  .express-item {
+    padding-bottom: 1px;
+    background-color: #fff;
+    i {
+      background-color: #fff;
+      line-height: 42px;
+    }
+    .info-item {
+      line-height: 42px;
+    }
+    .select-express > p {
+      line-height: 42px;
+      color: #626262;
+    }
+    input {
+      border: none;
+    }
+  }
+  .refunds-address {
+    font-size: 12px;
+    margin: 70px 20px 30px 20px;
+    border: 1px solid #DADADA;
+    > div {
+      padding: 12px 12px 8px 16px;
+    }
+  }
+}

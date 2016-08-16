@@ -59,7 +59,11 @@ export default class Detail extends Component {
   onExpressBtnClick = (e) => {
     const data = this.props.data;
     const { refundsid, orderid, type } = e.currentTarget.dataset;
-    this.context.router.push(`/refunds/express/order/${refundsid}/${orderid}/${encodeURIComponent('请选择物流公司')}?packageId=${data.sid}&companyName=${data.company_name}&type=${type}`);
+    if (type === 'fill') {
+      this.context.router.push(`/refunds/express/fill/${refundsid}/${orderid}/${encodeURIComponent('请选择物流公司')}`);
+    } else {
+      this.context.router.push(`/refunds/express/find?refundsId=${refundsid}&packageId=${data.sid}&companyName=${data.company_name}`);
+    }
     e.preventDefault();
   }
 
