@@ -10,21 +10,19 @@ import { Toast } from 'components/Toast';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as expressInfoAction from 'actions/refunds/expressInfo';
 import * as refundsDetailsAction from 'actions/refunds/detail';
-import * as refundsLogisticsAction from 'actions/refunds/logistics';
 
 import './index.scss';
 
-const actionCreators = _.extend(expressInfoAction, refundsDetailsAction, refundsLogisticsAction);
+const actionCreators = _.extend(expressInfoAction, refundsDetailsAction);
 
 @connect(
   state => ({
     express: state.expressInfo,
     refundsDetails: state.refundsDetails,
-    refundsLogistics: state.refundsLogistics,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class Order extends Component {
+export default class Fill extends Component {
   static propTypes = {
     location: React.PropTypes.any,
     children: React.PropTypes.array,
@@ -33,11 +31,8 @@ export default class Order extends Component {
     error: React.PropTypes.bool,
     refundsDetails: React.PropTypes.object,
     express: React.PropTypes.object,
-    refundsLogistics: React.PropTypes.any,
     fetchRefundsDetail: React.PropTypes.func,
     pushExpressInfo: React.PropTypes.func,
-    fetchRefundsLogistics: React.PropTypes.func,
-    resetRefundsLogistics: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -53,18 +48,10 @@ export default class Order extends Component {
   }
 
   componentWillMount() {
-    const { type, packageId, companyName } = this.props.location.query;
     const { refundsid } = this.props.params;
     if (_.isEmpty(this.props.refundsDetails.data)) {
       this.props.fetchRefundsDetail(refundsid);
     }
-    if (refundsid && packageId && companyName) {
-      this.props.fetchRefundsLogistics(refundsid, packageId, companyName);
-    }
-  }
-
-  componentDidMount() {
-    this.props.resetRefundsLogistics();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -97,32 +84,14 @@ export default class Order extends Component {
     e.preventDefault();
   }
 
-  renderRefunsLogistics = (logisticsList) => {
-    return (
-      <div className="row no-margin margin-top-xs padding-left-xs bottom-border">
-        <Timeline className="margin-left-xxs">
-          {logisticsList.map((item, index) => {
-            return (
-              <TimelineItem key={index} headColor="grey" tailColor="grey">
-                <p className="font-grey">{item.time.replace('T', ' ')}</p>
-                <p className="font-sm">{item.content}</p>
-              </TimelineItem>
-            );
-          })}
-        </Timeline>
-      </div>
-    );
-  }
-
   render() {
     const { type, packageId, companyName } = this.props.location.query;
     const bindPhoneBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
       ['pressed']: this.state.submitBtnPressed,
     });
-    const { refundsDetails, params, refundsLogistics } = this.props;
+    const { refundsDetails, params } = this.props;
     const refundsDetailsData = refundsDetails.data || {};
-    const refundsLogisticsData = refundsLogistics.data || {};
     return (
       <div className="fill-logistics-info">
         <Header title="填写快递单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
@@ -146,23 +115,18 @@ export default class Order extends Component {
               <p>4.请保持衣服吊牌完整，不影响商品后续处理</p>
             </div>
           </div>
-          <If condition={type === 'fill'}>
-            <div className="row no-margin bottom-border express-item">
-              <div className="select-express" onClick={this.onExpressChooseBtnClick}>
-                <p className="col-xs-6 no-margin">{params.name}</p>
-                <i className="col-xs-6 icon-angle-right font-grey-light text-right"></i>
-              </div>
+          <div className="row no-margin bottom-border express-item">
+            <div className="select-express" onClick={this.onExpressChooseBtnClick}>
+              <p className="col-xs-6 no-margin">{params.name}</p>
+              <i className="col-xs-6 icon-angle-right font-grey-light text-right"></i>
             </div>
-            <div className="row no-margin bottom-border express-item">
-              <input className="col-xs-12 info-item" type="text" placeholder={'请输入快递单号'} onChange={this.onLogisticsNumberChange} />
-            </div>
-            <div className="row no-margin">
-              <button className={bindPhoneBtnCls} type="button" onClick={this.onSubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>
-            </div>
-          </If>
-          <If condition={!_.isEmpty(refundsLogisticsData) && type === 'find'}>
-            {this.renderRefunsLogistics(refundsLogisticsData.data)}
-          </If>
+          </div>
+          <div className="row no-margin bottom-border express-item">
+            <input className="col-xs-12 info-item" type="text" placeholder={'请输入快递单号'} onChange={this.onLogisticsNumberChange} />
+          </div>
+          <div className="row no-margin">
+            <button className={bindPhoneBtnCls} type="button" onClick={this.onSubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>
+          </div>
         </div>
       </div>
     );

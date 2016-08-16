@@ -44,7 +44,7 @@ export default class ExpressCompany extends Component {
   onExpressItemClick = (e) => {
     const { refundsid, orderid } = this.props.params;
     const { company } = e.currentTarget.dataset;
-    this.context.router.replace(`/refunds/express/order/${refundsid}/${orderid}/${company}?type=fill`);
+    this.context.router.replace(`/refunds/express/fill/${refundsid}/${orderid}/${company}`);
   }
 
   render() {
