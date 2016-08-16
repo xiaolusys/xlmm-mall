@@ -145,7 +145,7 @@ export default class TopTen extends Component {
       });
       return;
     }
-    if (utils.detector.isIOS() && utils.detector.isWechat()) {
+    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
       setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
