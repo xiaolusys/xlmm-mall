@@ -6,7 +6,6 @@ import _ from 'underscore';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
-import { Toast } from 'components/Toast';
 import { Timeline, TimelineItem } from 'components/Timeline';
 import * as refundsDetailsAction from 'actions/refunds/detail';
 import * as refundsLogisticsAction from 'actions/refunds/logistics';
@@ -52,10 +51,6 @@ export default class Find extends Component {
     if (refundsId && packageId && companyName) {
       this.props.fetchRefundsLogistics(refundsId, packageId, companyName);
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-
   }
 
   componentWillUnmount() {
