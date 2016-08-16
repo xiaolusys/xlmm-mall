@@ -104,12 +104,12 @@ export default class Winners extends Component {
           <If condition={!_.isEmpty(awardData)}>
             <ul className="winner-list">
               <li key={-1} className="row no-margin bottom-border padding-bottom-xxs padding-top-xxs">
-                <div className="col-xs-9 no-padding text-left">
+                <div className="col-xs-8 no-padding text-left">
                   <div className="col-xs-2 no-padding">排名</div>
                   <div className="col-xs-3 no-padding">图像</div>
                   <p className="no-margin">昵称</p>
                 </div>
-                <div className="col-xs-3 text-center">奖金(元)</div>
+                <div className="col-xs-4 text-center">{activeTab === 'income' ? '奖金/收益(¥)' : '奖金(¥)'}</div>
               </li>
             {awardData.map((item, index) => {
               return (
@@ -143,7 +143,15 @@ export default class Winners extends Component {
                     </div>
                     <p className="no-margin padding-top-xxs no-wrap text-left">{item.mama_nick}</p>
                   </div>
-                  <p className="col-xs-3 no-margin no-wrap text-center font-orange">{Number(item.award || 200)}</p>
+                  <If condition={activeTab === 'invite'}>
+                    <p className="col-xs-3 no-margin no-wrap text-center font-orange">{Number(item.award).toFixed(2)}</p>
+                  </If>
+                  <If condition={activeTab === 'income'}>
+                    <p className="col-xs-3 no-margin no-wrap text-center font-orange">{Number(item.award) + '/' + (Number(item.income) / 100).toFixed(2)}</p>
+                  </If>
+                  <If condition={activeTab === 'team'}>
+                    <p className="col-xs-3 no-margin no-wrap text-center font-orange">{Number(item.award || 200).toFixed(2)}</p>
+                  </If>
                 </li>
               );
             })}
