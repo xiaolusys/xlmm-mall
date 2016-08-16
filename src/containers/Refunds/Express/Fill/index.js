@@ -7,12 +7,13 @@ import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
+import { Timeline, TimelineItem } from 'components/Timeline';
 import * as expressInfoAction from 'actions/refunds/expressInfo';
-import * as detailsAction from 'actions/refunds/detail';
+import * as refundsDetailsAction from 'actions/refunds/detail';
 
 import './index.scss';
 
-const actionCreators = _.extend(detailsAction, expressInfoAction);
+const actionCreators = _.extend(expressInfoAction, refundsDetailsAction);
 
 @connect(
   state => ({
@@ -21,13 +22,12 @@ const actionCreators = _.extend(detailsAction, expressInfoAction);
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class Detail extends Component {
+export default class Fill extends Component {
   static propTypes = {
+    location: React.PropTypes.any,
     children: React.PropTypes.array,
-    data: React.PropTypes.any,
     params: React.PropTypes.object,
     dispatch: React.PropTypes.func,
-    isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
     refundsDetails: React.PropTypes.object,
     express: React.PropTypes.object,
@@ -48,16 +48,18 @@ export default class Detail extends Component {
   }
 
   componentWillMount() {
+    const { refundsid } = this.props.params;
     if (_.isEmpty(this.props.refundsDetails.data)) {
-      this.props.fetchRefundsDetail(this.props.params.refundsid);
+      this.props.fetchRefundsDetail(refundsid);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success) {
-      Toast.show(nextProps.data.info);
+    const { express } = nextProps;
+    if (express.success) {
+      Toast.show(express.data.info);
     }
-    if (nextProps.success && nextProps.data.code === 0) {
+    if (express.success && express.data.code === 0) {
       this.context.router.push('/refunds/details/' + this.props.params.refundsid);
     }
   }
@@ -83,25 +85,26 @@ export default class Detail extends Component {
   }
 
   render() {
+    const { type, packageId, companyName } = this.props.location.query;
     const bindPhoneBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
       ['pressed']: this.state.submitBtnPressed,
     });
     const { refundsDetails, params } = this.props;
-    const data = refundsDetails.data || {};
+    const refundsDetailsData = refundsDetails.data || {};
     return (
       <div className="fill-logistics-info">
         <Header title="填写快递单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content">
           <div className="row express-item refunds-address border">
             <p className="text-center font-xlg font-weight-800 margin-top-xs">收货地址</p>
-            <If condition={data.return_address}>
+            <If condition={refundsDetailsData.return_address}>
               <div className="bottom-border">
                 <p className="text-left no-margin">
-                  <span className="margin-right-xs">{'收货人：' + data.return_address.split('，')[2]}</span>
-                  <span>{'联系电话：' + data.return_address.split('，')[1]}</span>
+                  <span className="margin-right-xs">{'收货人：' + refundsDetailsData.return_address.split('，')[2]}</span>
+                  <span>{'联系电话：' + refundsDetailsData.return_address.split('，')[1]}</span>
                 </p>
-                <p className="no-margin font-grey-light">{data.return_address.split('，')[0]}</p>
+                <p className="no-margin font-grey-light">{refundsDetailsData.return_address.split('，')[0]}</p>
               </div>
             </If>
             <div>

@@ -50,7 +50,8 @@ import {
   RefundsList,
   ExpressCompany,
   RefundsDetail,
-  ExpressOrder,
+  ExpressFind,
+  ExpressFill,
 } from 'containers/Refunds';
 
 import {
@@ -105,7 +106,8 @@ export default (
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
     <Route path="/refunds/details/:refundsid" component={RefundsDetail} onEnter={utils.checkAuth} />
-    <Route path="/refunds/express/order/:refundsid/:orderid/:name" component={ExpressOrder} onEnter={utils.checkAuth} />
+    <Route path="/refunds/express/fill/:refundsid/:orderid/:name" component={ExpressFill} onEnter={utils.checkAuth} />
+    <Route path="/refunds/express/find" component={ExpressFind} onEnter={utils.checkAuth} />
     <Route path="/refunds/express/company/:refundsid/:orderid" component={ExpressCompany} onEnter={utils.checkAuth} />
     <Route path="/refunds" component={RefundsList} onEnter={utils.checkAuth} />
     <Route path="/refunds/apply/:tradeId/:orderId" component={RefundsApply} onEnter={utils.checkAuth} />
