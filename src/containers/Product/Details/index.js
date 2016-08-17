@@ -109,6 +109,7 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { preview } = this.props.location.query;
     const { addFavorite, unFavorite } = nextProps.favorite;
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
@@ -131,7 +132,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}?preview=${preview}`);
           return;
         case 500:
           Toast.show(nextProps.shopBag.addProduct.data.detail);
@@ -588,6 +589,7 @@ export default class Detail extends Component {
     if (shopBag.shopBagQuantity.data) {
       badge = shopBag.shopBagQuantity.data.result;
     }
+    const { preview } = this.props.location.query;
     return (
       <div className={`${prefixCls}`}>
         <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
@@ -614,7 +616,7 @@ export default class Detail extends Component {
                 </If>
               </div>
             </div>
-            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={details.detail_content.is_sale_out || !details.detail_content.is_saleopen}>
+            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
               {this.getAddToShopBagBtnText(details.detail_content)}
             </button>
           </BottomBar>
