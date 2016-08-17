@@ -135,7 +135,7 @@ export default class List extends Component {
             lessonType: '',
             orderingBy: 'num_attender',
           });
-          this.props.fetchCourse(1, pageSize, '', 'num_attender');
+          this.props.fetchCourse(1, pageSize, '', 'num_attender,-order_weight');
           break;
         case 'newest':
           this.setState({
@@ -224,7 +224,7 @@ export default class List extends Component {
               <div className="col-xs-8">
                 <p className="col-xs-12 no-margin no-padding no-wrap padding-top-xxs">{course.title}</p>
                 <p className="col-xs-12 no-margin no-padding padding-top-xxs font-xxs font-grey-light">
-                  <span className="col-xs-7 no-padding text-left no-wrap">{course.num_attender + '人阅读'}</span>
+                  <span className="col-xs-7 no-padding text-left no-wrap">{course.click_num_show + '人阅读'}</span>
                   <span className="col-xs-5 no-padding text-right">小鹿美美</span>
                 </p>
               </div>
