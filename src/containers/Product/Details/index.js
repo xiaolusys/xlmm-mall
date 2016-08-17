@@ -109,7 +109,6 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { preview } = this.props.location.query;
     const { addFavorite, unFavorite } = nextProps.favorite;
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
@@ -132,7 +131,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${this.props.location.pathname}?preview=${preview}`);
+          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
           return;
         case 500:
           Toast.show(nextProps.shopBag.addProduct.data.detail);
