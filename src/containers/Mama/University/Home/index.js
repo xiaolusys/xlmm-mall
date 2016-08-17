@@ -54,7 +54,7 @@ export default class List extends Component {
     topTab: 'hot',
     bottomTab: 'course',
     lessonType: '',
-    orderingBy: 'num_attender,',
+    orderingBy: 'num_attender',
   }
 
   componentWillMount() {
@@ -143,7 +143,7 @@ export default class List extends Component {
             lessonType: '',
             orderingBy: 'created',
           });
-          this.props.fetchCourse(1, pageSize, '', 'created,');
+          this.props.fetchCourse(1, pageSize, '', 'created');
           break;
         default:
       }
