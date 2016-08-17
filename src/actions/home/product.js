@@ -9,7 +9,7 @@ export const fetchProduct = (when, pageIndex, pageSize) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request({ when: when }));
-    return axios.get(constants.baseEndpoint + 'products' + (when ? '/' + when : ''), { params: { page: pageIndex, page_size: pageSize } })
+    return axios.get(constants.baseEndpoint + 'modelproducts/' + when, { params: { page: pageIndex, page_size: pageSize } })
       .then((resp) => {
         const data = resp.data;
         data.when = when;
