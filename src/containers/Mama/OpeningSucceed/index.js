@@ -7,6 +7,7 @@ import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
 import { WechatPopup } from 'components/WechatPopup';
+import { DownloadAppBanner } from 'components/DownloadAppBanner';
 import * as utils from 'utils';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as wechatSignAction from 'actions/wechat/sign';
@@ -89,6 +90,7 @@ export default class Succeed extends Component {
   render() {
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop">
+        <DownloadAppBanner/>
         <Image style={{ width: '100%' }} src={banner} />
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
