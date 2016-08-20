@@ -37,7 +37,7 @@ export class Product extends Component {
       ['hide']: this.state.imageLoadError,
     });
     return (
-      <div className="col-xs-6 col-sm-3 col-md-2 no-padding" data-productid={product.id} data-modelid={product.model_id} onClick={this.props.onItemClick}>
+      <div className="col-xs-6 col-sm-3 col-md-2 no-padding" data-modelid={product.id} onClick={this.props.onItemClick}>
         <div className="product text-center">
           <div className="product-picture">
             <LazyLoad throttle={200}>
@@ -46,16 +46,16 @@ export class Product extends Component {
             <If condition={product.is_saleout}>
               <div className="product-tips"><p>已抢光</p></div>
             </If>
-            <If condition={!product.is_saleopen}>
+            <If condition={product.sale_state === 'will'}>
               <div className="product-tips"><p>即将开售</p></div>
             </If>
           </div>
           <div className="product-info">
             <p className="product-name">{product.name}</p>
             <p>
-              <span className="font-lg">{'￥' + product.lowest_price}</span>
+              <span className="font-lg">{'￥' + product.lowest_agent_price}</span>
               <span className="font-grey">/</span>
-              <span className="font-grey text-line-through">{'￥' + product.std_sale_price}</span>
+              <span className="font-grey text-line-through">{'￥' + product.lowest_std_sale_price}</span>
             </p>
           </div>
         </div>

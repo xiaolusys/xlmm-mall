@@ -19,8 +19,8 @@ import { BackTop } from 'components/BackTop';
 import * as actionCreators from 'actions/home/product';
 
 const requestAction = {
-  child: 'childlist',
-  lady: 'ladylist',
+  child: 1,
+  lady: 2,
 };
 
 const title = {
@@ -64,7 +64,7 @@ export default class List extends Component {
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
     const { params } = this.props;
-    this.props.fetchProduct(requestAction[params.type], pageIndex + 1, pageSize);
+    this.props.fetchProduct('', pageIndex + 1, pageSize, requestAction[params.type]);
   }
 
   componentDidMount() {
@@ -80,10 +80,6 @@ export default class List extends Component {
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
     }
-  }
-
-  componentDidUpdate() {
-
   }
 
   componentWillUnmount() {
@@ -103,7 +99,7 @@ export default class List extends Component {
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
     if (scrollTop === documentHeight - windowHeight && !this.props.product.isLoading && this.state.hasMore) {
-      fetchProduct(requestAction[params.type], pageIndex + 1, pageSize);
+      fetchProduct('', pageIndex + 1, pageSize, requestAction[params.type]);
     }
   }
 
@@ -125,7 +121,7 @@ export default class List extends Component {
           <div className="product-list clearfix">
           <div className="margin-top-xxs"></div>
             {products.map((item) => {
-              return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
+              return <Product key={item.id} product={item} onItemClick = {this.onItemClick} />;
             })}
           </div>
           {product.isLoading ? <Loader/> : null}

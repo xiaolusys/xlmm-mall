@@ -5,11 +5,11 @@ import createAction from '../createAction';
 
 export const name = 'FETCH_PRODUCT';
 
-export const fetchProduct = (when, pageIndex, pageSize) => {
+export const fetchProduct = (when, pageIndex, pageSize, cid) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request({ when: when }));
-    return axios.get(constants.baseEndpoint + 'products' + (when ? '/' + when : ''), { params: { page: pageIndex, page_size: pageSize } })
+    return axios.get(constants.baseEndpoint + 'modelproducts' + (when ? '/' + when : ''), { params: { page: pageIndex, page_size: pageSize, cid: cid } })
       .then((resp) => {
         const data = resp.data;
         data.when = when;

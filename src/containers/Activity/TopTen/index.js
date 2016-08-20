@@ -211,13 +211,13 @@ export default class TopTen extends Component {
       <div>
         <Header title={modelData.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <div className="content clearfix activity-top10">
-          <Image className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={modelData.banner} />
+          <Image quality={50} className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={modelData.banner} />
           <If condition={!_.isEmpty(modelData.coupons)}>
             <ul className="coupon-list">
               {modelData.coupons.map((coupon, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
-                    <Image className="col-xs-12 no-padding" src={coupon.isReceived ? coupon.getAfterPic : coupon.getBeforePic} />
+                    <Image quality={50} className="col-xs-12 no-padding" src={coupon.isReceived ? coupon.getAfterPic : coupon.getBeforePic} />
                   </li>
                 );
               })}
@@ -229,7 +229,7 @@ export default class TopTen extends Component {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index}>
                     <Link to="">
-                      <Image className="col-xs-12 no-padding" src={item.pic} />
+                      <Image quality={50} className="col-xs-12 no-padding" src={item.pic} />
                     </Link>
                   </li>
                 );
@@ -241,7 +241,7 @@ export default class TopTen extends Component {
               {modelData.category.map((item, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-couponid={item.couponId} onClick={this.onCouponClick}>
-                    <Image className="col-xs-12 no-padding" src={item.getBeforePic} />
+                    <Image quality={50} className="col-xs-12 no-padding" src={item.getBeforePic} />
                   </li>
                 );
               })}
@@ -252,7 +252,7 @@ export default class TopTen extends Component {
               {modelData.productsHorizental.map((product, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xxs" key={index} data-modelid={product.modelId} onClick={this.onProductClick}>
-                    <Image src={product.pic} />
+                    <Image quality={50} src={product.pic} />
                   </li>
                 );
               })}
@@ -262,12 +262,12 @@ export default class TopTen extends Component {
             <ul className="product-list-vertical">
               {modelData.productsVertical.map((product, index) => {
                 return (
-                  <Image className="col-xs-6" thumbnail={352} crop="352x681" src={product.pic} key={index} data-modelid={product.modelId} onClick={this.onProductClick}/>
+                  <Image quality={50} className="col-xs-6" thumbnail={352} crop="352x681" src={product.pic} key={index} data-modelid={product.modelId} onClick={this.onProductClick}/>
                 );
               })}
             </ul>
           </If>
-          <Image className="col-xs-6 col-xs-offset-3 margin-top-md no-padding act-share" src={modelData.shareBtn} onClick={this.onShareBtnClick}/>
+          <Image quality={50} className="col-xs-6 col-xs-offset-3 margin-top-md no-padding act-share" src={modelData.shareBtn} onClick={this.onShareBtnClick}/>
         </div>
         <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>

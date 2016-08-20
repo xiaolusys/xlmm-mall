@@ -36,7 +36,7 @@ import './index.scss';
 const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction);
 const requestAction = {
   yesterday: 'yesterday',
-  today: '',
+  today: 'today',
   tomorrow: 'tomorrow',
 };
 const tabs = {
@@ -317,17 +317,17 @@ export class Home extends Component {
                 </li>
               </ul>
             </div>
-            <If condition={product.data.downshelf_deadline}>
-            <div className="col-xs-12 text-center">
-              <p className="countdown">
-                <span className="font-grey-light margin-right-xxs">{'距本场' + (activeTab === tabs.tomorrow ? '开始' : '结束')}</span>
-                <Timer endDateString={(activeTab === tabs.tomorrow ? product.data.upshelf_starttime : product.data.downshelf_deadline)} />
-              </p>
-            </div>
+            <If condition={product.data.offshelf_deadline}>
+              <div className="col-xs-12 text-center">
+                <p className="countdown">
+                  <span className="font-grey-light margin-right-xxs">{'距本场' + (activeTab === tabs.tomorrow ? '开始' : '结束')}</span>
+                  <Timer endDateString={(activeTab === tabs.tomorrow ? product.data.onshelf_starttime : product.data.offshelf_deadline)} />
+                </p>
+              </div>
             </If>
             <div className="home-products clearfix">
               {products.map((item) => {
-                return <Product key={item.model_id} product={item} onItemClick = {this.onItemClick} />;
+                return <Product key={item.id} product={item} onItemClick = {this.onItemClick} />;
               })}
             </div>
             {product.isLoading ? <Loader/> : null}
