@@ -112,7 +112,7 @@ export default class List extends Component {
             </div>
             <div className="row no-margin content-white-bg">
               <div className="col-xs-2"></div>
-              <textarea className="col-xs-10 no-margin margin-top-xxxs word-break" value={item.content} disabled="disabled"/>
+              <p className="col-xs-10 no-margin margin-top-xxs word-break">{item.content}</p>
             </div>
           </div>
         );
