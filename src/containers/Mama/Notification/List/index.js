@@ -99,7 +99,7 @@ export default class List extends Component {
       data.map((item, index) => {
         return (
           <div key={index} className="row no-margin notification-item">
-            <div className="col-xs-2" data-modelid={item.id} onClick={this.onProductClick}>
+            <div className="col-xs-2">
               <LazyLoad throttle={200}>
                 <Image className={''} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/mama/v1/notification.png'} thumbnail={200}/>
               </LazyLoad>
