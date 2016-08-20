@@ -5,13 +5,17 @@
     padding-bottom: 12px;
     margin-bottom: 16px;
     img {
-        border-radius: 10px;
-        width: 60px;
-        overflow: hidden;
-        height: 60px;
-      }
+      border-radius: 10px;
+      width: 36px;
+      overflow: hidden;
+      height: 36px;
+    }
     .time-created {
-      padding-top:4px;
+      padding-top: 4px;
+    }
+    textarea {
+      resize: none;
+      min-height: 80px;
     }
   }
 }
