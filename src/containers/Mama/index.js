@@ -7,3 +7,4 @@ export MamaUniversityHome from './University/Home';
 export MamaUniversityCourseDetail from './University/Course';
 export MamaNotificationList from './Notification/List';
 export MamaNotificationDetail from './Notification/Detail';
+export MamaTeamIntroduce from './Team/Introduce';
