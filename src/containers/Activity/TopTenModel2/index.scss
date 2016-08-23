@@ -1,0 +1,80 @@
+.activity-topTen-model-2 {
+  &.bg-white {
+    background-color: #fff;
+  }
+  > ul {
+    display: inline-block;
+    -webkit-padding-start: 0px;
+    > li {
+      padding: 0 8px;
+      > img {
+        width: 100%;
+      }
+    }
+  }
+  > .coupon-list {
+    padding: 0 16px;
+  }
+  .products-horizental-list {
+    .ice-price {
+      font-size: 12px;
+      border: 1px solid #f68d68;
+      color: #f68d68;
+    }
+    .actual-pice {
+      color: #fd7337;
+      font-size: 20px;
+      padding-left: 4px;
+    }
+    .original-price {
+      font-size: 12px;
+      padding-left: 4px;
+    }
+    .buy-immediately {
+      padding: 6px 6px;
+      background-color: #fd763e;
+      color: #fff;
+      margin-top: 8px;
+      text-align: center;
+    }
+  }
+  .products-vertical-list {
+    img:nth-child(2n+0) {
+      padding: 0 8px 8px 4px;
+    }
+    img:nth-child(2n+1) {
+      padding: 0 4px 8px 8px;
+    }
+    .product-details:nth-child(2n+0) {
+      padding: 0 8px 8px 12px;
+    }
+    .product-details:nth-child(2n+1) {
+      padding: 0 4px 8px 12px;
+    }
+    .ice-price {
+      font-size: 12px;
+      border: 1px solid #f68d68;
+      color: #f68d68;
+    }
+    .actual-pice {
+      color: #fd7337;
+      font-size: 20px;
+      padding-left: 4px;
+    }
+    .original-price {
+      font-size: 12px;
+      padding-left: 4px;
+    }
+    .buy-immediately {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      background-color: #fd763e;
+      color: #fff;
+      margin-top: 8px;
+      text-align: center;
+    }
+  }
+  .act-share {
+    margin-bottom: 100px;
+  }
+}

@@ -29,7 +29,6 @@ export default class List extends Component {
     notification: React.PropTypes.any,
     fetchNotifications: React.PropTypes.func,
     resetNotifications: React.PropTypes.func,
-    readNotification: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -59,8 +58,7 @@ export default class List extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { pageIndex, pageSize } = this.state;
-    const { notification } = nextProps;
-    const { fetchNotification, readNotification } = notification;
+    const { fetchNotification } = nextProps.notification;
     if (fetchNotification.success) {
       const count = fetchNotification.data.count;
       const size = fetchNotification.data.results.length;
@@ -79,39 +77,13 @@ export default class List extends Component {
   }
 
   onScroll = (e) => {
-    const { pageSize, pageIndex, activeTab } = this.state;
+    const { pageSize, pageIndex } = this.state;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
     if (scrollTop === documentHeight - windowHeight && !this.props.notification.fetchNotification.isLoading && this.state.hasMore) {
       this.props.fetchNotifications(pageIndex + 1, pageSize, (new Date()).valueOf());
     }
-  }
-
-  onNotificationClick = (e) => {
-    const { id, to, read, content } = e.currentTarget.dataset;
-    const appUrl = `com.jimei.xlmm://app/v1/webview?is_native=1&url=${to}`;
-    if (read === 'false') {
-      this.props.readNotification(id);
-    }
-    if (to) {
-      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-        window.AndroidBridge.jumpToNativeLocation(appUrl);
-        return;
-      }
-      if (utils.detector.isIOS()) {
-        plugins.invoke({
-          method: 'jumpToNativeLocation',
-          data: { target_url: appUrl },
-          callback: (resp) => {},
-        });
-        return;
-      }
-    } else {
-      this.context.router.push(`/mama/notification/detail?content=${encodeURIComponent(content)}`);
-    }
-    // window.location.href = `/mama/university/course/detail?link=${encodeURIComponent(to)}`;
-    e.preventDefault();
   }
 
   addScrollListener = () => {
@@ -126,18 +98,21 @@ export default class List extends Component {
     return (
       data.map((item, index) => {
         return (
-          <div key={index} className="row no-margin notification-item" data-id={item.id} data-to={item.content_link} data-read={item.read} data-content={item.content} onClick={this.onNotificationClick}>
-            <div className="col-xs-3" data-modelid={item.id} onClick={this.onProductClick}>
+          <div key={index} className="row no-margin notification-item">
+            <div className="col-xs-2">
               <LazyLoad throttle={200}>
                 <Image className={''} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/mama/v1/notification.png'} thumbnail={200}/>
               </LazyLoad>
             </div>
-            <div className="col-xs-9 notification-info">
-              <p className="no-margin margin-top-xxs no-wrap">{item.title}</p>
-              <p className="no-margin margin-top-xxs">
-                <span className="pull-left font-orange">{item.read === true ? '已读' : '未读'}</span>
-                <span className="pull-right font-grey-light font-xs time-created">{`日期:${item.created.replace('T', ' ')}`}</span>
+            <div className="col-xs-10 notification-info">
+              <p className="no-margin no-wrap">{item.title}</p>
+              <p className="no-margin">
+                <span className="pull-left font-grey-light font-xs">{`日期:${item.created.replace('T', ' ')}`}</span>
               </p>
+            </div>
+            <div className="row no-margin content-white-bg">
+              <div className="col-xs-2"></div>
+              <p className="col-xs-10 no-margin margin-top-xxs word-break">{item.content}</p>
             </div>
           </div>
         );
@@ -146,13 +121,11 @@ export default class List extends Component {
   }
 
   render() {
-    const { activeTab, sticky, favoriteStatus } = this.state;
     const { fetchNotification } = this.props.notification;
     const data = fetchNotification.data.results || [];
-    const unReadCount = fetchNotification.data.unread_cnt || 0;
     return (
       <div>
-        <Header title="通知" leftIcon="icon-angle-left" rightText={`${unReadCount}条未读`} onLeftBtnClick={this.context.router.goBack} />
+        <Header title="通知" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content favorite-container">
             <If condition={!_.isEmpty(data)}>
               {this.renderNotifications(data)}
