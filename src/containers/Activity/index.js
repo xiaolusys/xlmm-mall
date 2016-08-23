@@ -5,6 +5,7 @@ export ExamHome from './Exam/Home';
 export ExamQuestion from './Exam/Question';
 export ExamResult from './Exam/Result';
 export TopTen from './TopTen';
+export TopTenModel2 from './TopTenModel2';
 export SummerMatHome from './SummerMat/Home';
 export SummerMatSuccess from './SummerMat/Success';
 export SummerMatRegistration from './SummerMat/Registration';
