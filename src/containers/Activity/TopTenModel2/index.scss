@@ -36,17 +36,11 @@
     }
   }
   .products-vertical-list {
-    img:nth-child(2n) {
-      padding: 0 8px 8px 4px;
+    img {
+      padding: 8px;
     }
-    img:nth-child(2n+1) {
-      padding: 0 4px 8px 8px;
-    }
-    .product-details:nth-child(2n) {
-      padding: 0 8px 8px 12px;
-    }
-    .product-details:nth-child(2n+1) {
-      padding: 0 4px 8px 12px;
+    .product-details {
+      padding: 0 8px 8px 8px;
     }
     .actual-pice {
       color: #ff4848;
@@ -61,7 +55,6 @@
       padding-bottom: 4px;
       background-color: #ff4848;
       color: #fff;
-      margin-top: 8px;
       text-align: center;
     }
   }
