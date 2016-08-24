@@ -51,7 +51,6 @@ export default class Charge extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
-    resetFetchState: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     saveMamaInfo: React.PropTypes.func,
     fetchMamaOrder: React.PropTypes.func,
@@ -114,7 +113,6 @@ export default class Charge extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetFetchState();
     this.props.fetchInviteSharing(27);
   }
 
