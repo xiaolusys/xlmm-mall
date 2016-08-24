@@ -243,9 +243,15 @@ export class Home extends Component {
             <If condition={!_.isEmpty(mamaInfo && mamaInfo.data)}>
               <div className="row no-margin focus-container">
                 <div className="col-xs-2 no-padding">
-                  <img src={`${mamaInfo.data.thumbnail}${constants.image.square}`} />
+                  <img className="focus-img" src={`${mamaInfo.data.thumbnail}${constants.image.square}`} />
                 </div>
-                <p className="no-margin margin-top-xs col-xs-7 no-padding no-wrap">{`${mamaInfo.data.nick}的店铺`}</p>
+                <div className="col-xs-7 no-padding">
+                  <p className="no-margin margin-top-xxs no-wrap">{`${mamaInfo.data.nick}的店铺`}</p>
+                  <Link className="row no-margin" to={`/mama/open/introduce`}>
+                    <img className="col-xs-6 no-padding margin-right-xxs open-img" src={`http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open.jpg`} />
+                    <p className="no-margin margin-top-xxxs">我要开店</p>
+                  </Link>
+                </div>
                 <div className="pull-right">
                   <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onFocusClick}>+关注</button>
                 </div>
