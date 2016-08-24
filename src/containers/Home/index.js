@@ -40,9 +40,9 @@ const requestAction = {
   tomorrow: 'tomorrow',
 };
 const tabs = {
-  yesterday: 0,
-  today: 1,
-  tomorrow: 2,
+  yesterday: 1,
+  today: 2,
+  tomorrow: 3,
 };
 
 @connect(
@@ -96,15 +96,17 @@ export class Home extends Component {
     hasMore: true,
     pageIndex: 0,
     pageSize: 20,
-    activeTab: tabs.today,
+    activeTab: tabs[this.props.location.query.active] || tabs.today,
     sticky: false,
   }
 
   componentWillMount() {
+    const { active } = this.props.location.query;
     const { pageIndex, pageSize } = this.state;
+    const { product } = this.props;
     const mmLinkId = this.props.location.query.mm_linkid;
     this.props.fetchPortal();
-    this.props.fetchProduct(requestAction.today, pageIndex + 1, pageSize);
+    this.props.fetchProduct(active || requestAction.today, pageIndex + 1, pageSize);
     if (mmLinkId) {
       this.props.fetchMamaInfoById(mmLinkId);
     }
@@ -166,6 +168,7 @@ export class Home extends Component {
     });
     const { pageSize, pageIndex } = this.state;
     this.props.fetchProduct(requestAction[e.currentTarget.id], 1, pageSize);
+    this.context.router.replace(`/?active=${e.currentTarget.id}`);
   }
 
   onFocusClick = (e) => {
