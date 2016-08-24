@@ -26,12 +26,24 @@
   }
   .focus-container {
     padding: 0 8px;
-    img {
+    .focus-img {
       border-radius: 18px;
       width: 36px;
       overflow: hidden;
       height: 36px;
       margin: 8px 0;
+    }
+    .open-img {
+      width: 22px;
+      margin-top: 2px;
+    }
+    a,
+    a:hover,
+    a:active,
+    a:focus,
+    a:visited {
+      color: #26262e;
+      text-decoration: none;
     }
   }
   .home-categories {
