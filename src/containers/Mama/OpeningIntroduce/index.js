@@ -10,12 +10,6 @@ import * as actionCreators from 'actions/favorite/index';
 import './index.scss';
 
 export default class OpeningIntroduce extends Component {
-  static propTypes = {
-    location: React.PropTypes.any,
-    params: React.PropTypes.any,
-    isLoading: React.PropTypes.bool,
-  };
-
   static contextTypes = {
     router: React.PropTypes.object,
   };
