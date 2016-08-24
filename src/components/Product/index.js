@@ -40,9 +40,7 @@ export class Product extends Component {
       <div className="col-xs-6 col-sm-3 col-md-2 no-padding" data-modelid={product.id} onClick={this.props.onItemClick}>
         <div className="product text-center">
           <div className="product-picture">
-            <LazyLoad throttle={200}>
-              <Image className={imageCls} src={product.head_img} thumbnail={200} onError={this.onImageLoadError}/>
-            </LazyLoad>
+            <Image className={imageCls} src={product.head_img} thumbnail={200} onError={this.onImageLoadError}/>
             <If condition={product.is_saleout}>
               <div className="product-tips"><p>已抢光</p></div>
             </If>
