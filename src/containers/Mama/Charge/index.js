@@ -10,7 +10,6 @@ import { Toast } from 'components/Toast';
 import { Popup } from 'components/Popup';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
-import * as verifyCodeAction from 'actions/user/verifyCode';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
@@ -36,11 +35,10 @@ const pageInfos = {
   },
 };
 
-const actionCreators = _.extend(verifyCodeAction, mamaInfoAction, mamaOrderAction, mamaChargeAction, inviteSharingAction, wechatSignAction);
+const actionCreators = _.extend(mamaInfoAction, mamaOrderAction, mamaChargeAction, inviteSharingAction, wechatSignAction);
 
 @connect(
   state => ({
-    verifyCode: state.verifyCode,
     mamaInfo: state.mamaInfo,
     mamaOrder: state.mamaOrder,
     mamaCharge: state.mamaCharge,
@@ -53,9 +51,6 @@ export default class Charge extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
-    fetchVerifyCode: React.PropTypes.func,
-    verify: React.PropTypes.func,
-    resetVerifyState: React.PropTypes.func,
     resetFetchState: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     saveMamaInfo: React.PropTypes.func,
@@ -99,14 +94,7 @@ export default class Charge extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetch, verify } = nextProps.verifyCode;
     const { mamaInfo, mamaOrder, mamaCharge, inviteSharing, wechatSign } = nextProps;
-    if (fetch.isLoading || verify.isLoading || mamaInfo.isLoading ||
-      mamaOrder.isLoading || mamaCharge.isLoading || inviteSharing.isLoading || wechatSign.isLoading) {
-      utils.ui.loadingSpinner.show();
-    } else {
-      utils.ui.loadingSpinner.hide();
-    }
     utils.wechat.config(wechatSign);
     if (!inviteSharing.isLoading && inviteSharing.success) {
       const shareInfo = {
@@ -120,10 +108,6 @@ export default class Charge extends Component {
       };
       utils.wechat.configShareContent(shareInfo);
     }
-
-    if ((fetch.success || fetch.error) && !fetch.isLoading && fetch.data.code !== 0) {
-      Toast.show(fetch.data.msg);
-    }
     if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
       this.pay(mamaCharge.data);
     }
@@ -131,28 +115,7 @@ export default class Charge extends Component {
 
   componentWillUnmount() {
     this.props.resetFetchState();
-    this.props.resetVerifyState();
     this.props.fetchInviteSharing(27);
-  }
-
-  onPhoneChange = (val) => {
-    this.setState({ phone: val });
-  }
-
-  onVerifyCodeChange = (e) => {
-    this.setState({ code: e.target.value });
-  }
-
-  onVerifyCodeBlur = () => {
-    this.props.resetFetchState();
-    if (_.isEmpty(this.state.code)) {
-      return;
-    }
-    this.props.verify(this.state.phone, this.state.code, 'bind');
-  }
-
-  onGetVerifyCodeBtnClick = () => {
-    this.props.fetchVerifyCode(this.state.phone, 'bind');
   }
 
   onChargeClick = (e) => {
@@ -179,12 +142,7 @@ export default class Charge extends Component {
 
   togglePayTypePopupActive = () => {
     const { mama_id } = this.props.location.query;
-    const { verify } = this.props.verifyCode;
     const { mamaInfo } = this.props;
-    if (!verify.success) {
-      Toast.show('请先验证手机号');
-      return;
-    }
     if (mamaInfo.success && !_.isEmpty(mamaInfo.data) && !mamaInfo.data[0].can_trial) {
       Toast.show('您已经是小鹿妈妈');
       return;
@@ -237,11 +195,6 @@ export default class Charge extends Component {
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg opening-shop">
         <Image style={{ width: '100%' }} src={banner} />
-        <Input type="number" placeholder="请输入手机号" onChange={this.onPhoneChange}/>
-        <div className="row no-margin password-box bottom-border margin-bottom-xs">
-          <input className="col-xs-8" type="number" placeholder="请输入验证码" onChange={this.onVerifyCodeChange} onBlur= {this.onVerifyCodeBlur} />
-          <button className="col-xs-4 button button-sm button-light" type="button" onClick={this.onGetVerifyCodeBtnClick}>获取验证码</button>
-        </div>
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.togglePayTypePopupActive}>{btn}</button>
         </div>
