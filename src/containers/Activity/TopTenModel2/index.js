@@ -252,7 +252,7 @@ export default class TopTenModel2 extends Component {
               {modelData.productsHorizental.map((product, index) => {
                 return (
                   <li className="col-xs-12 col-md-6 col-md-offset-3 margin-bottom-xxs" key={index}>
-                    <Image quality={50} src={product.pic} />
+                    <Image quality={50} src={product.pic} data-modelid={product.modelId} onClick={this.onProductClick}/>
                     <div className="row no-margin">
                       <div className="col-xs-8">
                         <p className="row no-margin no-wrap">{product.productName}</p>
@@ -276,7 +276,7 @@ export default class TopTenModel2 extends Component {
               {modelData.productsVertical.map((product, index) => {
                 return (
                   <li className="col-xs-6">
-                    <Image quality={50} thumbnail={352} crop="352x681" src={product.pic} key={index}/>
+                    <Image quality={50} thumbnail={352} crop="352x681" src={product.pic} key={index} data-modelid={product.modelId} onClick={this.onProductClick}/>
                     <div className="row no-margin product-details">
                       <p className="col-xs-12 no-margin no-padding no-wrap">{product.productName}</p>
                       <p className="col-xs-12 no-margin no-padding">
