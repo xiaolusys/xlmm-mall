@@ -81,6 +81,7 @@ export default class Charge extends Component {
 
   componentWillMount() {
     const { mama_id } = this.props.location.query;
+    const { location } = this.props;
     const pageInfo = pageInfos[location.pathname];
     if (pageInfo) {
       this.setState({ pageInfo: pageInfo });
