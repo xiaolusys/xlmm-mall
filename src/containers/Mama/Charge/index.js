@@ -114,7 +114,7 @@ export default class Charge extends Component {
       this.pay(mamaCharge.data);
     }
     if (!_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
-      this.context.router.replace(`/mall/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
+      this.context.router.replace(`/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
     }
   }
 
