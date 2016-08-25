@@ -245,14 +245,13 @@ export class Home extends Component {
                 <div className="col-xs-2 no-padding">
                   <img className="focus-img" src={`${mamaInfo.data.thumbnail}${constants.image.square}`} />
                 </div>
-                <div className="col-xs-7 no-padding">
-                  <p className="no-margin margin-top-xxs no-wrap">{`${mamaInfo.data.nick}的店铺`}</p>
-                  <Link className="row no-margin" to={`/mama/open/introduce`}>
-                    <img className="col-xs-6 no-padding margin-right-xxs open-img" src={`http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open.jpg`} />
-                    <p className="no-margin margin-top-xxxs">我要开店</p>
-                  </Link>
+                <div className="col-xs-4 no-padding">
+                  <p className="no-margin margin-top-xs no-wrap">{`${mamaInfo.data.nick}`}</p>
                 </div>
-                <div className="pull-right">
+                <Link className="col-xs-3 no-padding" to={`/mama/open/introduce`}>
+                  <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button">我要开店</button>
+                </Link>
+                <div className="padding-left-xs">
                   <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onFocusClick}>+关注</button>
                 </div>
               </div>
