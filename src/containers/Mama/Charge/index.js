@@ -113,7 +113,7 @@ export default class Charge extends Component {
     if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
       this.pay(mamaCharge.data);
     }
-    if (!_.isEmpty(mamaInfo.data) && mamaInfo.data.charge_status === 'uncharge') {
+    if (!_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
       this.context.router.replace(`/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
     }
   }
