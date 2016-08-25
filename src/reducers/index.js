@@ -57,6 +57,7 @@ import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
 import * as mamaActivityAction from 'actions/mama/activity';
 import * as mamaFocusAction from 'actions/mama/focus';
+import * as administratorInfoAction from 'actions/mama/administratorInfo';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -114,6 +115,7 @@ const rootReducer = combineReducers({
   mamaCourse: courseReducer,
   favorite: favoriteReducer,
   notification: notificationReducer,
+  administratorInfo: createReducer(administratorInfoAction.name),
 });
 
 export default rootReducer;

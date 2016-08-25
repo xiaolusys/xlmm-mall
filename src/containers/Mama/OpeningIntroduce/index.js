@@ -19,6 +19,17 @@ export default class OpeningIntroduce extends Component {
     context.router;
   }
 
+  onBtnClick = (e) => {
+    const mamaLinkId = utils.cookie.getCookie('mm_linkid');
+    const { type } = e.currentTarget.dataset;
+    const { protocol, host } = window.location;
+    if (Number(type) === 1) {
+      window.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mct.html?mama_id=${mamaLinkId}`;
+      return;
+    }
+    window.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mcf.html?mama_id=${mamaLinkId}`;
+  }
+
   render() {
     return (
       <div>
@@ -27,12 +38,12 @@ export default class OpeningIntroduce extends Component {
             <Image src={`http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/v2/banner.jpg`}/>
             <Image src={`http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/v2/introduce.png`}/>
             <div className="content-white-bg">
-              <Link className="row no-margin" to={`/mct.html`}>
-                <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button">1元体验15天</button>
-              </Link>
-              <Link className="row no-margin" to={`/mcf.html`}>
-                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" type="button">成为正式会员</button>
-              </Link>
+              <div className="row no-margin">
+                <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" data-type="1" onClick={this.onBtnClick}>1元体验15天</button>
+              </div>
+              <div className="row no-margin">
+                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" type="button" data-type="2" onClick={this.onBtnClick}>成为正式会员</button>
+              </div>
             </div>
           </div>
       </div>
