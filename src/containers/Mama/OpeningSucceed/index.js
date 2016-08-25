@@ -11,24 +11,31 @@ import { DownloadAppBanner } from 'components/DownloadAppBanner';
 import * as utils from 'utils';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as wechatSignAction from 'actions/wechat/sign';
+import * as summerMatAction from 'actions/activity/summerMat';
 
-const actionCreators = _.extend(inviteSharingAction, wechatSignAction);
-const banner = 'http://img.xiaolumeimei.com/top101470982118078succeed.jpg';
+import './index.scss';
+
+const actionCreators = _.extend(inviteSharingAction, wechatSignAction, summerMatAction);
+const banner = 'http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/success/banner.jpg';
 
 @connect(
   state => ({
     inviteSharing: state.inviteSharing,
     wechatSign: state.wechatSign,
+    summerMat: state.summerMat,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export default class Succeed extends Component {
   static propTypes = {
+    location: React.PropTypes.object,
     children: React.PropTypes.array,
     fetchInviteSharing: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     inviteSharing: React.PropTypes.object,
     wechatSign: React.PropTypes.object,
+    summerMat: React.PropTypes.any,
+    signUp: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -45,6 +52,7 @@ export default class Succeed extends Component {
   }
 
   componentWillMount() {
+    this.props.signUp();
     this.props.fetchWechatSign();
     this.props.fetchInviteSharing(27);
   }
@@ -88,10 +96,13 @@ export default class Succeed extends Component {
   }
 
   render() {
+    const data = this.props.summerMat.signUp && this.props.summerMat.signUp.data || [];
     return (
-      <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop">
-        <DownloadAppBanner/>
+      <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
         <Image style={{ width: '100%' }} src={banner} />
+        <div className="qr-code-bg">
+          <Image src={data.weixin_qr_img} />
+        </div>
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
         </div>
