@@ -24,10 +24,10 @@ export default class OpeningIntroduce extends Component {
     const { type } = e.currentTarget.dataset;
     const { protocol, host } = window.location;
     if (Number(type) === 1) {
-      window.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mct.html?mama_id=${mamaLinkId}`;
+      window.location.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mct.html?mama_id=${mamaLinkId}`;
       return;
     }
-    window.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mcf.html?mama_id=${mamaLinkId}`;
+    window.location.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mcf.html?mama_id=${mamaLinkId}`;
   }
 
   render() {
