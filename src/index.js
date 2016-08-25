@@ -19,7 +19,7 @@ history.listen((location) => {
 });
 _.extend(history, {
   goSmartBack: () => {
-    if (window.history.length >= 1 && window.history.length <= 2) {
+    if (window.history.length === 1) {
       history.push('/');
     } else {
       history.goBack();
