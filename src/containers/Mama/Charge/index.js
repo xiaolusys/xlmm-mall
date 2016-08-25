@@ -51,7 +51,6 @@ export default class Charge extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
-    fetchMamaInfo: React.PropTypes.func,
     saveMamaInfo: React.PropTypes.func,
     fetchMamaOrder: React.PropTypes.func,
     fetchMamaCharge: React.PropTypes.func,
@@ -81,12 +80,15 @@ export default class Charge extends Component {
   }
 
   componentWillMount() {
-    const { location } = this.props;
+    const { mama_id } = this.props.location.query;
     const pageInfo = pageInfos[location.pathname];
     if (pageInfo) {
       this.setState({ pageInfo: pageInfo });
     }
-    this.props.fetchMamaInfo();
+
+    this.props.saveMamaInfo({
+      mama_id: mama_id,
+    });
     this.props.fetchMamaOrder();
     this.props.fetchInviteSharing(pageInfo.shareId);
     this.props.fetchWechatSign();
@@ -110,7 +112,9 @@ export default class Charge extends Component {
     if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
       this.pay(mamaCharge.data);
     }
-    // if(mamaInfo.data)
+    if (!_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
+      this.context.router.replace(`/mall/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
+    }
   }
 
   componentWillUnmount() {
@@ -135,7 +139,7 @@ export default class Charge extends Component {
       mm_linkid: mama_id,
       uuid: mamaOrder.uuid,
       total_fee: mamaOrder.payinfos[id].total_payment,
-      success_url: `/mall/mama/open/succeed?mamaId=${mamaInfo.data[0].id}`,
+      success_url: `/mall/mama/open/succeed?mamaId=${mamaInfo.data.id}`,
       cancel_url: '/mall/mama/open/failed',
     });
   }
@@ -143,14 +147,11 @@ export default class Charge extends Component {
   togglePayTypePopupActive = () => {
     const { mama_id } = this.props.location.query;
     const { mamaInfo } = this.props;
-    if (mamaInfo.success && !_.isEmpty(mamaInfo.data) && !mamaInfo.data[0].can_trial) {
+    if (mamaInfo.success && !_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
       Toast.show('您已经是小鹿妈妈');
       return;
     }
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
-    this.props.saveMamaInfo({
-      mama_id: mama_id,
-    });
   }
 
   payInfo = () => {
