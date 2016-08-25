@@ -122,6 +122,7 @@ export default class Charge extends Component {
     const mamaOrder = this.props.mamaOrder.data || {};
     const { id } = this.state.pageInfo;
     const { mama_id } = this.props.location.query;
+    const { mamaInfo } = this.props;
     this.props.fetchMamaCharge({
       product_id: mamaOrder.product.id,
       sku_id: mamaOrder.product.normal_skus[id].id,
@@ -133,7 +134,7 @@ export default class Charge extends Component {
       mm_linkid: mama_id,
       uuid: mamaOrder.uuid,
       total_fee: mamaOrder.payinfos[id].total_payment,
-      success_url: '/mall/mama/open/succeed',
+      success_url: `/mall/mama/open/succeed?mamaId=${mamaInfo.data[0].id}`,
       cancel_url: '/mall/mama/open/failed',
     });
   }
