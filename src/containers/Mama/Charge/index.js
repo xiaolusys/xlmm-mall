@@ -31,7 +31,7 @@ const pageInfos = {
     banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXzkR8s0NxM0F3A_1500_3524.png',
     id: 0,
     shareId: 26,
-    btn: '支付押金',
+    btn: '支付',
   },
 };
 
@@ -110,6 +110,7 @@ export default class Charge extends Component {
     if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
       this.pay(mamaCharge.data);
     }
+    // if(mamaInfo.data)
   }
 
   componentWillUnmount() {
@@ -148,7 +149,6 @@ export default class Charge extends Component {
     }
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
     this.props.saveMamaInfo({
-      mama_mobile: this.state.phone,
       mama_id: mama_id,
     });
   }
