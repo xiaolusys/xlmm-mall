@@ -7,6 +7,7 @@ import { If } from 'jsx-control-statements';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
+import { BottomBar } from 'components/BottomBar';
 import * as invitedAction from 'actions/mama/invited';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import moment from 'moment';
@@ -149,9 +150,11 @@ export default class Invited extends Component {
             })}
           </ul>
         </div>
-        <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareClick}>分享</button>
-        </div>
+        <BottomBar>
+          <div className="row no-margin text-center margin-bottom-xs">
+            <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareClick}>分享</button>
+          </div>
+        </BottomBar>
       </div>
     );
   }
