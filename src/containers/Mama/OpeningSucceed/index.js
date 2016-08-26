@@ -104,9 +104,9 @@ export default class Succeed extends Component {
     const data = this.props.administratorInfo && this.props.administratorInfo.data || [];
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
-        <Image style={{ width: '100%' }} src={banner} />
+        <Image style={{ width: '100%' }} src={banner} quality={50}/>
         <div className="qr-code-bg">
-          <Image src={data.qr_img} />
+          <Image src={data.qr_img} quality={50}/>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
