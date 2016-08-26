@@ -1,16 +1,29 @@
 .opening-shop-succeed {
   background-color: #FFD900;
   width: 100%;
-  > .qr-code-bg {
+  .qr-code {
+    width: 46%;
+    margin-top: 25%;
+    margin-left: 27%;
+    margin-bottom: 26%;
+  }
+  > .qr-code-bg-v3 {
     background-image: url(http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/success/v3/qrCodeBorder.png);
     width: 80%;
     margin: 16px 10% 16px 10%;
     background-size: 100% 100%;
-    > img {
-      width: 46%;
-      margin-top: 25%;
-      margin-left: 27%;
-      margin-bottom: 26%;
+  }
+  > .qr-code-bg-v4 {
+    background-image: url(http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/success/v4/qrCodeBorder.png);
+    width: 80%;
+    margin: 16px 10% 16px 10%;
+    background-size: 100% 100%;
+    > div {
+      .referal-mama-avatar {
+        width: 32px;
+        border-radius: 16px 16px;
+        margin-bottom: 10%;
+      }
     }
   }
 }

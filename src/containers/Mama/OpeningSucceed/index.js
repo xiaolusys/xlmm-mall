@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
+import { If } from 'jsx-control-statements';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
@@ -105,9 +106,23 @@ export default class Succeed extends Component {
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
         <Image style={{ width: '100%' }} src={banner} quality={50}/>
-        <div className="qr-code-bg">
-          <Image src={data.qr_img} quality={50}/>
-        </div>
+        <If condition={!data.referal_mama_avatar || !data.referal_mama_nick}>
+          <div className="qr-code-bg-v3">
+            <Image className="qr-code" src={data.qr_img} quality={50}/>
+          </div>
+        </If>
+        <If condition={data.referal_mama_avatar && data.referal_mama_nick}>
+          <div className="qr-code-bg-v4">
+            <Image className="qr-code" src={data.qr_img} quality={50}/>
+            <div className="row no-margin">
+              <Image className="col-xs-3 col-xs-offset-2 no-padding referal-mama-avatar" src={data.referal_mama_avatar} quality={50}/>
+              <p className="col-xs-7 no-padding no-margin margin-top-xxs text-center">
+                <span className="col-xs-6 no-padding no-wrap">{data.referal_mama_nick}</span>
+                <span className="col-xs-6 no-padding">推荐成功</span>
+              </p>
+            </div>
+          </div>
+        </If>
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
         </div>
