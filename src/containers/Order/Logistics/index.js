@@ -49,9 +49,8 @@ export default class Logistics extends Component {
   }
 
   componentWillMount() {
-    const packageId = this.props.location.query.packageId;
-    const companyCode = this.props.location.query.companyCode;
-    this.props.fetchOrder(this.props.location.query.id);
+    const { packageId, companyCode, orderId } = this.props.location.query;
+    this.props.fetchOrder(orderId);
     this.props.fetchLogistics(packageId, companyCode);
   }
 
