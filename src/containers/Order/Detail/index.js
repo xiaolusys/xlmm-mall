@@ -192,6 +192,11 @@ export default class Detail extends Component {
     }
   }
 
+  onProductClick = (e) => {
+    const { modelid } = e.currentTarget.dataset;
+    this.context.router.push(`/product/details/${modelid}`);
+  }
+
   getClosedDate = (dateString) => {
     const date = moment(dateString).toDate();
     date.setMinutes(date.getMinutes() + 20);
@@ -217,7 +222,7 @@ export default class Detail extends Component {
           <div key={order.id} className="row no-margin bottom-border padding-left-xxs padding-right-xxs">
             <If condition={order.status !== 2 && order.status !== 3 && order.status !== 4}>
               <div className="col-xs-3 no-padding">
-                <img src={order.pic_path + constants.image.square} />
+                <img src={order.pic_path + constants.image.square} data-modelid={order.model_id} onClick={this.onProductClick}/>
               </div>
               <div className="col-xs-9 no-padding padding-top-xxs font-xs">
                 <p className="row no-margin no-wrap">{order.title}</p>
@@ -230,7 +235,7 @@ export default class Detail extends Component {
             </If>
             <If condition={order.status === 2 || order.status === 3 || order.status === 4}>
               <div className="col-xs-3 no-padding">
-                <img src={order.pic_path + constants.image.square} />
+                <img src={order.pic_path + constants.image.square} data-modelid={order.model_id} onClick={this.onProductClick}/>
               </div>
               <div className="col-xs-6 no-padding padding-top-xxs font-xs">
                 <p className="row no-margin no-wrap">{order.title}</p>
