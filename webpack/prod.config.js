@@ -36,11 +36,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       filename: `framework-${frameworkVersion}.js`,
-      minChunks: (module) => (
-        module.resource &&
-        module.resource.indexOf('node_modules') !== -1 &&
-        module.resource.indexOf('.css') === -1
-      ),
+      minChunks: Infinity,
     }),
     new ReplacePlugin({
       skip: process.env.NODE_ENV === 'development',
