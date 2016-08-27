@@ -105,6 +105,7 @@ export default class Succeed extends Component {
     const data = this.props.administratorInfo && this.props.administratorInfo.data || [];
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
+        <DownloadAppBanner />
         <Image style={{ width: '100%' }} src={banner} quality={50}/>
         <If condition={!data.referal_mama_avatar || !data.referal_mama_nick}>
           <div className="qr-code-bg-v3">
