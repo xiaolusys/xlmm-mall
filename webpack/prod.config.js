@@ -37,7 +37,8 @@ module.exports = {
       output: 'dist/index.html',
       data: {
         css: '<link type="text/css" rel="stylesheet" href="' + publicPath + 'app-[hash].css">',
-        js: '<script src="' + publicPath + 'app-[hash].js"><script type="text/javascript" src="https://dn-bughd-web.qbox.me/bughd.min.js" crossOrigin="anonymous"></script></script><script type="text/javascript">window.bughd = window.bughd || function() {}; window.bughd(\'create\',{key: \'84f20f4fcf7cc0c71462e63cfa8cd1b5\',});</script>',
+        app: '<script src="' + publicPath + 'app-[hash].js"></script>',
+        bughd: '<script type="text/javascript" src="https://dn-bughd-web.qbox.me/bughd.min.js" crossOrigin="anonymous"></script><script type="text/javascript">window.bughd = window.bughd || function() {}; window.bughd(\'create\',{key: \'84f20f4fcf7cc0c71462e63cfa8cd1b5\',});</script>',
       },
     }),
     new webpack.ProvidePlugin({
