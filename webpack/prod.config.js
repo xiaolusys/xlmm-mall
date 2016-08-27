@@ -4,6 +4,9 @@ const ReplacePlugin = require('replace-webpack-plugin');
 
 const publicPath = '/mall/';
 
+const extractCSS = new ExtractTextPlugin('app-[hash].css');
+const frameworkVersion = '1.0.0';
+
 module.exports = {
 
   entry: ['bootstrap-loader/extractStyles'],
@@ -16,7 +19,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.scss$/,
-      loader: 'style!css!postcss-loader!sass',
+      loader: extractCSS.extract(['css', 'sass']),
     }],
   },
 
@@ -27,9 +30,18 @@ module.exports = {
       },
       __DEVELOPMENT__: false,
     }),
-    new ExtractTextPlugin('app-[hash].css'),
+    extractCSS,
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: `framework-${frameworkVersion}.js`,
+      minChunks: (module) => (
+        module.resource &&
+        module.resource.indexOf('node_modules') !== -1 &&
+        module.resource.indexOf('.css') === -1
+      ),
+    }),
     new ReplacePlugin({
       skip: process.env.NODE_ENV === 'development',
       entry: 'index.html',
@@ -37,7 +49,8 @@ module.exports = {
       output: 'dist/index.html',
       data: {
         css: '<link type="text/css" rel="stylesheet" href="' + publicPath + 'app-[hash].css">',
-        app: '<script src="' + publicPath + 'app-[hash].js"></script>',
+        framework: `<script src="${publicPath}framework-${frameworkVersion}.js"></script>`,
+        app: `<script src="${publicPath}app-[hash].js"></script>`,
         bughd: '<script type="text/javascript" src="https://dn-bughd-web.qbox.me/bughd.min.js" crossOrigin="anonymous"></script><script type="text/javascript">window.bughd = window.bughd || function() {}; window.bughd(\'create\',{key: \'84f20f4fcf7cc0c71462e63cfa8cd1b5\',});</script>',
       },
     }),
