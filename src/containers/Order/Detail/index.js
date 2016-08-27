@@ -220,7 +220,7 @@ export default class Detail extends Component {
     });
   }
 
-  renderOrders(orders = [], key, packageId, companyCode) {
+  renderOrders(orders = [], key, packageId, companyCode, id) {
     const trade = this.props.order.fetchOrder.data || {};
     const self = this;
     return (
@@ -231,7 +231,7 @@ export default class Detail extends Component {
               <div className="col-xs-3 no-padding">
                 <img src={order.pic_path + constants.image.square} data-modelid={order.model_id} onClick={this.onProductClick}/>
               </div>
-              <div className="col-xs-9 no-padding padding-top-xxs font-xs" data-key={key} data-packageid={packageId} data-companycode={companyCode} data-orderid={order.id} onClick={this.onLogisticsClick}>
+              <div className="col-xs-9 no-padding padding-top-xxs font-xs" data-key={key} data-packageid={packageId} data-companycode={companyCode} data-orderid={id} onClick={this.onLogisticsClick}>
                 <p className="row no-margin no-wrap">{order.title}</p>
                 <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + order.sku_name}</p>
                 <p className="row no-margin margin-top-xxxs">
@@ -244,7 +244,7 @@ export default class Detail extends Component {
               <div className="col-xs-3 no-padding">
                 <img src={order.pic_path + constants.image.square} data-modelid={order.model_id} onClick={this.onProductClick}/>
               </div>
-              <div className="col-xs-6 no-padding padding-top-xxs font-xs" data-key={key} data-packageid={packageId} data-companycode={companyCode} data-orderid={order.id} onClick={this.onLogisticsClick}>
+              <div className="col-xs-6 no-padding padding-top-xxs font-xs" data-key={key} data-packageid={packageId} data-companycode={companyCode} data-orderid={id} onClick={this.onLogisticsClick}>
                 <p className="row no-margin no-wrap">{order.title}</p>
                 <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + order.sku_name}</p>
                 <p className="row no-margin margin-top-xxxs">
@@ -287,7 +287,7 @@ export default class Detail extends Component {
                 </Link>
               </div>
             </If>
-            {self.renderOrders(item.orders, key, item.out_sid, item.logistics_company && item.logistics_company.code)}
+            {self.renderOrders(item.orders, key, item.out_sid, item.logistics_company && item.logistics_company.code, id)}
           </div>
         );
       })}
