@@ -22,6 +22,12 @@ const initState = {
     success: false,
     data: [],
   },
+  inviteRank: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
   inviteAward: {
     isLoading: false,
     error: false,
@@ -81,6 +87,19 @@ export default (state = initState, action = null) => {
     case entrepreneurshipAction.names.FETCH_TEAM_RANK + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         teamRank: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+    case entrepreneurshipAction.names.FETCH_INVITE_RANK + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        inviteRank: { isLoading: true, data: {}, error: false, success: false },
+      });
+    case entrepreneurshipAction.names.FETCH_INVITE_RANK + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        inviteRank: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case entrepreneurshipAction.names.FETCH_INVITE_RANK + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        inviteRank: { isLoading: false, data: action.payload, error: true, success: false },
       });
 
     case entrepreneurshipAction.names.FETCH_INVITE_AWARD + '_' + actionTypes.REQUEST:
