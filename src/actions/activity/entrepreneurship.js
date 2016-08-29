@@ -7,6 +7,7 @@ export const names = {
   FETCH_MAMA_INFO: 'FETCH_MAMA_INFO',
   FETCH_MAMA_RANK: 'FETCH_MAMA_RANK',
   FETCH_TEAM_RANK: 'FETCH_TEAM_RANK',
+  FETCH_INVITE_RANK: 'FETCH_INVITE_RANK',
   FETCH_INVITE_AWARD: 'FETCH_INVITE_AWARD',
   FETCH_INCOME_AWARD: 'FETCH_INCOME_AWARD',
   FETCH_TEAM_AWARD: 'FETCH_TEAM_AWARD',
@@ -16,7 +17,7 @@ export const fetchMamaInfo = () => {
   const action = createAction(names.FETCH_MAMA_INFO);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'mama/rank/activity_self_rank')
+    return axios.get(constants.baseEndpoint + 'mama/acrank/1/self_rank')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -30,7 +31,7 @@ export const fetchMamaRank = () => {
   const action = createAction(names.FETCH_MAMA_RANK);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'mama/rank/activity_carry_total_rank')
+    return axios.get(constants.baseEndpoint + 'mama/acrank/1/activity_rank')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -44,7 +45,21 @@ export const fetchTeamRank = () => {
   const action = createAction(names.FETCH_TEAM_RANK);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'mama/teamrank/activity_carry_total_rank')
+    return axios.get(constants.baseEndpoint + 'mama/acteamrank/1/activity_rank')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchInviteRank = () => {
+  const action = createAction(names.FETCH_INVITE_RANK);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'mama/acrank/1/invitenum')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
