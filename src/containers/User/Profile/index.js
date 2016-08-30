@@ -46,8 +46,9 @@ export default class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success && nextProps.data.code === 0) {
-      this.context.router.push('/user/login');
+    if (nextProps.success && !_.isEmpty(nextProps.data) && !nextProps.data.mobile) {
+      Toast.show('请绑定手机号码！');
+      this.context.router.push('/user/profile/phone');
     }
   }
 

@@ -12,7 +12,7 @@ import { Image } from 'components/Image';
 import * as actionCreators from 'actions/activity/entrepreneurship';
 
 import './index.scss';
-
+const title = { mama: '个人收益排行榜', team: '团队收益排行榜', invite: '邀请数排行榜' };
 @connect(
   state => ({
     entrepreneurship: state.entrepreneurship,
@@ -30,6 +30,7 @@ export default class Rank extends Component {
     fetchMamaInfo: React.PropTypes.func,
     fetchMamaRank: React.PropTypes.func,
     fetchTeamRank: React.PropTypes.func,
+    fetchInviteRank: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -48,11 +49,12 @@ export default class Rank extends Component {
     this.props.fetchMamaInfo();
     this.props.fetchMamaRank();
     this.props.fetchTeamRank();
+    this.props.fetchInviteRank();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, mamaRank, teamRank } = nextProps.entrepreneurship;
-    if (mamaInfo.isLoading || mamaRank.isLoading || teamRank.isLoading) {
+    const { mamaInfo, mamaRank, teamRank, inviteRank } = nextProps.entrepreneurship;
+    if (mamaInfo.isLoading || mamaRank.isLoading || teamRank.isLoading || inviteRank.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
@@ -66,16 +68,24 @@ export default class Rank extends Component {
 
   render() {
     const { activeTab } = this.state;
-    const { mamaInfo, mamaRank, teamRank } = this.props.entrepreneurship;
+    const { mamaInfo, mamaRank, teamRank, inviteRank } = this.props.entrepreneurship;
     let rankData = [];
+    let rankNum = 0;
+    let income = 0;
     if (activeTab === 'mama') {
       rankData = mamaRank && mamaRank.data || {};
-    } else {
+      rankNum = mamaInfo && mamaInfo.data && mamaInfo.data.duration_rank || 0;
+      income = (mamaInfo && mamaInfo.data && mamaInfo.data.duration_total || 0).toFixed(2);
+    } else if (activeTab === 'team') {
       rankData = teamRank && teamRank.data || {};
+      rankNum = mamaInfo && mamaInfo.data && mamaInfo.data.team_duration_rank || 0;
+      income = (mamaInfo && mamaInfo.data && mamaInfo.data.team_duration_total || 0).toFixed(2);
+    } else {
+      rankData = inviteRank && inviteRank.data || {};
+      rankNum = mamaInfo && mamaInfo.data && mamaInfo.data.invite_rank || 0;
+      income = mamaInfo && mamaInfo.data && mamaInfo.data.invite_trial_num || 0;
     }
-    const rankNum = (activeTab === 'mama' ? mamaInfo.data.rank : mamaInfo.data.team_rank);
 
-    const income = (activeTab === 'mama') ? Number(mamaInfo.data.duration_total_display) : Number(mamaInfo.data.team_total_display);
     return (
       <div>
         <Header title="一元开店大赛" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
@@ -91,8 +101,8 @@ export default class Rank extends Component {
             </div>
             <p className="col-xs-8 no-margin no-padding">{mamaInfo.data.mama_nick}</p>
             <p className="col-xs-8 col-xs-offset-2 no-margin no-padding">
-              <span className="col-xs-6 no-padding">个人推荐: {mamaInfo.data.recommended_quantity}</span>
-              <span className="col-xs-6 no-padding">激活人数: {mamaInfo.data.activite_num}</span>
+              <span className="col-xs-6 no-padding">个人推荐: {mamaInfo.data.invite_trial_num}</span>
+              <span className="col-xs-6 no-padding">激活人数: {mamaInfo.data.active_trial_num}</span>
             </p>
           </div>
           <div className="row no-margin">
@@ -108,23 +118,26 @@ export default class Rank extends Component {
           </div>
           <div className="rank-tabs text-center bottom-border">
             <ul className="row no-margin">
-              <li type="mama" className={'col-xs-6' + (activeTab === 'mama' ? ' active' : '')} onClick={this.onTabItemClick}>
+              <li type="mama" className={'col-xs-4' + (activeTab === 'mama' ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>个人业绩</div>
               </li>
-              <li type="team" className={'col-xs-6' + (activeTab === 'team' ? ' active' : '')} onClick={this.onTabItemClick}>
+              <li type="invite" className={'col-xs-4' + (activeTab === 'invite' ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>推荐业绩</div>
+              </li>
+              <li type="team" className={'col-xs-4' + (activeTab === 'team' ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>团队业绩</div>
               </li>
             </ul>
           </div>
           <div className="row no-margin">
             <p className="col-xs-6 no-margin padding-top-xs padding-bottom-xs padding-left-xs text-center">我的排名: {rankNum === 0 ? '' : rankNum }</p>
-            <p className="col-xs-6 no-margin padding-top-xs padding-bottom-xs font-orange text-right">{income.toFixed(2)}</p>
+            <p className="col-xs-6 no-margin padding-top-xs padding-bottom-xs font-orange text-right">{income}</p>
           </div>
           <div className="row no-margin margin-top-xs bottom-border">
             <div className="col-xs-5 padding-left-xxs">
               <img className="pull-right rank" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-rank.png'} />
             </div>
-            <p className="col-xs-7 no-margin no-padding padding-top-xs padding-bottom-xs">{activeTab === 'mama' ? '个人' : '团队'}收益排行榜</p>
+            <p className="col-xs-7 no-margin no-padding padding-top-xs padding-bottom-xs">{title[activeTab]}</p>
           </div>
           <If condition={!_.isEmpty(rankData)}>
             <ul className="rank-list">
@@ -160,7 +173,7 @@ export default class Rank extends Component {
                     </div>
                     <p className="no-margin padding-top-xxs no-wrap text-left">{item.mama_nick}</p>
                   </div>
-                  <p className="col-xs-4 no-margin no-wrap text-right font-orange">{Number(item.duration_total_display).toFixed(2)}</p>
+                  <p className="col-xs-4 no-margin no-wrap text-right font-orange">{item.invite_trial_num || Number(item.duration_total_display).toFixed(2)}</p>
                 </li>
               );
             })}

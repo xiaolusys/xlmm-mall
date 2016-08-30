@@ -210,7 +210,7 @@ export default class TopTenModel2 extends Component {
     return (
       <div>
         <Header title={modelData.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
-        <div className="content clearfix activity-topTen-model-2 bg-white">
+        <div className="content activity-topTen-model-2 bg-white">
           <Image quality={50} className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={modelData.banner} />
           <If condition={!_.isEmpty(modelData.coupons)}>
             <ul className="coupon-list">
