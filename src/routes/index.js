@@ -104,7 +104,7 @@ export default (
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/details/app/:id" component={ProductAppDetails} />
-    <Route path="/product/list/:type" component={ProductList} />
+    <Route path="/product/list" component={ProductList} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
     <Route path="/refunds/details/:refundsid" component={RefundsDetail} onEnter={utils.checkAuth} />

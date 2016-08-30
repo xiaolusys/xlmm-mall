@@ -18,16 +18,6 @@ import { Favorite } from 'components/Favorite';
 import { BackTop } from 'components/BackTop';
 import * as actionCreators from 'actions/home/product';
 
-const requestAction = {
-  child: 1,
-  lady: 2,
-};
-
-const title = {
-  child: '潮童专区',
-  lady: '时尚女装',
-};
-
 @connect(
   state => ({
     product: {
@@ -41,7 +31,7 @@ const title = {
 )
 export default class List extends Component {
   static propTypes = {
-    params: React.PropTypes.any,
+    location: React.PropTypes.object,
     fetchProduct: React.PropTypes.func,
     product: React.PropTypes.any,
   };
@@ -63,8 +53,8 @@ export default class List extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    const { params } = this.props;
-    this.props.fetchProduct('', pageIndex + 1, pageSize, requestAction[params.type]);
+    const { cid } = this.props.location.query;
+    this.props.fetchProduct('', pageIndex + 1, pageSize, cid);
   }
 
   componentDidMount() {
@@ -94,12 +84,13 @@ export default class List extends Component {
 
   onScroll = (e) => {
     const { pageSize, pageIndex, activeTab } = this.state;
-    const { fetchProduct, product, params } = this.props;
+    const { fetchProduct, product } = this.props;
+    const { cid } = this.props.location.query;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
     if (scrollTop === documentHeight - windowHeight && !this.props.product.isLoading && this.state.hasMore) {
-      fetchProduct('', pageIndex + 1, pageSize, requestAction[params.type]);
+      fetchProduct('', pageIndex + 1, pageSize, cid);
     }
   }
 
@@ -112,11 +103,12 @@ export default class List extends Component {
   }
 
   render() {
-    const { product, params } = this.props;
+    const { product } = this.props;
+    const { title } = this.props.location.query;
     const products = product.data.results || [];
     return (
       <div className="product-list">
-        <Header title={title[params.type]} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()}/>
+        <Header title={title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()}/>
         <div className="content content-white-bg">
           <div className="product-list clearfix">
           <div className="margin-top-xxs"></div>
