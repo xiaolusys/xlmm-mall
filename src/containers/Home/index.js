@@ -276,7 +276,7 @@ export class Home extends Component {
                 <ul className="clearfix">
                   {categories.map((item) => {
                     return (
-                      <li className="col-xs-3 no-padding" key={item.id}>
+                      <li className="col-xs-3" key={item.id}>
                         <a href={`/mall/product/list?cid=${item.id}&title=${item.name}`}>
                           <Image src={item.cat_img} />
                         </a>
