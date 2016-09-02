@@ -193,7 +193,7 @@ export default class Detail extends Component {
     if (!_.isEmpty(nextProps.details)) {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
-    if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 1) {
+    if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       const cartId = shopBag.data[0].id;
       window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}`;
     }
@@ -266,8 +266,12 @@ export default class Detail extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = details.sku_info;
     this.setState({ type: Number(type) });
-    if (Number(type) === 1) {
+    if (Number(type) === 3) {
       this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, 1, type);
+      return;
+    }
+    if (type === '单独购买') {
+      this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, 1);
       return;
     }
     if (details.detail_content.is_flatten) {
@@ -632,10 +636,10 @@ export default class Detail extends Component {
               </button>
             </If>
             <If condition={details.teambuy_info.teambuy}>
-              <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+              <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
                 {`单独购¥${details.detail_content.lowest_agent_price}`}
               </button>
-              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={1} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
                 {`三人购¥${details.teambuy_info.teambuy_price}`}
               </button>
           </If>

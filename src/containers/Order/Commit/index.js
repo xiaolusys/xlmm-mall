@@ -99,11 +99,10 @@ export default class Commit extends Component {
     }
     if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
       if (order.data.charge.success) {
-        const trade = order.data.trade;
-        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
-      } else {
-        window.location.replace(constants.aymentResults.error);
+        window.location.replace(order.data.charge.success_url);
+        return;
       }
+      window.location.replace(order.data.charge.fail_url);
     }
     if (payInfo.isLoading || order.isLoading || address.isLoading) {
       utils.ui.loadingSpinner.show();

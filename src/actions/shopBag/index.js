@@ -12,6 +12,9 @@ export const names = {
   FETCH_SHOP_BAG_QUANTITY: 'FETCH_SHOP_BAG_QUANTITY',
 };
 
+/**
+* @type 商品类型；0：普通，3:团购
+**/
 export const fetchShopBag = (type) => {
   const action = createAction(names.FETCH_SHOP_BAG);
   return (dispatch) => {
@@ -63,9 +66,6 @@ export const updateQuantity = (id, requestAction) => {
   };
 };
 
-/**
-* @type 商品类型；0：普通商品，1:团购商品
-**/
 export const fetchShopBagQuantity = (type) => {
   const action = createAction(names.FETCH_SHOP_BAG_QUANTITY);
   return (dispatch) => {

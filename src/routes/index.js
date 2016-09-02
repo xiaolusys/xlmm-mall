@@ -37,6 +37,7 @@ import {
   OrderCommit,
   OrderSuccess,
   OrderRedpacket,
+  OrderSpellgroupProgress,
 } from 'containers/Order';
 
 import {
@@ -101,6 +102,7 @@ export default (
     <Route path="/order/success/:tradeId/:tid" component={OrderSuccess} onEnter={utils.checkAuth} />
     <Route path="/order/logistics" component={Logistics} onEnter={utils.checkAuth} />
     <Route path="/order/redpacket" component={OrderRedpacket} />
+    <Route path="/order/spell/group/progress/:tradeId/:sId" component={OrderSpellgroupProgress} onEnter={utils.checkAuth} />
     <Route path="/shop/bag" component={ShopBag} onEnter={utils.checkAuth} />
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/details/app/:id" component={ProductAppDetails} />
