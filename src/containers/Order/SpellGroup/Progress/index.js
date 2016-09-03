@@ -74,7 +74,12 @@ export default class Progress extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
+    const { progress, share } = this.props.spellGroup;
+    if (progress.isLoading || share.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else {
+      utils.ui.loadingSpinner.hide();
+    }
   }
 
   onShareBtnClick = (e) => {
