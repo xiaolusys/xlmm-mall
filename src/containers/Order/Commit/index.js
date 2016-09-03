@@ -121,6 +121,7 @@ export default class Commit extends Component {
   onCommitOrderClick = (e) => {
     const { address, payInfo, coupon } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
+    const { teambuyId } = this.props.location.query;
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
       return;
@@ -140,6 +141,7 @@ export default class Commit extends Component {
         addr_id: address.data.id,
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
+        teambuy_id: teambuyId,
       });
       return;
     }
@@ -155,6 +157,7 @@ export default class Commit extends Component {
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
         pay_extras: this.getPayExtras(),
+        teambuy_id: teambuyId,
       });
       return;
     }
@@ -170,6 +173,7 @@ export default class Commit extends Component {
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
         pay_extras: this.getPayExtras(),
+        teambuy_id: teambuyId,
       });
       return;
     }
@@ -181,6 +185,7 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId } = this.state;
     const { paytype } = e.currentTarget.dataset;
+    const { teambuyId } = this.props.location.query;
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
@@ -192,6 +197,7 @@ export default class Commit extends Component {
       channel: this.getPayType(paytype),
       logistics_company_id: logisticsCompanyId,
       pay_extras: this.getPayExtras(),
+      teambuy_id: teambuyId,
     });
     e.preventDefault();
   }

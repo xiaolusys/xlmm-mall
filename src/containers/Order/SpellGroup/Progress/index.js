@@ -85,7 +85,7 @@ export default class Progress extends Component {
       share_desc: spellGroup.share.data.active_dec,
       share_icon: spellGroup.share.data.share_icon,
       share_type: 'link',
-      link: spellGroup.share.data.share_link,
+      link: `spellGroup.share.data.share_link?from_page=share`,
     };
 
     if (utils.detector.isWechat()) {
@@ -124,8 +124,12 @@ export default class Progress extends Component {
 
   onSpellGroupBtnClick = (e) => {
     const fromPage = this.props.location.query.from_page;
-    const { modelid } = e.currentTarget.dataset;
+    const { modelid, teambuyid } = e.currentTarget.dataset;
     if (fromPage === 'order_commit') {
+      return;
+    }
+    if (fromPage === 'share') {
+      window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyid}`;
       return;
     }
     if (!fromPage) {
@@ -138,6 +142,9 @@ export default class Progress extends Component {
     const fromPage = this.props.location.query.from_page;
     if (fromPage === 'order_commit') {
       return '分享团购';
+    }
+    if (fromPage === 'share') {
+      return '参加团购';
     }
     if (!fromPage) {
       return '我也要开个团';
@@ -267,7 +274,7 @@ export default class Progress extends Component {
             {this.renderJoinList(progress.data)}
             <div className="row no-margin">
               <If condition={fromPage === 'order_commit' || !fromPage}>
-                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
+                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} data-teambuyid={progress.data.id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
           </If>
