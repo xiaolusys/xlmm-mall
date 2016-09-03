@@ -44,6 +44,7 @@ const setupWebViewJavascriptBridge = function(callback) {
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export default class Progress extends Component {
+
   static propTypes = {
     prefixCls: React.PropTypes.string,
     params: React.PropTypes.object,
