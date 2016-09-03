@@ -1,7 +1,9 @@
 .spell-group-progress {
+  background-color: #fff;
   .product-info {
     background-color: #fff;
-    padding: 8px;
+    padding: 8px 16px;
+    ;
     p {
       margin-bottom: 0px;
     }
@@ -9,15 +11,48 @@
       font-size: 28px;
       color: #F92828;
     }
+    .product-name {
+      margin-top: 12px;
+    }
   }
   .presenter-list {
-  	background-color: #fff;
-  	padding-top: 8px;
-  	padding-bottom: 8px;
+    background-color: #fff;
+    padding: 8px 16px;
     img {
       width: 30px;
       height: 30px;
       border-radius: 15px;
+    }
+  }
+  .join-list {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    background-color: #f3f3f4;
+    li {
+      padding-bottom: 16px;
+      .bg-red {
+        background-color: #F92828;
+      }
+      .bg-grey {
+        background-color: #D8D8D8;
+      }
+      .bg-yellow {
+        background-color: #FFBE28;
+      }
+      .join-item {
+        height: 36px;
+        border-radius: 18px;
+      }
+      .join-info {
+        font-size: 24px;
+        color: #fff;
+      }
+    }
+    img {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
     }
   }
 }
