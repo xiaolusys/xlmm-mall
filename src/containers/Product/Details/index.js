@@ -197,7 +197,7 @@ export default class Detail extends Component {
     }
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       const cartId = shopBag.data[0].id;
-      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mm_linkid=${this.props.location.query.mm_linkid}`;
+      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mm_linkid=${this.props.location.query.mm_linkid && ''}`;
     }
   }
 
@@ -642,7 +642,7 @@ export default class Detail extends Component {
                 {`单独购¥${details.detail_content.lowest_agent_price}`}
               </button>
               <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
-                {`三人购¥${details.teambuy_info.teambuy_price}`}
+                {`${details.teambuy_info.teambuy_person_num}人购¥${details.teambuy_info.teambuy_price}`}
               </button>
           </If>
           </BottomBar>

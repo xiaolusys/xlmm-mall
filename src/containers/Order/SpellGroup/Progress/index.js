@@ -223,7 +223,7 @@ export default class Progress extends Component {
           );
         })}
         <If condition={data.status === 0}>
-          <p className="no-margin margin-top-xxxs pull-right">{`${detailLength}/3`}</p>
+          <p className="no-margin margin-top-xxxs pull-right">{`${detailLength}/${data.limit_person_num}`}</p>
         </If>
         <If condition={data.status === 1}>
           <p className="no-margin pull-right font-xlg font-orange">拼团成功</p>
