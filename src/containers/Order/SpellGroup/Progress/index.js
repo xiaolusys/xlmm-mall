@@ -84,13 +84,14 @@ export default class Progress extends Component {
 
   onShareBtnClick = (e) => {
     const { spellGroup } = this.props;
+    const shareLink = spellGroup.share.data.share_link;
     const shareData = {
       share_title: spellGroup.share.data.title,
       share_to: '',
       share_desc: spellGroup.share.data.active_dec,
       share_icon: spellGroup.share.data.share_icon,
       share_type: 'link',
-      link: `spellGroup.share.data.share_link?from_page=share`,
+      link: shareLink.indexOf('?') ? `${window.location.host}${shareLink}&from_page=share` : `${window.location.host}${shareLink}?from_page=share`,
     };
 
     if (utils.detector.isWechat()) {
@@ -249,7 +250,7 @@ export default class Progress extends Component {
         {data.detail_info.reverse().map((item, index) => {
         return (
           <li className="row no-margin" key={index}>
-            <p className="no-margin col-xs-12 no-padding">{item.join_time}</p>
+            <p className="no-margin col-xs-12 no-padding">{item.join_time ? item.join_time.replace('T', ' ') : ''}</p>
             <div className="col-xs-12 no-padding">
               <div className="col-xs-2 no-padding">
                 <Image src={item.customer_thumbnail} />
