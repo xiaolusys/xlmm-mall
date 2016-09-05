@@ -417,8 +417,10 @@ export default class Detail extends Component {
             </If>
           </div>
           <If condition={Number(trade.order_type) === 3}>
-            <a className="row no-margin content-white-bg" href={`/order/spell/group/${trade.tid}`}>
-              <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-lg button button-energized" type="button" onClick={this.onSpellGroupBtnClick}>查看拼团进度</button>
+            <a href={`/order/spell/group/${trade.tid}?from_page=order_detail`}>
+              <div className="row no-margin content-white-bg">
+                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" type="button">查看拼团进度</button>
+              </div>
             </a>
           </If>
           <If condition={trade.status === 1 || trade.status === 2}>

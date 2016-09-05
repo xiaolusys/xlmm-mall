@@ -130,28 +130,45 @@ export default class Progress extends Component {
   onSpellGroupBtnClick = (e) => {
     const fromPage = this.props.location.query.from_page;
     const { modelid, teambuyid } = e.currentTarget.dataset;
+    const status = Number(this.props.spellGroup.data && this.props.spellGroup.data.status);
     if (fromPage === 'order_commit') {
+      this.onShareBtnClick();
       return;
     }
-    if (fromPage === 'share') {
+    if (fromPage === 'share' && status === 0) {
       window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyid}`;
       return;
     }
-    if (!fromPage) {
+    if (fromPage === 'share' && status !== 0) {
+      window.location.href = `/mall/product/details/${modelid}`;
+      return;
+    }
+    if (fromPage === 'order_detail' && status === 0) {
       this.onShareBtnClick();
+      return;
+    }
+    if (fromPage === 'order_detail' && status !== 0) {
+      window.location.href = `/mall/product/details/${modelid}`;
       return;
     }
   }
 
   getBtnText() {
     const fromPage = this.props.location.query.from_page;
+    const status = Number(this.props.spellGroup.data && this.props.spellGroup.data.status);
     if (fromPage === 'order_commit') {
       return '分享团购';
     }
-    if (fromPage === 'share') {
+    if (fromPage === 'share' && status === 0) {
       return '参加团购';
     }
-    if (!fromPage) {
+    if (fromPage === 'share' && status !== 0) {
+      return '我也要开个团';
+    }
+    if (fromPage === 'order_detail' && status === 0) {
+      return '分享团购';
+    }
+    if (fromPage === 'order_detail' && status !== 0) {
       return '我也要开个团';
     }
   }
@@ -278,7 +295,7 @@ export default class Progress extends Component {
             {this.renderPresenter(progress.data)}
             {this.renderJoinList(progress.data)}
             <div className="row no-margin">
-              <If condition={fromPage === 'order_commit' || !fromPage || fromPage === 'share'}>
+              <If condition={fromPage === 'order_commit' || fromPage === 'order_detail' || fromPage === 'share'}>
                 <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} data-teambuyid={progress.data.id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
