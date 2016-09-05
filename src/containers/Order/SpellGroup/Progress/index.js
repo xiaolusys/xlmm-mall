@@ -129,14 +129,15 @@ export default class Progress extends Component {
 
   onSpellGroupBtnClick = (e) => {
     const fromPage = this.props.location.query.from_page;
+    const mmLinkId = this.props.location.query.mm_linkid;
     const { modelid, teambuyid } = e.currentTarget.dataset;
-    const status = Number(this.props.spellGroup.data && this.props.spellGroup.data.status);
+    const status = Number(this.props.spellGroup.progress.data.status);
     if (fromPage === 'order_commit') {
       this.onShareBtnClick();
       return;
     }
     if (fromPage === 'share' && status === 0) {
-      window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyid}`;
+      window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyid}&mm_linkid=${mmLinkId}`;
       return;
     }
     if (fromPage === 'share' && status !== 0) {
@@ -155,7 +156,7 @@ export default class Progress extends Component {
 
   getBtnText() {
     const fromPage = this.props.location.query.from_page;
-    const status = Number(this.props.spellGroup.data && this.props.spellGroup.data.status);
+    const status = Number(this.props.spellGroup.progress.data.status);
     if (fromPage === 'order_commit') {
       return '分享团购';
     }
@@ -236,7 +237,7 @@ export default class Progress extends Component {
   renderJoinList(data) {
     return (
       <div className="row no-margin join-list">
-        <If condition={data.limit_time}>
+        <If condition={data.limit_time && Number(data.status) === 0}>
           <div className="col-xs-12 text-center">
             <p className="countdown">
               <span className="font-grey-light margin-right-xxs">{'剩余时间'}</span>
