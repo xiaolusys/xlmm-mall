@@ -253,7 +253,7 @@ export default class Detail extends Component {
                 </p>
               </div>
               <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
-                <If condition={order.refund_status === 0}>
+                <If condition={order.refund_status === 0 && order.can_refund}>
                   <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
                 </If>
                 <If condition={order.refund_status !== 0}>
