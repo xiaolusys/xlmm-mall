@@ -197,7 +197,7 @@ export default class Detail extends Component {
     }
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       const cartId = shopBag.data[0].id;
-      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}`;
+      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${this.props.location.query.mm_linkid}`;
     }
   }
 

@@ -121,6 +121,8 @@ export default class Commit extends Component {
   onCommitOrderClick = (e) => {
     const { address, payInfo, coupon } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
+    let mmLinkId = this.props.location.query.mmLinkId;
+    mmLinkId = mmLinkId === 'undefined' ? '' : mmLinkId;
     let teambuyId = this.props.location.query.teambuyId;
     teambuyId = teambuyId === 'undefined' ? '' : teambuyId;
     if (!address.data.id) {
@@ -143,6 +145,7 @@ export default class Commit extends Component {
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
         teambuy_id: teambuyId,
+        mm_linkid: mmLinkId,
       });
       return;
     }
@@ -159,6 +162,7 @@ export default class Commit extends Component {
         logistics_company_id: logisticsCompanyId,
         pay_extras: this.getPayExtras(),
         teambuy_id: teambuyId,
+        mm_linkid: mmLinkId,
       });
       return;
     }
@@ -175,6 +179,7 @@ export default class Commit extends Component {
         logistics_company_id: logisticsCompanyId,
         pay_extras: this.getPayExtras(),
         teambuy_id: teambuyId,
+        mm_linkid: mmLinkId,
       });
       return;
     }
@@ -188,6 +193,8 @@ export default class Commit extends Component {
     const { paytype } = e.currentTarget.dataset;
     let teambuyId = this.props.location.query.teambuyId;
     teambuyId = teambuyId === 'undefined' ? '' : teambuyId;
+    let mmLinkId = this.props.location.query.mmLinkId;
+    mmLinkId = mmLinkId === 'undefined' ? '' : mmLinkId;
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
@@ -200,6 +207,7 @@ export default class Commit extends Component {
       logistics_company_id: logisticsCompanyId,
       pay_extras: this.getPayExtras(),
       teambuy_id: teambuyId,
+      mm_linkid: mmLinkId,
     });
     e.preventDefault();
   }
