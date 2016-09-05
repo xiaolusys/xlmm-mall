@@ -138,7 +138,7 @@ export default class Progress extends Component {
       return;
     }
     if (!fromPage) {
-      window.location.href = `/mall/product/details/${modelid}`;
+      this.onShareBtnClick();
       return;
     }
   }
@@ -278,10 +278,13 @@ export default class Progress extends Component {
             {this.renderPresenter(progress.data)}
             {this.renderJoinList(progress.data)}
             <div className="row no-margin">
-              <If condition={fromPage === 'order_commit' || !fromPage}>
+              <If condition={fromPage === 'order_commit' || !fromPage || fromPage === 'share'}>
                 <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} data-teambuyid={progress.data.id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
+          </If>
+          <If condition={_.isEmpty(progress.data)}>
+            <p className="no-margin padding-top-xs padding-left-xs padding-bottom-xs">暂无团购进度信息</p>
           </If>
         </div>
       </div>

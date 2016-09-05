@@ -11,6 +11,7 @@ export const names = {
 
 const detailAction = createAction(names.FETCH_SPELL_GROUP_PROGRESS);
 const shareAction = createAction(names.FETCH_SPELL_GROUP_SHARE_INFO);
+let count = 0;
 
 export const fetchSpellGroupShareInfo = (spellGroupId) => {
   return (dispatch) => {
@@ -41,9 +42,12 @@ export const fetchSpellGroupDetails = (tid) => {
       })
       .catch((resp) => {
         dispatch(detailAction.failure(resp.data));
-        _.delay(function() {
-          dispatch(fetchSpellGroupDetails(tid));
-        }, 2000);
+        if (count < 3) {
+          _.delay(function() {
+            dispatch(fetchSpellGroupDetails(tid));
+          }, 2000);
+          count++;
+        }
       });
   };
 };

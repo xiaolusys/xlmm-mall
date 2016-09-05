@@ -111,6 +111,8 @@ export default class Detail extends Component {
   componentWillReceiveProps(nextProps) {
     const { addFavorite, unFavorite } = nextProps.favorite;
     const { shopBag } = nextProps.shopBag;
+    let teambuyId = this.props.location.query.teambuyId;
+    teambuyId = teambuyId === 'undefined' ? '' : teambuyId;
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
     if (nextProps.isLoading) {
@@ -195,7 +197,7 @@ export default class Detail extends Component {
     }
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       const cartId = shopBag.data[0].id;
-      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}`;
+      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}`;
     }
   }
 
