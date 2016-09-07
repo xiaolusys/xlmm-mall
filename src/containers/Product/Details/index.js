@@ -113,6 +113,8 @@ export default class Detail extends Component {
     const { shopBag } = nextProps.shopBag;
     let teambuyId = this.props.location.query.teambuyId;
     teambuyId = teambuyId === 'undefined' ? '' : teambuyId;
+    let mmLinkId = this.props.location.query.mm_linkid;
+    mmLinkId = mmLinkId === 'undefined' ? '' : mmLinkId;
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
     if (nextProps.isLoading) {
@@ -197,7 +199,7 @@ export default class Detail extends Component {
     }
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       const cartId = shopBag.data[0].id;
-      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mm_linkid=${this.props.location.query.mm_linkid && ''}`;
+      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
     }
   }
 

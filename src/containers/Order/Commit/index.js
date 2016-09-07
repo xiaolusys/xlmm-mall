@@ -121,8 +121,10 @@ export default class Commit extends Component {
   onCommitOrderClick = (e) => {
     const { address, payInfo, coupon } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
-    const mmLinkId = this.props.location.query.mm_linkid && '';
-    const teambuyId = this.props.location.query.teambuyId && '';
+    let mmLinkId = this.props.location.query.mmLinkId;
+    mmLinkId = mmLinkId === 'undefined' ? '' : mmLinkId;
+    let teambuyId = this.props.location.query.teambuyId;
+    teambuyId = teambuyId === 'undefined' ? '' : teambuyId;
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
       return;
@@ -189,8 +191,10 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId } = this.state;
     const { paytype } = e.currentTarget.dataset;
-    const mmLinkId = this.props.location.query.mm_linkid && '';
-    const teambuyId = this.props.location.query.teambuyId && '';
+    let mmLinkId = this.props.location.query.mmLinkId;
+    mmLinkId = mmLinkId === 'undefined' ? '' : mmLinkId;
+    let teambuyId = this.props.location.query.teambuyId;
+    teambuyId = teambuyId === 'undefined' ? '' : teambuyId;
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
