@@ -14,7 +14,7 @@ module.exports = {
     apiPort: 80,
     port: 7070,
   },
-  s18: {
+  django: {
     apiHost: 's18.xiaolumm.com',
     apiPort: 80,
     port: 7070,
