@@ -132,15 +132,16 @@ export default class Progress extends Component {
 
   onSpellGroupBtnClick = (e) => {
     const fromPage = this.props.location.query.from_page;
-    const mmLinkId = this.props.location.query.mm_linkid;
-    const { modelid, teambuyid } = e.currentTarget.dataset;
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
+    const teambuyId = this.props.spellGroup.progress.data.id ? this.props.spellGroup.progress.data.id : '';
+    const { modelid } = e.currentTarget.dataset;
     const status = Number(this.props.spellGroup.progress.data.status);
     if (fromPage === 'order_commit') {
       this.onShareBtnClick();
       return;
     }
     if (fromPage === 'share' && status === 0) {
-      window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyid}&mm_linkid=${mmLinkId}`;
+      window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`;
       return;
     }
     if (fromPage === 'share' && status !== 0) {
@@ -304,7 +305,7 @@ export default class Progress extends Component {
             {this.renderJoinList(progress.data)}
             <div className="row no-margin">
               <If condition={fromPage === 'order_commit' || fromPage === 'order_detail' || fromPage === 'share'}>
-                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} data-teambuyid={progress.data.id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
+                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
             <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
