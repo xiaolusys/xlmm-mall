@@ -111,10 +111,8 @@ export default class Detail extends Component {
   componentWillReceiveProps(nextProps) {
     const { addFavorite, unFavorite } = nextProps.favorite;
     const { shopBag } = nextProps.shopBag;
-    let teambuyId = this.props.location.query.teambuyId;
-    teambuyId = teambuyId === 'undefined' ? '' : teambuyId;
-    let mmLinkId = this.props.location.query.mm_linkid;
-    mmLinkId = mmLinkId === 'undefined' ? '' : mmLinkId;
+    const teambuyId = this.props.location.query.teambuyId ? this.props.location.query.teambuyId : '';
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
     if (nextProps.isLoading) {
