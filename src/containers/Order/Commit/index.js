@@ -99,11 +99,10 @@ export default class Commit extends Component {
     }
     if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
       if (order.data.charge.success) {
-        const trade = order.data.trade;
-        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
-      } else {
-        window.location.replace(constants.aymentResults.error);
+        window.location.replace(order.data.charge.success_url);
+        return;
       }
+      window.location.replace(order.data.charge.fail_url);
     }
     if (payInfo.isLoading || order.isLoading || address.isLoading) {
       utils.ui.loadingSpinner.show();
@@ -122,6 +121,8 @@ export default class Commit extends Component {
   onCommitOrderClick = (e) => {
     const { address, payInfo, coupon } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
+    const mmLinkId = this.props.location.query.mmLinkId;
+    const teambuyId = this.props.location.query.teambuyId;
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
       return;
@@ -141,6 +142,8 @@ export default class Commit extends Component {
         addr_id: address.data.id,
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
+        teambuy_id: teambuyId,
+        mm_linkid: mmLinkId,
       });
       return;
     }
@@ -156,6 +159,8 @@ export default class Commit extends Component {
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
         pay_extras: this.getPayExtras(),
+        teambuy_id: teambuyId,
+        mm_linkid: mmLinkId,
       });
       return;
     }
@@ -171,6 +176,8 @@ export default class Commit extends Component {
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
         pay_extras: this.getPayExtras(),
+        teambuy_id: teambuyId,
+        mm_linkid: mmLinkId,
       });
       return;
     }
@@ -182,6 +189,8 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId } = this.state;
     const { paytype } = e.currentTarget.dataset;
+    const mmLinkId = this.props.location.query.mmLinkId;
+    const teambuyId = this.props.location.query.teambuyId;
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
@@ -193,6 +202,8 @@ export default class Commit extends Component {
       channel: this.getPayType(paytype),
       logistics_company_id: logisticsCompanyId,
       pay_extras: this.getPayExtras(),
+      teambuy_id: teambuyId,
+      mm_linkid: mmLinkId,
     });
     e.preventDefault();
   }

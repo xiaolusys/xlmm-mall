@@ -16,6 +16,7 @@ import favoriteReducer from './favoriteReducer';
 import notificationReducer from './notificationReducer';
 import entrepreneurshipReducer from './entrepreneurshipReducer';
 import mamaFocusReducer from './mamaFocusReducer';
+import spellGroupReducer from './spellGroupReducer';
 import * as categoriesAction from 'actions/faq/categories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -93,6 +94,7 @@ const rootReducer = combineReducers({
   express: createReducer(expressAction.name),
   updateExpress: createReducer(updateExpressAction.name),
   expressInfo: createReducer(expressInfoAction.name),
+  spellGroup: spellGroupReducer,
   refundsList: refundsReducer,
   refundsApply: createReducer(refundsApplyAction.names.REFUNDS_APPLY),
   refundsOrder: createReducer(refundsApplyAction.names.FETCH_ORDER),

@@ -110,6 +110,9 @@ export default class Detail extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { addFavorite, unFavorite } = nextProps.favorite;
+    const { shopBag } = nextProps.shopBag;
+    const teambuyId = this.props.location.query.teambuyId ? this.props.location.query.teambuyId : '';
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
     if (nextProps.isLoading) {
@@ -192,6 +195,10 @@ export default class Detail extends Component {
     if (!_.isEmpty(nextProps.details)) {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
+    if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
+      const cartId = shopBag.data[0].id;
+      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
+    }
   }
 
   componentWillUnmount() {
@@ -258,7 +265,17 @@ export default class Detail extends Component {
 
   onAddToShopBagClick = (e) => {
     const { details } = this.props;
+    const { type } = e.currentTarget.dataset;
     const skus = details.sku_info;
+    this.setState({ type: Number(type) });
+    if (Number(type) === 3) {
+      this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, 1, type);
+      return;
+    }
+    if (type === '单独购买') {
+      this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, 1);
+      return;
+    }
     if (details.detail_content.is_flatten) {
       this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, 1);
       return;
@@ -615,9 +632,19 @@ export default class Detail extends Component {
                 </If>
               </div>
             </div>
-            <button className="button button-energized col-xs-10 no-padding" type="button" onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
-              {this.getAddToShopBagBtnText(details.detail_content)}
-            </button>
+            <If condition={!details.teambuy_info.teambuy}>
+              <button className="button button-energized col-xs-10 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+                {this.getAddToShopBagBtnText(details.detail_content)}
+              </button>
+            </If>
+            <If condition={details.teambuy_info.teambuy}>
+              <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+                {`单独购¥${details.detail_content.lowest_agent_price}`}
+              </button>
+              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+                {`${details.teambuy_info.teambuy_person_num}人购¥${details.teambuy_info.teambuy_price}`}
+              </button>
+          </If>
           </BottomBar>
           <If condition={activeSkuPopup}>
             <Popup className={`${skuPopupPrefixCls}`} active={activeSkuPopup} onPopupOverlayClick={this.onPopupOverlayClick}>
