@@ -8,6 +8,7 @@ import { Timer } from 'components/Timer';
 import { Carousel } from 'components/Carousel';
 import { Image } from 'components/Image';
 import { Toast } from 'components/Toast';
+import { WechatPopup } from 'components/WechatPopup';
 import classnames from 'classnames';
 import * as constants from 'constants';
 import * as utils from 'utils';
@@ -66,7 +67,9 @@ export default class Progress extends Component {
     context.router;
   }
 
-  state = {}
+  state = {
+    popupActive: false,
+  }
 
   componentWillMount() {
     const { sId } = this.props.params;
@@ -84,14 +87,13 @@ export default class Progress extends Component {
 
   onShareBtnClick = (e) => {
     const { spellGroup } = this.props;
-    const shareLink = spellGroup.share.data.share_link;
     const shareData = {
       share_title: spellGroup.share.data.title,
       share_to: '',
       share_desc: spellGroup.share.data.active_dec,
       share_icon: spellGroup.share.data.share_icon,
       share_type: 'link',
-      link: shareLink.indexOf('?') ? `${window.location.host}${shareLink}&from_page=share` : `${window.location.host}${shareLink}?from_page=share`,
+      link: `${window.location.host}${spellGroup.share.data.share_link}`,
     };
 
     if (utils.detector.isWechat()) {
@@ -153,6 +155,10 @@ export default class Progress extends Component {
       window.location.href = `/mall/product/details/${modelid}`;
       return;
     }
+  }
+
+  onCloseBtnClick = (e) => {
+    this.setState({ popupActive: false });
   }
 
   getBtnText() {
@@ -301,6 +307,7 @@ export default class Progress extends Component {
                 <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} data-teambuyid={progress.data.id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
+            <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
           </If>
           <If condition={_.isEmpty(progress.data)}>
             <p className="no-margin padding-top-xs padding-left-xs padding-bottom-xs">暂无团购进度信息</p>
