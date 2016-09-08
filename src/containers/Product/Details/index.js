@@ -134,7 +134,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
           return;
         case 500:
           Toast.show(nextProps.shopBag.addProduct.data.detail);
@@ -151,7 +151,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
           return;
         case 500:
           Toast.show(addFavorite.data.detail);
@@ -168,7 +168,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${this.props.location.pathname}`);
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
           return;
         case 500:
           Toast.show(unFavorite.data.detail);
