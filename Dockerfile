@@ -1,4 +1,4 @@
-from busybox
+from registry.aliyuncs.com/xiaolu-img/busybox:latest
 
 run mkdir -p /var/www/mall
 add dist /var/www/mall
