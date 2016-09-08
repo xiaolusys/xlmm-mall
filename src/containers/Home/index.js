@@ -277,7 +277,7 @@ export class Home extends Component {
                   {categories.map((item) => {
                     return (
                       <li className="col-xs-3" key={item.id}>
-                        <a href={`/mall/product/list?cid=${item.id}&title=${item.name}`}>
+                        <a href={`/mall/product/list?${item.cat_link.split('?')[1]}&title=${item.name}`}>
                           <Image src={item.cat_img} />
                         </a>
                       </li>
