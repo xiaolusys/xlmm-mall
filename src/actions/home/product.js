@@ -5,11 +5,11 @@ import createAction from '../createAction';
 
 export const name = 'FETCH_PRODUCT';
 
-export const fetchProduct = (when, pageIndex, pageSize, cid) => {
+export const fetchProduct = (when, pageIndex, pageSize, cid, orderBy) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request({ when: when }));
-    return axios.get(constants.baseEndpoint + 'modelproducts' + (when ? '/' + when : ''), { params: { page: pageIndex, page_size: pageSize, cid: cid } })
+    return axios.get(constants.baseEndpoint + 'modelproducts' + (when ? '/' + when : ''), { params: { page: pageIndex, page_size: pageSize, cid: cid, order_by: orderBy } })
       .then((resp) => {
         const data = resp.data;
         data.when = when;
@@ -18,5 +18,12 @@ export const fetchProduct = (when, pageIndex, pageSize, cid) => {
       .catch((resp) => {
         dispatch(action.failure(resp.data));
       });
+  };
+};
+
+export const resetProducts = () => {
+  const action = createAction(name);
+  return (dispatch) => {
+    dispatch(action.reset());
   };
 };
