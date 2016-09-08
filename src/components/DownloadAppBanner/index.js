@@ -42,8 +42,8 @@ export class DownloadAppBanner extends Component {
         <div className={`${prefixCls} clearfix`}>
           <div className="pull-left" style={{ lineHeight: '48px' }}>
             <i className="icon-close" onClick={this.onCloseClick}></i>
-            <span style={{ marginLeft: '8px' }}>用App首次支付</span>
-            <span style={{ fontSize: '18px' }}>立减12元</span>
+            <span style={{ marginLeft: '8px' }}>用App支付</span>
+            <span style={{ fontSize: '18px' }}>立减2元</span>
           </div>
           <div className="pull-right">
             <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onDownlodClick}>下载App</button>
