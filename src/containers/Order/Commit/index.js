@@ -95,14 +95,14 @@ export default class Commit extends Component {
     const { order, payInfo, address } = nextProps;
     const { router } = this.context;
     if (order.success && order.data.charge && order.data.charge.channel !== 'budget') {
-      this.pay(order.data.charge, order.data.trade);
+      this.pay(order.data);
     }
     if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
       if (order.data.charge.success) {
-        window.location.replace(order.data.charge.success_url);
+        window.location.replace(order.data.success_url);
         return;
       }
-      window.location.replace(order.data.charge.fail_url);
+      window.location.replace(order.data.fail_url);
     }
     if (payInfo.isLoading || order.isLoading || address.isLoading) {
       utils.ui.loadingSpinner.show();
@@ -364,14 +364,14 @@ export default class Commit extends Component {
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
   }
 
-  pay = (charge, trade) => {
+  pay = (data) => {
     this.togglePayTypePopupActive();
-    window.pingpp.createPayment(charge, (result, error) => {
+    window.pingpp.createPayment(data.charge, (result, error) => {
       if (result === 'success') {
-        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
+        window.location.replace(`${data.success_url}`);
         return;
       }
-      window.location.replace(constants.paymentResults.error);
+      window.location.replace(`${data.fail_url}`);
     });
   }
 
