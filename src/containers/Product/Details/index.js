@@ -113,6 +113,7 @@ export default class Detail extends Component {
     const { shopBag } = nextProps.shopBag;
     const teambuyId = this.props.location.query.teambuyId ? this.props.location.query.teambuyId : '';
     const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
+    let cartId = '';
     utils.wechat.config(nextProps.wechatSign);
     utils.wechat.configShareContent(nextProps.share);
     if (nextProps.isLoading) {
@@ -196,7 +197,7 @@ export default class Detail extends Component {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
-      const cartId = shopBag.data[0].id;
+      cartId = shopBag.data[0].id;
       window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
     }
   }
