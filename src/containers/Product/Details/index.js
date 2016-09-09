@@ -375,10 +375,14 @@ export default class Detail extends Component {
   }
 
   getAddToShopBagBtnText = (detail) => {
-    if (detail.is_sale_out) {
-      return '已抢光';
-    } else if (!detail.is_saleopen) {
+    if (detail.sale_state === 'will') {
       return '即将开售';
+    }
+    if (detail.sale_state === 'off') {
+      return '已下架';
+    }
+    if (detail.sale_state === 'on' && detail.is_sale_out) {
+      return '已抢光';
     }
     return '加入购物车';
   }
@@ -607,6 +611,10 @@ export default class Detail extends Component {
       badge = shopBag.shopBagQuantity.data.result;
     }
     const { preview } = this.props.location.query;
+    let disabled = false;
+    if (!_.isEmpty(details.detail_content)) {
+      disabled = (details.detail_content.sale_state === 'will' || details.detail_content.sale_state === 'off' || (details.detail_content.sale_state === 'on' && details.detail_content.is_sale_out)) && preview !== 'true';
+    }
     return (
       <div className={`${prefixCls}`}>
         <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
@@ -634,15 +642,15 @@ export default class Detail extends Component {
               </div>
             </div>
             <If condition={!details.teambuy_info.teambuy}>
-              <button className="button button-energized col-xs-10 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+              <button className="button button-energized col-xs-10 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
                 {this.getAddToShopBagBtnText(details.detail_content)}
               </button>
             </If>
             <If condition={details.teambuy_info.teambuy}>
-              <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+              <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
                 {`单独购¥${details.detail_content.lowest_agent_price}`}
               </button>
-              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={(details.detail_content.is_sale_out || !details.detail_content.is_saleopen) && preview !== 'true'}>
+              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={disabled}>
                 {`${details.teambuy_info.teambuy_person_num}人购¥${details.teambuy_info.teambuy_price}`}
               </button>
           </If>

@@ -41,11 +41,14 @@ export class Product extends Component {
         <div className="product text-center">
           <div className="product-picture">
             <Image className={imageCls} src={product.head_img} thumbnail={200} onError={this.onImageLoadError}/>
-            <If condition={product.is_saleout}>
-              <div className="product-tips"><p>已抢光</p></div>
-            </If>
             <If condition={product.sale_state === 'will'}>
               <div className="product-tips"><p>即将开售</p></div>
+            </If>
+            <If condition={product.sale_state === 'off'}>
+              <div className="product-tips"><p>已下架</p></div>
+            </If>
+            <If condition={product.sale_state === 'on' && product.is_saleout}>
+              <div className="product-tips"><p>已抢光</p></div>
             </If>
           </div>
           <div className="product-info">
