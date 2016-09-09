@@ -16,10 +16,11 @@ import pingpp from 'vendor/pingpp';
 import _ from 'underscore';
 import * as plugins from 'plugins';
 import * as spellGroupAction from 'actions/order/spellGroup';
+import * as wechatSignAction from 'actions/wechat/sign';
 
 import './index.scss';
 
-const actionCreators = _.extend(spellGroupAction);
+const actionCreators = _.extend(wechatSignAction, spellGroupAction);
 
 const setupWebViewJavascriptBridge = function(callback) {
   if (window.WebViewJavascriptBridge) {
@@ -41,6 +42,7 @@ const setupWebViewJavascriptBridge = function(callback) {
 @connect(
   state => ({
     spellGroup: state.spellGroup,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -51,6 +53,7 @@ export default class Progress extends Component {
     params: React.PropTypes.object,
     location: React.PropTypes.object,
     spellGroup: React.PropTypes.any,
+    fetchWechatSign: React.PropTypes.func,
     fetchSpellGroupDetails: React.PropTypes.func,
   };
 
@@ -73,11 +76,22 @@ export default class Progress extends Component {
 
   componentWillMount() {
     const { sId } = this.props.params;
+    this.props.fetchWechatSign();
     this.props.fetchSpellGroupDetails(sId);
   }
 
   componentWillReceiveProps(nextProps) {
     const { progress, share } = nextProps.spellGroup;
+    utils.wechat.config(nextProps.wechatSign);
+    utils.wechat.configShareContent({
+      success: nextProps.spellGroup.share.success,
+      data: {
+        title: nextProps.spellGroup.share.data.title,
+        desc: nextProps.spellGroup.share.data.active_dec,
+        link: nextProps.spellGroup.share.data.share_link,
+        imgUrl: nextProps.spellGroup.share.data.share_icon,
+      },
+    });
     if (progress.isLoading || share.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
