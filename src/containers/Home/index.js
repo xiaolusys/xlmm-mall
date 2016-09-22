@@ -239,7 +239,6 @@ export class Home extends Component {
         <div className="home-container">
           <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} hide={!hasHeader}/>
           <div className="content content-white-bg">
-            <DownloadAppBanner />
             <If condition={!_.isEmpty(mamaInfo && mamaInfo.data)}>
               <div className="row no-margin focus-container">
                 <div className="col-xs-2 no-padding">
