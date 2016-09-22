@@ -253,9 +253,17 @@ export default class Detail extends Component {
                 </p>
               </div>
               <div className="col-xs-3 no-padding text-center" style={ { marginTop: '25.5px' } }>
-                <If condition={order.refund_status === 0 && order.can_refund}>
-                  <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
-                </If>
+                <Choose>
+                  <When condition={order.status === 2 && order.refund_status === 0 && order.can_refund}>
+                    <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
+                  </When>
+                  <When condition={order.status === 3}>
+                    <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
+                  </When>
+                  <When condition={order.status === 4 && order.refund_status === 0 && order.can_refund}>
+                    <button className="button button-sm button-light" type="button" data-action={orderOperations[order.status].action} data-tradeid={trade.id} data-orderid={order.id} onClick={self.onOrderBtnClick}>{orderOperations[order.status].tag}</button>
+                  </When>
+                </Choose>
                 <If condition={order.refund_status !== 0}>
                   <div>{order.refund_status_display}</div>
                 </If>
