@@ -17,8 +17,8 @@ const createAction = (name) => {
     failure: (resp) => {
       return {
         type: name + '_' + actionTypes.FAILURE,
-        payload: resp.data || {},
-        status: resp.status || 0,
+        payload: {},
+        status: 0,
         error: true,
       };
     },

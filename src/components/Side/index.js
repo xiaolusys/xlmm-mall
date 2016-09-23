@@ -62,7 +62,7 @@ export class Side extends Component {
             <p>{profile.user_budget ? profile.user_budget.budget_cash : 0}</p>
             <p>
               <i className="icon-wallet"></i>
-              <span>钱包(元)</span>
+              <span>零钱(元)</span>
             </p>
           </div>
           <div className="col-xs-4">

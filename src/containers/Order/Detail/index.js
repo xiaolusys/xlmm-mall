@@ -16,6 +16,7 @@ import { Statusline, StatuslineItem } from 'components/Statusline';
 import { Popup } from 'components/Popup';
 import { LogisticsPopup } from 'components/LogisticsPopup';
 import { Checkbox } from 'components/Checkbox';
+import { Dialog } from 'components/Dialog';
 import moment from 'moment';
 import * as orderAction from 'actions/order/order';
 import * as payInfoAction from 'actions/order/logistics';
@@ -74,6 +75,7 @@ export default class Detail extends Component {
     logisticsCompanyCode: '',
     isShowPopup: false,
     refundChecked: false,
+    isShowDialog: false,
   }
 
   componentWillMount() {
@@ -110,13 +112,8 @@ export default class Detail extends Component {
   }
 
   onLogisticsCompanyChange = (e) => {
-    const { addressid } = this.state;
-    const id = this.props.location.query.id;
     const { value, name } = e.currentTarget.dataset;
-    this.setState({
-      logisticsPopupShow: false,
-    });
-    this.props.changeLogisticsCompany(addressid, this.props.location.query.id, value, Number(id));
+    this.setState({ isShowDialog: true, logisticsCompanyCode: value });
     e.preventDefault();
   }
 
@@ -127,6 +124,21 @@ export default class Detail extends Component {
 
   onColseLogisticsPopupClick = (e) => {
     this.setState({ logisticsPopupShow: false });
+    e.preventDefault();
+  }
+
+  onCancelBtnClick = (e) => {
+    this.setState({ isShowDialog: false, logisticsPopupShow: false });
+    e.preventDefault();
+  }
+
+  onAgreeBtnClick = (e) => {
+    const { addressid } = this.state;
+    const id = this.props.location.query.id;
+    this.setState({
+      isShowDialog: false, logisticsPopupShow: false,
+    });
+    this.props.changeLogisticsCompany(addressid, this.props.location.query.id, this.state.logisticsCompanyCode, Number(id));
     e.preventDefault();
   }
 
@@ -482,6 +494,7 @@ export default class Detail extends Component {
           </If>
         </Popup>
         <LogisticsPopup active={this.state.logisticsPopupShow} companies={logisticsCompanies} onItemClick={this.onLogisticsCompanyChange} onColsePopupClick={this.onColseLogisticsPopupClick}/>
+        <Dialog active={this.state.isShowDialog} title="小鹿提醒" content="非服装类商品是供应商直接发货，只能尽量满足您选择的快递公司，如需确认能否满足您的快递需求，请联系客服4008235355。" onCancelBtnClick={this.onCancelBtnClick} onAgreeBtnClick={this.onAgreeBtnClick}/>
       </div>
     );
   }
