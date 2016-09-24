@@ -116,6 +116,9 @@ export default class Charge extends Component {
     if (!_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
       this.context.router.replace(`/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
     }
+    if (this.state.pageInfo.trail === 'trail') {
+      Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
+    }
   }
 
   componentWillUnmount() {
@@ -152,7 +155,12 @@ export default class Charge extends Component {
       Toast.show('您已经是小鹿妈妈');
       return;
     }
-    this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
+
+    if (this.state.pageInfo.trail === 'trail') {
+      Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
+    } else {
+      this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
+    }
   }
 
   payInfo = () => {
