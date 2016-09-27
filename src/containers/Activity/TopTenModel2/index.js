@@ -117,7 +117,50 @@ export default class TopTenModel2 extends Component {
   onCouponClick = (e) => {
     const activityId = this.props.location.query.id;
     const couponId = e.currentTarget.dataset.couponid;
-    this.props.receiveCoupon(Number(couponId), activityId);
+    const modelData = this.props.topTen.data || {};
+    const index = e.currentTarget.dataset.index;
+    const jumpUrl = modelData.coupons[index].jumpUrl;
+
+    if (modelData.coupons[index].isReceived && jumpUrl && (jumpUrl !== undefined) && jumpUrl.length > 0) {
+      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+        const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
+        if (appVersion < 20160528 || appVersion >= 20160815) {
+          window.AndroidBridge.jumpToNativeLocation(jumpUrl);
+          return;
+        }
+        if (utils.detector.isApp()) {
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
+          return;
+        }
+      }
+      if (utils.detector.isIOS() && utils.detector.isApp()) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: jumpUrl },
+        });
+        return;
+      }
+      if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+        setupWebViewJavascriptBridge(function(bridge) {
+          bridge.callHandler('jumpToNativeLocation', {
+            target_url: jumpUrl,
+          }, function(response) {});
+        });
+        return;
+      }
+      if (jumpUrl.indexOf('activity_id') > 0) {
+        window.location.href = jumpUrl.substr(jumpUrl.indexOf('/mall/'));
+      } else {
+        const category = ['童装', '女装', '美食', '配饰', '母婴玩具', '箱包', '美妆', '家居'];
+        const cid = jumpUrl.substr(jumpUrl.indexOf('cid=') + 4);
+        window.location.href = `/mall/product/list?${jumpUrl.split('?')[1]}&title=${category[Number(cid) - 1]}`;
+      }
+    } else {
+      this.props.receiveCoupon(Number(couponId), activityId);
+    }
   }
 
   onProductClick = (e) => {
@@ -216,7 +259,7 @@ export default class TopTenModel2 extends Component {
             <ul className="coupon-list">
               {modelData.coupons.map((coupon, index) => {
                 return (
-                  <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
+                  <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-index={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
                     <Image quality={50} className="col-xs-12 no-padding" src={coupon.isReceived ? coupon.getAfterPic : coupon.getBeforePic} />
                   </li>
                 );
