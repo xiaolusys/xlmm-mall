@@ -94,6 +94,7 @@ export default class TopTenModel2 extends Component {
       },
     });
     if (nextProps.success) {
+      console.log('nextprops succ');
       Toast.show({
         message: nextProps.data.res,
         position: Toast.POSITION_MIDDLE,
@@ -117,7 +118,50 @@ export default class TopTenModel2 extends Component {
   onCouponClick = (e) => {
     const activityId = this.props.location.query.id;
     const couponId = e.currentTarget.dataset.couponid;
-    this.props.receiveCoupon(Number(couponId), activityId);
+    const modelData = this.props.topTen.data || {};
+    const index = e.currentTarget.dataset.index;
+    const jumpUrl = modelData.coupons[index].jumpUrl;
+    if (modelData.coupons[index].isReceived) {
+      console.log('aa');
+
+      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+        const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
+        if (appVersion < 20160528 || appVersion >= 20160815) {
+          window.AndroidBridge.jumpToNativeLocation(jumpUrl);
+          return;
+        }
+        if (utils.detector.isApp()) {
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
+          return;
+        }
+      }
+      if (utils.detector.isIOS() && utils.detector.isApp()) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: jumpUrl },
+        });
+        return;
+      }
+      if (utils.detector.isIOS() && !utils.detector.isWechat()) {
+        setupWebViewJavascriptBridge(function(bridge) {
+          bridge.callHandler('jumpToNativeLocation', {
+            target_url: jumpUrl,
+          }, function(response) {});
+        });
+        return;
+      }
+      if (modelData.coupons[index].jumpUrl.indexOf('activity_id') > 0) {
+        window.location.href = jumpUrl.substr(jumpUrl.indexOf('/mall/'));
+      } else {
+        window.location.href = `/mall/product/list?${jumpUrl.split('?')[1]}&title="分类"`;
+      }
+    } else {
+      console.log('bb');
+      this.props.receiveCoupon(Number(couponId), activityId);
+    }
   }
 
   onProductClick = (e) => {
@@ -216,7 +260,7 @@ export default class TopTenModel2 extends Component {
             <ul className="coupon-list">
               {modelData.coupons.map((coupon, index) => {
                 return (
-                  <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
+                  <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-index={index} data-couponid={coupon.couponId} onClick={this.onCouponClick}>
                     <Image quality={50} className="col-xs-12 no-padding" src={coupon.isReceived ? coupon.getAfterPic : coupon.getBeforePic} />
                   </li>
                 );
