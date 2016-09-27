@@ -121,7 +121,7 @@ export default class TopTenModel2 extends Component {
     const index = e.currentTarget.dataset.index;
     const jumpUrl = modelData.coupons[index].jumpUrl;
 
-    if (modelData.coupons[index].isReceived) {
+    if (modelData.coupons[index].isReceived && jumpUrl && (jumpUrl !== undefined) && jumpUrl.length > 0) {
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
         if (appVersion < 20160528 || appVersion >= 20160815) {
