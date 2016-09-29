@@ -30,7 +30,7 @@ const pageInfos = {
     type: 'full',
     banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXzkR8s0NxM0F3A_1500_3524.png?imageMogr2/strip/format/jpg/quality/10/interlace/1/',
     id: 0,
-    shareId: 26,
+    shareId: 38,
     btn: '支付',
   },
 };
@@ -111,7 +111,7 @@ export default class Charge extends Component {
       utils.wechat.configShareContent(shareInfo);
     }
 
-    if (this.state.pageInfo.trail === 'trail') {
+    if (this.state.pageInfo.type === 'trail') {
       Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
       window.location.replace('/mall/mama/open/failed');
       return;
@@ -156,10 +156,10 @@ export default class Charge extends Component {
   togglePayTypePopupActive = () => {
     const { mama_id } = this.props.location.query;
     const { mamaInfo } = this.props;
-    if (mamaInfo.success && !_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
-      Toast.show('您已经是小鹿妈妈');
-      return;
-    }
+    // if (mamaInfo.success && !_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
+    //  Toast.show('您已经是小鹿妈妈');
+    //  return;
+    // }
 
     if (this.state.pageInfo.trail === 'trail') {
       Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
