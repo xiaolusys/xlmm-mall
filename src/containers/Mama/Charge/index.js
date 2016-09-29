@@ -111,7 +111,6 @@ export default class Charge extends Component {
       utils.wechat.configShareContent(shareInfo);
     }
 
-    console.log(this.state.pageInfo);
     if (this.state.pageInfo.type === 'trail') {
       Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
       window.location.replace('/mall/mama/open/failed');
