@@ -110,14 +110,19 @@ export default class Charge extends Component {
       };
       utils.wechat.configShareContent(shareInfo);
     }
+
+    if (this.state.pageInfo.trail === 'trail') {
+      Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
+      window.location.replace('/mall/mama/open/failed');
+      return;
+    }
+
     if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
       this.pay(mamaCharge.data);
     }
-    if (!_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
+    // 正式妈妈邀请页面，并且存在妈妈信息，且为99或188元正式妈妈，那么直接显示开店成功
+    if ((!_.isEmpty(mamaInfo.data)) && (mamaInfo.data.last_renew_type === 183 || mamaInfo.data.last_renew_type === 365)) {
       this.context.router.replace(`/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
-    }
-    if (this.state.pageInfo.trail === 'trail') {
-      Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
     }
   }
 
@@ -158,6 +163,7 @@ export default class Charge extends Component {
 
     if (this.state.pageInfo.trail === 'trail') {
       Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
+      window.location.replace('/mall/mama/open/failed');
     } else {
       this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
     }
