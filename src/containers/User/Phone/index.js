@@ -62,11 +62,17 @@ export default class Phone extends Component {
 
   onGetVerifyCodeBtnClick = (e) => {
     const { phone, action } = this.state;
-    this.setState({ getVerifyCodeBtnPressed: true });
-    this.props.fetchVerifyCode(phone, action.requestAction);
-    _.delay(() => {
-      this.setState({ getVerifyCodeBtnPressed: false });
-    }, 50);
+    if (!this.state.getVerifyCodeBtnDsiabled) {
+      this.setState({ getVerifyCodeBtnPressed: true });
+      this.setState({ getVerifyCodeBtnDsiabled: true });
+      this.props.fetchVerifyCode(phone, action.requestAction);
+      _.delay(() => {
+        this.setState({ getVerifyCodeBtnPressed: false });
+      }, 50);
+      _.delay(() => {
+        this.setState({ getVerifyCodeBtnDsiabled: false });
+      }, 60000);
+    }
     e.preventDefault();
   }
 
