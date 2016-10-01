@@ -5,15 +5,24 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Input } from 'components/Input';
-import * as actionCreators from 'actions/user/password';
+import * as actionCreators from 'actions/user/verifyCode';
 import { Toast } from 'components/Toast';
+
+const dataFlowType = {
+  init: 0,
+  gettingVerifyCode: 1,
+  gettedVerifyCode: 2,
+  verifyingCode: 3,
+  verifiedCode: 4,
+};
 
 @connect(
   state => ({
-    data: state.password.data,
-    isLoading: state.password.isLoading,
-    error: state.password.error,
-    success: state.password.success,
+    data: state.verifyCode.verify.data,
+    isLoading: state.verifyCode.verify.isLoading,
+    error: state.verifyCode.verify.error,
+    success: state.verifyCode.verify.success,
+    verifyCodeData: state.verifyCode.fetch,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -26,6 +35,7 @@ export default class Phone extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
+    verifyCodeData: React.PropTypes.any,
     fetchVerifyCode: React.PropTypes.func,
     verify: React.PropTypes.func,
   };
@@ -45,27 +55,47 @@ export default class Phone extends Component {
     submitBtnDisabled: true,
     submitBtnPressed: false,
     bindPhone: false,
+    dataFlowState: dataFlowType.init,
+    remaining: '获取验证码',
   }
 
   componentWillMount() {
     this.setState({ action: { requestAction: 'bind' } });
+
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success) {
+    if (this.state.dataFlowState === dataFlowType.gettingVerifyCode) {
+      this.setState({ dataFlowState: dataFlowType.gettedVerifyCode });
+      if (nextProps.verifyCodeData.success && nextProps.verifyCodeData.data) {
+        Toast.show(nextProps.verifyCodeData.data.msg);
+      }
+    }
+
+    if (this.state.dataFlowState === dataFlowType.verifyingCode) {
+      this.setState({ dataFlowState: dataFlowType.verifiedCode });
       Toast.show(nextProps.data.msg);
     }
+
     if (nextProps.success && nextProps.data.rcode === 0 && this.state.bindPhone) {
       this.context.router.push('/user/profile');
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   onGetVerifyCodeBtnClick = (e) => {
     const { phone, action } = this.state;
     if (!this.state.getVerifyCodeBtnDsiabled) {
-      this.setState({ getVerifyCodeBtnPressed: true });
-      this.setState({ getVerifyCodeBtnDsiabled: true });
+      this.setState({ getVerifyCodeBtnPressed: true, getVerifyCodeBtnDsiabled: true, remaining: '60s',
+        dataFlowState: dataFlowType.gettingVerifyCode });
       this.props.fetchVerifyCode(phone, action.requestAction);
+
+      this.tick();
+      this.interval = setInterval(this.tick, 1000);
+
       _.delay(() => {
         this.setState({ getVerifyCodeBtnPressed: false });
       }, 50);
@@ -83,6 +113,7 @@ export default class Phone extends Component {
     }
     this.setState({ bindPhone: true });
     this.setState({ submitBtnPressed: true });
+    this.setState({ dataFlowState: dataFlowType.verifyingCode });
     this.props.verify(phone, verifyCode, action.requestAction);
     _.delay(() => {
       this.setState({ submitBtnPressed: false });
@@ -103,6 +134,23 @@ export default class Phone extends Component {
     });
   }
 
+  tick = () => {
+    let remaining = parseInt(this.state.remaining, 10);
+    if (remaining > 0) {
+      remaining--;
+    } else if (remaining === 0) {
+      remaining = 0;
+    } else {
+      remaining = 60;
+    }
+    if (remaining > 0) {
+      this.setState({ remaining: remaining + 's' });
+    } else {
+      this.setState({ remaining: '获取验证码' });
+      clearInterval(this.interval);
+    }
+  }
+
   render() {
     const props = this.props;
     const { children, data, isLoading, error } = this.props;
@@ -121,7 +169,7 @@ export default class Phone extends Component {
           <Input type="number" placeholder={'请输入手机号码'} onChange={this.onPhoneChange} />
           <div className="row no-margin password-box bottom-border">
             <input className="col-xs-8" type="number" placeholder="请输入验证码" onChange={this.onVerifyCodeChange} />
-            <button className={getVerifyCodeBtnCls} type="button" onClick={this.onGetVerifyCodeBtnClick} disabled={this.state.getVerifyCodeBtnDsiabled}>获取验证码</button>
+            <button className={getVerifyCodeBtnCls} type="button" onClick={this.onGetVerifyCodeBtnClick} disabled={this.state.getVerifyCodeBtnDsiabled}>{this.state.remaining}</button>
           </div>
           <div className="row no-margin">
             <button className={bindPhoneBtnCls} type="button" onClick={this.onBubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>
