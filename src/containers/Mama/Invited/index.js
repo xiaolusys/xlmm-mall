@@ -15,7 +15,7 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
-const base = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/v3/';
+const base = 'http://7xkyoy.com1.z0.glb.clouddn.com/mall/v3/';
 const actionCreators = _.extend(invitedAction, inviteSharingAction);
 const shareType = {
   full: 38,
@@ -117,17 +117,23 @@ export default class Invited extends Component {
           </li>
           <li id="trial" className="col-xs-6 no-padding" style={{ marginTop: '16px' }} onClick={this.onTabItemClick}>
             <img style={{ width: '24px', marginBottom: '10px' }} src={`${base}trial-icon${activeTab === 'trial' ? '-active' : ''}.png`} />
-            <div>一元体验</div>
+            <div>试用会员</div>
           </li>
         </ul>
         <div className="spec">
           <If condition={this.state.activeTab === 'full'}>
-            <h5>正式会员多重收益：</h5>
-            <p>享有推荐奖最高110元/人，销售佣金8-30%，点击补贴0.1-1元，限时充值188元立返230元无门槛无期限购物金，保持活跃帐户将永久有效。</p>
+            <h5>正式会员享受四大福利：</h5>
+            <p>福利1:享有推荐奖最高110元/人。转发网页点击补贴0.1-1元。</p>
+            <p>福利2:转发二维码邀人关注小鹿美美公众号，每人0.3元，2元就可轻松提现。</p>
+            <p>福利3:店铺或商品轻松转发，销售佣金8-30%，根据会员升级计划更有佣金提升。自己购买佣金返回自己帐户，享受折上折。</p>
+            <p>福利4:充值立返，充值188元立返230元无门槛无期限购物金，保持活跃帐户将永久有效。</p>
           </If>
           <If condition={this.state.activeTab === 'trial'}>
-            <h5>1元体验：</h5>
-            <p>获得15天的小鹿妈妈功能使用权限，享有推荐奖最高110元/人，销售佣金8-30%，点击补贴0.1-1元。全面了解小鹿美美模式，充值188元立返230元，即可成为正式会员！</p>
+            <h5>使用会员享受三大福利：</h5>
+            <p>福利1:获得3天的专业版小鹿妈妈功能使用权限，享有推荐奖最高110元/人，转发网页点击补贴0.1-1元。</p>
+            <p>福利2:关注小鹿美美公众号立奖1元，转发二维码邀人关注小鹿美美公众号，每人0.3元，2元就可轻松提现。</p>
+            <p>福利3:店铺或商品轻松转发，销售佣金8-30%。</p>
+            <p>注:专业版试用结束后福利2和3继续有效。续费充值188元立返230元、充值99立返115元无门槛无期限购物金。</p>
           </If>
         </div>
         <div className="invited-list text-center">
