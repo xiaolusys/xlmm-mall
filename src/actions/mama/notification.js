@@ -16,8 +16,8 @@ export const fetchNotifications = (pageIndex, pageSize, timeStamp) => {
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
-      .then((resp) => {
-        dispatch(action.failure(resp.data));
+      .catch((resp) => {
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -37,8 +37,8 @@ export const readNotification = (notificationid) => {
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
-      .then((resp) => {
-        dispatch(action.failure(resp.data));
+      .catch((resp) => {
+        dispatch(action.failure(resp));
       });
   };
 };

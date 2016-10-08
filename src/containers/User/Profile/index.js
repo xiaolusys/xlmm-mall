@@ -9,6 +9,8 @@ import { Toast } from 'components/Toast';
 import { Loader } from 'components/Loader';
 import { If } from 'jsx-control-statements';
 import classnames from 'classnames';
+import * as utils from 'utils';
+import * as plugins from 'plugins';
 
 import './index.scss';
 
@@ -18,6 +20,7 @@ import './index.scss';
     isLoading: state.profile.isLoading,
     error: state.profile.error,
     success: state.profile.success,
+    status: state.profile.status,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -28,8 +31,10 @@ export default class Profile extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
+    status: React.PropTypes.number,
     fetchProfile: React.PropTypes.func,
     logout: React.PropTypes.any,
+    location: React.PropTypes.object,
   }
 
   static contextTypes = {
@@ -41,18 +46,46 @@ export default class Profile extends Component {
     context.router;
   }
 
+  state = {
+    logoutState: false,
+  };
+
   componentWillMount() {
     this.props.fetchProfile();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success && !_.isEmpty(nextProps.data) && !nextProps.data.mobile) {
+    if (!this.state.logoutState && nextProps.success && !_.isEmpty(nextProps.data) && !nextProps.data.mobile) {
       Toast.show('请绑定手机号码！');
       this.context.router.push('/user/profile/phone');
+    }
+
+    if (this.state.logoutState && nextProps.success) {
+      Toast.show('退出登录成功！');
+      this.context.router.push('/mall');
+    }
+
+    if (nextProps.error) {
+      console.log(this.props.location.pathname + this.props.location.search);
+      switch (nextProps.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
+          return;
+        case 500:
+          Toast.show(nextProps.data.detail);
+          break;
+        default:
+          break;
+      }
     }
   }
 
   onLogoutBtnClick = (e) => {
+    this.setState({ logoutState: true });
     this.props.logout();
   }
 

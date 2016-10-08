@@ -25,7 +25,7 @@ export const fetchCities = (provinceId, address) => {
         }
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
