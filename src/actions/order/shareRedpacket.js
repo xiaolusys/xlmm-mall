@@ -14,7 +14,7 @@ export const fetchShareRedpacket = (tid) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

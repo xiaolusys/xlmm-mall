@@ -17,7 +17,7 @@ export const receiveCoupon = (couponIds, activityId) => {
         dispatch(topTenAction.fetchTopTen(activityId));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -30,7 +30,7 @@ export const fetchCouponById = (couponId) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

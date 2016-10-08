@@ -13,7 +13,7 @@ export const fetchPointLogs = (pageIndex, pageSize) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

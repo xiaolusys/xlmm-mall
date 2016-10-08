@@ -20,7 +20,7 @@ export const fetchAddress = (id, isEdit = false) => {
         }
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -33,7 +33,7 @@ export const updateAddress = (id, requestAction, address) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -46,7 +46,7 @@ export const deleteAddress = (id) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

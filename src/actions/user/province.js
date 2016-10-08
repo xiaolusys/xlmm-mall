@@ -25,7 +25,7 @@ export const fetchProvinces = (address) => {
         }
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };

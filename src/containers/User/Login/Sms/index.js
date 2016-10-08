@@ -41,6 +41,7 @@ export default class Password extends Component {
     getVerifyCodeBtnPressed: false,
     nextBtnDisabled: true,
     nextBtnPressed: false,
+    remaining: '获取验证码',
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,12 +50,20 @@ export default class Password extends Component {
     if (verify.success && verify.data.rcode === 0 && !verify.isLoading) {
       Toast.show(verify.data.msg);
       this.context.router.replace(query.next);
-    } else if ((verify.success || verify.error) && !verify.isLoading) {
+    } else if (verify.success && !verify.isLoading) {
       Toast.show(verify.data.msg);
+      this.setState({ nextBtnPressed: false });
+    } else if ((verify.error) && !verify.isLoading) {
+      Toast.show(verify.data.detail);
+      this.setState({ nextBtnPressed: false });
     }
     if ((fetch.success || fetch.error) && !fetch.isLoading && !this.state.verifyCode) {
       Toast.show(fetch.data.msg);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   onPhoneChange = (value) => {
@@ -66,17 +75,25 @@ export default class Password extends Component {
 
   onGetVerifyCodeBtnClick = (e) => {
     const { phone, action } = this.state;
-    this.setState({ getVerifyCodeBtnPressed: true });
+    this.setState({ getVerifyCodeBtnPressed: true, getVerifyCodeBtnDsiabled: true, remaining: '60s' });
     this.props.fetchVerifyCode(phone, requestAction);
+
+    this.tick();
+    this.interval = setInterval(this.tick, 1000);
+
     _.delay(() => {
       this.setState({ getVerifyCodeBtnPressed: false });
     }, 50);
+    _.delay(() => {
+        this.setState({ getVerifyCodeBtnDsiabled: false });
+      }, 60000);
     e.preventDefault();
   }
 
   onVerifyCodeChange = (e) => {
     this.setState({
       verifyCode: e.target.value,
+      submitBtnDisabled: false,
     });
   }
 
@@ -85,7 +102,25 @@ export default class Password extends Component {
     if (!verifyCode) {
       return;
     }
+    this.setState({ nextBtnPressed: true });
     this.props.verify(phone, verifyCode, requestAction);
+  }
+
+  tick = () => {
+    let remaining = parseInt(this.state.remaining, 10);
+    if (remaining > 0) {
+      remaining--;
+    } else if (remaining === 0) {
+      remaining = 0;
+    } else {
+      remaining = 60;
+    }
+    if (remaining > 0) {
+      this.setState({ remaining: remaining + 's' });
+    } else {
+      this.setState({ remaining: '获取验证码' });
+      clearInterval(this.interval);
+    }
   }
 
   render() {
@@ -106,7 +141,7 @@ export default class Password extends Component {
           <Input type="number" placeholder="请输入手机号" onChange={this.onPhoneChange}/>
           <div className="row no-margin password-box bottom-border">
             <input className="col-xs-8" type="number" placeholder="请输入验证码" onChange={this.onVerifyCodeChange}/>
-            <button className={getVerifyCodeBtnCls} type="button" onClick={this.onGetVerifyCodeBtnClick} disabled={this.state.getVerifyCodeBtnDsiabled}>获取验证码</button>
+            <button className={getVerifyCodeBtnCls} type="button" onClick={this.onGetVerifyCodeBtnClick} disabled={this.state.getVerifyCodeBtnDsiabled}>{this.state.remaining}</button>
           </div>
           <div className="row no-margin">
             <button className={nextBtnCls} type="button" onClick={this.onNextBntClick} disabled={this.state.nextBtnPressed}>登录</button>

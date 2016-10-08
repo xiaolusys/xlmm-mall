@@ -27,7 +27,7 @@ export const fetchOrders = (type, pageIndex, pageSize) => {
         dispatch(fetchOrdersAction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(fetchOrdersAction.failure(resp.data));
+        dispatch(fetchOrdersAction.failure(resp));
       });
   };
 };
@@ -47,7 +47,7 @@ export const fetchOrder = (tradeId) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -60,7 +60,7 @@ export const deleteOrder = (tradeId) => {
         dispatch(deleteOrderAction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(deleteOrderAction.failure(resp.data));
+        dispatch(deleteOrderAction.failure(resp));
       });
   };
 };
@@ -73,7 +73,7 @@ export const chargeOrder = (tradeId) => {
         dispatch(chargeOrderaction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(chargeOrderaction.failure(resp.data));
+        dispatch(chargeOrderaction.failure(resp));
       });
   };
 };
@@ -94,7 +94,7 @@ export const confirmReceivedOrder = (tradeId, orderId) => {
         dispatch(fetchOrder(tradeId));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
@@ -109,7 +109,7 @@ export const remindShipment = (tradeId) => {
         dispatch(fetchOrders());
       })
       .catch((resp) => {
-        dispatch(remindShipmentAction.failure(resp.data));
+        dispatch(remindShipmentAction.failure(resp));
       });
   };
 };

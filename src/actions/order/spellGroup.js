@@ -21,7 +21,7 @@ export const fetchSpellGroupShareInfo = (spellGroupId) => {
         dispatch(shareAction.success(resp.data));
       })
       .catch((resp) => {
-        dispatch(shareAction.failure(resp.data));
+        dispatch(shareAction.failure(resp));
       });
   };
 };
@@ -41,7 +41,7 @@ export const fetchSpellGroupDetails = (tid) => {
         }, 2000);
       })
       .catch((resp) => {
-        dispatch(detailAction.failure(resp.data));
+        dispatch(detailAction.failure(resp));
         if (count < 3) {
           _.delay(function() {
             dispatch(fetchSpellGroupDetails(tid));
