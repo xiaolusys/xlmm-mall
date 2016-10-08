@@ -16,7 +16,7 @@ export const fetchCouponsByStatus = (status) => {
         dispatch(action.success(data));
       })
       .catch((resp) => {
-        dispatch(action.failure(resp.data));
+        dispatch(action.failure(resp));
       });
   };
 };
