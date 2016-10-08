@@ -9,3 +9,4 @@ export MamaNotificationList from './Notification/List';
 export MamaNotificationDetail from './Notification/Detail';
 export MamaTeamIntroduce from './Team/Introduce';
 export MamaOpeningIntroduce from './OpeningIntroduce';
+export MamaZeroOpeningIntroduce from './ZeroOpeningIntroduce';

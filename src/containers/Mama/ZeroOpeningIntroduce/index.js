@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as constants from 'constants';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
 import { Image } from 'components/Image';
 import { Header } from 'components/Header';
 import * as fetchMamaQrcodeAction from 'actions/mama/mamaQrcode';
@@ -35,14 +36,14 @@ export default class ZeroOpeningIntroduce extends Component {
 
   componentWillMount() {
       this.props.fetchMamaQrcode();
-    }
+  }
 
   componentDidMount() {
     document.body.style.backgroundColor = '#FFCB00';
   }
 
   componentWillReceiveProps(nextProps) {
-
+    console.log(nextProps.mamaQrcode);
 
   }
 
@@ -55,8 +56,9 @@ export default class ZeroOpeningIntroduce extends Component {
       <div>
         <Header title="开店介绍" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content open-introduce-container">
-            <Image src={`http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/v2/banner.jpg`}/>
-            <Image src={`http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/v2/introduce.png`}/>
+            <Image src={`http://7xkyoy.com1.z0.glb.clouddn.com/mall/mama/open/v2/zeroopenbanner.png`}/>
+            <Image src ={this.props.mamaQrcode ? this.props.mamaQrcode.qrcode_link : ''} />
+            <Image src={`http://7xkyoy.com1.z0.glb.clouddn.com/mall/mama/open/v2/zeroopeninfo.png`}/>
           </div>
       </div>
     );
