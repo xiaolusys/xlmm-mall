@@ -72,6 +72,7 @@ import {
   MamaNotificationDetail,
   MamaTeamIntroduce,
   MamaOpeningIntroduce,
+  MamaZeroOpeningIntroduce,
 } from 'containers/Mama';
 
 import {
@@ -129,6 +130,7 @@ export default (
     <Route path="/mama/notification/detail" component={MamaNotificationDetail} onEnter={utils.checkAuth} />
     <Route path="/mama/team/introduce" component={MamaTeamIntroduce} />
     <Route path="/mama/open/introduce" component={MamaOpeningIntroduce} />
+    <Route path="/mama/open/zeroopen" component={MamaZeroOpeningIntroduce} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>
