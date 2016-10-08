@@ -66,7 +66,6 @@ export default class Profile extends Component {
     }
 
     if (nextProps.error) {
-      console.log(this.props.location.pathname + this.props.location.search);
       switch (nextProps.status) {
         case 403:
           if (utils.detector.isApp()) {

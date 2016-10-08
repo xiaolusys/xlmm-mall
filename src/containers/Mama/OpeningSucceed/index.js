@@ -124,9 +124,9 @@ export default class Succeed extends Component {
             </div>
           </div>
         </If>
-        <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
-        </div>
+        //<div className="row no-margin text-center margin-bottom-xs">
+        //<button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
+        //</div>
         <WechatPopup active={this.state.sharePopupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>
     );

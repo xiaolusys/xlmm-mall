@@ -9,7 +9,7 @@ export const fetchMamaQrcode = () => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post('${constants.baseEndpoint}qrcode/get_wxpub_qrcode')
+    return axios.get(constants.baseEndpoint + 'qrcode/get_wxpub_qrcode')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
