@@ -33,6 +33,7 @@ import * as cityAction from 'actions/user/city';
 import * as districtAction from 'actions/user/district';
 import * as couponAction from 'actions/user/coupon';
 import * as verifyCouponAction from 'actions/user/verifyCoupon';
+import * as selectCouponAction from 'actions/user/selectCoupon';
 import * as productDetailsAction from 'actions/product/details';
 import * as promotionAction from 'actions/activity/promotion';
 import * as shareAction from 'actions/share';
@@ -84,6 +85,7 @@ const rootReducer = combineReducers({
   district: createReducer(districtAction.name),
   coupon: createReducer(couponAction.name),
   verifyCoupon: createReducer(verifyCouponAction.name),
+  selectCoupon: createReducer(selectCouponAction.name),
   shopBag: shopBagReducer,
   coupons: couponsReducer,
   promotion: createReducer(promotionAction.name),
