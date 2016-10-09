@@ -206,7 +206,7 @@ export default class Charge extends Component {
     const payInfo = this.payInfo();
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg opening-shop">
-        <Image style={{ width: '100%' }} src={banner} quality={10} />
+        <Image style={{ width: '100%' }} src={banner} quality={30} />
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.togglePayTypePopupActive}>{btn}</button>
         </div>
