@@ -128,6 +128,7 @@ export default class Detail extends Component {
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
     }
+
     if (nextProps.shopBag.addProduct.error) {
       switch (nextProps.shopBag.addProduct.status) {
         case 403:
