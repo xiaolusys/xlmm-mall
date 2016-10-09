@@ -1,15 +1,15 @@
 import * as constants from 'constants';
 import axios from 'axios';
-import createAction from '../createAction';
 import qs from 'qs';
+import _ from 'underscore';
+import createAction from '../createAction';
+export const name = 'FETCH_COUPONS_BY_CARTID';
+const action = createAction(name);
 
-export const name = 'FETCH_MAMA_QRCODE';
-
-export const fetchMamaQrcode = (mamaLinkId) => {
-  const action = createAction(name);
+export const fetchCouponsByCartid = (cartid) => {
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'qrcode/get_wxpub_qrcode?mama_id=' + mamaLinkId)
+    return axios.get(constants.baseEndpointV1 + 'usercoupons/coupon_able?cart_ids=' + cartid)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
