@@ -28,7 +28,7 @@ const pageInfos = {
   },
   'mcf.html': {
     type: 'full',
-    banner: 'http://7xogkj.com1.z0.glb.clouddn.com/lALOXzkR8s0NxM0F3A_1500_3524.png?imageMogr2/strip/format/jpg/quality/10/interlace/1/',
+    banner: 'http://7xkyoy.com1.z0.glb.clouddn.com/mall/mama/open/v2/188.png',
     id: 0,
     shareId: 38,
     btn: '支付',
@@ -110,12 +110,12 @@ export default class Charge extends Component {
       };
       utils.wechat.configShareContent(shareInfo);
     }
-    this.pay(mamaCharge.data);
+
+    if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
+      this.pay(mamaCharge.data);
+    }
 
     /*
-    //if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
-    //  this.pay(mamaCharge.data);
-    //}
     // 正式妈妈邀请页面，并且存在妈妈信息，且为99或188元正式妈妈，那么直接显示开店成功
     //if ((!_.isEmpty(mamaInfo.data)) && (mamaInfo.data.last_renew_type === 183 || mamaInfo.data.last_renew_type === 365)) {
     //  this.context.router.replace(`/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
@@ -206,7 +206,7 @@ export default class Charge extends Component {
     const payInfo = this.payInfo();
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg opening-shop">
-        <Image style={{ width: '100%' }} src={banner} />
+        <Image style={{ width: '100%' }} src={banner} quality={10} />
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.togglePayTypePopupActive}>{btn}</button>
         </div>
