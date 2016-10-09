@@ -109,6 +109,8 @@ export const addProductToShopBag = (productId, skuId, num, type) => {
         dispatch(fetchShopBag(type));
       })
       .catch((resp) => {
+        console.log('add bag error');
+        console.log(resp);
         dispatch(action.failure(resp));
       });
   };
