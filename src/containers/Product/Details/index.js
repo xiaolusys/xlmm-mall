@@ -128,7 +128,7 @@ export default class Detail extends Component {
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
     }
-    console.log(nextProps.shopBag);
+
     if (nextProps.shopBag.addProduct.error) {
       switch (nextProps.shopBag.addProduct.status) {
         case 403:
@@ -224,7 +224,6 @@ export default class Detail extends Component {
   }
 
   onShopbagClick = (e) => {
-    console.log('on shop bag click');
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'jumpToNativeLocation',
@@ -232,7 +231,6 @@ export default class Detail extends Component {
         callback: (resp) => {},
       });
     } else {
-      console.log('jump to shop/bag');
       this.context.router.push('/shop/bag');
     }
     e.preventDefault();
@@ -268,13 +266,11 @@ export default class Detail extends Component {
   }
 
   onAddToShopBagClick = (e) => {
-    console.log('on add to shop bag click');
     const { details } = this.props;
     const { type } = e.currentTarget.dataset;
     const skus = details.sku_info;
     this.setState({ type: Number(type) });
     if (Number(type) === 3) {
-      console.log('teambuy');
       this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, 1, type);
       return;
     }
