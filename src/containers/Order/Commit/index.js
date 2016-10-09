@@ -208,6 +208,7 @@ export default class Commit extends Component {
     e.preventDefault();
   }
 
+  // select coupon
   onLinkClick = (e) => {
     this.context.router.push(e.currentTarget.dataset.to);
     e.preventDefault();
@@ -409,7 +410,7 @@ export default class Commit extends Component {
     const channels = this.props.payInfo.data.channels || [];
     const { pathname, query } = this.props.location;
     const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.couponId ? '&couponId=' + query.couponId : ''));
-    const couponLink = '/user/coupons?cartIds=' + query.cartIds + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.addressId ? '&addressId=' + query.addressId : ''));
+    const couponLink = '/order/selectcoupon?cartIds=' + query.cartIds + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds + (query.addressId ? '&addressId=' + query.addressId : ''));
     return (
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />

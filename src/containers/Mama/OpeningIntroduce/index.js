@@ -35,7 +35,10 @@ export default class OpeningIntroduce extends Component {
   }
 
   componentWillMount() {
-      this.props.fetchMamaQrcode();
+    const mamaLinkId = utils.cookie.getCookie('mm_linkid');
+    if (mamaLinkId && (mamaLinkId !== undefined)) {
+      this.props.fetchMamaQrcode(mamaLinkId);
+    }
   }
 
   componentDidMount() {
