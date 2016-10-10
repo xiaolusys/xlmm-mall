@@ -27,6 +27,8 @@ class WechatUtils {
   }
 
   configShareContent(shareInfo) {
+    console.log('configShareContent');
+    console.log(shareInfo);
     if (!shareInfo.success) {
       return;
     }

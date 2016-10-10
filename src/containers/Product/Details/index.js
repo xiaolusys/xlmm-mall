@@ -197,6 +197,7 @@ export default class Detail extends Component {
     if (!_.isEmpty(nextProps.details)) {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
+    console.log(shopBag);
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       cartId = shopBag.data[0].id;
       window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
