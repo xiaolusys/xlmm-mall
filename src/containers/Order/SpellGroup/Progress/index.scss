@@ -24,6 +24,14 @@
       border-radius: 15px;
     }
   }
+  .progress-status {
+    background-color: #fff;
+    padding: 8px 16px;
+    text-align: center;
+    .left-num {
+      color: #F92828;
+    }
+  }
   .join-list {
     padding-left: 16px;
     padding-right: 16px;
@@ -54,5 +62,9 @@
       height: 36px;
       border-radius: 18px;
     }
+  }
+  button {
+    background:#F92828;
+    color:white;
   }
 }

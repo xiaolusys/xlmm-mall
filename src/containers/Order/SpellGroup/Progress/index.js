@@ -243,14 +243,28 @@ export default class Progress extends Component {
           </div>
           );
         })}
+      </div>
+    );
+  }
+
+  renderProgressStatus(data) {
+    let detailLength = 0;
+    return (
+      <div className="row no-margin progress-status">
+      {data.detail_info.map((item, index) => {
+        if (item.customer_id) {
+          detailLength = detailLength + 1;
+        }
+      })}
+
         <If condition={data.status === 0}>
-          <p className="no-margin margin-top-xxxs pull-right">{`${detailLength}/${data.limit_person_num}`}</p>
+          <p className="no-margin margin-top-xxxs ">还差<span className="font-xlg left-num">{`${data.limit_person_num - detailLength}`}</span>人拼团成功</p>
         </If>
         <If condition={data.status === 1}>
-          <p className="no-margin pull-right font-xlg font-orange">拼团成功</p>
+          <p className="no-margin  font-xlg font-orange">拼团成功</p>
         </If>
         <If condition={data.status === 2}>
-          <p className="no-margin pull-right font-xlg font-orange">拼团失败</p>
+          <p className="no-margin font-xlg font-orange">拼团失败</p>
         </If>
       </div>
     );
@@ -270,32 +284,20 @@ export default class Progress extends Component {
         <ul>
         {data.detail_info.reverse().map((item, index) => {
         return (
+        <If condition={item.originizer}>
           <li className="row no-margin" key={index}>
             <p className="no-margin col-xs-12 no-padding">{item.join_time ? item.join_time.replace('T', ' ') : ''}</p>
             <div className="col-xs-12 no-padding">
               <div className="col-xs-2 no-padding">
                 <Image src={item.customer_thumbnail} />
               </div>
-                <If condition={item.originizer}>
-                  <p className="no-margin col-xs-10 join-item bg-red">
-                    <span className="col-xs-6 padding-top-xxs no-wrap no-padding">{item.customer_nick}</span>
-                    <span className="no-padding join-info">发起团购</span>
-                  </p>
-                </If>
-                <If condition={!item.originizer && item.customer_id}>
-                  <p className="no-margin col-xs-10 join-item bg-yellow">
-                    <span className="col-xs-6 padding-top-xxs no-wrap no-padding">{item.customer_nick}</span>
-                    <span className="no-padding join-info">加入团购</span>
-                  </p>
-                </If>
-                <If condition={!item.originizer && !item.customer_id}>
-                  <p className="no-margin col-xs-10 join-item bg-grey">
-                    <span className="col-xs-6 padding-top-xxs no-wrap no-padding">{item.customer_nick}</span>
-                    <span className="no-padding join-info">就等你了</span>
-                  </p>
-                </If>
+              <p className="no-margin col-xs-10 join-item bg-yellow">
+                <span className="col-xs-6 padding-top-xxs no-wrap no-padding">团长 {item.customer_nick}</span>
+                <span className="no-padding join-info">发起团购</span>
+              </p>
             </div>
           </li>
+          </If>
           );
         })}
         </ul>
@@ -309,17 +311,18 @@ export default class Progress extends Component {
     const fromPage = this.props.location.query.from_page;
     return (
       <div className={`${prefixCls}`}>
-        <Header title="小鹿美美商城" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="小鹿美美拼团" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
           <If condition={!_.isEmpty(progress.data) && !_.isEmpty(share.data)}>
             <DownloadAppBanner />
             {this.renderCarousel(progress.data.product_info.head_imgs)}
             {this.renderProductInfo(progress.data.product_info)}
             {this.renderPresenter(progress.data)}
+            {this.renderProgressStatus(progress.data)}
             {this.renderJoinList(progress.data)}
             <div className="row no-margin">
               <If condition={fromPage === 'order_commit' || fromPage === 'order_detail' || fromPage === 'share'}>
-                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-energized" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
+                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
             <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
