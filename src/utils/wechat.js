@@ -16,6 +16,12 @@ class WechatUtils {
     window.wx.error(function (res) {
       console.log('wx error');
       console.log(res.errMsg);
+      window.ga && window.ga('send', {
+              hitType: 'event',
+              eventCategory: 'wxapiError',
+              eventAction: 'config',
+              eventLabel: res.errMsg,
+            });
     });
 
     const params = wechatSign.data;
