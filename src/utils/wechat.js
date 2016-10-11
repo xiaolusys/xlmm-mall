@@ -45,7 +45,7 @@ class WechatUtils {
               hitType: 'event',
               eventCategory: 'ShareSucceed',
               eventAction: method,
-              eventLabel: params.link,
+              eventLabel: params.share_link,
             });
           },
           cancel: () => {
@@ -53,7 +53,7 @@ class WechatUtils {
               hitType: 'event',
               eventCategory: 'ShareCanceled',
               eventAction: method,
-              eventLabel: params.link,
+              eventLabel: params.share_link,
             });
           },
         });

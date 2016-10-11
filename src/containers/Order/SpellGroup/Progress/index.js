@@ -88,8 +88,8 @@ export default class Progress extends Component {
       data: {
         title: nextProps.spellGroup.share.data.title,
         desc: nextProps.spellGroup.share.data.active_dec,
-        link: `${window.location.host}${nextProps.spellGroup.share.data.share_link}`,
-        imgUrl: nextProps.spellGroup.share.data.share_icon,
+        share_link: `${window.location.host}${nextProps.spellGroup.share.data.share_link}`,
+        share_img: nextProps.spellGroup.share.data.share_icon,
       },
     });
     if (progress.isLoading || share.isLoading) {
