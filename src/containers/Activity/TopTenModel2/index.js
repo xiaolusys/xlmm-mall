@@ -73,6 +73,7 @@ export default class TopTenModel2 extends Component {
 
   state = {
     popupActive: false,
+    wxConfig: true,
   }
 
   componentWillMount() {
@@ -83,16 +84,21 @@ export default class TopTenModel2 extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    utils.wechat.config(nextProps.wechatSign);
-    utils.wechat.configShareContent({
-      success: nextProps.shareActivity.success,
-      data: {
-        title: nextProps.shareActivity.data.title,
-        desc: nextProps.shareActivity.data.active_dec,
-        share_link: nextProps.shareActivity.data.share_link,
-        share_img: nextProps.shareActivity.data.share_icon,
-      },
-    });
+    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success && this.state.wxConfig) {
+      this.setState({ wxConfig: false });
+      utils.wechat.config(nextProps.wechatSign);
+    }
+    if (!nextProps.shareActivity.isLoading && nextProps.shareActivity.success && !this.state.wxConfig) {
+      utils.wechat.configShareContent({
+        success: nextProps.shareActivity.success,
+        data: {
+          title: nextProps.shareActivity.data.title,
+          desc: nextProps.shareActivity.data.active_dec,
+          share_link: nextProps.shareActivity.data.share_link,
+          share_img: nextProps.shareActivity.data.share_icon,
+        },
+      });
+    }
     if (nextProps.success) {
       Toast.show({
         message: nextProps.data.res,

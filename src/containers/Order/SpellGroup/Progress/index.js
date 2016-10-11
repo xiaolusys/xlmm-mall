@@ -82,16 +82,20 @@ export default class Progress extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { progress, share } = nextProps.spellGroup;
-    utils.wechat.config(nextProps.wechatSign);
-    utils.wechat.configShareContent({
-      success: nextProps.spellGroup.share.success,
-      data: {
-        title: nextProps.spellGroup.share.data.title,
-        desc: nextProps.spellGroup.share.data.active_dec,
-        share_link: `${window.location.host}${nextProps.spellGroup.share.data.share_link}`,
-        share_img: nextProps.spellGroup.share.data.share_icon,
-      },
-    });
+    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
+      utils.wechat.config(nextProps.wechatSign);
+    }
+    if (!nextProps.spellGroup.share.isLoading && nextProps.spellGroup.share.success) {
+      utils.wechat.configShareContent({
+        success: nextProps.spellGroup.share.success,
+        data: {
+          title: nextProps.spellGroup.share.data.title,
+          desc: nextProps.spellGroup.share.data.active_dec,
+          share_link: nextProps.spellGroup.share.data.share_link,
+          share_img: nextProps.spellGroup.share.data.share_icon,
+        },
+      });
+    }
     if (progress.isLoading || share.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
@@ -107,7 +111,7 @@ export default class Progress extends Component {
       share_desc: spellGroup.share.data.active_dec,
       share_icon: spellGroup.share.data.share_icon,
       share_type: 'link',
-      link: `${window.location.host}${spellGroup.share.data.share_link}`,
+      link: `${spellGroup.share.data.share_link}`,
     };
 
     if (utils.detector.isWechat()) {
