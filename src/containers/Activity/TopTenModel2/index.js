@@ -73,6 +73,7 @@ export default class TopTenModel2 extends Component {
 
   state = {
     popupActive: false,
+    wxConfig: true,
   }
 
   componentWillMount() {
@@ -83,8 +84,9 @@ export default class TopTenModel2 extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
+    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success && this.state.wxConfig) {
       utils.wechat.config(nextProps.wechatSign);
+      this.setState({ wxConfig: false });
     }
     if (!nextProps.shareActivity.isLoading && nextProps.shareActivity.success) {
       utils.wechat.configShareContent({
