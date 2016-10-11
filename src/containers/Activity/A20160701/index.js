@@ -82,8 +82,8 @@ export default class A20160701 extends Component {
       data: {
         title: nextProps.shareActivity.data.title,
         desc: nextProps.shareActivity.data.active_dec,
-        link: nextProps.shareActivity.data.share_link,
-        imgUrl: nextProps.shareActivity.data.share_icon,
+        share_link: nextProps.shareActivity.data.share_link,
+        share_img: nextProps.shareActivity.data.share_icon,
       },
     });
     if (nextProps.success) {
