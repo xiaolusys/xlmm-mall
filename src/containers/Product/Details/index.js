@@ -114,8 +114,12 @@ export default class Detail extends Component {
     const teambuyId = this.props.location.query.teambuyId ? this.props.location.query.teambuyId : '';
     const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
     let cartId = '';
-    utils.wechat.config(nextProps.wechatSign);
-    utils.wechat.configShareContent(nextProps.share);
+    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
+      utils.wechat.config(nextProps.wechatSign);
+    }
+    if (!nextProps.share.isLoading && nextProps.share.success) {
+      utils.wechat.configShareContent(nextProps.share);
+    }
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
