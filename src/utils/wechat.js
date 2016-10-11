@@ -41,7 +41,7 @@ class WechatUtils {
       console.log('wx ready');
       const params = shareInfo.data;
       shareMethods.map(method => {
-        window.wx.method({
+        window.wx[method]({
           title: params.title,
           desc: params.desc,
           link: params.share_link,
