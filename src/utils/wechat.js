@@ -40,6 +40,7 @@ class WechatUtils {
     window.wx.ready(() => {
       console.log('wx ready');
       const params = shareInfo.data;
+      console.log(params);
       shareMethods.map(method => {
         window.wx[method]({
           title: params.title,
@@ -66,14 +67,6 @@ class WechatUtils {
             window.ga && window.ga('send', {
               hitType: 'event',
               eventCategory: 'ShareFailed',
-              eventAction: method,
-              eventLabel: params.share_link,
-            });
-          },
-          complete: () => {
-            window.ga && window.ga('send', {
-              hitType: 'event',
-              eventCategory: 'ShareComplete',
               eventAction: method,
               eventLabel: params.share_link,
             });

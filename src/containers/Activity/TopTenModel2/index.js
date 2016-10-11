@@ -85,10 +85,10 @@ export default class TopTenModel2 extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success && this.state.wxConfig) {
-      utils.wechat.config(nextProps.wechatSign);
       this.setState({ wxConfig: false });
+      utils.wechat.config(nextProps.wechatSign);
     }
-    if (!nextProps.shareActivity.isLoading && nextProps.shareActivity.success) {
+    if (!nextProps.shareActivity.isLoading && nextProps.shareActivity.success && !this.state.wxConfig) {
       utils.wechat.configShareContent({
         success: nextProps.shareActivity.success,
         data: {
