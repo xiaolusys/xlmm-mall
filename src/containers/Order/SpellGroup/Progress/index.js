@@ -91,7 +91,7 @@ export default class Progress extends Component {
         data: {
           title: nextProps.spellGroup.share.data.title,
           desc: nextProps.spellGroup.share.data.active_dec,
-          share_link: `${window.location.host}${nextProps.spellGroup.share.data.share_link}`,
+          share_link: nextProps.spellGroup.share.data.share_link,
           share_img: nextProps.spellGroup.share.data.share_icon,
         },
       });
@@ -111,7 +111,7 @@ export default class Progress extends Component {
       share_desc: spellGroup.share.data.active_dec,
       share_icon: spellGroup.share.data.share_icon,
       share_type: 'link',
-      link: `${window.location.host}${spellGroup.share.data.share_link}`,
+      link: `${spellGroup.share.data.share_link}`,
     };
 
     if (utils.detector.isWechat()) {
