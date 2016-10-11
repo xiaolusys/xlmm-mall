@@ -443,7 +443,7 @@ export default class Detail extends Component {
               </div>
             </a>
           </If>
-          <If condition={trade.status === 1 || trade.status === 2}>
+          <If condition={trade.status === 1}>
             <BottomBar>
               <If condition={trade.status === 1}>
                 <div className="pull-left text-left countdown">
