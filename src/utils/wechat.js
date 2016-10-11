@@ -71,7 +71,12 @@ class WechatUtils {
             });
           },
           complete: () => {
-            console.log('share complete ' + params.share_link);
+            window.ga && window.ga('send', {
+              hitType: 'event',
+              eventCategory: 'ShareComplete',
+              eventAction: method,
+              eventLabel: params.share_link,
+            });
           },
         });
       });
