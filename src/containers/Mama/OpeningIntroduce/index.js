@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { If } from 'jsx-control-statements';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as constants from 'constants';
@@ -67,7 +68,9 @@ export default class OpeningIntroduce extends Component {
         <Header title="开店介绍" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content open-introduce-container">
             <Image src={`http://7xkyoy.com1.z0.glb.clouddn.com//mall/mama/open/v2/zeroopenbanner.png`} quality={80}/>
-            <Image className="qrcode" src ={this.props.mamaQrcode ? this.props.mamaQrcode.data.qrcode_link : ''} />
+            <If condition={this.props.mamaQrcode && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link)}>
+              <Image className="qrcode" src ={this.props.mamaQrcode.data.qrcode_link} />
+            </If>
             <div >
               <h>-----------------------------0元开店步骤---------------------------</h>
               <ul>
