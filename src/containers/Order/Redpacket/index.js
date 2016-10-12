@@ -16,13 +16,15 @@ import * as constants from 'constants';
 
 import './index.scss';
 
-const actionCreators = _.extend(profileAction, usersRedpacketAction, receiveRedpacketAction);
+const actionCreators = _.extend(profileAction, usersRedpacketAction, receiveRedpacketAction, shareRedpacketAction, wechatSignAction);
 const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/';
 
 @connect(
   state => ({
     usersRedpacket: state.usersRedpacket,
     receiveRedpacket: state.receiveRedpacket,
+    shareRedpacket: state.shareRedpacket,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -35,6 +37,11 @@ export default class Redpacket extends Component {
     receiveRedpacket: React.PropTypes.object,
     fetchUsersRedpacket: React.PropTypes.func,
     fetchReceiveRedpacket: React.PropTypes.func,
+    shareRedpacket: React.PropTypes.object,
+    wechatSign: React.PropTypes.object,
+    fetchShareRedpacket: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
+    params: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -58,10 +65,12 @@ export default class Redpacket extends Component {
     const { query } = this.props.location;
     this.props.fetchReceiveRedpacket(query.uniq_id);
     this.props.fetchUsersRedpacket(query.uniq_id);
+    this.props.fetchWechatSign();
+    this.props.fetchShareRedpacket(query.uniq_id);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { profile, receiveRedpacket } = nextProps;
+    const { profile, receiveRedpacket, wechatSign, shareRedpacket } = nextProps;
     if (!receiveRedpacket.isLoading && receiveRedpacket.success && receiveRedpacket.data.msg) {
       Toast.show(receiveRedpacket.data.msg);
     }
