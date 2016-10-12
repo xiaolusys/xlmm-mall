@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { If } from 'jsx-control-statements';
@@ -281,7 +282,7 @@ export default class Progress extends Component {
                   <span className="">{'单购价:￥' + product.agent_price}</span>
                   <span className="padding-left-xs font-blue" onClick={this.onProductDetailClick}>{'商品详情>>'}</span>
                 </p>
-                <p className="row spell-introduction font-blue"><a href="/static/spellGroupRule.html">查看团购规则</a>>></p>
+                <p className="row spell-introduction font-blue"><Link to="/order/spell/rule">查看团购规则>></Link></p>
               </div>
             </div>
     );
