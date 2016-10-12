@@ -5,4 +5,5 @@ export OrderCommit from './Commit';
 export OrderSuccess from './Success';
 export OrderRedpacket from './Redpacket';
 export OrderSpellgroupProgress from './SpellGroup/Progress';
+export OrderSpellgroupRule from './SpellGroup/Rule';
 export OrderSelectCoupon from './SelectCoupon';
