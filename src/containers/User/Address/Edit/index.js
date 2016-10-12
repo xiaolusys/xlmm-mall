@@ -101,18 +101,36 @@ export default class Edit extends Component {
     let selectedCity = {};
     let selectedProvince = {};
     let selecteDistrict = {};
+
+    if ((nextProps.address.success && typeof(nextProps.address.data.code) !== 'undefined')
+      || (nextProps.address.error)) {
+      this.setState({ nextBtnPressed: false });
+    }
+
     if (nextProps.address.success && nextProps.address.data.code === 0) {
       this.context.router.goBack();
     }
+    if (nextProps.address.success && typeof(nextProps.address.data.code) !== 'undefined'
+      && nextProps.address.data.code !== 0 && this.state.nextBtnPressed) {
+      Toast.show(nextProps.address.data.info);
+    }
     if (nextProps.address.success && _.isObject(nextProps.address.data) && (nextProps.address.data.code === 0)) {
+      // fuck,删除是msg，update是info,server has some question
       Toast.show(nextProps.address.data.msg);
     }
 
     if (nextProps.province.success) {
+      // 第一次是使用后台查出来的省，如果后面有修改，要用state里面的省
+      let province = '';
+      if (this.state.address.receiver_state) {
+        province = this.state.address.receiver_state;
+      } else {
+        province = nextProps.address.data.receiver_state;
+      }
 
       _.each(nextProps.province.data, (item, index) => {
 
-        if (nextProps.address.data.receiver_state && nextProps.address.data.receiver_state.indexOf(item.name) >= 0) {
+        if (province && province.indexOf(item.name) >= 0) {
           selectedProvince = { receiver_state: item.name, receiverStateId: item.id };
         }
       });
@@ -169,6 +187,13 @@ export default class Edit extends Component {
     const value = Number(e.currentTarget.value);
     const label = e.currentTarget.selectedOptions[0].label;
     const selectName = e.currentTarget.name;
+
+    if (typeof(label) === 'undefined') {
+      return;
+    } else if (label === '选择省份' || label === '选择城市' || label === '选择地区') {
+      return;
+    }
+
     switch (selectName) {
       case 'province':
         this.setState({ address: _.extend({}, this.state.address, { receiver_state: label, receiverStateId: value }) });
@@ -193,11 +218,18 @@ export default class Edit extends Component {
 
   onSaveBntClick = (e) => {
     const id = Number(this.props.params.id);
+    if (this.state.address.receiver_mobile.length !== 11) {
+      Toast.show('手机号长度不对，请修改！！！');
+      e.preventDefault();
+      return;
+    }
+
     if (id === 0) {
       this.props.updateAddress(null, requestAction.create, this.state.address);
     } else {
       this.props.updateAddress(id, requestAction.update, this.state.address);
     }
+    this.setState({ nextBtnPressed: true });
     e.preventDefault();
   }
 
