@@ -74,6 +74,22 @@ export default class Redpacket extends Component {
     if (!receiveRedpacket.isLoading && receiveRedpacket.success && receiveRedpacket.data.msg) {
       Toast.show(receiveRedpacket.data.msg);
     }
+
+    if (!wechatSign.isLoading && wechatSign.success) {
+      utils.wechat.config(wechatSign);
+    }
+    if (!shareRedpacket.isLoading && shareRedpacket.success) {
+      const shareInfo = {
+        success: shareRedpacket.success,
+        data: {
+          title: shareRedpacket.data.title,
+          desc: shareRedpacket.data.description,
+          share_link: shareRedpacket.data.share_link,
+          share_img: shareRedpacket.data.post_img,
+        },
+      };
+      utils.wechat.configShareContent(shareInfo);
+    }
   }
 
   onInputTextChange = (e) => {

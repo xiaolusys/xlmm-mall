@@ -3,17 +3,18 @@
   .product-info {
     background-color: #fff;
     padding: 8px 16px;
-    ;
-    p {
-      margin-bottom: 0px;
-    }
-    .team-price {
-      font-size: 28px;
-      color: #F92828;
-    }
-    .product-name {
-      margin-top: 12px;
-    }
+      img {
+        // margin: 8px;
+        // border: 1px solid #979797;
+        border-radius: 10px;
+        width: 90%;
+        overflow: hidden;
+      }
+
+    .product-info-txt {
+      padding: 8px;
+    }  
+
   }
   .presenter-list {
     background-color: #fff;
@@ -29,7 +30,7 @@
     padding: 8px 16px;
     text-align: center;
     .left-num {
-      color: #F92828;
+      color: #F92828; //red
     }
   }
   .join-list {
@@ -63,8 +64,14 @@
       border-radius: 18px;
     }
   }
-  button {
+  .button-home {
+    background:#D8D8D8;
+    color:white;
+    border:none;
+  }
+  .button-group {
     background:#F92828;
     color:white;
+    border:none;
   }
 }
