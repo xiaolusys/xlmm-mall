@@ -198,7 +198,7 @@ export default class Detail extends Component {
       }
       return;
     }
-    if (!_.isEmpty(nextProps.details)) {
+    if (!_.isEmpty(nextProps.details) && nextProps.details.custom_info) {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
     console.log(shopBag);
