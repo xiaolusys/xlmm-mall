@@ -60,6 +60,7 @@ import * as mamaChargeAction from 'actions/mama/mamaCharge';
 import * as mamaActivityAction from 'actions/mama/activity';
 import * as mamaFocusAction from 'actions/mama/focus';
 import * as mamaQrcodeAction from 'actions/mama/mamaQrcode';
+import * as mamaShopSharingAction from 'actions/mama/shopSharing';
 import * as administratorInfoAction from 'actions/mama/administratorInfo';
 
 const rootReducer = combineReducers({
@@ -116,6 +117,7 @@ const rootReducer = combineReducers({
   mamaCharge: createReducer(mamaChargeAction.name),
   mamaActivity: createReducer(mamaActivityAction.name),
   mamaQrcode: createReducer(mamaQrcodeAction.name),
+  shopSharing: createReducer(mamaShopSharingAction.name),
   mamaFocus: mamaFocusReducer,
   entrepreneurship: entrepreneurshipReducer,
   mamaCourse: courseReducer,
