@@ -136,7 +136,7 @@ export class Home extends Component {
       const shareInfo = {
         success: nextProps.shopSharing.success,
         data: {
-          title: nextProps.shopSharing.data.shop_info.name,
+          title: nextProps.shopSharing.data.shop_info.desc,
           desc: nextProps.shopSharing.data.shop_info.desc,
           share_link: nextProps.shopSharing.data.shop_info.shop_link,
           share_img: nextProps.shopSharing.data.shop_info.first_pro_pic,
