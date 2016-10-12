@@ -154,22 +154,30 @@ export default class Progress extends Component {
     const teambuyId = this.props.spellGroup.progress.data.id ? this.props.spellGroup.progress.data.id : '';
     const { modelid } = e.currentTarget.dataset;
     const status = Number(this.props.spellGroup.progress.data.status);
+    // 商品支付成功页过来的，处于拼团中分享
     if (fromPage === 'order_commit') {
       this.onShareBtnClick();
       return;
     }
+
+    // 别人分享过来的，处于拼团中则参团，注意即使自己开的团进来还是可以参团，只不过支付会成功
     if (fromPage === 'share' && status === 0) {
       window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`;
       return;
     }
+    // 别人分享过来的，处于拼团结束，那就是新开团支付，不带以前的团购信息
     if (fromPage === 'share' && status !== 0) {
       window.location.href = `/mall/product/details/${modelid}`;
       return;
     }
+
+    // 商品详情页过来的，处于拼团中则分享
     if (fromPage === 'order_detail' && status === 0) {
       this.onShareBtnClick();
       return;
     }
+
+    // 商品详情页过来的，拼团结束了，那就是新开团支付，不带以前的团购信息
     if (fromPage === 'order_detail' && status !== 0) {
       window.location.href = `/mall/product/details/${modelid}`;
       return;
@@ -178,6 +186,34 @@ export default class Progress extends Component {
 
   onCloseBtnClick = (e) => {
     this.setState({ popupActive: false });
+  }
+
+  onGoMallClick = (e) => {
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
+    window.location.href = `/mall/?mm_linkid=${mmLinkId}`;
+  }
+
+  onProductDetailClick = (e) => {
+    /* const fromPage = this.props.location.query.from_page;
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
+    const teambuyId = this.props.spellGroup.progress.data.id ? this.props.spellGroup.progress.data.id : '';
+    const { modelid } = e.currentTarget.dataset;
+    const status = Number(this.props.spellGroup.progress.data.status);
+    if (fromPage === 'order_commit' || fromPage === 'order_detail') {
+      return;
+    }
+
+    // 别人分享过来的，处于拼团中则参团，注意即使自己开的团进来还是可以参团，只不过支付会成功
+    if (fromPage === 'share' && status === 0) {
+      window.location.href = `/mall/product/details/${modelid}?teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`;
+      return;
+    }
+    // 别人分享过来的，处于拼团结束，那就是新开团支付，不带以前的团购信息
+    if (fromPage === 'share' && status !== 0) {
+      window.location.href = `/mall/product/details/${modelid}`;
+      return;
+    }*/
+    Toast.show('请点击页面下方 参加团购 或 我也要开个团 按钮查看详情。');
   }
 
   getBtnText() {
@@ -204,7 +240,7 @@ export default class Progress extends Component {
     const windowWidth = utils.dom.windowWidth();
     const carouselHeight = Number((utils.dom.windowHeight() * 0.7).toFixed(0));
     return (
-      <Carousel >
+      <Carousel>
       {images.map((image, index) => {
         return (
           <div key={index}>
@@ -217,8 +253,11 @@ export default class Progress extends Component {
   }
 
   renderProductInfo(info) {
+    const { progress } = this.props.spellGroup;
+    const product = progress.data.product_info;
+    console.log(progress);
     return (
-      <div>
+      /* <div>
         <div className="product-info bottom-border bg-white">
           <div className="row no-margin">
             <p className="col-xs-8 no-padding no-wrap product-name">{info.name}</p>
@@ -229,7 +268,22 @@ export default class Progress extends Component {
             <p className="col-xs-4 no-padding text-right font-xs">{`独购价${info.agent_price}`}</p>
           </div>
         </div>
-      </div>
+      </div>*/
+
+      <div key={product.model_id} className="row no-margin bottom-border product-info">
+              <div className="col-xs-6 no-padding">
+                <img src={product.head_imgs[0] + constants.image.square} />
+              </div>
+              <div className="col-xs-6 no-padding padding-top-xxs font-m product-info-txt">
+                <p className="row  no-wrap">{product.name}</p>
+                <p className="row  margin-top-xxxs">{'拼团价:￥' + product.team_price}</p>
+                <p className="row  margin-top-xxxs">
+                  <span className="">{'单购价:￥' + product.agent_price}</span>
+                  <span className="padding-left-xs font-blue" onClick={this.onProductDetailClick}>{'商品详情>>'}</span>
+                </p>
+                <p className="row spell-introduction font-blue"><a href="/static/spellGroupRule.html">查看团购规则</a>>></p>
+              </div>
+            </div>
     );
   }
 
@@ -319,14 +373,14 @@ export default class Progress extends Component {
         <div className="content">
           <If condition={!_.isEmpty(progress.data) && !_.isEmpty(share.data)}>
             <DownloadAppBanner />
-            {this.renderCarousel(progress.data.product_info.head_imgs)}
             {this.renderProductInfo(progress.data.product_info)}
             {this.renderPresenter(progress.data)}
             {this.renderProgressStatus(progress.data)}
             {this.renderJoinList(progress.data)}
             <div className="row no-margin">
               <If condition={fromPage === 'order_commit' || fromPage === 'order_detail' || fromPage === 'share'}>
-                <button className="col-xs-10 col-xs-offset-1 margin-top-xs margin-bottom-xs button" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
+                <button className="col-xs-3 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-home" onClick={this.onGoMallClick}>更多拼团</button>
+                <button className="col-xs-6 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-group" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
             <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
