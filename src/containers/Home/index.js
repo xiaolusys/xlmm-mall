@@ -28,12 +28,13 @@ import * as productAction from 'actions/home/product';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaFocusAction from 'actions/mama/focus';
 import * as wechatSignAction from 'actions/wechat/sign';
+import * as shopSharingAction from 'actions/mama/shopSharing';
 
 import logo from './images/logo.png';
 
 import './index.scss';
 
-const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction);
+const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction, shopSharingAction);
 const requestAction = {
   yesterday: 'yesterday',
   today: 'today',
@@ -62,6 +63,7 @@ const tabs = {
     mamaFocus: state.mamaFocus,
     mamaInfo: state.mamaInfo,
     wechatSign: state.wechatSign,
+    shopSharing: state.shopSharing,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -75,11 +77,13 @@ export class Home extends Component {
     focusMamaById: React.PropTypes.func,
     resetFocusMama: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
+    fetchShopSharing: React.PropTypes.func,
     portal: React.PropTypes.any,
     product: React.PropTypes.any,
     mamaFocus: React.PropTypes.any,
     mamaInfo: React.PropTypes.any,
     wechatSign: React.PropTypes.object,
+    shopSharing: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -98,6 +102,7 @@ export class Home extends Component {
     pageSize: 20,
     activeTab: tabs[this.props.location.query.active] || tabs.today,
     sticky: false,
+    wxConfig: true,
   }
 
   componentWillMount() {
@@ -111,6 +116,7 @@ export class Home extends Component {
       this.props.fetchMamaInfoById(mmLinkId);
     }
     this.props.fetchWechatSign();
+    this.props.fetchShopSharing();
   }
 
   componentDidMount() {
@@ -121,7 +127,24 @@ export class Home extends Component {
     let count = 0;
     let size = 0;
     const mmLinkId = this.props.location.query.mm_linkid;
-    utils.wechat.config(nextProps.wechatSign);
+    if (nextProps.wechatSign.success && !nextProps.wechatSign.isLoading && this.state.wxConfig) {
+      this.setState({ wxConfig: false });
+      utils.wechat.config(nextProps.wechatSign);
+    }
+
+    if (nextProps.shopSharing.success && !nextProps.shopSharing.isLoading && !this.state.wxConfig) {
+      const shareInfo = {
+        success: nextProps.shopSharing.success,
+        data: {
+          title: nextProps.shopSharing.data.shop_info.name,
+          desc: nextProps.shopSharing.data.shop_info.desc,
+          share_link: nextProps.shopSharing.data.shop_info.shop_link,
+          share_img: nextProps.shopSharing.data.shop_info.first_pro_pic,
+        },
+      };
+      utils.wechat.configShareContent(shareInfo);
+    }
+
     if (nextProps.product.success) {
       count = nextProps.product.data.count;
       size = nextProps.product.data.results.length;
