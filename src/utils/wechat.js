@@ -41,7 +41,7 @@ class WechatUtils {
     }
 
     console.log('configShareContent');
-    console.log(shareInfo);
+    // console.log(shareInfo);
 
     window.wx.ready(() => {
       console.log('wx ready');

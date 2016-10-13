@@ -201,6 +201,7 @@ export default class Detail extends Component {
     if (!_.isEmpty(nextProps.details) && nextProps.details.custom_info) {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
+    console.log('--shopBag--');
     console.log(shopBag);
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       cartId = shopBag.data[0].id;
