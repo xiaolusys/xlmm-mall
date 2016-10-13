@@ -218,7 +218,7 @@ export default class Edit extends Component {
 
   onSaveBntClick = (e) => {
     const id = Number(this.props.params.id);
-    if (this.state.address.receiver_mobile.length !== 11) {
+    if ((typeof(this.state.address.receiver_mobile) !== 'undefined') && this.state.address.receiver_mobile.length !== 11) {
       Toast.show('手机号长度不对，请修改！！！');
       e.preventDefault();
       return;
