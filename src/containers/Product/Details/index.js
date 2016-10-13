@@ -133,10 +133,6 @@ export default class Detail extends Component {
       Toast.show(nextProps.shopBag.addProduct.data.info);
     }
 
-    console.log(this.props.location.pathname);
-    console.log(this.props.location.search);
-    console.log(this.props);
-
     if (nextProps.shopBag.addProduct.error) {
       switch (nextProps.shopBag.addProduct.status) {
         case 403:
