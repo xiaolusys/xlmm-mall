@@ -140,7 +140,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}?teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`);
           return;
         case 500:
           Toast.show(nextProps.shopBag.addProduct.data.detail);
@@ -157,7 +157,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}?teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`);
           return;
         case 500:
           Toast.show(addFavorite.data.detail);
@@ -174,7 +174,7 @@ export default class Detail extends Component {
             plugins.invoke({ method: 'jumpToNativeLogin' });
             return;
           }
-          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}?teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`);
           return;
         case 500:
           Toast.show(unFavorite.data.detail);
