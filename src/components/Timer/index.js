@@ -51,7 +51,7 @@ export class Timer extends Component {
 
   render() {
     return (
-      <span {...this.props}>{this.state.remaining}</span>
+      <span >{this.state.remaining}</span>
     );
   }
 }

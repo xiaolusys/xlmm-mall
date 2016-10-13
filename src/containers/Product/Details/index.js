@@ -201,8 +201,7 @@ export default class Detail extends Component {
     if (!_.isEmpty(nextProps.details) && nextProps.details.custom_info) {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
-    console.log('--shopBag--');
-    console.log(shopBag);
+
     if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
       cartId = shopBag.data[0].id;
       window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
@@ -483,8 +482,8 @@ export default class Detail extends Component {
     return (
       <div className="product-spec bg-white margin-top-xxs">
         <p className="font-md font-weight-700">商品参数</p>
-        {attributes.map((attribute) => (
-          <p><span>{attribute.name}</span><span className="margin-left-xxs font-grey-light">{attribute.value}</span></p>
+        {attributes.map((attribute, index) => (
+          <p key={index}><span>{attribute.name}</span><span className="margin-left-xxs font-grey-light">{attribute.value}</span></p>
         ))}
       </div>
     );
@@ -500,10 +499,10 @@ export default class Detail extends Component {
     );
   }
 
-  renderProductSpec(rows) {
+  renderProductSpec(rows, index) {
     const self = this;
     return (
-      <div className="table-container">
+      <div className="table-container" key={index}>
         <table className="table">
           <thead>{self.renderRow(rows[0])}</thead>
           <tbody>
@@ -634,7 +633,7 @@ export default class Detail extends Component {
             {this.renderProductProps(details.comparison.attributes)}
             <If condition={!_.isEmpty(details.comparison)}>
               {details.comparison.tables.map((spec, tableIndex) => {
-                return self.renderProductSpec(spec.table);
+                return self.renderProductSpec(spec.table, tableIndex);
               })}
             </If>
             {this.renderDetails(details.detail_content.content_imgs)}
