@@ -62,25 +62,29 @@ export default class Home extends Component {
   }
 
   onShareBtnClick = (e) => {
-    if (utils.detector.isWechat()) {
+    /* if (utils.detector.isWechat()) {
       Toast.show('点击右上角按钮分享');
       return;
     }
     plugins.invoke({
       method: 'callNativeShareFunc',
       data: shareData,
-    });
+    });*/
+    Toast.show('查看分享教程');
+    window.location.href = 'http://mp.weixin.qq.com/s?__biz=MzIzODUyOTk1NA==&mid=2247483710&idx=1&sn=0395e08b6bac98cd3c95ae3ac87b8c55&chksm=e936bdf3de4134e5dc145838ca525007501d1b06229ad0647bedbde71f77c4bbeaa154471ebd#rd';
   }
 
   onInviteBtnClick = (e) => {
-    if (utils.detector.isWechat()) {
+    /* if (utils.detector.isWechat()) {
       Toast.show('点击右上角按钮分享');
       return;
     }
     plugins.invoke({
       method: 'callNativeShareFunc',
       data: shareData,
-    });
+    });*/
+    Toast.show('点击分享按钮邀请好友');
+    this.context.router.push('/mama/invited');
   }
 
   onTakeExamBtnClick = (e) => {
