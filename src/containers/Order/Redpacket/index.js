@@ -159,6 +159,7 @@ export default class Redpacket extends Component {
             <If condition={!usersRedpacket.isLoading && !_.isEmpty(usersRedpacket.data)}>
               <h4 className="text-center font-red">看看小伙伴的手气</h4>
               <ul className="margin-top-sm margin-bottom-sm">
+                <If condition={Array.isArray(usersRedpacket.data)}>
                 {usersRedpacket.data.map((item) => {
                   return (
                     <li className="row user">
@@ -174,6 +175,7 @@ export default class Redpacket extends Component {
                     </li>
                   );
                 })}
+                </If>
               </ul>
             </If>
             <div className={`${prefixCls}-rules`}>
