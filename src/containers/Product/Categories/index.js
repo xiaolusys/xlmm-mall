@@ -104,15 +104,15 @@ export default class List extends Component {
       if (item.cid === cid) {
           firstCategory = item.cid;
       } else if (item.childs) {
-        item.childs.map( (secondItem) => {
+        item.childs.map((secondItem) => {
           if (secondItem.cid === cid) {
             firstCategory = item.cid;
           }
           return;
-        })
+        });
       }
       return;
-    })
+    });
     return firstCategory;
   }
 
@@ -123,11 +123,11 @@ export default class List extends Component {
     if ((!cid) || (categoryData === [])) return secondCategory;
 
     categoryData.map((item) => {
-        if (item.cid === cid && item.childs.length > 0) {
-            secondCategory = item.childs.concat();
-        } 
+      if (item.cid === cid && item.childs.length > 0) {
+          secondCategory = item.childs.concat();
+      }
       return;
-    })
+    });
     return secondCategory;
   }
 
@@ -155,9 +155,7 @@ export default class List extends Component {
             <ul className="cat-list-ul no-margin">
               <If condition= {categoryData && categoryData.length > 0}>
               { categoryData.map((item) => {
-                return <li className={'cat-name no-margin bottom-border text-center' + (item.cid === selectCid ? ' active' : '')} key={item.cid} data-cid={item.cid} onClick={this.onTabItemClick}>
-                    {item.name}
-                  </li>;
+                  return <li className={'cat-name no-margin bottom-border text-center' + (item.cid === selectCid ? ' active' : '')} key={item.cid} data-cid={item.cid} onClick={this.onTabItemClick}>{item.name}</li>;
                 })
               }
               </If>
@@ -166,7 +164,7 @@ export default class List extends Component {
           <div className="cat-pic-list col-xs-9"></div>
             <If condition= {secondCategory && (secondCategory.length > 0)}>
             {secondCategory.map((item) => {
-              return <Image className="cat-pic col-xs-3 no-margin" key={item.cid} src={item.cat_pic} data-cid={item.cid} data-name={item.name}  onClick = {this.onItemClick} />;
+              return <Image className="cat-pic col-xs-3 no-margin" key={item.cid} src={item.cat_pic} data-cid={item.cid} data-name={item.name} onClick = {this.onItemClick} />;
             })}
             </If>
           </div>
