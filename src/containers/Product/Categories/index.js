@@ -73,38 +73,6 @@ export default class List extends Component {
     this.removeScrollListener();
   }
 
-  onItemClick = (e) => {
-    const dataSet = e.currentTarget.dataset;
-    window.location.href = `/mall/product/list?cid=${dataSet.cid}&title=${dataSet.name}`;
-  }
-
-  onTabItemClick = (e) => {
-    const { cid } = e.currentTarget.dataset;
-    this.setState({ selectCid: cid });
-  }
-
-  onScroll = (e) => {
-    const { cid } = this.props.location.query;
-    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    const documentHeight = utils.dom.documnetHeight();
-    const windowHeight = utils.dom.windowHeight();
-    const tabsOffsetTop = utils.dom.offsetTop('.product-list-tabs');
-
-    if (scrollTop > tabsOffsetTop) {
-      this.setState({ sticky: true });
-    } else {
-      this.setState({ sticky: false });
-    }
-  }
-
-  addScrollListener = () => {
-    window.addEventListener('scroll', this.onScroll);
-  }
-
-  removeScrollListener = () => {
-    window.removeEventListener('scroll', this.onScroll);
-  }
-
   getFirstCategory = (cid, categoryData) => {
     let firstCategory = 1;
     if ((!cid) || (!categoryData) || (categoryData === [])) return firstCategory;
@@ -137,6 +105,38 @@ export default class List extends Component {
       return;
     })
     return secondCategory;
+  }
+
+  onItemClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    window.location.href = `/mall/product/list?cid=${dataSet.cid}&title=${dataSet.name}`;
+  }
+
+  onTabItemClick = (e) => {
+    const { cid } = e.currentTarget.dataset;
+    this.setState({ selectCid: cid });
+  }
+
+  onScroll = (e) => {
+    const { cid } = this.props.location.query;
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    const tabsOffsetTop = utils.dom.offsetTop('.product-list-tabs');
+
+    if (scrollTop > tabsOffsetTop) {
+      this.setState({ sticky: true });
+    } else {
+      this.setState({ sticky: false });
+    }
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   render() {
