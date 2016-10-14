@@ -17,7 +17,7 @@ import notificationReducer from './notificationReducer';
 import entrepreneurshipReducer from './entrepreneurshipReducer';
 import mamaFocusReducer from './mamaFocusReducer';
 import spellGroupReducer from './spellGroupReducer';
-import * as categoriesAction from 'actions/faq/categories';
+import * as faqCategoriesAction from 'actions/faq/faqcategories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
 import * as loginAction from 'actions/user/login';
@@ -35,6 +35,7 @@ import * as couponAction from 'actions/user/coupon';
 import * as verifyCouponAction from 'actions/user/verifyCoupon';
 import * as selectCouponAction from 'actions/user/selectCoupon';
 import * as productDetailsAction from 'actions/product/details';
+import * as productCategoriesAction from 'actions/product/categories';
 import * as promotionAction from 'actions/activity/promotion';
 import * as shareAction from 'actions/share';
 import * as shareActivityAction from 'actions/share/activity';
@@ -65,7 +66,7 @@ import * as administratorInfoAction from 'actions/mama/administratorInfo';
 
 const rootReducer = combineReducers({
   form: formReducer,
-  categories: createReducer(categoriesAction.name),
+  faqcategories: createReducer(faqCategoriesAction.name),
   questions: createReducer(questionsAction.name),
   profile: createReducer(profileAction.name),
   address: createReducer(addressAction.name),
@@ -79,6 +80,7 @@ const rootReducer = combineReducers({
   portal: createReducer(portalAction.name),
   products: productsReducer,
   productDetails: createReducer(productDetailsAction.name),
+  categories: createReducer(productCategoriesAction.name),
   order: orderReducer,
   logistics: createReducer(logisticsAction.name),
   province: createReducer(provinceAction.name),
