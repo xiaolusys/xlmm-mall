@@ -64,7 +64,7 @@ export default class List extends Component {
     const { cid, title } = this.props.location.query;
 
     if (nextProps.categories.success) {
-      let selectCid = this.getFirstCategory(cid, nextProps.categories.data);
+      const selectCid = this.getFirstCategory(cid, nextProps.categories.data);
       this.setState({ selectCid: selectCid });
     }
   }
