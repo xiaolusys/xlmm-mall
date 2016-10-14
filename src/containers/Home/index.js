@@ -296,11 +296,11 @@ export class Home extends Component {
               <div className="home-categories bottom-border">
                 {portal.isLoading ? <Loader/> : null}
                 <ul className="clearfix">
-                  {categories.map((item) => {
+                  {categories.map((item, index) => {
                     return (
                       <li className="col-xs-3" key={item.id}>
                         <a href={`/mall/product/list?${item.cat_link.split('?')[1]}&title=${item.name}`}>
-                          <Image src={item.cat_img} />
+                          <Image style={{ padding: '0px 20px 0px 20px' }} src={item.cat_img} quality={90}/>
                         </a>
                       </li>
                     );
