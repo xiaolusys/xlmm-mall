@@ -99,6 +99,11 @@ export default class List extends Component {
     this.props.fetchProduct('', 1, pageSize, cid, type === 'price' ? 'price' : '');
   }
 
+  onCategoryClick = (e) => {
+    const { cid } = this.props.location.query;
+    window.location.href = '/mall/product/categories' + (cid ? `?cid=${cid}` : '') + '&title=分类';
+  }
+
   onScroll = (e) => {
     const { pageSize, pageIndex, activeTab } = this.state;
     const { fetchProduct, product } = this.props;
@@ -133,7 +138,7 @@ export default class List extends Component {
     const { activeTab, sticky } = this.state;
     return (
       <div className="product-list">
-        <Header title={title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()}/>
+        <Header title={title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} rightText="分类" onRightBtnClick={this.onCategoryClick} hide={utils.detector.isApp()}/>
         <div className="content content-white-bg">
           <div className={'product-list-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
             <ul className="row no-margin">

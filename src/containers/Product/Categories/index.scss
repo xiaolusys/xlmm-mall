@@ -1,0 +1,25 @@
+.product-categories {
+  .cat-list {
+  	height: 100%;
+  	.cat-list-ul {
+  		.cat-name {
+  			height: 30px;
+  			padding-top: 5px;
+  			&.active {
+	          color: #faac14;
+	        }
+  		}
+  	}
+  }
+  .cat-pic-list {
+    background-color: #fff;
+    height: 100%;
+    .cat-pic-ul {
+	    .cat-pic-p {
+         .cat-pic {
+          width: 100%;
+         }
+  	  }
+    }
+  }
+}

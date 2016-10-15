@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import * as actionCreators from 'actions/faq/categories';
+import * as actionCreators from 'actions/faq/faqcategories';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 
@@ -11,8 +11,8 @@ import './index.scss';
 
 @connect(
   state => ({
-    data: state.categories.data,
-    isLoading: state.categories.isLoading,
+    data: state.faqcategories.data,
+    isLoading: state.faqcategories.isLoading,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )

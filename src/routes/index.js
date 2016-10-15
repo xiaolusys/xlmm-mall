@@ -46,6 +46,7 @@ import {
   ProductDetails,
   ProductList,
   ProductAppDetails,
+  ProductCategories,
 } from 'containers/Product';
 
 import {
@@ -112,6 +113,7 @@ export default (
     <Route path="/product/details/:id" component={ProductDetails} />
     <Route path="/product/details/app/:id" component={ProductAppDetails} />
     <Route path="/product/list" component={ProductList} />
+    <Route path="/product/categories" component={ProductCategories} />
     <Route path="faq" component={FaqCategory} />
     <Route path="faq/list/:id/:name" component={FaqList} />
     <Route path="/refunds/details/:refundsid" component={RefundsDetail} onEnter={utils.checkAuth} />
