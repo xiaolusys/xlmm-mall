@@ -88,7 +88,7 @@ export default class List extends Component {
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
-    const tabsOffsetTop = utils.dom.offsetTop('.product-list-tabs');
+    const tabsOffsetTop = utils.dom.offsetTop('.cat-pic-list');
 
     if (scrollTop > tabsOffsetTop) {
       this.setState({ sticky: true });
@@ -148,7 +148,7 @@ export default class List extends Component {
     const secondCategory = this.getSecondCategory(selectCid);
 
     return (
-      <div className="product-categories white-bg">
+      <div className="product-categories">
         <Header title={title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()}/>
         <div className=" row">
           <div className={'cat-list col-xs-3 '}>
@@ -161,15 +161,22 @@ export default class List extends Component {
               </If>
             </ul>
           </div>
-          <div className="cat-pic-list col-xs-9"></div>
+          <div className="cat-pic-list col-xs-9">
+            <ul className="cat-pic-ul">
             <If condition= {secondCategory && (secondCategory.length > 0)}>
             {secondCategory.map((item) => {
-              return <Image className="cat-pic col-xs-3 no-margin" key={item.cid} src={item.cat_pic} data-cid={item.cid} data-name={item.name} onClick = {this.onItemClick} />;
-            })}
+              return (<li className="cat-pic-p col-xs-4" key={item.cid}>
+                      <Image className="cat-pic" src={item.cat_pic} data-cid={item.cid} data-name={item.name} onClick = {this.onItemClick} />
+                      <p className="text-center">{item.name}</p>
+                     </li>);
+              })
+            }
             </If>
+            </ul>
           </div>
-          {categories.isLoading ? <Loader/> : null}
         </div>
+        {categories.isLoading ? <Loader/> : null}
+      </div>
     );
   }
 }
