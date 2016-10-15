@@ -12,8 +12,14 @@
   	}
   }
   .cat-pic-list {
-  	.cat-pic {
-  		padding-top:10px;
-  	}
+    background-color: #fff;
+    height: 100%;
+    .cat-pic-ul {
+	    .cat-pic-p {
+         .cat-pic {
+          width: 100%;
+         }
+  	  }
+    }
   }
 }
