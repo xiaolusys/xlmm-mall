@@ -542,7 +542,7 @@ export default class Detail extends Component {
           if (item.sku_id === skuId) {
             return (
               <div className="col-xs-7 no-padding">
-                <p className="product-name">{details.detail_content.name + '/' + product.name}</p>
+                <p className="product-name">{details.detail_content.name + '/' + product.name + '/' + item.name}</p>
                 <p>
                   <span className="font-26">{'￥' + item.agent_price.toFixed(2)}</span>
                   <span className="font-grey-light">{'/￥' + item.std_sale_price.toFixed(2)}</span>
