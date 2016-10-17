@@ -280,9 +280,9 @@ export default class Progress extends Component {
                 <p className="row  margin-top-xxxs">{'拼团价:￥' + product.team_price}</p>
                 <p className="row  margin-top-xxxs">
                   <span className="">{'单购价:￥' + product.agent_price}</span>
-                  <span className="padding-left-xs font-blue" onClick={this.onProductDetailClick}>{'商品详情>>'}</span>
+                  <span className="padding-left-xs font-blue font-xs" onClick={this.onProductDetailClick}>{'商品详情>>'}</span>
                 </p>
-                <p className="row spell-introduction font-blue"><Link to="/order/spell/rule">查看团购规则>></Link></p>
+                <p className="row spell-introduction font-blue font-xs"><Link to="/order/spell/rule">查看团购规则>></Link></p>
               </div>
             </div>
     );
@@ -373,15 +373,14 @@ export default class Progress extends Component {
         <Header title="小鹿美美拼团" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
           <If condition={!_.isEmpty(progress.data) && !_.isEmpty(share.data)}>
-            <DownloadAppBanner />
             {this.renderProductInfo(progress.data.product_info)}
             {this.renderPresenter(progress.data)}
             {this.renderProgressStatus(progress.data)}
             {this.renderJoinList(progress.data)}
             <div className="row no-margin">
               <If condition={fromPage === 'order_commit' || fromPage === 'order_detail' || fromPage === 'share'}>
-                <button className="col-xs-3 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-home" onClick={this.onGoMallClick}>更多拼团</button>
-                <button className="col-xs-6 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-group" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
+                <button className="col-xs-3 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-home font-xs" onClick={this.onGoMallClick}>更多拼团</button>
+                <button className="col-xs-6 col-xs-offset-1 margin-top-xs margin-bottom-xs button button-group font-xs" data-modelid={progress.data.product_info.model_id} type="button" onClick={this.onSpellGroupBtnClick}>{this.getBtnText()}</button>
               </If>
             </div>
             <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
