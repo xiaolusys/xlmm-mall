@@ -59,11 +59,13 @@ export class Side extends Component {
         </div>
         <div className="row no-margin account-summary bottom-border-black text-center">
           <div className="col-xs-4">
-            <p>{profile.user_budget ? profile.user_budget.budget_cash : 0}</p>
-            <p>
-              <i className="icon-wallet"></i>
-              <span>零钱(元)</span>
-            </p>
+            <Link to={'/user/wallet?cash=' + (profile.user_budget ? profile.user_budget.budget_cash : 0)}>
+              <p>{profile.user_budget ? profile.user_budget.budget_cash : 0}</p>
+              <p>
+                <i className="icon-wallet"></i>
+                <span>零钱(元)</span>
+              </p>
+            </Link>
           </div>
           <div className="col-xs-4">
             <Link to="/user/point">

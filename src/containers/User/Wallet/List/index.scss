@@ -1,0 +1,38 @@
+.list-container {
+  > .list-head {
+    background-color: #fff;
+    height: 120px;
+
+    .cash {
+      font-size: 2em;
+      color: #FFA500;
+      padding-top: 30px;
+    }
+
+    .cash-prompt {
+      font-size: 0.75em;
+      margin-down:30px;
+    }
+    
+  }
+  .cashout-info {
+    margin-left: 4px;
+    margin-right: 4px;
+    background-color: #fff;
+
+    .cashout-status {
+      padding-top:8px;
+      .cashout-status-span {
+        color: #FFA500;
+      }
+    }
+
+    .cashout-desc {
+      padding-top:16px;
+    }
+    
+    .font-grey {
+      color: #a0a0a0 !important;
+    }
+  }
+}
