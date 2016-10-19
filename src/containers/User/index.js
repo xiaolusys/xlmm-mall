@@ -10,3 +10,7 @@ export AddressList from './Address/List';
 export EditAddress from './Address/Edit';
 export Point from './Point';
 export CouponList from './Coupon/List';
+export CashoutList from './Wallet/List';
+export CashoutDetail from './Wallet/Detail';
+export Cashout from './Wallet/Cashout';
+export CashoutResult from './Wallet/CashoutResult';
