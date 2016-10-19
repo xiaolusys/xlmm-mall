@@ -19,13 +19,6 @@ import * as wechatSignAction from 'actions/wechat/sign';
 import './index.scss';
 
 const pageInfos = {
-  'mct.html': {
-    type: 'trail',
-    banner: 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg',
-    id: 2,
-    shareId: 27,
-    btn: '马上一元开店',
-  },
   'mcf.html': {
     type: 'full',
     banner: 'http://7xkyoy.com1.z0.glb.clouddn.com/mall/mama/open/v2/188.png',
@@ -47,7 +40,7 @@ const actionCreators = _.extend(mamaInfoAction, mamaOrderAction, mamaChargeActio
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class Charge extends Component {
+export default class BuyCoupon extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
@@ -151,19 +144,7 @@ export default class Charge extends Component {
   }
 
   togglePayTypePopupActive = () => {
-    const { mama_id } = this.props.location.query;
-    const { mamaInfo } = this.props;
-    // if (mamaInfo.success && !_.isEmpty(mamaInfo.data) && !mamaInfo.data.can_trial) {
-    //  Toast.show('您已经是小鹿妈妈');
-    //  return;
-    // }
-
-    if (this.state.pageInfo.trail === 'trail') {
-      Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
-      window.location.replace('/mall/mama/open/failed');
-    } else {
       this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
-    }
   }
 
   payInfo = () => {
