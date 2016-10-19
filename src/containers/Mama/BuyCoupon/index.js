@@ -83,12 +83,6 @@ export default class Charge extends Component {
     const { mama_id } = this.props.location.query;
     const { location } = this.props;
     const pageInfo = pageInfos[location.pathname];
-    if (pageInfo.type === 'trail') {
-      Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
-      window.location.replace('/mall/mama/open/failed');
-      return;
-    }
-
     if (pageInfo) {
       this.setState({ pageInfo: pageInfo });
     }
@@ -164,7 +158,7 @@ export default class Charge extends Component {
     //  return;
     // }
 
-    if (this.state.pageInfo.type === 'trail') {
+    if (this.state.pageInfo.trail === 'trail') {
       Toast.show('一元开店活动已经结束，更优惠的活动马上开始，敬请等待！');
       window.location.replace('/mall/mama/open/failed');
     } else {
