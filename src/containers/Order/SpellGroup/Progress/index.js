@@ -120,33 +120,11 @@ export default class Progress extends Component {
       return;
     }
 
-    if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-      const appVersion = Number(window.AndroidBridge.appVersion && window.AndroidBridge.appVersion()) || 0;
-      if (appVersion < 20160528) {
-        window.AndroidBridge.callNativeUniShareFunc(shareData);
-        return;
-      }
-      if (utils.detector.isApp()) {
-        plugins.invoke({
-          method: 'callNativeUniShareFunc',
-          data: shareData,
-        });
-        return;
-      }
-    }
-    if (utils.detector.isIOS() && utils.detector.isApp()) {
-      plugins.invoke({
-        method: 'callNativeUniShareFunc',
-        data: shareData,
-      });
-      return;
-    }
-    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-      setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('callNativeUniShareFunc', shareData, function(response) {});
-      });
-      return;
-    }
+    plugins.invoke({
+      method: 'callNativeUniShareFunc',
+      data: shareData,
+    });
+    return;
   }
 
   onSpellGroupBtnClick = (e) => {
