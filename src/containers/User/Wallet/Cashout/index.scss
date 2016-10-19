@@ -1,53 +1,20 @@
-.favorite-container {
-  > .favorite-tabs {
+.cashout-container {
+  
+  .cash {
     background-color: #fff;
-    &.sticky {
-      position: fixed;
-      top: 0px;
-      left: 0;
-      right: 0;
-      z-index: 9;
-      &.has-header {
-        top: 44px;
-      }
-    }
-    > ul {
-      > li {
-        &.active {
-          color: #faac14;
-        }
-        > p {
-          padding: 8px 0px;
-        }
-      }
-    }
-  }
-  .product {
-    margin-left: 4px;
-    margin-right: 4px;
+    padding-left: 8px;
+    padding-top:8px;
+  }  
+
+  .cash-nick {
     background-color: #fff;
-    .product-picture {
-      min-height: 160px;
-      background: url("/Product/images/placeholder-vertical.png") center center no-repeat;
-      img {
-        display: block;
-        width: 100%;
-      }
-    }
-    .product-info {
-      padding: 8px;
-      margin-bottom: 8px;
-      > p {
-        height: 22px;
-        line-height: 22px;
-        text-align: left;
-        i {
-          color: #FF3840;
-        }
-      }
-    }
-    .font-grey {
-      color: #a0a0a0 !important;
-    }
+    padding-left: 8px;
+    padding-top: 8px;
+    margin-top: 20px;
   }
+
+  .cash-message {
+    padding: 8px 16px 0 16px;
+  }
+
 }

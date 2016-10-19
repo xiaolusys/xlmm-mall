@@ -29,6 +29,8 @@ import {
   Point,
   CouponList,
   CashoutList,
+  Cashout,
+  CashoutDetail,
 } from 'containers/User';
 
 import {
@@ -100,6 +102,8 @@ export default (
     <Route path="/user/point" component={Point} onEnter={utils.checkAuth} />
     <Route path="/user/coupons" component={CouponList} onEnter={utils.checkAuth} />
     <Route path="/user/wallet" component={CashoutList} onEnter={utils.checkAuth} />
+    <Route path="/user/wallet/cashout" component={Cashout} onEnter={utils.checkAuth} />
+    <Route path="/user/wallet/cashoutdetail/:index" component={CashoutDetail} />
     <Route path="/complaint/commit" component={ComplainCommit} onEnter={utils.checkAuth} />
     <Route path="/complaint/history" component={ComplainList} onEnter={utils.checkAuth} />
     <Route path="/ol.html" component={OrderList} onEnter={utils.checkAuth} />

@@ -36,7 +36,7 @@ export const cashout = (amount, verifyCode) => {
   const action = createAction(names.CASHOUT);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'users/budget_cash_out', { params: { cashout_amount: amount, verify_code:verifyCode } })
+    return axios.post(constants.baseEndpointV1 + 'users/budget_cash_out' + '?cashout_amount=' + amount + '&verify_code=' + verifyCode)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -54,7 +54,7 @@ export const resetCashout = () => {
 };
 
 export const fetchCashoutPolicy = () => {
-  const action = createAction(names.CASHOUT_POLICY);
+  const action = createAction(names.FETCH_CASHOUT_POLICY);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'cashout_policy')
@@ -68,7 +68,7 @@ export const fetchCashoutPolicy = () => {
 };
 
 export const reqCashoutVerifyCode = () => {
-  const action = createAction(names.CASHOUT_POLICY);
+  const action = createAction(names.REQUEST_CASHOUT_VERIFY_CODE);
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpoint + 'request_cashout_verify_code')

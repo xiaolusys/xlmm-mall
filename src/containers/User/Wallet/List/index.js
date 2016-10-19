@@ -72,9 +72,15 @@ export default class List extends Component {
     this.removeScrollListener();
   }
 
+  onCashoutClick = (e) => {
+    const { cash, nick } = this.props.location.query;
+    window.location.href = `/mall/user/wallet/cashout/?cash=${cash}&nick=${nick}`;
+    e.preventDefault();
+  }
+
   onItemClick = (e) => {
     const dataSet = e.currentTarget.dataset;
-    window.location.href = `/mall/cashout/detail/${dataSet.index}`;
+    // window.location.href = `/mall/user/wallet/cashoutdetail/${dataSet.index}`;
     e.preventDefault();
   }
 
@@ -83,6 +89,7 @@ export default class List extends Component {
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
+
     if (scrollTop === documentHeight - windowHeight && !this.props.userCashout.cashoutList.isLoading && this.state.hasMore) {
       this.props.fetchCashoutList(pageIndex + 1, pageSize);
     }
@@ -102,19 +109,19 @@ export default class List extends Component {
         return (
           <div key={index} className="no-padding row bottom-border" data-index={index} onClick={this.onItemClick}>
             <div className="cashout-info ">
-              <div className="cashout-status row col-xs-9" >
+              <div className="cashout-status row col-xs-8" >
                 <p>
-                  <span className="cashout-status-span col-xs-offset-1 no-padding">{item.get_status_display}</span>
-                  <span className="col-xs-offset-3 font-grey">{item.budget_date}</span>
+                  <span className="col-xs-offset-1 font-grey">{item.budget_date}</span>
+                  <span className="cashout-status-span col-xs-offset-3 no-padding">{item.get_status_display}</span>
                 </p>
                 <p className="col-xs-offset-1 no-padding">{item.desc}</p>
               </div>
-              <div className="cashout-desc col-xs-3">
+              <div className="cashout-desc col-xs-4 text-center">
                 <If condition={item.budget_type === 0}>
-                  <p className="row no-margin">{'+' + item.budeget_detail_cash + '元'}</p>
+                  <p className="">{'+' + item.budeget_detail_cash + '元'}</p>
                 </If>
                 <If condition={item.budget_type === 1}>
-                  <p className="row no-margin">{'-' + item.budeget_detail_cash + '元'}</p>
+                  <p className="">{'-' + item.budeget_detail_cash + '元'}</p>
                 </If>
               </div>
             </div>
@@ -131,7 +138,7 @@ export default class List extends Component {
     const data = cashoutList.data.results || [];
     return (
       <div>
-        <Header title="零钱" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="零钱" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText="提现" onRightBtnClick={this.onCashoutClick}/>
           <div className="content list-container">
             <div className={'list-head text-center bottom-border ' + (hasHeader ? 'has-header' : '')}>
               <p className="cash">{query.cash}</p>

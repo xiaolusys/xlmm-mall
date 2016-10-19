@@ -37,7 +37,7 @@ export default (state = initState, action = null) => {
       });
     case cashoutAction.names.FETCH_CASHOUT_LIST + '_' + actionTypes.SUCCESS:
       const payload = action.payload;
-      // payload.results = _.chain(state.cashoutList.data.results || []).union(payload.results || []).unique('id').value();
+      payload.results = _.chain(state.cashoutList.data.results || []).union(payload.results || []).unique().value();
       return _.extend({}, state, {
         cashoutList: { isLoading: false, data: payload, error: false, success: true },
       });

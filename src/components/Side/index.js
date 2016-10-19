@@ -59,7 +59,7 @@ export class Side extends Component {
         </div>
         <div className="row no-margin account-summary bottom-border-black text-center">
           <div className="col-xs-4">
-            <Link to={'/user/wallet?cash=' + (profile.user_budget ? profile.user_budget.budget_cash : 0)}>
+            <Link to={'/user/wallet?cash=' + (profile.user_budget ? profile.user_budget.budget_cash : 0) + '&nick=' + profile.nick}>
               <p>{profile.user_budget ? profile.user_budget.budget_cash : 0}</p>
               <p>
                 <i className="icon-wallet"></i>
