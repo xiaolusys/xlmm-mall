@@ -76,7 +76,6 @@ export default class Cashout extends Component {
     }
 
     if (this.props.userCashout.cashoutVerifyCode.isLoading) {
-      this.setState({ getVerifyCodeBtnDisabled: false });
       if (nextProps.userCashout.cashoutVerifyCode.success && nextProps.userCashout.cashoutVerifyCode.data) {
         Toast.show(nextProps.userCashout.cashoutVerifyCode.data.info);
       }
@@ -106,8 +105,13 @@ export default class Cashout extends Component {
   }
 
   onCashoutValueChange = (e) => {
+    const { cash } = this.props.location.query;
     console.log(e.target);
-    this.setState({ cashoutValue: e.target.value });
+    if (cash <= 0 || (Math.round(e.target.value * 100) > Math.round(cash * 100))) {
+      Toast.show('零钱金额不足，不能满足您输入的提现金额');
+    } else {
+      this.setState({ cashoutValue: e.target.value });
+    }
     e.preventDefault();
   }
 
