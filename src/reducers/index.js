@@ -17,6 +17,7 @@ import notificationReducer from './notificationReducer';
 import entrepreneurshipReducer from './entrepreneurshipReducer';
 import mamaFocusReducer from './mamaFocusReducer';
 import spellGroupReducer from './spellGroupReducer';
+import userCashoutReducer from './userCashoutReducer';
 import * as faqCategoriesAction from 'actions/faq/faqcategories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -126,6 +127,7 @@ const rootReducer = combineReducers({
   favorite: favoriteReducer,
   notification: notificationReducer,
   administratorInfo: createReducer(administratorInfoAction.name),
+  userCashout: userCashoutReducer,
 });
 
 export default rootReducer;
