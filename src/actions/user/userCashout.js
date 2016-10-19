@@ -36,7 +36,7 @@ export const cashout = (amount, verifyCode) => {
   const action = createAction(names.CASHOUT);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'users/budget_cash_out' + '?cashout_amount=' + amount + '&verify_code=' + verifyCode)
+    return axios.post(constants.baseEndpointV1 + 'users/budget_cash_out', qs.stringify({ cashout_amount: amount, verify_code: verifyCode }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
