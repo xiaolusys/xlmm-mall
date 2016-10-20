@@ -11,32 +11,23 @@ import { Popup } from 'components/Popup';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
-import * as mamaOrderAction from 'actions/mama/mamaOrder';
-import * as mamaChargeAction from 'actions/mama/mamaCharge';
-import * as inviteSharingAction from 'actions/mama/inviteSharing';
-import * as wechatSignAction from 'actions/wechat/sign';
+import * as detailsAction from 'actions/product/details';
+import * as shopBagAction from 'actions/shopBag';
+import * as payInfoAction from 'actions/order/payInfo';
+import * as commitOrderAction from 'actions/order/commit';
+import * as plugins from 'plugins';
 
 import './index.scss';
 
-const pageInfos = {
-  'mcf.html': {
-    type: 'full',
-    banner: 'http://7xkyoy.com1.z0.glb.clouddn.com/mall/mama/open/v2/188.png',
-    id: 0,
-    shareId: 38,
-    btn: '支付',
-  },
-};
-
-const actionCreators = _.extend(mamaInfoAction, mamaOrderAction, mamaChargeAction, inviteSharingAction, wechatSignAction);
+const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction);
 
 @connect(
   state => ({
     mamaInfo: state.mamaInfo,
-    mamaOrder: state.mamaOrder,
-    mamaCharge: state.mamaCharge,
-    inviteSharing: state.inviteSharing,
-    wechatSign: state.wechatSign,
+    productDetails: state.productDetails,
+    shopBag: state.shopBag,
+    payInfo: state.payInfo,
+    order: state.commitOrder,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -44,17 +35,16 @@ export default class BuyCoupon extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
-    saveMamaInfo: React.PropTypes.func,
-    fetchMamaOrder: React.PropTypes.func,
-    fetchMamaCharge: React.PropTypes.func,
-    fetchInviteSharing: React.PropTypes.func,
-    fetchWechatSign: React.PropTypes.func,
+    fetchProductDetails: React.PropTypes.func,
+    addProductToShopBag: React.PropTypes.func,
+    fetchPayInfo: React.PropTypes.func,
+    commitOrder: React.PropTypes.func,
+    fetchMamaInfo: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
-    mamaOrder: React.PropTypes.any,
-    mamaCharge: React.PropTypes.any,
-    verifyCode: React.PropTypes.any,
-    inviteSharing: React.PropTypes.object,
-    wechatSign: React.PropTypes.object,
+    productDetails: React.PropTypes.object,
+    shopBag: React.PropTypes.object,
+    order: React.PropTypes.object,
+    payInfo: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -67,80 +57,136 @@ export default class BuyCoupon extends Component {
   }
 
   state = {
-    phone: '',
-    code: '',
     payTypePopupActive: false,
+    num: 5,
   }
 
   componentWillMount() {
-    const { mama_id } = this.props.location.query;
-    const { location } = this.props;
-    const pageInfo = pageInfos[location.pathname];
-    if (pageInfo) {
-      this.setState({ pageInfo: pageInfo });
-    }
-
-    this.props.saveMamaInfo({
-      mama_id: mama_id,
-    });
-    this.props.fetchMamaOrder();
-    this.props.fetchInviteSharing(pageInfo.shareId);
-    this.props.fetchWechatSign();
+    this.props.fetchProductDetails(23487);
+    this.props.fetchMamaInfo();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, mamaOrder, mamaCharge, inviteSharing, wechatSign } = nextProps;
-    utils.wechat.config(wechatSign);
-    if (!inviteSharing.isLoading && inviteSharing.success) {
-      const shareInfo = {
-        success: inviteSharing.success,
-        data: {
-          title: inviteSharing.data.title,
-          desc: inviteSharing.data.active_dec,
-          share_link: inviteSharing.data.share_link,
-          share_img: inviteSharing.data.share_icon,
-        },
-      };
-      utils.wechat.configShareContent(shareInfo);
+    const { mamaInfo, productDetails, shopBag, payInfo, order } = nextProps;
+    if (nextProps.isLoading) {
+      utils.ui.loadingSpinner.show();
+    } else if (!nextProps.isLoading) {
+      utils.ui.loadingSpinner.hide();
     }
 
-    if (mamaCharge.success && !mamaCharge.isLoading && !_.isEmpty(mamaCharge.data)) {
-      this.pay(mamaCharge.data);
+    // Add product resp
+    if (this.props.shopBag.addProduct.isLoading) {
+      if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
+        Toast.show(nextProps.shopBag.addProduct.data.info);
+        this.setState({ activeSkuPopup: false });
+      }
+      if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
+        Toast.show(nextProps.shopBag.addProduct.data.info);
+      }
+
+      if (nextProps.shopBag.addProduct.error) {
+        switch (nextProps.shopBag.addProduct.status) {
+          case 403:
+            if (utils.detector.isApp()) {
+              plugins.invoke({ method: 'jumpToNativeLogin' });
+              return;
+            }
+            this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
+            return;
+          case 500:
+            Toast.show(nextProps.shopBag.addProduct.data.detail);
+            break;
+          default:
+            Toast.show(nextProps.shopBag.addProduct.data.detail);
+            break;
+        }
+      }
     }
 
-    /*
-    // 正式妈妈邀请页面，并且存在妈妈信息，且为99或188元正式妈妈，那么直接显示开店成功
-    //if ((!_.isEmpty(mamaInfo.data)) && (mamaInfo.data.last_renew_type === 183 || mamaInfo.data.last_renew_type === 365)) {
-    //  this.context.router.replace(`/mama/open/succeed?mamaId=${mamaInfo.data.id}`);
-    //}
-    */
+    // query shopbag resp
+    if (this.props.shopBag.shopBag.isLoading) {
+      if (shopBag.shopBag.success && !_.isEmpty(shopBag.shopBag.data)) {
+        const cartIds = shopBag.shopBag.data[0].id;
+        this.props.fetchPayInfo(cartIds);
+      }
+    }
+
+    // payinfo resp
+    if (this.props.payInfo.isLoading) {
+      // pop pay
+      if (payInfo.success && !_.isEmpty(payInfo.data)) {
+        console.log(payInfo);
+        this.setState({ payTypePopupActive: true });
+      }
+    }
+
+    // commit order resp
+    if (this.props.order.isLoading) {
+      if (order.success && !_.isEmpty(order.data) && order.data.code === 0) {
+          this.pay(order.data);
+      }
+
+      if (order.success && !_.isEmpty(order.data) && order.data.code !== 0) {
+          Toast.show(order.data.info);
+      }
+    }
+
   }
 
   componentWillUnmount() {
-    this.props.fetchInviteSharing(27);
+
   }
 
   onChargeClick = (e) => {
+    const { productDetails } = this.props;
+    const { type } = e.currentTarget.dataset;
+    const skus = productDetails.data.sku_info;
+
+    this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
+  }
+
+  onPayTypeClick = (e) => {
+    const { payInfo, mamaInfo } = this.props;
     const { paytype } = e.currentTarget.dataset;
-    this.setState({ payChannel: paytype });
-    const mamaOrder = this.props.mamaOrder.data || {};
-    const { id } = this.state.pageInfo;
-    const { mama_id } = this.props.location.query;
-    const { mamaInfo } = this.props;
-    this.props.fetchMamaCharge({
-      product_id: mamaOrder.product.id,
-      sku_id: mamaOrder.product.normal_skus[id].id,
-      payment: mamaOrder.payinfos[id].total_payment,
+    const mmLinkId = mamaInfo.data ? mamaInfo.data.id : 0;
+
+    if (mmLinkId === 0) {
+      Toast.show('小鹿妈妈信息获取不全，请重进此页面！！');
+      e.preventDefault();
+      return;
+    }
+
+    this.props.commitOrder({
+      uuid: payInfo.data.uuid,
+      cart_ids: payInfo.data.cart_ids,
+      payment: payInfo.data.total_payment,
+      post_fee: payInfo.data.post_fee,
+      discount_fee: payInfo.data.discount_fee,
+      total_fee: payInfo.data.total_fee,
       channel: paytype,
-      num: 1,
-      post_fee: 0,
-      discount_fee: 0,
-      mm_linkid: mama_id,
-      uuid: mamaOrder.uuid,
-      total_fee: mamaOrder.payinfos[id].total_payment,
-      success_url: `/mall/mama/open/succeed?mamaId=${mamaInfo.data.id}`,
-      cancel_url: '/mall/mama/open/failed',
+      mm_linkid: mmLinkId,
+      order_type: 4, // 对应后台的电子商品类型，不校验地址
     });
+    e.preventDefault();
+  }
+
+  onUpdateQuantityClick = (e) => {
+    const { action } = e.currentTarget.dataset;
+    if (action === 'minus' && Number(this.state.num) === 1) {
+      e.preventDefault();
+      return false;
+    }
+    switch (action) {
+      case 'plus':
+        this.setState({ num: this.state.num + 1 });
+        break;
+      case 'minus':
+      this.setState({ num: this.state.num - 1 });
+        break;
+      default:
+        break;
+    }
+    e.preventDefault();
   }
 
   togglePayTypePopupActive = () => {
@@ -148,11 +194,10 @@ export default class BuyCoupon extends Component {
   }
 
   payInfo = () => {
-    const { id } = this.state.pageInfo;
-    let payInfo = { total_payment: 0 };
-    if (!_.isEmpty(this.props.mamaOrder.data.payinfos)) {
-      payInfo = this.props.mamaOrder.data.payinfos[id];
-      payInfo.channels = [];
+    let payInfo = {};
+    if (!_.isEmpty(this.props.payInfo.data)) {
+      payInfo = this.props.payInfo.data;
+      /* payInfo.channels = [];
       if (payInfo.weixin_payable) {
         payInfo.channels.push({
           id: 'wx_pub',
@@ -166,43 +211,44 @@ export default class BuyCoupon extends Component {
           icon: 'icon-alipay-square icon-alipay-blue',
           name: '支付宝',
         });
-      }
+      }*/
     }
     return payInfo;
   }
 
-  pay = (charge) => {
+  pay = (data) => {
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
-    window.pingpp.createPayment(charge, (result, error) => {
+    window.pingpp.createPayment(data.charge, (result, error) => {
       if (result === 'success') {
-        window.location.replace('/mall/mama/open/succeed');
+        Toast.show('支付成功');
+        window.location.replace(`${data.success_url}`);
         return;
       }
-      window.location.replace('/mall/mama/open/failed');
+      Toast.show('支付失败');
+      window.location.replace(`${data.fail_url}`);
     });
   }
 
   render() {
-    const { banner, btn, type } = this.state.pageInfo;
+    const { productDetails } = this.props;
+    const imgSrc = (productDetails.data && productDetails.data.detail_content) ? productDetails.data.detail_content.head_img : '';
     const payInfo = this.payInfo();
     return (
-      <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg opening-shop">
-        <Image style={{ width: '100%' }} src={banner} quality={70} />
-        <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.togglePayTypePopupActive}>{btn}</button>
+      <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg buycoupon">
+        <Image className="coupon-img" src={imgSrc} quality={70} />
+        <div className="row coupon-num">
+          <p className="text-center cart-quantity">
+            <i className="icon-minus icon-yellow" data-action="minus" onClick={this.onUpdateQuantityClick}></i>
+            <span>{this.state.num}</span>
+            <i className="icon-plus icon-yellow" data-action="plus" onClick={this.onUpdateQuantityClick}></i>
+          </p>
         </div>
-          <If condition={type === 'trail'}>
-            <div className="row no-margin text-center margin-bottom-xs">
-              <Checkbox className="margin-bottom-xs" checked>同意</Checkbox>
-              <Link to="/mama/agreement">一元体验15天小鹿妈妈服务条款！</Link>
-            </div>
-          </If>
-          <If condition={type === 'full'}>
-            <div className="row no-margin text-center margin-bottom-xs">
-              <Checkbox className="margin-bottom-xs" checked>同意</Checkbox>
-              <a href="/static/tiaokuan.html">小鹿妈妈服务条款！</a>
-            </div>
-          </If>
+        <div>
+          <p className="col-xs-offset-1">规则说明：本优惠券只能专业版小鹿妈妈购买分销。</p>
+        </div>
+        <div className="row no-margin text-center margin-bottom-xs">
+          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick}>支付</button>
+        </div>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className="row no-margin bottom-border">
             <i className="col-xs-1 no-padding icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
@@ -213,7 +259,7 @@ export default class BuyCoupon extends Component {
           </div>
           {payInfo.channels && payInfo.channels.map((channel) =>
             (
-              <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onChargeClick}>
+              <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
                 <i className={`${channel.icon} icon-2x margin-right-xxs`}></i>
                 <span className="inline-block margin-top-xxs">{channel.name}</span>
               </div>

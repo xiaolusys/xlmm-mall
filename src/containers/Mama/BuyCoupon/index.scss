@@ -1,13 +1,24 @@
-.opening-shop {
-  a {
-    color: #4a4a4a;
-    text-decoration: underline;
-    &:hover,
-    :active,
-    :focus,
-    :visited {
-      color: #4a4a4a;
-      text-decoration: underline;
+.buycoupon {
+  .coupon-img {
+    padding-top: 16px;
+    width: 60%;
+    clear: both; 
+    display: block;
+    margin: auto;
+  }
+
+  .coupon-num {
+    .cart-quantity {
+      padding: 8px;
+      display: block;
+      margin: auto;
+        > i {
+          padding: 16px;
+          font-size: 2em;
+        }
+        > span {
+          font-size: 2em;
+        }
     }
   }
 }

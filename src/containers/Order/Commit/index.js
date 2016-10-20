@@ -191,6 +191,7 @@ export default class Commit extends Component {
     const { paytype } = e.currentTarget.dataset;
     const mmLinkId = this.props.location.query.mmLinkId;
     const teambuyId = this.props.location.query.teambuyId;
+
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,

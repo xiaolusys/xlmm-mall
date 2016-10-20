@@ -656,10 +656,10 @@ export default class Detail extends Component {
             <If condition={details.teambuy_info.teambuy}>
               <Choose>
               <When condition={(details.detail_content.sale_state !== 'on' || details.detail_content.is_sale_out)}>
-                <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} disabled={disabled}>
                   {`商品已抢光`}
                 </button>
-                <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} disabled={disabled}>
                   {`拼团已结束`}
                 </button>
               </When>
