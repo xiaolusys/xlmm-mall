@@ -10,6 +10,7 @@ import { BottomBar } from 'components/BottomBar';
 import { Popup } from 'components/Popup';
 import { Toast } from 'components/Toast';
 import { DownloadAppBanner } from 'components/DownloadAppBanner';
+import { If } from 'jsx-control-statements';
 import classnames from 'classnames';
 import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
@@ -653,12 +654,24 @@ export default class Detail extends Component {
               </button>
             </If>
             <If condition={details.teambuy_info.teambuy}>
-              <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
-                {`单独购¥${details.detail_content.lowest_agent_price}`}
-              </button>
-              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={disabled}>
-                {`${details.teambuy_info.teambuy_person_num}人购¥${details.teambuy_info.teambuy_price}`}
-              </button>
+              <Choose>
+              <When condition={(details.detail_content.sale_state !== 'on' || details.detail_content.is_sale_out)}>
+                <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                  {`商品已抢光`}
+                </button>
+                <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                  {`拼团已结束`}
+                </button>
+              </When>
+              <When condition={(details.detail_content.sale_state === 'on' && !details.detail_content.is_sale_out)}>
+                <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                  {`单独购¥${details.detail_content.lowest_agent_price}`}
+                </button>
+                <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                  {`${details.teambuy_info.teambuy_person_num}人购¥${details.teambuy_info.teambuy_price}`}
+                </button>
+              </When>
+              </Choose>
           </If>
           </BottomBar>
           <If condition={activeSkuPopup}>
