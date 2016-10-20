@@ -120,7 +120,6 @@ export default class BuyCoupon extends Component {
     if (this.props.payInfo.isLoading) {
       // pop pay
       if (payInfo.success && !_.isEmpty(payInfo.data)) {
-        console.log(payInfo);
         this.setState({ payTypePopupActive: true });
       }
     }
@@ -222,18 +221,15 @@ export default class BuyCoupon extends Component {
   }
 
   pay = (data) => {
-    console.log(data.charge);
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
     window.pingpp.createPayment(data.charge, (result, error) => {
-      console.log(result);
-      console.log(error);
-      /* if (result === 'success') {
+      if (result === 'success') {
         Toast.show('支付成功');
         window.location.replace(`${data.success_url}`);
         return;
       }
       Toast.show('支付失败');
-      window.location.replace(`${data.fail_url}`);*/
+      window.location.replace(`${data.fail_url}`);
     });
   }
 
