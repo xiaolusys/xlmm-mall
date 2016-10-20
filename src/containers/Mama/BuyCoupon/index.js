@@ -19,6 +19,11 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
+const payTypeIcons = {
+  wx_pub: 'icon-wechat-pay icon-wechat-green',
+  alipay_wap: 'icon-alipay-square icon-alipay-blue',
+};
+
 const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction);
 
 @connect(
@@ -219,6 +224,8 @@ export default class BuyCoupon extends Component {
   pay = (data) => {
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
     window.pingpp.createPayment(data.charge, (result, error) => {
+      console.log(result);
+      console.log(error);
       if (result === 'success') {
         Toast.show('支付成功');
         window.location.replace(`${data.success_url}`);
@@ -244,7 +251,7 @@ export default class BuyCoupon extends Component {
           </p>
         </div>
         <div>
-          <p className="col-xs-offset-1">规则说明：本优惠券只能专业版小鹿妈妈购买分销。</p>
+          <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版小鹿妈妈购买及流通使用。</p>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick}>支付</button>
@@ -260,7 +267,7 @@ export default class BuyCoupon extends Component {
           {payInfo.channels && payInfo.channels.map((channel) =>
             (
               <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
-                <i className={`${channel.icon} icon-2x margin-right-xxs`}></i>
+                <i className={`${payTypeIcons[channel.id]} icon-2x margin-right-xxs`}></i>
                 <span className="inline-block margin-top-xxs">{channel.name}</span>
               </div>
             )
