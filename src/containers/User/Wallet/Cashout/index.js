@@ -178,11 +178,11 @@ export default class Cashout extends Component {
         <div className="content cashout-container no-padding">
           <div className={'cash row'}>
             <p className=" col-xs-6 font-xs"><span>我的零钱:</span><span>{cash}</span></p>
-            <Checkbox className="col-xs-4 font-xs" checked={this.state.checked} onChange={this.onCheckboxChange}>最大提现</Checkbox>
+            <Checkbox className="col-xs-4 font-xs " checked={this.state.checked} onChange={this.onCheckboxChange}> 最大提现</Checkbox>
           </div>
           <div className={'cash row bottom-border'}>
             <p className=" col-xs-4 font-xs">金额（元）:</p>
-            <input className="col-xs-6 font-xs" type="number" placeholder="请输入提现金额" onChange={this.onCashoutValueChange} value={this.state.cashoutValue}></input>
+            <input className="col-xs-6 font-xs cash-input" type="number" placeholder="请输入提现金额" onChange={this.onCashoutValueChange} value={this.state.cashoutValue}></input>
           </div>
           <div className={'cash-nick row'}>
             <p className=" col-xs-6 font-xs">提现至微信红包</p>
