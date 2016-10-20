@@ -19,6 +19,11 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
+const payTypeIcons = {
+  wx_pub: 'icon-wechat-pay icon-wechat-green',
+  alipay_wap: 'icon-alipay-square icon-alipay-blue',
+};
+
 const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction);
 
 @connect(
@@ -260,7 +265,7 @@ export default class BuyCoupon extends Component {
           {payInfo.channels && payInfo.channels.map((channel) =>
             (
               <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
-                <i className={`${channel.icon} icon-2x margin-right-xxs`}></i>
+                <i className={`${payTypeIcons[channel.id]} icon-2x margin-right-xxs`}></i>
                 <span className="inline-block margin-top-xxs">{channel.name}</span>
               </div>
             )
