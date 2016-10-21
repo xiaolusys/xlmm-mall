@@ -142,12 +142,17 @@ export default class BuyCoupon extends Component {
   }
 
   onChargeClick = (e) => {
-    const { productDetails } = this.props;
+    const { productDetails, mamaInfo } = this.props;
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
-    if (skus && (skus.length > 0)) {
-      this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
+    if (mamaInfo && mamaInfo.data && mamaInfo.data.charge_status === 'charged'
+        && (mamaInfo.data.last_renew_type === 183 || mamaInfo.data.last_renew_type === 365)) {
+      if (skus && (skus.length > 0)) {
+        this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
+      }
+    } else {
+      Toast.show('对不起，只有专业版小鹿妈妈才能购买此精品券，您可以续费后再来购买！！');
     }
   }
 
@@ -173,6 +178,7 @@ export default class BuyCoupon extends Component {
       mm_linkid: mmLinkId,
       order_type: 4, // 对应后台的电子商品类型，不校验地址
     });
+
     e.preventDefault();
   }
 
