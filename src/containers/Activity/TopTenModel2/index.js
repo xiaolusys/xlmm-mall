@@ -18,23 +18,6 @@ import './index.scss';
 
 const actionCreators = _.extend(wechatSignAction, shareActivityAction, couponAction, topTenAction);
 
-const setupWebViewJavascriptBridge = function(callback) {
-  if (window.WebViewJavascriptBridge) {
-    return callback(window.WebViewJavascriptBridge);
-  }
-  if (window.WVJBCallbacks) {
-    return window.WVJBCallbacks.push(callback);
-  }
-  window.WVJBCallbacks = [callback];
-  const WVJBIframe = document.createElement('iframe');
-  WVJBIframe.style.display = 'none';
-  WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
-  document.documentElement.appendChild(WVJBIframe);
-  setTimeout(function() {
-    document.documentElement.removeChild(WVJBIframe);
-  }, 0);
-};
-
 @connect(
   state => ({
     data: state.coupon.data,
@@ -130,6 +113,7 @@ export default class TopTenModel2 extends Component {
     if (modelData.coupons[index].isReceived && (jumpUrl !== null) && (jumpUrl !== undefined) && (jumpUrl.length > 0)) {
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
+        console.log(appVersion);
         if (appVersion < 20161019 && appVersion >= 20160815) {
           window.AndroidBridge.jumpToNativeLocation(jumpUrl);
           return;
@@ -150,7 +134,7 @@ export default class TopTenModel2 extends Component {
         return;
       }
       if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-        setupWebViewJavascriptBridge(function(bridge) {
+        plugins.setupWebViewJavascriptBridge(function(bridge) {
           bridge.callHandler('jumpToNativeLocation', {
             target_url: jumpUrl,
           }, function(response) {});
@@ -195,7 +179,7 @@ export default class TopTenModel2 extends Component {
       return;
     }
     if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-      setupWebViewJavascriptBridge(function(bridge) {
+      plugins.setupWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('jumpToNativeLocation', {
           target_url: appUrl,
         }, function(response) {});
