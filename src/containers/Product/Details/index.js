@@ -234,7 +234,6 @@ export default class Detail extends Component {
       const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart';
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
-        console.log(appVersion);
         if (appVersion < 20161019 && appVersion >= 20160815) {
           window.AndroidBridge.jumpToNativeLocation(jumpUrl);
           return;
