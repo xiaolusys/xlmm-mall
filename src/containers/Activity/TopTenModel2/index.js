@@ -113,7 +113,6 @@ export default class TopTenModel2 extends Component {
     if (modelData.coupons[index].isReceived && (jumpUrl !== null) && (jumpUrl !== undefined) && (jumpUrl.length > 0)) {
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
-        console.log(appVersion);
         if (appVersion < 20161019 && appVersion >= 20160815) {
           window.AndroidBridge.jumpToNativeLocation(jumpUrl);
           return;
@@ -159,7 +158,7 @@ export default class TopTenModel2 extends Component {
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
-      if (appVersion < 20161019 || appVersion >= 20160815) {
+      if (appVersion < 20161019 && appVersion >= 20160815) {
         window.AndroidBridge.jumpToNativeLocation(appUrl);
         return;
       }

@@ -146,7 +146,9 @@ export default class BuyCoupon extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
-    this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
+    if (skus && (skus.length > 0)) {
+      this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
+    }
   }
 
   onPayTypeClick = (e) => {
@@ -235,11 +237,25 @@ export default class BuyCoupon extends Component {
 
   render() {
     const { productDetails } = this.props;
+    const skus = productDetails.data.sku_info;
     const imgSrc = (productDetails.data && productDetails.data.detail_content) ? productDetails.data.detail_content.head_img : '';
     const payInfo = this.payInfo();
+    const sku = (skus && skus.length > 0) ? skus[0] : null;
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg buycoupon">
         <Image className="coupon-img" src={imgSrc} quality={70} />
+        <div className="product-info bottom-border bg-white col-xs-offset-1">
+          <div className="row no-margin">
+            <p className="col-xs-8 no-padding no-wrap font-md">{(productDetails.data.detail_content && sku) ? productDetails.data.detail_content.name + '/' + sku.name : '' }</p>
+          </div>
+          <div className="row no-margin">
+            <p className="col-xs-6 no-padding">
+              <span className="font-32">{'￥' + (sku ? sku.agent_price : '')}</span>
+              <span className="font-grey">/</span>
+              <span className="font-xs font-grey-light text-line-through">{'￥' + (sku ? sku.std_sale_price : '')}</span>
+            </p>
+          </div>
+        </div>
         <div className="row coupon-num">
           <p className="text-center cart-quantity">
             <i className="icon-minus icon-yellow" data-action="minus" onClick={this.onUpdateQuantityClick}></i>
