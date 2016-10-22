@@ -421,6 +421,7 @@ export default class Detail extends Component {
             <p><span>商品金额</span><span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span></p>
             <p><span>优惠券</span><span className="pull-right font-yellow">{'-￥' + Number(trade.discount_fee).toFixed(2)}</span></p>
             <p><span>运费</span><span className="pull-right font-yellow">{'￥' + Number(trade.post_fee).toFixed(2)}</span></p>
+            <p><span>小鹿零钱支付</span><span className="pull-right font-yellow">{'-￥' + Number(trade.payment - trade.pay_cash).toFixed(2)}</span></p>
           </div>
           <div>
             <If condition={type === 1}>
@@ -432,7 +433,7 @@ export default class Detail extends Component {
             <If condition={type === 0 || type === 2}>
               <p className="margin-top-xxs margin-left-xs margin-right-xs">
                 <span>实付金额</span>
-                <span className="pull-right font-yellow">{'￥' + Number(trade.total_fee).toFixed(2)}</span>
+                <span className="pull-right font-yellow">{'￥' + Number(trade.pay_cash).toFixed(2)}</span>
               </p>
             </If>
           </div>
