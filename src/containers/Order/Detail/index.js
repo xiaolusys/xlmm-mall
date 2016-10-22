@@ -432,7 +432,7 @@ export default class Detail extends Component {
             </If>
             <If condition={type === 0 || type === 2}>
               <p className="margin-top-xxs margin-left-xs margin-right-xs">
-                <span>实付现金</span>
+                <span>实付金额</span>
                 <span className="pull-right font-yellow">{'￥' + Number(trade.pay_cash).toFixed(2)}</span>
               </p>
             </If>
