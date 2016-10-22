@@ -97,6 +97,10 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, {
         deleteOrder: { isLoading: false, data: action.payload, error: true, success: false },
       });
+    case orderAction.names.DELETE_ORDER + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        deleteOrder: { isLoading: false, data: {}, error: false, success: false },
+      });
     case orderAction.names.CHARGE_ORDER + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         chargeOrder: { isLoading: true, data: {}, error: false, success: false },

@@ -37,12 +37,16 @@ export default class Detail extends Component {
   }
 
   state = {
+    detail: {},
   }
 
   componentWillMount() {
     const { index } = this.props.params;
     console.log('index= ' + index);
     console.log(this.props.cashoutList);
+    if (this.props.cashoutList.data && this.props.cashoutList.data.results.length > index) {
+      this.setState({ detail: this.props.cashoutList.data.results[index] });
+    }
   }
 
   componentDidMount() {
@@ -58,15 +62,15 @@ export default class Detail extends Component {
   }
 
   render() {
-    const { query } = this.state;
     const hasHeader = !utils.detector.isApp();
+    const { detail } = this.state;
 
     return (
       <div>
         <Header title="账单明细" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content favorite-container">
             <div className={'favorite-tabs text-center bottom-border ' + (hasHeader ? 'has-header' : '')}>
-              <p className="cash">{query.index}</p>
+              <p className="cash">{detail.budeget_detail_cash}</p>
               <p className="cash-prompt">出账金额（元）</p>
             </div>
 
