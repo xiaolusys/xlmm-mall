@@ -80,18 +80,18 @@ export default class Detail extends Component {
             {_.map(refundStatusList, function(item, key) {
               const index = Number(key);
               return (
-                <div>
-                  <If condition={index === data.status}>
+                <Choose>
+                  <When condition={index === data.status}>
                     <th key={index} className="font-xxs font-weight-200 font-orange text-center">
                       {item.display}
                     </th>
-                  </If>
-                  <If condition={index !== data.status}>
+                  </When>
+                  <When condition={index !== data.status}>
                     <th key={index} className="font-xxs font-weight-200 text-center">
                       {item.display}
                     </th>
-                  </If>
-                </div>
+                  </When>
+                </Choose>
               );
             })}
           </tr></thead>
