@@ -99,7 +99,7 @@ export default (state = initState, action = null) => {
       });
     case orderAction.names.DELETE_ORDER + '_' + actionTypes.RESET:
       return _.extend({}, state, {
-        chargeOrder: { isLoading: false, data: {}, error: false, success: false },
+        deleteOrder: { isLoading: false, data: {}, error: false, success: false },
       });
     case orderAction.names.CHARGE_ORDER + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
