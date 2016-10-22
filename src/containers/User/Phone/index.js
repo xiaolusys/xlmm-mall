@@ -74,7 +74,9 @@ export default class Phone extends Component {
 
     if (this.state.dataFlowState === dataFlowType.verifyingCode) {
       this.setState({ dataFlowState: dataFlowType.verifiedCode });
-      Toast.show(nextProps.data.msg);
+      if (nextProps.success && nextProps.data) {
+        Toast.show(nextProps.data.msg);
+      }
     }
 
     if (nextProps.success && nextProps.data.rcode === 0 && this.state.bindPhone) {
