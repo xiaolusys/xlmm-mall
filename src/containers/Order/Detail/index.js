@@ -343,18 +343,18 @@ export default class Detail extends Component {
                 {_.map(refundStatusList, function(item, key) {
                   const index = Number(key);
                   return (
-                    <div>
-                      <If condition={index === trade.status}>
+                    <Choose>
+                      <When condition={index === trade.status}>
                         <th key={index} className="font-xxs font-weight-200 font-orange text-center">
                           {item.display}
                         </th>
-                      </If>
-                      <If condition={index !== trade.status}>
+                      </When>
+                      <When condition={index !== trade.status}>
                         <th key={index} className="font-xxs font-weight-200 text-center">
                           {item.display}
                         </th>
-                      </If>
-                    </div>
+                      </When>
+                    </Choose>
                   );
                 })}
               </tr></thead>

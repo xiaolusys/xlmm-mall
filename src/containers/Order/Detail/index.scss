@@ -4,10 +4,9 @@
       overflow-x: auto;
       padding: 16px;
       > table {
-        border: 1px solid  red;
         overflow-x: auto;
         > thead {
-          > tr >div > th {
+          > tr > th {
             border-bottom: none;
             min-width: 80px;
           }
