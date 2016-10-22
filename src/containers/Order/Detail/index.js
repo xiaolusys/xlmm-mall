@@ -53,6 +53,7 @@ export default class Detail extends Component {
     order: React.PropTypes.any,
     fetchOrder: React.PropTypes.func,
     deleteOrder: React.PropTypes.func,
+    resetDeleteOrder: React.PropTypes.func,
     chargeOrder: React.PropTypes.func,
     confirmReceivedOrder: React.PropTypes.func,
     remindShipment: React.PropTypes.func,
@@ -108,6 +109,13 @@ export default class Detail extends Component {
     }
     if (deleteOrder.success && deleteOrder.data.code === 0) {
       this.context.router.push(`/ol.html?type=1`);
+    }
+  }
+
+  componentWillUnmount() {
+    const { deleteOrder } = this.props.order;
+    if (deleteOrder.success || deleteOrder.error) {
+      this.props.resetDeleteOrder();
     }
   }
 

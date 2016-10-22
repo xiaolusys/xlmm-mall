@@ -65,6 +65,12 @@ export const deleteOrder = (tradeId) => {
   };
 };
 
+export const resetDeleteOrder = () => {
+  return (dispatch) => {
+    dispatch(deleteOrderAction.reset());
+  };
+};
+
 export const chargeOrder = (tradeId) => {
   return (dispatch) => {
     dispatch(chargeOrderaction.request());
