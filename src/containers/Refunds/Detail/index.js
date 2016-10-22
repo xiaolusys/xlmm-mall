@@ -169,7 +169,7 @@ export default class Detail extends Component {
     }
     return (
       <div className="refunds-details">
-        <Header title="退货详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title="退款退货详情" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content refunds">
           <If condition={data.status}>
             {this.renderRefundsList(refundStatusList, statuslineWidth, data)}
