@@ -53,6 +53,7 @@ export default class Detail extends Component {
     order: React.PropTypes.any,
     fetchOrder: React.PropTypes.func,
     deleteOrder: React.PropTypes.func,
+    resetDeleteOrder: React.PropTypes.func,
     chargeOrder: React.PropTypes.func,
     confirmReceivedOrder: React.PropTypes.func,
     remindShipment: React.PropTypes.func,
@@ -85,6 +86,7 @@ export default class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('od componentWillReceiveProps');
     const { fetchOrder, chargeOrder, deleteOrder, remindShipment } = nextProps.order;
     let logisticsCompany = '';
     let addressId = '';
@@ -107,7 +109,15 @@ export default class Detail extends Component {
       Toast.show(deleteOrder.data.info);
     }
     if (deleteOrder.success && deleteOrder.data.code === 0) {
+      console.log('return ol');
       this.context.router.push(`/ol.html?type=1`);
+    }
+  }
+
+  componentWillUnmount() {
+    const { deleteOrder } = this.props.order;
+    if (deleteOrder.success || deleteOrder.error) {
+      this.props.resetDeleteOrder();
     }
   }
 
@@ -316,6 +326,7 @@ export default class Detail extends Component {
   }
 
   render() {
+    console.log('od render');
     const { express } = this.props;
     const trade = this.props.order.fetchOrder.data || {};
     const receiver = trade.user_adress || {};

@@ -80,7 +80,9 @@ export default class List extends Component {
 
   onItemClick = (e) => {
     const dataSet = e.currentTarget.dataset;
+    // const url = `/user/wallet/cashoutdetail/${dataSet.index}`;
     // window.location.href = `/mall/user/wallet/cashoutdetail/${dataSet.index}`;
+    // this.context.router.push(url);
     e.preventDefault();
   }
 
