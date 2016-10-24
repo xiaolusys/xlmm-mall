@@ -57,6 +57,7 @@ export default class List extends Component {
     this.props.fetchCouponsByStatus(couponStatus.available);
     this.props.fetchCouponsByStatus(couponStatus.used);
     this.props.fetchCouponsByStatus(couponStatus.expired);
+    this.props.fetchCouponsByStatus(couponStatus.available, 8);
   }
 
   componentDidMount() {
@@ -122,7 +123,7 @@ export default class List extends Component {
   }
 
   getCoupons(type) {
-    const { available, used, unavailable, expired } = this.props.coupons;
+    const { available, used, unavailable, expired, negotiable } = this.props.coupons;
     const { activeTab } = this.state;
     let coupons = [];
     switch (activeTab) {
@@ -134,6 +135,9 @@ export default class List extends Component {
         break;
       case 3:
         coupons = expired;
+        break;
+      case 5:
+        coupons = negotiable;
         break;
       default:
     }
@@ -150,25 +154,30 @@ export default class List extends Component {
 
   render() {
     const { query } = this.props.location;
-    const { available, used, unavailable, expired } = this.props.coupons;
+    const { available, used, unavailable, expired, negotiable } = this.props.coupons;
     const { sticky, activeTab } = this.state;
     const hasHeader = !utils.detector.isApp();
     const { couponStatus } = constants;
     const coupons = this.getCoupons(activeTab);
+
+    console.log(negotiable);
     return (
       <div>
         <Header title="优惠劵" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content coupons-container">
           <div className={'coupon-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
             <ul className="row no-margin">
-              <li id="available" className={'col-xs-4' + (activeTab === couponStatus.available ? ' active' : '')} onClick={this.onTabItemClick}>
+              <li id="available" className={'col-xs-3' + (activeTab === couponStatus.available ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>未使用({available.data && available.data.coupons && available.data.coupons.length})</div>
               </li>
-              <li id="used" className={'col-xs-4' + (activeTab === couponStatus.used ? ' active' : '')} onClick={this.onTabItemClick}>
+              <li id="used" className={'col-xs-3' + (activeTab === couponStatus.used ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>已使用({used.data && used.data.coupons && used.data.coupons.length})</div>
               </li>
-              <li id="expired" className={'col-xs-4' + (activeTab === couponStatus.expired ? ' active' : '')} onClick={this.onTabItemClick}>
+              <li id="expired" className={'col-xs-3' + (activeTab === couponStatus.expired ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>已过期({expired.data && expired.data.coupons && expired.data.coupons.length})</div>
+              </li>
+              <li id="negotiable" className={'col-xs-3' + (activeTab === couponStatus.negotiable ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>可流通({negotiable.data && negotiable.data.coupons && negotiable.data.coupons.length})</div>
               </li>
             </ul>
           </div>
@@ -181,17 +190,12 @@ export default class List extends Component {
               })}
             </ul>
           </If>
-          <If condition={_.isEmpty(coupons.data && coupons.data.coupons) || available.isLoading || used.isLoading || unavailable.isLoading || expired.isLoading}>
+          <If condition={_.isEmpty(coupons.data && coupons.data.coupons) || available.isLoading || used.isLoading || unavailable.isLoading || expired.isLoading || negotiable.isLoading}>
             <div className="text-center coupon-list-empty">
               <i className="icon-coupon-o icon-6x font-grey"/>
               <p>您暂时还没有优惠劵哦～</p>
               <p className="font-xs font-grey-light">快去逛逛吧～</p>
               <Link className="col-xs-4 col-xs-offset-4 margin-bottom-lg button button-energized" to="/">快去抢购</Link>
-            </div>
-          </If>
-          <If condition={query.next}>
-            <div className="row no-margin">
-              <button className="col-xs-10 col-xs-offset-1 button button-energized" type="button" onClick={this.onBtnClick}> 取消</button>
             </div>
           </If>
         </div>
