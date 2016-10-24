@@ -65,8 +65,17 @@ export default class List extends Component {
     if (verifyCoupon.success && verifyCoupon.data) {
       if (verifyCoupon.data.coupon_message) {
         Toast.show(verifyCoupon.data.coupon_message);
-      } else if (state.couponid) {
-        this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&couponId=${state.couponid}` : `${query.next}?couponId=${state.couponid}`);
+      } else if (state.couponids) {
+        this.searchSameCoupons();
+        let ids = '';
+        for (let i = 0; i < state.couponids.length; i++) {
+          if (i + 1 === state.couponids.length) {
+            ids += this.state.couponids[i];
+          } else {
+            ids += this.state.couponids[i] + '/';
+          }
+        }
+        this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&couponId=${ids}` : `${query.next}?couponId=${ids}`);
       }
     } else if (verifyCoupon.error) {
       Toast.show(verifyCoupon.data.detail);
@@ -95,11 +104,11 @@ export default class List extends Component {
 
   onCouponItemClick = (e) => {
     const { query } = this.props.location;
-    const { status, id } = e.currentTarget.dataset;
+    const { status, id, type } = e.currentTarget.dataset;
     if (!query.next || Number(status) !== constants.couponStatus.available) {
       return;
     }
-    this.setState({ couponid: id });
+    this.setState({ couponids: ([id]), couponType: type });
     this.props.fetchVerifyCoupon(query.cartIds, id);
     e.preventDefault();
   }
@@ -136,6 +145,26 @@ export default class List extends Component {
     return coupons;
   }
 
+  searchSameCoupons = () => {
+    const { query } = this.props.location;
+    const goodsnum = query.goodsnum;
+    const usable = this.props.selectCoupon ? this.props.selectCoupon.data.usable_coupon : [];
+    let num = 0;
+
+    for (let i = 0; i < usable.length; i++) {
+      const item = usable[i];
+      if (item.coupon_type === 8 && item.coupon_type === this.state.couponType) {
+        const ids = [...this.state.couponids, item.id];
+        console.log(ids);
+        this.setState({ couponids: ids });
+        num++;
+        if (num === goodsnum) {
+          break;
+        }
+      }
+    }
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -170,7 +199,7 @@ export default class List extends Component {
             <ul className="coupon-list">
               {coupons.map((item, index) => {
                 return (
-                  <Coupon status={item.status} couponItem={item} key={index} data-status={item.status} data-id={item.id} onClick={this.onCouponItemClick}/>
+                  <Coupon status={item.status} couponItem={item} key={index} data-status={item.status} data-id={item.id} data-type={item.coupon_type} onClick={this.onCouponItemClick}/>
                 );
               })}
             </ul>

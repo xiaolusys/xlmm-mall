@@ -414,7 +414,8 @@ export default class Commit extends Component {
                     + (query.teambuyId ? '&teambuyId=' + query.teambuyId : '')
                     + (query.mmLinkId ? '&mmLinkId=' + query.mmLinkId : '')
                     + (query.couponId ? '&couponId=' + query.couponId : ''));
-    const couponLink = '/order/selectcoupon?cartIds=' + query.cartIds + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
+    const couponLink = '/order/selectcoupon?cartIds=' + query.cartIds + (products.length > 0 ? '&goodsnum=' + products[0].num : '')
+                    + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
                     + (query.teambuyId ? '&teambuyId=' + query.teambuyId : '')
                     + (query.mmLinkId ? '&mmLinkId=' + query.mmLinkId : '')
                     + (query.addressId ? '&addressId=' + query.addressId : ''));
