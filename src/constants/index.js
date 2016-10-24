@@ -14,6 +14,7 @@ export const couponStatus = {
   unavailable: 2,
   expired: 3,
   selected: 4,
+  negotiable: 5,
 };
 
 export const shareType = {
