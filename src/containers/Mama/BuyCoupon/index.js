@@ -146,8 +146,8 @@ export default class BuyCoupon extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
-    if (mamaInfo && mamaInfo.data && mamaInfo.data.charge_status === 'charged'
-        && (mamaInfo.data.last_renew_type === 183 || mamaInfo.data.last_renew_type === 365)) {
+    if (mamaInfo && mamaInfo.data && mamaInfo.data[0].charge_status === 'charged'
+        && (mamaInfo.data[0].last_renew_type === 183 || mamaInfo.data[0].last_renew_type === 365)) {
       if (skus && (skus.length > 0)) {
         this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
       }
