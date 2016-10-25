@@ -158,7 +158,7 @@ export default class List extends Component {
       if (Number(item.coupon_type) === 8 && Number(item.coupon_type) === Number(this.state.couponType) && Number(item.template_id) === Number(this.state.couponTemplate)) {
         ids.push(item.id.toString());
         num++;
-        if (num === goodsnum) {
+        if (num === Number(goodsnum)) {
           break;
         }
       }
