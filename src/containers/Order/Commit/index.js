@@ -76,6 +76,7 @@ export default class Commit extends Component {
     logisticsPopupShow: false,
     agreePurchaseTerms: true,
     isShowPurchaseTerms: false,
+    couponNum: 1,
   }
 
   componentWillMount() {
@@ -83,7 +84,14 @@ export default class Commit extends Component {
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(cartIds);
     if (couponId) {
-      this.props.fetchCouponById(couponId);
+      let firstCoupon = couponId;
+      let couponNum = 1;
+      if (couponId.indexOf('/') > 0) {
+        firstCoupon = couponId.split('/')[0];
+        couponNum = couponId.split('/').length;
+      }
+      this.setState({ couponNum: couponNum });
+      this.props.fetchCouponById(firstCoupon);
     }
   }
 
@@ -147,7 +155,7 @@ export default class Commit extends Component {
       });
       return;
     }
-    if (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value)) {
+    if (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum)) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
         cart_ids: payInfo.data.cart_ids,
@@ -164,7 +172,7 @@ export default class Commit extends Component {
       });
       return;
     }
-    if (coupon.data.coupon_value >= payInfo.data.total_fee) {
+    if (coupon.data.coupon_value * this.state.couponNum >= payInfo.data.total_fee) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
         cart_ids: payInfo.data.cart_ids,
@@ -271,11 +279,11 @@ export default class Commit extends Component {
       if (extra.pid === 3 && walletChecked && walletBalance > 0 && self.getDisplayPrice(payInfo.data.total_fee) > 0) {
         payExtras.push('pid:' + extra.pid + ':value:' + extra.value);
       }
-      if (extra.pid === 3 && walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value)) {
-        payExtras.push('pid:' + extra.pid + ':budget:' + (payInfo.data.total_fee - coupon.data.coupon_value).toFixed(2));
+      if (extra.pid === 3 && walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum)) {
+        payExtras.push('pid:' + extra.pid + ':budget:' + (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum).toFixed(2));
       }
       if (extra.pid === 2 && self.getDiscountValue() > 0) {
-        payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue() + ':couponid:' + coupon.data.id);
+        payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue() + ':couponid:' + this.props.location.query.couponId);
       }
     });
     return payExtras.join(','); // pid:1:value:2,pid:2:value:3:cunponid:2
@@ -284,7 +292,8 @@ export default class Commit extends Component {
   getPayType = (payType) => {
     const { coupon, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
-    if (coupon.data.coupon_value >= payInfo.data.total_fee || (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value))) {
+    if (coupon.data.coupon_value * this.state.couponNum >= payInfo.data.total_fee
+      || (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum))) {
       return 'budget';
     }
     if (walletChecked && payInfo.data.total_fee <= walletBalance) {
@@ -297,14 +306,14 @@ export default class Commit extends Component {
     const { coupon, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
     let value = totalPrice || 0;
-    if (coupon.data.coupon_value >= payInfo.data.total_fee) {
+    if (coupon.data.coupon_value * this.state.couponNum >= payInfo.data.total_fee) {
       return 0;
     }
-    if (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value)) {
-      return (payInfo.data.total_fee - coupon.data.coupon_value).toFixed(2);
+    if (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum)) {
+      return (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum).toFixed(2);
     }
     if (value > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
-      value = value - coupon.data.coupon_value;
+      value = value - coupon.data.coupon_value * this.state.couponNum;
     }
     return value.toFixed(2);
   }
@@ -320,7 +329,7 @@ export default class Commit extends Component {
       displayPrice = displayPrice - walletBalance;
     }
     if (displayPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
-      displayPrice = displayPrice - coupon.data.coupon_value;
+      displayPrice = displayPrice - coupon.data.coupon_value * this.state.couponNum;
       if (displayPrice < 0) {
         displayPrice = 0;
       }
@@ -334,8 +343,9 @@ export default class Commit extends Component {
   getTotalPrice = () => {
     const { coupon, payInfo } = this.props;
     let totalPrice = payInfo.data.total_fee || 0;
-    if (totalPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee && payInfo.data.total_fee >= payInfo.data.discount_fee) {
-      totalPrice = totalPrice - coupon.data.coupon_value;
+    if (totalPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee
+        && payInfo.data.total_fee >= payInfo.data.discount_fee) {
+      totalPrice = totalPrice - coupon.data.coupon_value * this.state.couponNum;
       if (totalPrice < 0) {
         totalPrice = 0;
       }
@@ -347,14 +357,14 @@ export default class Commit extends Component {
     const { coupon, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType } = this.state;
     let discount = 0;
-    if (coupon.data.coupon_value >= payInfo.data.total_fee) {
+    if (coupon.data.coupon_value * this.state.couponNum >= payInfo.data.total_fee) {
       return payInfo.data.total_fee;
     }
-    if (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value)) {
-      discount = coupon.data.coupon_value;
+    if (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum)) {
+      discount = coupon.data.coupon_value * this.state.couponNum;
     }
     if (coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
-      discount = coupon.data.coupon_value;
+      discount = coupon.data.coupon_value * this.state.couponNum;
     } else if (coupon.success && (coupon.data.status !== 0 || payInfo.data.total_fee < coupon.data.use_fee)) {
       this.props.resetCoupon();
       Toast.show('优惠券不可用！');
@@ -403,7 +413,7 @@ export default class Commit extends Component {
   }
 
   render() {
-    const { prefixCls, payInfo, order } = this.props;
+    const { prefixCls, payInfo, order, coupon } = this.props;
     const products = payInfo.data.cart_list || [];
     const logisticsCompanies = payInfo.data.logistics_companys || [];
     const payExtras = payInfo.data.pay_extras || [];
@@ -456,7 +466,14 @@ export default class Commit extends Component {
                   <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`} key={item.pid} data-to={couponLink} onClick={this.onLinkClick}>
                     <p className="col-xs-5 no-padding">优惠券</p>
                     <p className="col-xs-7 no-padding">
-                      <span className="col-xs-11 no-padding text-right">{'￥-' + this.getDiscountValue()}</span>
+                      <Choose>
+                        <When condition = {this.state.couponNum > 1}>
+                          <span className="col-xs-11 no-padding text-right">{'￥' + coupon.data.coupon_value + '元优惠券' + (this.state.goodsNum > 0 ? '使用' + this.state.couponNum + '张' : '') + '共' + this.getDiscountValue()}</span>
+                        </When>
+                        <When condition = {this.state.couponNum === 1}>
+                          <span className="col-xs-11 no-padding text-right">{'￥-' + this.getDiscountValue() + '元优惠券'}</span>
+                        </When>
+                      </Choose>
                       <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
                     </p>
                   </div>
