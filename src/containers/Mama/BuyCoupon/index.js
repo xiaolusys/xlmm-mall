@@ -79,6 +79,18 @@ export default class BuyCoupon extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
+    console.log(mamaInfo);
+    console.log(productDetails);
+    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data.sku_info) {
+      for (let i = 0; i < productDetails.data.sku_info.length; i++) {
+        console.log(productDetails.data.sku_info[i].name);
+        console.log(mamaInfo.data.elite_level);
+        if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
+          this.setState({ sku: productDetails.data.sku_info[i] });
+        }
+      }
+    }
+
     // Add product resp
     if (this.props.shopBag.addProduct.isLoading) {
       if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
@@ -147,12 +159,12 @@ export default class BuyCoupon extends Component {
     const skus = productDetails.data.sku_info;
 
     if (mamaInfo && mamaInfo.data && mamaInfo.data[0].charge_status === 'charged'
-        && (mamaInfo.data[0].last_renew_type === 183 || mamaInfo.data[0].last_renew_type === 365)) {
-      if (skus && (skus.length > 0)) {
-        this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
+        && (mamaInfo.data[0].is_elite_mama) && mamaInfo.data[0].is_buyable) {
+      if (this.state.sku) {
+        this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
       }
     } else {
-      Toast.show('对不起，只有专业版小鹿妈妈才能购买此精品券，您可以续费后再来购买！！');
+      Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
     }
   }
 
@@ -240,7 +252,7 @@ export default class BuyCoupon extends Component {
   }
 
   render() {
-    const { productDetails } = this.props;
+    const { productDetails, mamaInfo } = this.props;
     const skus = productDetails.data.sku_info;
     const imgSrc = (productDetails.data && productDetails.data.detail_content) ? productDetails.data.detail_content.head_img : '';
     const payInfo = this.payInfo();
@@ -268,7 +280,7 @@ export default class BuyCoupon extends Component {
           </p>
         </div>
         <div>
-          <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版小鹿妈妈购买及流通使用。</p>
+          <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版精英小鹿妈妈购买及流通使用。</p>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick}>支付</button>
