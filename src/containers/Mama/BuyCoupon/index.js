@@ -79,12 +79,8 @@ export default class BuyCoupon extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
-    console.log(mamaInfo);
-    console.log(productDetails);
     if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data.sku_info) {
       for (let i = 0; i < productDetails.data.sku_info.length; i++) {
-        console.log(productDetails.data.sku_info[i].name);
-        console.log(mamaInfo.data.elite_level);
         if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
           this.setState({ sku: productDetails.data.sku_info[i] });
         }
