@@ -91,8 +91,7 @@ export default class Commit extends Component {
         firstCoupon = couponId.split('/')[0];
         couponNum = couponId.split('/').length;
       }
-      console.log(firstCoupon);
-      console.log(couponNum);
+
       this.setState({ couponNum: couponNum });
       this.props.fetchCouponById(firstCoupon);
     }
