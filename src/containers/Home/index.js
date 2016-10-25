@@ -285,7 +285,7 @@ export class Home extends Component {
                   return (
                     <div key={index} >
                       <a href={item.item_link}>
-                        <Image src={item.pic_link} />
+                        <Image src={item.pic_link} quality={90}/>
                       </a>
                     </div>
                   );
@@ -316,7 +316,7 @@ export class Home extends Component {
                     return (
                       <li key={item.id}>
                         <a href={item.act_link}>
-                          <Image style={{ padding: '10px 0px' }} className="col-xs-12 no-padding bottom-border" src={item.act_img} />
+                          <Image style={{ padding: '10px 0px' }} className="col-xs-12 no-padding bottom-border" quality={90} src={item.act_img} />
                         </a>
                       </li>
                     );
