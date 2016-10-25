@@ -83,7 +83,7 @@ export default class Commit extends Component {
     const { cartIds, addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(cartIds);
-    console.log(couponId);
+
     if (couponId) {
       let firstCoupon = couponId;
       let couponNum = 1;
