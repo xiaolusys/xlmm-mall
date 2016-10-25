@@ -203,9 +203,14 @@ export default class Detail extends Component {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
 
-    if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
+    if (shopBag.success && !_.isEmpty(shopBag.data)) {
       cartId = shopBag.data[0].id;
-      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
+      if (Number(shopBag.data[0].type) === 3) {
+        window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
+      } else if (nextProps.details && nextProps.details.detail_content.is_onsale) {
+        // 特卖抢购商品直接进入支付页面
+        window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+      }
     }
   }
 

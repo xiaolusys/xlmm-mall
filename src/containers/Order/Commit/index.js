@@ -83,7 +83,7 @@ export default class Commit extends Component {
     const { cartIds, addressId, couponId } = this.props.location.query;
     this.props.fetchAddress(addressId ? addressId : 'get_default_address');
     this.props.fetchPayInfo(cartIds);
-    console.log(couponId);
+
     if (couponId) {
       let firstCoupon = couponId;
       let couponNum = 1;
@@ -91,8 +91,7 @@ export default class Commit extends Component {
         firstCoupon = couponId.split('/')[0];
         couponNum = couponId.split('/').length;
       }
-      console.log(firstCoupon);
-      console.log(couponNum);
+
       this.setState({ couponNum: couponNum });
       this.props.fetchCouponById(firstCoupon);
     }
