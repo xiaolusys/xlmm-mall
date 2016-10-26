@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
+import { Header } from 'components/Header';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
@@ -254,6 +255,7 @@ export default class BuyCoupon extends Component {
     const sku = this.state.sku ? this.state.sku : null;
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg buycoupon">
+        <Header title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <Image className="coupon-img" src={imgSrc} quality={70} />
         <div className="product-info bottom-border bg-white col-xs-offset-1">
           <div className="row no-margin">
