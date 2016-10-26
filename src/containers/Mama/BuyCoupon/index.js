@@ -249,10 +249,9 @@ export default class BuyCoupon extends Component {
 
   render() {
     const { productDetails, mamaInfo } = this.props;
-    const skus = productDetails.data.sku_info;
     const imgSrc = (productDetails.data && productDetails.data.detail_content) ? productDetails.data.detail_content.head_img : '';
     const payInfo = this.payInfo();
-    const sku = (skus && skus.length > 0) ? skus[0] : null;
+    const sku = this.state.sku ? this.state.sku : null;
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg buycoupon">
         <Image className="coupon-img" src={imgSrc} quality={70} />
