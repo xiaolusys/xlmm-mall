@@ -203,9 +203,14 @@ export default class Detail extends Component {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
 
-    if (shopBag.success && !_.isEmpty(shopBag.data) && Number(shopBag.data[0].type) === 3) {
+    if (shopBag.success && !_.isEmpty(shopBag.data)) {
       cartId = shopBag.data[0].id;
-      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
+      if (Number(shopBag.data[0].type) === 3) {
+        window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
+      } else if (nextProps.details && nextProps.details.detail_content.is_onsale) {
+        // 特卖抢购商品直接进入支付页面
+        window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+      }
     }
   }
 
@@ -443,7 +448,7 @@ export default class Detail extends Component {
       {images.map((image, index) => {
         return (
           <div key={index}>
-            <Image className="head-image" style={{ width: windowWidth, height: carouselHeight }} thumbnail={windowWidth} crop={ windowWidth + 'x' + carouselHeight } src={image} />
+            <Image className="head-image" quality={90} style={{ width: windowWidth, height: carouselHeight }} thumbnail={windowWidth} crop={ windowWidth + 'x' + carouselHeight } src={image} />
           </div>
         );
       })}
@@ -556,7 +561,7 @@ export default class Detail extends Component {
         <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">商品展示</div>
         <div className="details">
           {images.map((image, index) => {
-            return (<Image key={index} className="col-xs-12 no-padding" thumbnail={640} src={image} />);
+            return (<Image key={index} quality={90} className="col-xs-12 no-padding" thumbnail={640} src={image} />);
           })}
         </div>
       </div>

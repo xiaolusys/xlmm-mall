@@ -28,18 +28,32 @@ const initState = {
     success: false,
     data: [],
   },
+  negotiable: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
 };
 
 const success = (state, action) => {
-  switch (action.payload.status) {
-    case couponStatus.available:
-      return _.extend({}, state, { available: { isLoading: false, error: false, success: true, data: action.payload } });
-    case couponStatus.used:
-      return _.extend({}, state, { used: { isLoading: false, error: false, success: true, data: action.payload } });
-    case couponStatus.unavailable:
-      return _.extend({}, state, { unavailable: { isLoading: false, error: false, success: true, data: action.payload } });
-    case couponStatus.expired:
-      return _.extend({}, state, { expired: { isLoading: false, error: false, success: true, data: action.payload } });
+  switch (action.type) {
+    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
+      switch (action.payload.status) {
+        case couponStatus.available:
+          return _.extend({}, state, { available: { isLoading: false, error: false, success: true, data: action.payload } });
+        case couponStatus.used:
+          return _.extend({}, state, { used: { isLoading: false, error: false, success: true, data: action.payload } });
+        case couponStatus.unavailable:
+          return _.extend({}, state, { unavailable: { isLoading: false, error: false, success: true, data: action.payload } });
+        case couponStatus.expired:
+          return _.extend({}, state, { expired: { isLoading: false, error: false, success: true, data: action.payload } });
+        default:
+          return state;
+      }
+      break;
+    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, { negotiable: { isLoading: false, error: false, success: true, data: action.payload } });
     default:
       return state;
   }
@@ -48,11 +62,17 @@ const success = (state, action) => {
 
 export default (state = initState, action = null) => {
   switch (action.type) {
-    case couponsAction.name + '_' + actionTypes.REQUEST:
+    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.REQUEST:
       return _.extend({}, state);
-    case couponsAction.name + '_' + actionTypes.SUCCESS:
+    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
       return success(state, action);
-    case couponsAction.name + '_' + actionTypes.FAILURE:
+    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state);
+    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state);
+    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+      return success(state, action);
+    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state);
     default:
       return state;

@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
+import { Header } from 'components/Header';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
@@ -79,6 +80,14 @@ export default class BuyCoupon extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
+    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data.sku_info) {
+      for (let i = 0; i < productDetails.data.sku_info.length; i++) {
+        if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
+          this.setState({ sku: productDetails.data.sku_info[i] });
+        }
+      }
+    }
+
     // Add product resp
     if (this.props.shopBag.addProduct.isLoading) {
       if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
@@ -146,13 +155,13 @@ export default class BuyCoupon extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
-    if (mamaInfo && mamaInfo.data && mamaInfo.data.charge_status === 'charged'
-        && (mamaInfo.data.last_renew_type === 183 || mamaInfo.data.last_renew_type === 365)) {
-      if (skus && (skus.length > 0)) {
-        this.props.addProductToShopBag(skus[0].product_id, skus[0].sku_items[0].sku_id, this.state.num);
+    if (mamaInfo && mamaInfo.data && mamaInfo.data[0].charge_status === 'charged'
+        && (mamaInfo.data[0].is_elite_mama) && mamaInfo.data[0].is_buyable) {
+      if (this.state.sku) {
+        this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
       }
     } else {
-      Toast.show('对不起，只有专业版小鹿妈妈才能购买此精品券，您可以续费后再来购买！！');
+      Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
     }
   }
 
@@ -209,21 +218,19 @@ export default class BuyCoupon extends Component {
     let payInfo = {};
     if (!_.isEmpty(this.props.payInfo.data)) {
       payInfo = this.props.payInfo.data;
-      /* payInfo.channels = [];
-      if (payInfo.weixin_payable) {
+      payInfo.channels = [];
         payInfo.channels.push({
           id: 'wx_pub',
           icon: 'icon-wechat-pay icon-wechat-green',
           name: '微信支付',
         });
-      }
-      if (payInfo.alipay_payable) {
+
         payInfo.channels.push({
           id: 'alipay_wap',
           icon: 'icon-alipay-square icon-alipay-blue',
           name: '支付宝',
         });
-      }*/
+
     }
     return payInfo;
   }
@@ -242,13 +249,13 @@ export default class BuyCoupon extends Component {
   }
 
   render() {
-    const { productDetails } = this.props;
-    const skus = productDetails.data.sku_info;
+    const { productDetails, mamaInfo } = this.props;
     const imgSrc = (productDetails.data && productDetails.data.detail_content) ? productDetails.data.detail_content.head_img : '';
     const payInfo = this.payInfo();
-    const sku = (skus && skus.length > 0) ? skus[0] : null;
+    const sku = this.state.sku ? this.state.sku : null;
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg buycoupon">
+        <Header title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <Image className="coupon-img" src={imgSrc} quality={70} />
         <div className="product-info bottom-border bg-white col-xs-offset-1">
           <div className="row no-margin">
@@ -270,7 +277,7 @@ export default class BuyCoupon extends Component {
           </p>
         </div>
         <div>
-          <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版小鹿妈妈购买及流通使用。</p>
+          <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版精英小鹿妈妈购买及流通使用。</p>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
           <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick}>支付</button>
