@@ -104,16 +104,28 @@ export default class Commit extends Component {
   componentWillReceiveProps(nextProps) {
     const { order, payInfo, address } = nextProps;
     const { router } = this.context;
-    if (order.success && order.data.charge && order.data.charge.channel !== 'budget') {
-      this.pay(order.data);
+
+    if (order.error && this.props.order.isLoading) {
+      Toast.show('网络错误，请重试。');
     }
-    if (order.success && order.data.charge && order.data.charge.channel === 'budget') {
-      if (order.data.charge.success) {
-        window.location.replace(order.data.success_url);
-        return;
+    if (order.success && this.props.order.isLoading) {
+      if (order.data.code === 0 && order.data.charge && order.data.charge.channel !== 'budget') {
+        this.pay(order.data);
       }
-      window.location.replace(order.data.fail_url);
+
+      if (order.data.code === 0 && order.data.charge && order.data.charge.channel === 'budget') {
+        if (order.data.charge.success) {
+          window.location.replace(order.data.success_url);
+          return;
+        }
+        window.location.replace(order.data.fail_url);
+      }
+
+      if (order.data.code !== 0) {
+        Toast.show(order.data.info);
+      }
     }
+
     if (payInfo.isLoading || order.isLoading || address.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
@@ -382,7 +394,7 @@ export default class Commit extends Component {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(data.charge, (result, error) => {
       if (result === 'success') {
-        window.location.replace(`${data.success_url}`);
+        window.location.push(`${data.success_url}`);
         return;
       }
       window.location.replace(`${data.fail_url}`);

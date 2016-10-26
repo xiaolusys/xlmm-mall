@@ -170,14 +170,14 @@ export default class List extends Component {
               <li id="available" className={'col-xs-3' + (activeTab === couponStatus.available ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>未使用({available.data && available.data.coupons && available.data.coupons.length})</div>
               </li>
+              <li id="negotiable" className={'col-xs-3' + (activeTab === couponStatus.negotiable ? ' active' : '')} onClick={this.onTabItemClick}>
+                <div>精品券({negotiable.data && negotiable.data.coupons && negotiable.data.coupons.length})</div>
+              </li>
               <li id="used" className={'col-xs-3' + (activeTab === couponStatus.used ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>已使用({used.data && used.data.coupons && used.data.coupons.length})</div>
               </li>
               <li id="expired" className={'col-xs-3' + (activeTab === couponStatus.expired ? ' active' : '')} onClick={this.onTabItemClick}>
                 <div>已过期({expired.data && expired.data.coupons && expired.data.coupons.length})</div>
-              </li>
-              <li id="negotiable" className={'col-xs-3' + (activeTab === couponStatus.negotiable ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>可流通({negotiable.data && negotiable.data.coupons && negotiable.data.coupons.length})</div>
               </li>
             </ul>
           </div>
