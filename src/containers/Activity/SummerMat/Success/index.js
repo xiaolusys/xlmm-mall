@@ -46,7 +46,7 @@ export default class Success extends Component {
         <Header title="活动报名成功" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <If condition={data && data.weixin_qr_img}>
           <div className="content activity-mat-success" style={{ height: height }}>
-            <Image className="col-xs-12 no-padding" src={data.weixin_qr_img} />
+            <Image className="col-xs-12 no-padding" src={data.weixin_qr_img} quality={90} />
           </div>
         </If>
       </div>

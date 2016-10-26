@@ -148,7 +148,7 @@ export default class List extends Component {
             <div className="product">
               <div className="product-picture" data-modelid={item.modelproduct.id} onClick={this.onProductClick}>
                 <LazyLoad throttle={200}>
-                  <Image className={''} src={item.modelproduct.head_img} thumbnail={200}/>
+                  <Image className={''} src={item.modelproduct.head_img} quality={90} thumbnail={200}/>
                 </LazyLoad>
               </div>
               <div className="product-info">

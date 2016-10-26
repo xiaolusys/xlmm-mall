@@ -115,7 +115,7 @@ export default class Home extends Component {
         <Header title="🚄✨VIP2考试✨💪💯" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <Image className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding" src={`${staticBase}banner-1.png`} quality={50} />
         <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding exam-date">
-          <Image src={`${staticBase}date-bg.png`} />
+          <Image src={`${staticBase}date-bg.png`} quality={90} />
           <div>
             <p className="font-lg font-red">考试时间</p>
             <p>{this.formatDate(examInfo.start_time, examInfo.expire_time)}</p>
@@ -129,7 +129,7 @@ export default class Home extends Component {
           <If condition={moment().isBetween(examInfo.start_time, examInfo.expire_time, 'seconds')}>
             <Image className="col-xs-4 no-padding" src={`${staticBase}start-exam-btn-normal.png`} quality={50} onClick={this.onTakeExamBtnClick}/>
           </If>
-          <Image className="col-xs-4 no-padding" src={`${staticBase}btn-right.png`}/>
+          <Image className="col-xs-4 no-padding" src={`${staticBase}btn-right.png`} quality={90}/>
         </div>
         <Image className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding" src={`${staticBase}paratice-part.png`} quality={50}/>
         <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding activity-operations">
