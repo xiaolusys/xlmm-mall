@@ -166,7 +166,7 @@ export default class List extends Component {
             <If condition= {secondCategory && (secondCategory.length > 0)}>
             {secondCategory.map((item) => {
               return (<li className="cat-pic-p col-xs-4" key={item.cid}>
-                      <Image className="cat-pic" src={item.cat_pic} data-cid={item.cid} data-name={item.name} onClick = {this.onItemClick} />
+                      <Image className="cat-pic" src={item.cat_pic} data-cid={item.cid} data-name={item.name} onClick = {this.onItemClick} quality={90}/>
                       <p className="text-center">{item.name}</p>
                      </li>);
               })

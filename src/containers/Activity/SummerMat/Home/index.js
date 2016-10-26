@@ -62,11 +62,11 @@ export default class Home extends Component {
       <div>
         <Header title="7月抢凉席活动" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <div className="content">
-          <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/summerMat/v2/top.png'} />
+          <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/summerMat/v2/top.png'} quality={90} />
           <div className="row" onClick={this.onSignUpClick}>
-            <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/summerMat/v2/signUpBtn.png'}/>
+            <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/summerMat/v2/signUpBtn.png'} quality={90} />
           </div>
-          <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/summerMat/v2/footer.png'} />
+          <Image className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/summerMat/v2/footer.png'} quality={90} />
         </div>
       </div>
     );

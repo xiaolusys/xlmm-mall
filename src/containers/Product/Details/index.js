@@ -574,7 +574,7 @@ export default class Detail extends Component {
     const product = this.getProduct(productId);
     return (
       <div className={`row bottom-border ${skuPopupPrefixCls}-header`}>
-        <Image className="col-xs-3 no-padding" thumbnail={200} crop="200x200" src={product.product_img} />
+        <Image className="col-xs-3 no-padding" thumbnail={200} crop="200x200" src={product.product_img} quality={90}/>
         {product.sku_items.map((item) => {
           if (item.sku_id === skuId) {
             return (

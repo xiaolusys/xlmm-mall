@@ -104,7 +104,7 @@ export default class AppDetail extends Component {
         <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">商品展示</div>
         <div className="details">
           {images.map((image, index) => {
-            return (<Image key={index} className="col-xs-12 no-padding" thumbnail={640} src={image} />);
+            return (<Image key={index} className="col-xs-12 no-padding" quality={90} thumbnail={640} src={image} />);
           })}
         </div>
       </div>
