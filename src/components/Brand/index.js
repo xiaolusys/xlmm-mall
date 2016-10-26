@@ -26,7 +26,7 @@ export class Brand extends Component {
               <i className="icon-angle-right icon-grey"></i>
             </div>
           </div>
-          <Image style={{ width: '100%' }} src={data.act_img} />
+          <Image style={{ width: '100%' }} quality={90} src={data.act_img} />
         </a>
       </li>
     );

@@ -148,7 +148,7 @@ export default class CashoutResult extends Component {
             <div className="product">
               <div className="product-picture" data-modelid={item.modelproduct.id} onClick={this.onProductClick}>
                 <LazyLoad throttle={200}>
-                  <Image className={''} src={item.modelproduct.head_img} thumbnail={200}/>
+                  <Image className={''} src={item.modelproduct.head_img} thumbnail={200} quality={90}/>
                 </LazyLoad>
               </div>
               <div className="product-info">

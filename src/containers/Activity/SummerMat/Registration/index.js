@@ -111,7 +111,7 @@ export default class Registration extends Component {
         <Header title="签到页面" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <div className="content summer-mat-register">
           <div className="top">
-            <Image src={fetchMumInfo.data.head_img_url}/>
+            <Image src={fetchMumInfo.data.head_img_url} quality={90}/>
             <p className="row no-margin font-md text-center">{'我是' + fetchMumInfo.data.nick}</p>
             <div className="row no-margin margin-top-xs font-xs">
               <p className="col-xs-6 text-right padding-right-xs">
@@ -135,7 +135,7 @@ export default class Registration extends Component {
                 {fetchRegisters.data.results.map((item, index) => {
                   return (
                     <li className="col-xs-12 col-md-6 col-md-offset-3 bottom-border" key={index} >
-                      <Image className="col-xs-3 no-padding" src={item.head_img_url} />
+                      <Image className="col-xs-3 no-padding" src={item.head_img_url} quality={90}/>
                       <div className="col-xs-9">
                         <p>
                           <span>昵称：</span>

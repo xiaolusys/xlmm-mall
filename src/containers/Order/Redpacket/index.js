@@ -126,7 +126,7 @@ export default class Redpacket extends Component {
     const coupon = receiveRedpacket.data.coupon || {};
     return (
       <div className={`${prefixCls}`}>
-        <Image className={`${prefixCls}-bg`} src={`${staticBase}sharing-redpacket-bg.png`} />
+        <Image className={`${prefixCls}-bg`} src={`${staticBase}sharing-redpacket-bg.png`} quality={90}/>
         <img className={`${prefixCls}-opened`} src={`${staticBase}redpacket-opened.png`} />
         <div className={`${prefixCls}-container`}>
           <div className={`${prefixCls}-content`}>

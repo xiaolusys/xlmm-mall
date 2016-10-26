@@ -223,7 +223,7 @@ export default class Progress extends Component {
       {images.map((image, index) => {
         return (
           <div key={index}>
-            <Image style={{ width: windowWidth, height: carouselHeight }} thumbnail={windowWidth} crop={ windowWidth + 'x' + carouselHeight } src={image} />
+            <Image style={{ width: windowWidth, height: carouselHeight }} thumbnail={windowWidth} crop={ windowWidth + 'x' + carouselHeight } src={image} quality={90}/>
           </div>
         );
       })}
@@ -276,7 +276,7 @@ export default class Progress extends Component {
         }
         return (
           <div className="col-xs-2 no-padding" key={index}>
-            <Image src={item.customer_thumbnail} />
+            <Image src={item.customer_thumbnail} quality={90}/>
           </div>
           );
         })}
@@ -326,7 +326,7 @@ export default class Progress extends Component {
             <p className="no-margin col-xs-12 no-padding">{item.join_time ? item.join_time.replace('T', ' ') : ''}</p>
             <div className="col-xs-12 no-padding">
               <div className="col-xs-2 no-padding">
-                <Image src={item.customer_thumbnail} />
+                <Image src={item.customer_thumbnail} quality={90}/>
               </div>
               <p className="no-margin col-xs-10 join-item bg-yellow">
                 <span className="col-xs-6 padding-top-xxs no-wrap no-padding">团长 {item.customer_nick}</span>

@@ -78,7 +78,7 @@ export default class Result extends Component {
       <div className={`${prefixCls} clearfix`}>
         <img className="exit-btn" src={`${staticBase}exit-btn.png`} onClick={this.onExitBtnClick} />
         <div className="score-container">
-          <Image src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/result-bg.png" />
+          <Image src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/result-bg.png" quality={90} />
           <div className="score">
             <p className="font-xlg">你的成绩</p>
             <p className="font-86 font-weight-600 font-yellow-light">{result.total_point}</p>

@@ -47,10 +47,10 @@ export class LogisticsPopup extends Component {
           return (
             <div className="col-xs-12 bottom-border padding-bottom-xxs padding-top-xxs logistics-item" key={index} data-value={item.code} data-name={item.name} onClick={onItemClick}>
               <If condition={!item.code}>
-                <Image className="col-xs-2 no-padding border" thumbnail={30} crop={30 + 'x' + 30} quality={100} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/XIAOLU.png'} onError={this.onImageLoadError}/>
+                <Image className="col-xs-2 no-padding border" thumbnail={30} crop={30 + 'x' + 30} quality={90} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/XIAOLU.png'} onError={this.onImageLoadError}/>
               </If>
               <If condition={item.code}>
-                <Image className="col-xs-2 no-padding border" thumbnail={30} crop={30 + 'x' + 30} quality={100} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/' + item.code + '.png'} onError={this.onImageLoadError}/>
+                <Image className="col-xs-2 no-padding border" thumbnail={30} crop={30 + 'x' + 30} quality={90} src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/logistics/' + item.code + '.png'} onError={this.onImageLoadError}/>
               </If>
               <p className="col-xs-10 no-margin text-center font-md">{item.name}</p>
             </div>

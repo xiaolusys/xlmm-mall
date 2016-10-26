@@ -161,7 +161,7 @@ export default class Question extends Component {
     return (
       <div className={`${prefixCls} col-xs-12 col-sm-8 col-sm-offset-2 no-padding clearfix`}>
         <div className="question-header">
-          <Image src={`${staticBase}red-bg.png`} />
+          <Image src={`${staticBase}red-bg.png`} quality={90} />
           <img className="exit-btn" src={`${staticBase}exit-btn.png`} onClick={this.onExitBtnClick} />
           <img className="header-text" src={`${staticBase}title-part-${type}.png`} onClick={this.context.router.goBack} />
         </div>
