@@ -217,7 +217,7 @@ export default class List extends Component {
                 <p className="row no-margin no-wrap">{product.title}</p>
                 <p className="row no-margin margin-top-xxxs font-grey">{'尺码:' + product.sku_name}</p>
                 <p className="row no-margin margin-top-xxxs">
-                  <span className="">{'￥' + product.payment}</span>
+                  <span className="">{'￥' + (Number(product.num) > 0) ? (Number(product.total_fee) / Number(product.num)).toFixed(2) : 0}</span>
                   <span className="padding-left-xs">{'x' + product.num}</span>
                 </p>
               </div>
