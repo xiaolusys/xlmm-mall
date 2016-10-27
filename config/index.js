@@ -5,7 +5,7 @@ module.exports = {
     port: 7070,
   },
   staging: {
-    apiHost: 'staging.xiaolumeimei.com',
+    apiHost: 'staging.xiaolumm.com',
     apiPort: 80,
     port: 7070,
   },
