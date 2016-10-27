@@ -150,8 +150,8 @@ export default class List extends Component {
               </li>
             </ul>
           </div>
-          <div className="product-list clearfix">
-          <div className="margin-top-xxs"></div>
+          <div className="product-list-p" >
+          <div className="margin-top-xxs" ></div>
             {products.map((item) => {
               return <Product key={item.id} product={item} onItemClick = {this.onItemClick} />;
             })}
