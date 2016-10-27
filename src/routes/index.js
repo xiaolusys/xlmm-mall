@@ -80,6 +80,7 @@ import {
   MamaOpeningIntroduce,
   MamaZeroOpeningIntroduce,
   MamaBuyCoupon,
+  TranCouponList,
 } from 'containers/Mama';
 
 import {
@@ -145,6 +146,7 @@ export default (
     <Route path="/mama/open/introduce" component={MamaOpeningIntroduce} />
     <Route path="/mama/open/zeroopen" component={MamaZeroOpeningIntroduce} />
     <Route path="/buycoupon" component={MamaBuyCoupon} />
+    <Route path="/trancoupon/list" component={TranCouponList} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>

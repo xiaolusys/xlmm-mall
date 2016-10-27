@@ -16,6 +16,7 @@ import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
 import * as payInfoAction from 'actions/order/payInfo';
 import * as commitOrderAction from 'actions/order/commit';
+import * as couponAction from 'actions/user/coupons';
 import * as plugins from 'plugins';
 
 import './index.scss';
@@ -25,7 +26,7 @@ const payTypeIcons = {
   alipay_wap: 'icon-alipay-square icon-alipay-blue',
 };
 
-const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction);
+const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction);
 
 @connect(
   state => ({
@@ -34,6 +35,7 @@ const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, pa
     shopBag: state.shopBag,
     payInfo: state.payInfo,
     order: state.commitOrder,
+    coupons: state.coupons,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -41,16 +43,17 @@ export default class BuyCoupon extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
-    fetchProductDetails: React.PropTypes.func,
     addProductToShopBag: React.PropTypes.func,
     fetchPayInfo: React.PropTypes.func,
     commitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
+    applyNegotiableCoupons: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
-    productDetails: React.PropTypes.object,
     shopBag: React.PropTypes.object,
     order: React.PropTypes.object,
     payInfo: React.PropTypes.object,
+    coupons: React.PropTypes.object,
+    productDetails: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -68,22 +71,25 @@ export default class BuyCoupon extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchProductDetails(23487);
+    const { query } = this.props.location;
+    if (query.index && this.props.productDetails) {
+      this.setState({ productDetail: this.props.productDetails.data[query.index] });
+    }
     this.props.fetchMamaInfo();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, productDetails, shopBag, payInfo, order } = nextProps;
+    const { mamaInfo, shopBag, payInfo, order, coupons } = nextProps;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data.sku_info) {
-      for (let i = 0; i < productDetails.data.sku_info.length; i++) {
-        if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
-          this.setState({ sku: productDetails.data.sku_info[i] });
+    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && this.state.productDetail) {
+      for (let i = 0; i < this.state.productDetail.sku_info.length; i++) {
+        if (this.state.productDetail.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
+          this.setState({ sku: this.state.productDetail.sku_info[i] });
         }
       }
     }
@@ -144,6 +150,17 @@ export default class BuyCoupon extends Component {
       }
     }
 
+    // apply coupon
+    if (this.props.coupons.applynegotiable.isLoading) {
+      if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code === 0) {
+          Toast.show('申请精品券成功');
+      }
+
+      if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code !== 0) {
+          Toast.show(coupons.applynegotiable.data.info);
+      }
+    }
+
   }
 
   componentWillUnmount() {
@@ -155,13 +172,16 @@ export default class BuyCoupon extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
-    if (mamaInfo && mamaInfo.data && mamaInfo.data[0].charge_status === 'charged'
+    if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
         && (mamaInfo.data[0].is_elite_mama) && mamaInfo.data[0].is_buyable) {
       if (this.state.sku) {
         this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
       }
     } else {
-      Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
+      // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
+      console.log(this.state.sku.product_id);
+      console.log(this.state.num);
+      this.props.applyNegotiableCoupons(this.state.sku.product_id, this.state.num);
     }
   }
 
@@ -249,8 +269,8 @@ export default class BuyCoupon extends Component {
   }
 
   render() {
-    const { productDetails, mamaInfo } = this.props;
-    const imgSrc = (productDetails.data && productDetails.data.detail_content) ? productDetails.data.detail_content.head_img : '';
+    const { mamaInfo } = this.props;
+    const imgSrc = (this.state.productDetail && this.state.productDetail.detail_content) ? this.state.productDetail.detail_content.head_img : '';
     const payInfo = this.payInfo();
     const sku = this.state.sku ? this.state.sku : null;
     return (
@@ -259,7 +279,7 @@ export default class BuyCoupon extends Component {
         <Image className="coupon-img" src={imgSrc} quality={70} />
         <div className="product-info bottom-border bg-white col-xs-offset-1">
           <div className="row no-margin">
-            <p className="col-xs-8 no-padding no-wrap font-md">{(productDetails.data.detail_content && sku) ? productDetails.data.detail_content.name + '/' + sku.name : '' }</p>
+            <p className="col-xs-10 no-padding no-wrap font-md">{(this.state.productDetail.detail_content && sku) ? this.state.productDetail.detail_content.name + '/' + sku.name : '' }</p>
           </div>
           <div className="row no-margin">
             <p className="col-xs-6 no-padding">
@@ -280,7 +300,7 @@ export default class BuyCoupon extends Component {
           <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版精英小鹿妈妈购买及流通使用。</p>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick}>支付</button>
+          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick}>{(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_elite_mama) ? '支付' : '申请'}</button>
         </div>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className="row no-margin bottom-border">
