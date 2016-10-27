@@ -258,14 +258,6 @@ export default class Detail extends Component {
         });
         return;
       }
-      if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-        plugins.setupWebViewJavascriptBridge(function(bridge) {
-          bridge.callHandler('jumpToNativeLocation', {
-            target_url: jumpUrl,
-          }, function(response) {});
-        });
-        return;
-      }
 
       /* plugins.invoke({
         method: 'jumpToNativeLocation',

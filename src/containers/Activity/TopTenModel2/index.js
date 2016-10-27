@@ -132,14 +132,7 @@ export default class TopTenModel2 extends Component {
         });
         return;
       }
-      if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-        plugins.setupWebViewJavascriptBridge(function(bridge) {
-          bridge.callHandler('jumpToNativeLocation', {
-            target_url: jumpUrl,
-          }, function(response) {});
-        });
-        return;
-      }
+
       if (jumpUrl.indexOf('activity_id') > 0) {
         window.location.href = jumpUrl.substr(jumpUrl.indexOf('/mall/'));
       } else {
@@ -156,6 +149,7 @@ export default class TopTenModel2 extends Component {
     const dataSet = e.currentTarget.dataset;
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
+
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
       if (appVersion < 20161019 && appVersion >= 20160815) {
@@ -170,6 +164,7 @@ export default class TopTenModel2 extends Component {
         return;
       }
     }
+
     if (utils.detector.isIOS() && utils.detector.isApp()) {
       plugins.invoke({
         method: 'jumpToNativeLocation',
@@ -177,14 +172,7 @@ export default class TopTenModel2 extends Component {
       });
       return;
     }
-    if (utils.detector.isIOS() && !utils.detector.isWechat()) {
-      plugins.setupWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('jumpToNativeLocation', {
-          target_url: appUrl,
-        }, function(response) {});
-      });
-      return;
-    }
+
     window.location.href = `/mall/product/details/${modelId}`;
   }
 
