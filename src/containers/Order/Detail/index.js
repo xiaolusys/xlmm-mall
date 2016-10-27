@@ -255,7 +255,7 @@ export default class Detail extends Component {
                 <p className="row no-margin no-wrap">{order.title}</p>
                 <p className="row no-margin margin-top-xxxs font-grey">{'尺寸: ' + order.sku_name}</p>
                 <p className="row no-margin margin-top-xxxs">
-                  <span className="">{'￥' + order.payment}</span>
+                  <span className="">{'￥' + (Number(order.num) > 0) ? (Number(order.total_fee) / Number(order.num)).toFixed(2) : 0}</span>
                   <span className="padding-left-xs">{'x' + order.num}</span>
                 </p>
               </div>
