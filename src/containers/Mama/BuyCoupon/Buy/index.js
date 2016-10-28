@@ -150,11 +150,12 @@ export default class BuyCoupon extends Component {
       }
     }
 
+    console.log(window.location);
     // apply coupon
     if (this.props.coupons.applynegotiable.isLoading) {
       if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code === 0) {
           Toast.show('申请精品券成功');
-          this.context.router.replace(`${encodeURIComponent(this.props.location.pathname)} + tran_coupon/html/trancoupon.html`);
+          this.context.router.replace(`${encodeURIComponent(window.location.host)} + tran_coupon/html/trancoupon.html`);
       }
 
       if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code !== 0) {
@@ -278,7 +279,7 @@ export default class BuyCoupon extends Component {
         <Image className="coupon-img" src={imgSrc} quality={70} />
         <div className="product-info bottom-border bg-white col-xs-offset-1">
           <div className="row no-margin">
-            <p className="col-xs-10 no-padding no-wrap font-md">{(this.state.productDetail.detail_content && sku) ? this.state.productDetail.detail_content.name + '/' + sku.name : '' }</p>
+            <p className="col-xs-10 no-padding no-wrap font-md">{(this.state.productDetail && this.state.productDetail.detail_content && sku) ? this.state.productDetail.detail_content.name + '/' + sku.name : '' }</p>
           </div>
           <div className="row no-margin">
             <p className="col-xs-6 no-padding">
