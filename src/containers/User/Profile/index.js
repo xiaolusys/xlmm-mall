@@ -62,7 +62,7 @@ export default class Profile extends Component {
 
     if (this.state.logoutState && nextProps.success) {
       Toast.show('退出登录成功！');
-      this.context.router.push('/mall');
+      this.context.router.push('/');
     }
 
     if (nextProps.error) {

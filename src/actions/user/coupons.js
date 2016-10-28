@@ -38,8 +38,7 @@ export const applyNegotiableCoupons = (productId, num) => {
   const action = createAction(names.APPLY_NEGOTIABLE_COUPONS);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'mama/trancoupon/start_transfer?product_id=' + productId
-              + ('&coupon_num=' + num))
+    return axios.post(constants.baseEndpoint + 'mama/trancoupon/start_transfer', qs.stringify({ product_id: productId, coupon_num: num }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

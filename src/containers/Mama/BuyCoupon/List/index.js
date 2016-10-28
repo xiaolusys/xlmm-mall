@@ -77,17 +77,15 @@ export default class TranCouponList extends Component {
     this.context.router.push('/buycoupon?index=' + index);
   }
 
-  renderProduct = (product) => {
+  renderProduct = (product, index) => {
     const { mamaInfo } = this.props;
     const productDetails = product;
     const imgSrc = (productDetails && productDetails.detail_content) ? productDetails.detail_content.head_img : '';
     let sku = null;
-    let index = 0;
 
     for (let i = 0; i < productDetails.sku_info.length; i++) {
       if (productDetails.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
         sku = productDetails.sku_info[i];
-        index = i;
         break;
       }
     }
@@ -119,7 +117,7 @@ export default class TranCouponList extends Component {
         <Header title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div>
         <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data}>
-          {productDetails.data.map((item) => this.renderProduct(item))
+          {productDetails.data.map((item, index) => this.renderProduct(item, index))
           }
         </If>
         </div>
