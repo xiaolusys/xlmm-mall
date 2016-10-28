@@ -150,12 +150,11 @@ export default class BuyCoupon extends Component {
       }
     }
 
-    console.log(window.location);
     // apply coupon
     if (this.props.coupons.applynegotiable.isLoading) {
       if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code === 0) {
           Toast.show('申请精品券成功');
-          this.context.router.replace(`${encodeURIComponent(window.location.host)} + tran_coupon/html/trancoupon.html`);
+          window.location.href = (`${encodeURIComponent(window.location.origin)} + /tran_coupon/html/trancoupon.html`);
       }
 
       if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code !== 0) {
@@ -181,7 +180,9 @@ export default class BuyCoupon extends Component {
       }
     } else {
       // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
-      this.props.applyNegotiableCoupons(this.state.sku.product_id, this.state.num);
+      if (this.state.sku) {
+        this.props.applyNegotiableCoupons(this.state.sku.product_id, this.state.num);
+      }
     }
   }
 
