@@ -76,6 +76,7 @@ export default class List extends Component {
             ids += couponids[i] + '/';
           }
         }
+
         this.context.router.replace(query.next.indexOf('?') > 0 ? `${query.next}&couponId=${ids}` : `${query.next}?couponId=${ids}`);
       }
     } else if (verifyCoupon.error) {
@@ -106,9 +107,11 @@ export default class List extends Component {
   onCouponItemClick = (e) => {
     const { query } = this.props.location;
     const { status, id, type, template } = e.currentTarget.dataset;
+
     if (!query.next || Number(status) !== constants.couponStatus.available) {
       return;
     }
+
     this.setState({ couponids: ([id]), couponType: type, couponTemplate: template });
     this.props.fetchVerifyCoupon(query.cartIds, id);
     e.preventDefault();
@@ -152,19 +155,23 @@ export default class List extends Component {
     const usable = this.props.selectCoupon ? this.props.selectCoupon.data.usable_coupon : [];
     let num = 0;
 
-    const ids = [];
-    for (let i = 0; i < usable.length; i++) {
-      const item = usable[i];
-      if (Number(item.coupon_type) === 8 && Number(item.coupon_type) === Number(this.state.couponType) && Number(item.template_id) === Number(this.state.couponTemplate)) {
-        ids.push(item.id.toString());
-        num++;
-        if (num === Number(goodsnum)) {
-          break;
+    let ids = [];
+    if (Number(this.state.couponType) === 8) {
+      for (let i = 0; i < usable.length; i++) {
+        const item = usable[i];
+        if (Number(item.coupon_type) === 8 && Number(item.coupon_type) === Number(this.state.couponType) && Number(item.template_id) === Number(this.state.couponTemplate)) {
+          ids.push(item.id.toString());
+          num++;
+          if (num === Number(goodsnum)) {
+            break;
+          }
         }
       }
+      this.setState({ couponids: ids });
+    } else {
+      ids = this.state.couponids;
     }
 
-    this.setState({ couponids: ids });
     return ids;
   }
 
