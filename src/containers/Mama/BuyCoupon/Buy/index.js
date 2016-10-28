@@ -154,7 +154,7 @@ export default class BuyCoupon extends Component {
     if (this.props.coupons.applynegotiable.isLoading) {
       if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code === 0) {
           Toast.show('申请精品券成功');
-          window.location.href = (`${encodeURIComponent(window.location.origin)} + /tran_coupon/html/trancoupon.html`);
+          window.location.href = window.location.origin + '/tran_coupon/html/trancoupon.html';
       }
 
       if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code !== 0) {
