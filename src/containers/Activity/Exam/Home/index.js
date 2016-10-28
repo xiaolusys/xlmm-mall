@@ -104,7 +104,7 @@ export default class Home extends Component {
   formatDate(beginDateStr, endDateStr) {
     const beginDate = moment(beginDateStr);
     const endDate = moment(endDateStr);
-    return beginDate.format('dddd') + '：' + beginDate.format('a') + beginDate.format('h:mm') + '-' + endDate.format('h:mm');
+    return beginDate.format('a') + beginDate.format('h:mm') + '-' + endDate.format('h:mm');
   }
 
   render() {

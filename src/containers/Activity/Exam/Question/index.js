@@ -158,7 +158,7 @@ export default class Question extends Component {
         <div className="question-header">
           <Image src={`${staticBase}red-bg.png`} quality={90} />
           <img className="exit-btn" src={`${staticBase}exit-btn.png`} onClick={this.onExitBtnClick} />
-          <img className="header-text" src={`${staticBase}title-part-${type}.png`} onClick={this.context.router.goBack} />
+          <img className="header-text" src={`${staticBase}title2-part-${type}.png`} onClick={this.context.router.goBack} />
         </div>
         <If condition={!_.isEmpty(question)}>
           <div className="question-body">
