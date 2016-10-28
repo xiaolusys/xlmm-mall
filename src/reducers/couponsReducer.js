@@ -34,6 +34,12 @@ const initState = {
     success: false,
     data: [],
   },
+  applynegotiable: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
 };
 
 const success = (state, action) => {
@@ -54,6 +60,8 @@ const success = (state, action) => {
       break;
     case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, { negotiable: { isLoading: false, error: false, success: true, data: action.payload } });
+    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, { applynegotiable: { isLoading: false, error: false, success: true, data: action.payload } });
     default:
       return state;
   }
@@ -74,6 +82,16 @@ export default (state = initState, action = null) => {
       return success(state, action);
     case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state);
+    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        applynegotiable: { isLoading: true, data: state.applynegotiable.data, error: false, success: false },
+      });
+    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+      return success(state, action);
+    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        applynegotiable: { isLoading: false, data: action.payload, error: true, success: false },
+      });
     default:
       return state;
   }
