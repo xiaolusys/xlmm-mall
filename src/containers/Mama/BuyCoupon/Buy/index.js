@@ -46,6 +46,7 @@ export default class BuyCoupon extends Component {
     addProductToShopBag: React.PropTypes.func,
     fetchPayInfo: React.PropTypes.func,
     commitOrder: React.PropTypes.func,
+    buyNowCommitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     applyNegotiableCoupons: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
@@ -175,6 +176,11 @@ export default class BuyCoupon extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
+    if (this.state.num <= 0) {
+      Toast.show('对不起，输入的商品个数不对，请重新输入');
+      return;
+    }
+
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
         && (mamaInfo.data[0].is_elite_mama) && mamaInfo.data[0].is_buyable) {
       if (this.state.sku) {
@@ -233,6 +239,14 @@ export default class BuyCoupon extends Component {
     e.preventDefault();
   }
 
+  onNumChange = (value) => {
+    if (Number(value.target.value) === 0 || Number(value.target.value) > 10000) {
+      Toast.show('输入个数不能为0或超过10000');
+      return;
+    }
+    this.setState({ num: Number(value.target.value) });
+  }
+
   togglePayTypePopupActive = () => {
       this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
   }
@@ -242,17 +256,31 @@ export default class BuyCoupon extends Component {
     if (!_.isEmpty(this.props.payInfo.data)) {
       payInfo = this.props.payInfo.data;
       payInfo.channels = [];
-      payInfo.channels.push({
-        id: 'wx',
-        icon: 'icon-wechat-pay icon-wechat-green',
-        name: '微信支付',
-      });
+      if (utils.detector.isApp()) {
+        payInfo.channels.push({
+          id: 'wx',
+          icon: 'icon-wechat-pay icon-wechat-green',
+          name: '微信支付',
+        });
 
-      payInfo.channels.push({
-        id: 'alipay',
-        icon: 'icon-alipay-square icon-alipay-blue',
-        name: '支付宝',
-      });
+        payInfo.channels.push({
+          id: 'alipay',
+          icon: 'icon-alipay-square icon-alipay-blue',
+          name: '支付宝',
+        });
+      } else {
+        payInfo.channels.push({
+          id: 'wx_pub',
+          icon: 'icon-wechat-pay icon-wechat-green',
+          name: '微信支付',
+        });
+
+        payInfo.channels.push({
+          id: 'alipay_wap',
+          icon: 'icon-alipay-square icon-alipay-blue',
+          name: '支付宝',
+        });
+      }
     }
     return payInfo;
   }
@@ -300,11 +328,11 @@ export default class BuyCoupon extends Component {
           </div>
         </div>
         <div className="row coupon-num">
-          <p className="text-center cart-quantity">
+          <div className="text-center cart-quantity">
             <i className="icon-minus icon-yellow" data-action="minus" onClick={this.onUpdateQuantityClick}></i>
-            <span>{this.state.num}</span>
+            <input className="input-num" type="number" placeholder="5" value={this.state.num} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
             <i className="icon-plus icon-yellow" data-action="plus" onClick={this.onUpdateQuantityClick}></i>
-          </p>
+          </div>
         </div>
         <div>
           <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版精英小鹿妈妈购买及流通使用。</p>
