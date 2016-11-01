@@ -75,6 +75,7 @@ export default class Find extends Component {
   }
 
   render() {
+    const { packageId, companyName } = this.props.location.query;
     const { refundsDetails, refundsLogistics } = this.props;
     const refundsDetailsData = refundsDetails.data || {};
     const refundsLogisticsData = refundsLogistics.data || {};
@@ -97,19 +98,19 @@ export default class Find extends Component {
               <p>为提高您的退货退款效率，请注意一下事项</p>
               <p>1.填写退货单or小纸条一并寄回，写明您的<span className="font-orange">微信昵称、联系电话、退换货原因</span></p>
               <p>2.勿发顺丰或EMS高等邮费快递</p>
-              <p>3.请先支付邮费，拒收到付件。收货验收后，货款和运费将分开退还到您的相应帐户</p>
+              <p>3.质量问题退货请事先拍照并联系在线客服，客服审核通过后会包邮退。请您先支付邮费，仓库拒收到付件。收货验收后，货款和运费将分开退还到您的相应帐户</p>
               <p>4.请保持衣服吊牌完整，不影响商品后续处理</p>
             </div>
           </div>
-          <If condition={!_.isEmpty(refundsLogisticsData)}>
             <div className="content-white-bg padding-top-xxs padding-bottom-xxs padding-left-xs">
-              <If condition={refundsLogisticsData.order}>
-                <p className="row no-margin">{`快递公司：${refundsLogisticsData.name}`}</p>
+              <If condition={companyName}>
+                <p className="row no-margin">{`快递公司：${companyName}`}</p>
               </If>
-              <If condition={refundsLogisticsData.order}>
-                <p className="row no-margin">{`快递单号：${refundsLogisticsData.order}`}</p>
+              <If condition={packageId}>
+                <p className="row no-margin">{`快递单号：${packageId}`}</p>
               </If>
             </div>
+          <If condition={!_.isEmpty(refundsLogisticsData)}>
             {this.renderRefunsLogistics(refundsLogisticsData.data)}
           </If>
         </div>

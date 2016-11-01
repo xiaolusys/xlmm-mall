@@ -125,7 +125,7 @@ export default class List extends Component {
     const data = fetchNotification.data.results || [];
     return (
       <div>
-        <Header title="通知" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="通知" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
           <div className="content favorite-container">
             <If condition={!_.isEmpty(data)}>
               {this.renderNotifications(data)}
