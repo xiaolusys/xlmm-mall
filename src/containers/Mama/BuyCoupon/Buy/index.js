@@ -72,6 +72,7 @@ export default class BuyCoupon extends Component {
 
   componentWillMount() {
     const { query } = this.props.location;
+
     if (query.index && this.props.productDetails) {
       this.setState({ productDetail: this.props.productDetails.data[query.index] });
     }
@@ -97,10 +98,11 @@ export default class BuyCoupon extends Component {
     // Add product resp
     if (this.props.shopBag.addProduct.isLoading) {
       if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
-        Toast.show(nextProps.shopBag.addProduct.data.info);
+        // Toast.show(nextProps.shopBag.addProduct.data.info);
         this.setState({ activeSkuPopup: false });
       }
-      if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
+      if (nextProps.shopBag.addProduct.success && (nextProps.shopBag.addProduct.data.code !== 0)
+          && nextProps.shopBag.addProduct.data.info) {
         Toast.show(nextProps.shopBag.addProduct.data.info);
       }
 
@@ -240,17 +242,17 @@ export default class BuyCoupon extends Component {
     if (!_.isEmpty(this.props.payInfo.data)) {
       payInfo = this.props.payInfo.data;
       payInfo.channels = [];
-        payInfo.channels.push({
-          id: 'wx',
-          icon: 'icon-wechat-pay icon-wechat-green',
-          name: '微信支付',
-        });
+      payInfo.channels.push({
+        id: 'wx',
+        icon: 'icon-wechat-pay icon-wechat-green',
+        name: '微信支付',
+      });
 
-        payInfo.channels.push({
-          id: 'alipay',
-          icon: 'icon-alipay-square icon-alipay-blue',
-          name: '支付宝',
-        });
+      payInfo.channels.push({
+        id: 'alipay',
+        icon: 'icon-alipay-square icon-alipay-blue',
+        name: '支付宝',
+      });
     }
     return payInfo;
   }
@@ -258,17 +260,23 @@ export default class BuyCoupon extends Component {
   pay = (data) => {
     console.log(data.charge);
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
-    window.pingpp.createPayment(data.charge, (result, error) => {
-      if (result === 'success') {
-        console.log(data.success_url);
-        Toast.show('支付成功');
-        window.location.replace(`${data.success_url}`);
-        return;
-      }
-      console.log(error);
-      Toast.show('支付失败');
-      window.location.replace(`${data.fail_url}`);
-    });
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativePurchase',
+        data: data.charge,
+      });
+    } else {
+      window.pingpp.createPayment(data.charge, (result, error) => {
+        if (result === 'success') {
+          Toast.show('支付成功');
+          window.location.replace(`${data.success_url}`);
+          return;
+        }
+        Toast.show('支付失败');
+        window.location.replace(`${data.fail_url}`);
+      });
+    }
+
   }
 
   render() {
