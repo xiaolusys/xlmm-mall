@@ -262,7 +262,7 @@ export default class BuyCoupon extends Component {
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'callNativePurchase',
-        data: { charge: data.charge },
+        data: data.charge,
       });
     } else {
       window.pingpp.createPayment(data.charge, (result, error) => {
