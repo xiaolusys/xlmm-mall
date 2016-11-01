@@ -17,11 +17,6 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
-const payTypeIcons = {
-  wx_pub: 'icon-wechat-pay icon-wechat-green',
-  alipay_wap: 'icon-alipay-square icon-alipay-blue',
-};
-
 const actionCreators = _.extend(mamaInfoAction, detailsAction);
 
 @connect(
@@ -74,7 +69,7 @@ export default class TranCouponList extends Component {
 
   onProductClick = (e) => {
     const { index } = e.currentTarget.dataset;
-    this.context.router.push('/buycoupon?index=' + index);
+    this.context.router.replace('/buycoupon?index=' + index);
   }
 
   renderProduct = (product, index) => {
