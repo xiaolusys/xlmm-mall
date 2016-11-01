@@ -72,6 +72,7 @@ export default class BuyCoupon extends Component {
 
   componentWillMount() {
     const { query } = this.props.location;
+
     if (query.index && this.props.productDetails) {
       this.setState({ productDetail: this.props.productDetails.data[query.index] });
     }
