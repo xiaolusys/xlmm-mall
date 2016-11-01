@@ -22,8 +22,8 @@ import * as plugins from 'plugins';
 import './index.scss';
 
 const payTypeIcons = {
-  wx_pub: 'icon-wechat-pay icon-wechat-green',
-  alipay_wap: 'icon-alipay-square icon-alipay-blue',
+  wx: 'icon-wechat-pay icon-wechat-green',
+  alipay: 'icon-alipay-square icon-alipay-blue',
 };
 
 const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction);
