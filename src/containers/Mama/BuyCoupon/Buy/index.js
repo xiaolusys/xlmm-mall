@@ -258,12 +258,11 @@ export default class BuyCoupon extends Component {
   }
 
   pay = (data) => {
-    console.log(data.charge);
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'callNativePurchase',
-        data: data.charge,
+        data: data,
       });
     } else {
       window.pingpp.createPayment(data.charge, (result, error) => {
