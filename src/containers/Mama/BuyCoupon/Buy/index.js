@@ -98,10 +98,11 @@ export default class BuyCoupon extends Component {
     // Add product resp
     if (this.props.shopBag.addProduct.isLoading) {
       if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
-        Toast.show(nextProps.shopBag.addProduct.data.info);
+        // Toast.show(nextProps.shopBag.addProduct.data.info);
         this.setState({ activeSkuPopup: false });
       }
-      if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
+      if (nextProps.shopBag.addProduct.success && (nextProps.shopBag.addProduct.data.code !== 0)
+          && nextProps.shopBag.addProduct.data.info) {
         Toast.show(nextProps.shopBag.addProduct.data.info);
       }
 
@@ -240,7 +241,7 @@ export default class BuyCoupon extends Component {
     let payInfo = {};
     if (!_.isEmpty(this.props.payInfo.data)) {
       payInfo = this.props.payInfo.data;
-      payInfo.channels = [];
+      /* payInfo.channels = [];
         payInfo.channels.push({
           id: 'wx',
           icon: 'icon-wechat-pay icon-wechat-green',
@@ -251,7 +252,7 @@ export default class BuyCoupon extends Component {
           id: 'alipay',
           icon: 'icon-alipay-square icon-alipay-blue',
           name: '支付宝',
-        });
+        });*/
     }
     return payInfo;
   }
