@@ -259,17 +259,23 @@ export default class BuyCoupon extends Component {
   pay = (data) => {
     console.log(data.charge);
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
-    window.pingpp.createPayment(data.charge, (result, error) => {
-      if (result === 'success') {
-        console.log(data.success_url);
-        Toast.show('支付成功');
-        window.location.replace(`${data.success_url}`);
-        return;
-      }
-      console.log(error);
-      Toast.show('支付失败');
-      window.location.replace(`${data.fail_url}`);
-    });
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativePurchase',
+        data: { charge: data.charge },
+      });
+    } else {
+      window.pingpp.createPayment(data.charge, (result, error) => {
+        if (result === 'success') {
+          Toast.show('支付成功');
+          window.location.replace(`${data.success_url}`);
+          return;
+        }
+        Toast.show('支付失败');
+        window.location.replace(`${data.fail_url}`);
+      });
+    }
+
   }
 
   render() {
