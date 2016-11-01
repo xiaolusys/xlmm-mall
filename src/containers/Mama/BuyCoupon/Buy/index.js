@@ -239,19 +239,18 @@ export default class BuyCoupon extends Component {
     let payInfo = {};
     if (!_.isEmpty(this.props.payInfo.data)) {
       payInfo = this.props.payInfo.data;
-      /* payInfo.channels = [];
+      payInfo.channels = [];
         payInfo.channels.push({
-          id: 'wx_pub',
+          id: 'wx',
           icon: 'icon-wechat-pay icon-wechat-green',
           name: '微信支付',
         });
 
         payInfo.channels.push({
-          id: 'alipay_wap',
+          id: 'alipay',
           icon: 'icon-alipay-square icon-alipay-blue',
           name: '支付宝',
         });
-      */
     }
     return payInfo;
   }
