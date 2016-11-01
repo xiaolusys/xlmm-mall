@@ -652,7 +652,7 @@ export default class Detail extends Component {
     }
     return (
       <div className={`${prefixCls}`}>
-        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} hide={utils.detector.isApp()}/>
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
