@@ -32,7 +32,6 @@ const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, pa
   state => ({
     mamaInfo: state.mamaInfo,
     productDetails: state.productDetails,
-    shopBag: state.shopBag,
     payInfo: state.payInfo,
     order: state.commitOrder,
     coupons: state.coupons,
@@ -43,9 +42,10 @@ export default class BuyCoupon extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
-    addProductToShopBag: React.PropTypes.func,
-    fetchPayInfo: React.PropTypes.func,
-    commitOrder: React.PropTypes.func,
+    // addProductToShopBag: React.PropTypes.func,
+    // fetchPayInfo: React.PropTypes.func,
+    // commitOrder: React.PropTypes.func,
+    fetchBuyNowPayInfo: React.PropTypes.func,
     buyNowCommitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     applyNegotiableCoupons: React.PropTypes.func,
@@ -81,7 +81,7 @@ export default class BuyCoupon extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, shopBag, payInfo, order, coupons } = nextProps;
+    const { mamaInfo, payInfo, order, coupons } = nextProps;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
@@ -97,6 +97,7 @@ export default class BuyCoupon extends Component {
     }
 
     // Add product resp
+    /*
     if (this.props.shopBag.addProduct.isLoading) {
       if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
         // Toast.show(nextProps.shopBag.addProduct.data.info);
@@ -132,7 +133,7 @@ export default class BuyCoupon extends Component {
         const cartIds = shopBag.shopBag.data[0].id;
         this.props.fetchPayInfo(cartIds);
       }
-    }
+    }*/
 
     // payinfo resp
     if (this.props.payInfo.isLoading) {
@@ -184,7 +185,13 @@ export default class BuyCoupon extends Component {
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
         && (mamaInfo.data[0].is_elite_mama) && mamaInfo.data[0].is_buyable) {
       if (this.state.sku) {
-        this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
+        // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
+        // 精品券默认是在app上支付
+        if (utils.detector.isApp()) {
+          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'app');
+        } else {
+          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'wap');
+        }
       }
     } else {
       // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
@@ -205,9 +212,23 @@ export default class BuyCoupon extends Component {
       return;
     }
 
-    this.props.commitOrder({
+    /* this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
+      payment: payInfo.data.total_payment,
+      post_fee: payInfo.data.post_fee,
+      discount_fee: payInfo.data.discount_fee,
+      total_fee: payInfo.data.total_fee,
+      channel: paytype,
+      mm_linkid: mmLinkId,
+      order_type: 4, // 对应后台的电子商品类型，不校验地址
+    });*/
+
+    this.props.buyNowCommitOrder({
+      uuid: payInfo.data.uuid,
+      item_id: payInfo.data.sku.product.id,
+      sku_id: payInfo.data.sku.id,
+      num: this.state.num,
       payment: payInfo.data.total_payment,
       post_fee: payInfo.data.post_fee,
       discount_fee: payInfo.data.discount_fee,
@@ -351,7 +372,12 @@ export default class BuyCoupon extends Component {
           {payInfo.channels && payInfo.channels.map((channel) =>
             (
               <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
-                <i className={`${payTypeIcons[channel.id]} icon-2x margin-right-xxs`}></i>
+                <If condition={channel.id.indexOf('wx') >= 0 }>
+                  <i className={`${payTypeIcons.wx} icon-2x margin-right-xxs`}></i>
+                </If>
+                <If condition={channel.id.indexOf('alipay') >= 0 }>
+                  <i className={`${payTypeIcons.alipay} icon-2x margin-right-xxs`}></i>
+                </If>
                 <span className="inline-block margin-top-xxs">{channel.name}</span>
               </div>
             )

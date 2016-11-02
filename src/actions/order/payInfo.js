@@ -17,3 +17,17 @@ export const fetchPayInfo = (cartIds, couponId) => {
       });
   };
 };
+
+export const fetchBuyNowPayInfo = (skuid, num, device) => {
+  const action = createAction(name);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'carts/now_payinfo', { params: { sku_id: skuid, num: num, device: device } })
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
