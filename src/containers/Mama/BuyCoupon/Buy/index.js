@@ -261,11 +261,11 @@ export default class BuyCoupon extends Component {
   }
 
   onNumChange = (value) => {
-    this.setState({ num: Number(value.target.value) });
-    if (Number(value.target.value) === 0 || Number(value.target.value) > 10000) {
+    if (Number(value.target.value) >= 10000) {
       Toast.show('输入个数不能为0或超过10000');
       return;
     }
+    this.setState({ num: Number(value.target.value) });
   }
 
   togglePayTypePopupActive = () => {
