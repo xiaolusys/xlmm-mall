@@ -261,11 +261,11 @@ export default class BuyCoupon extends Component {
   }
 
   onNumChange = (value) => {
+    this.setState({ num: Number(value.target.value) });
     if (Number(value.target.value) === 0 || Number(value.target.value) > 10000) {
       Toast.show('输入个数不能为0或超过10000');
       return;
     }
-    this.setState({ num: Number(value.target.value) });
   }
 
   togglePayTypePopupActive = () => {
@@ -351,7 +351,7 @@ export default class BuyCoupon extends Component {
         <div className="row coupon-num">
           <div className="text-center cart-quantity">
             <i className="icon-minus icon-yellow" data-action="minus" onClick={this.onUpdateQuantityClick}></i>
-            <input className="input-num" type="number" placeholder="5" value={this.state.num} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
+            <input className="input-num" type="number" value={this.state.num} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
             <i className="icon-plus icon-yellow" data-action="plus" onClick={this.onUpdateQuantityClick}></i>
           </div>
         </div>
