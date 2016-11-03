@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
-import makemoneyTab from './makemoney';
+import MakemoneyTab from './makemoney';
 
 import './index.scss';
 
@@ -101,7 +101,7 @@ export default class MamaHome extends Component {
       <div className="mamahome">
         <Header title="妈妈中心" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="content home-container">
-          {makemoneyTab}
+          <MakemoneyTab/>
         </div>
         <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">
