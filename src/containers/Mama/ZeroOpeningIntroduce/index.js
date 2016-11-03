@@ -56,9 +56,9 @@ export default class ZeroOpeningIntroduce extends Component {
       <div>
         <Header title="开店介绍" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content open-introduce-container">
-            <Image src={`http://7xkyoy.com1.z0.glb.clouddn.com/mall/mama/open/v2/zeroopenbanner.png`} quality={90}/>
+            <Image src={`//img.xiaolumeimei.com/mall/mama/open/v2/zeroopenbanner.png`} quality={90}/>
             <Image src ={this.props.mamaQrcode ? this.props.mamaQrcode.qrcode_link : ''} quality={90}/>
-            <Image src={`http://7xkyoy.com1.z0.glb.clouddn.com/mall/mama/open/v2/zeroopeninfo.png`} quality={90}/>
+            <Image src={`//img.xiaolumeimei.com/mall/mama/open/v2/zeroopeninfo.png`} quality={90}/>
           </div>
       </div>
     );

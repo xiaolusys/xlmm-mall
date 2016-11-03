@@ -219,7 +219,7 @@ export default class List extends Component {
           return (
             <li className="row no-margin bottom-border content-white-bg" data-id={course.id} data-to={course.content_link} onClick={this.onCourseItemClick}>
               <div className="col-xs-4">
-                <Image className="col-xs-12 no-padding" src={course.cover_image || 'http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png'}/>
+                <Image className="col-xs-12 no-padding" src={course.cover_image || '//og224uhh3.qnssl.com/mall/university/v1/banner.png'}/>
               </div>
               <div className="col-xs-8">
                 <p className="col-xs-12 no-margin no-padding no-wrap padding-top-xxs">{course.title}</p>
@@ -253,7 +253,7 @@ export default class List extends Component {
           <If condition={bottomTab === 'course'}>
             <div className="margin-bottom-lg course-container">
               <div className="row no-margin">
-                <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/university/v1/banner.png"/>
+                <img src="//og224uhh3.qnssl.com/mall/university/v1/banner.png"/>
               </div>
               <div className={'text-center bottom-border course-tab ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
                 <ul className="row no-margin">
