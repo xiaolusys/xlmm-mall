@@ -61,13 +61,13 @@ export default class OpeningIntroduce extends Component {
     window.location.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mcf.html?mama_id=${mamaLinkId}`;
   }
 
-  /* <Image src={`http://7xkyoy.com1.z0.glb.clouddn.com//mall/mama/open/v2/zeroopeninfo.png`} quality={80}/> */
+  /* <Image src={`//img.xiaolumeimei.com/mall/mama/open/v2/zeroopeninfo.png`} quality={80}/> */
   render() {
     return (
       <div>
         <Header title="开店介绍" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content open-introduce-container">
-            <Image src={`http://7xkyoy.com1.z0.glb.clouddn.com//mall/mama/open/v2/zeroopenbanner.png`} quality={80}/>
+            <Image src={`//img.xiaolumeimei.com/mall/mama/open/v2/zeroopenbanner.png`} quality={80}/>
             <If condition={this.props.mamaQrcode && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link)}>
               <Image className="qrcode" src ={this.props.mamaQrcode.data.qrcode_link} quality={90} />
             </If>

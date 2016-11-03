@@ -80,7 +80,7 @@ export default class Winners extends Component {
         <Header title="中奖名单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
         <div className="content entrepreneurship-winner-container">
           <div className="row no-margin">
-              <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/winner-banner.jpg'} />
+              <img className="col-xs-12 no-padding" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/winner-banner.jpg'} />
             </div>
           <div className="winner-tabs text-center bottom-border">
             <ul className="row no-margin">
@@ -117,17 +117,17 @@ export default class Winners extends Component {
                   <div className="col-xs-9 no-padding">
                     <If condition={index === 0}>
                       <div className="col-xs-2 padding-left-xxs">
-                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-1.png'} />
+                        <img className="rank-icon" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/rank-1.png'} />
                       </div>
                     </If>
                     <If condition={index === 1}>
                       <div className="col-xs-2 padding-left-xxs">
-                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-2.png'} />
+                        <img className="rank-icon" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/rank-2.png'} />
                       </div>
                     </If>
                     <If condition={index === 2}>
                       <div className="col-xs-2 padding-left-xxs">
-                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-3.png'} />
+                        <img className="rank-icon" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/rank-3.png'} />
                       </div>
                     </If>
                     <If condition={index !== 0 && index !== 1 && index !== 2}>
