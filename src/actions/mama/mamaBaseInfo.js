@@ -8,8 +8,6 @@ export const names = {
   FETCH_MAMA_WEBVIEW_CONFIG: 'FETCH_MAMA_WEBVIEW_CONFIG',
 };
 
-
-
 export const fetchMamaFortune = () => {
   const action = createAction(names.FETCH_MAMA_FORTUNE);
   return (dispatch) => {
