@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ReplacePlugin = require('replace-webpack-plugin');
 
-const publicPath = '//s.xiaolumeimei.com/mall/';
+const publicPath = '/mall/';
 
 const extractCSS = new ExtractTextPlugin('app-[hash].css');
 const frameworkVersion = '1.0.0';
