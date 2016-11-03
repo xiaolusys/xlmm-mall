@@ -192,11 +192,15 @@ export default class BuyCoupon extends Component {
         } else {
           this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'wap');
         }
+      } else {
+        Toast.show('商品信息获取不全');
       }
     } else {
       // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
       if (this.state.sku) {
         this.props.applyNegotiableCoupons(this.state.sku.product_id, this.state.num);
+      } else {
+        Toast.show('商品信息获取不全');
       }
     }
   }
