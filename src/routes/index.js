@@ -148,7 +148,7 @@ export default (
     <Route path="/mama/open/introduce" component={MamaOpeningIntroduce} />
     <Route path="/buycoupon" component={MamaBuyCoupon} />
     <Route path="/trancoupon/list" component={TranCouponList} />
-    <Route path="/mama/everdaypush" component={MamaEverydayPush} />
+    <Route path="/mama/everydaypush" component={MamaEverydayPush} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>
