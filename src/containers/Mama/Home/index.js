@@ -90,7 +90,14 @@ export default class MamaHome extends Component {
         <Header title="妈妈中心" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="content mamahome">
           <div className="mamahome-container">
-            <MakemoneyTab/>
+            <Choose>
+            <When condition={topTab === 'makemoney'}>
+              <MakemoneyTab/>
+            </When>
+            <When condition={topTab === 'forum'}>
+              <iframe src={'http://forum.xiaolumeimei.com'} />
+            </When>
+            </Choose>
           </div>
           <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">

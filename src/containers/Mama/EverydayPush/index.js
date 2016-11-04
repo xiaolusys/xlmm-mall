@@ -57,27 +57,7 @@ export default class EverydayPush extends Component {
 
   onSaveBtnClick = (e) => {
     const { id, type } = e.currentTarget.dataset;
-    console.log('save pic');
-    try {
-        /* const elemIF = document.createElement('iframe');
-        elemIF.src = banner;
-        elemIF.style.display = 'none';
-        document.body.appendChild(elemIF);*/
 
-        const objIframe = document.createElement('IFRAME');
-        // const re = setTimeout('onSaveBtnClick()', 1);
-        if (document.all.ifrm === null) {
-           document.body.insertBefore(objIframe);
-           objIframe.outerHTML = "<iframe name=ifrm style='width:0;hieght:0' src=" + banner + '></iframe>';
-          } else {
-           // clearTimeout(re);
-           const files = window.open(banner, 'ifrm');
-           files.document.execCommand('SaveAs');
-           document.all.ifrm.removeNode(true);
-        }
-    } catch (err) {
-      console.log('error ' + err);
-    }
     e.preventDefault();
   }
 
