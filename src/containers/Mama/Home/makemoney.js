@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
+import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
@@ -89,7 +90,13 @@ export default class MakemoneyTab extends Component {
           this.context.router.push('/');
           break;
         case '2':
-          this.context.router.push('/mama/everdaypush');
+          this.context.router.push('/mama/everydaypush');
+          break;
+        case '3':
+          window.location.href = constants.baseUrl + '/rest/v2/mama/redirect_stats_link?link_id=6';
+          break;
+        case '4':
+          this.context.router.push('/mama/invited');
           break;
         default:
       }
@@ -142,6 +149,12 @@ export default class MakemoneyTab extends Component {
             </div>
             <div className="col-xs-3 makemoney-cat" data-id={2} onClick={this.onMakemoneyClick}>
               <p className=" text-center">每日推送</p>
+            </div>
+            <div className="col-xs-3 makemoney-cat" data-id={3} onClick={this.onMakemoneyClick}>
+              <p className=" text-center">精品汇</p>
+            </div>
+            <div className="col-xs-3 makemoney-cat" data-id={4} onClick={this.onMakemoneyClick}>
+              <p className=" text-center">邀请开店</p>
             </div>
           </div>
         </div>
