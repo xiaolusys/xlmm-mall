@@ -12,3 +12,4 @@ export MamaOpeningIntroduce from './OpeningIntroduce';
 export MamaBuyCoupon from './BuyCoupon/Buy';
 export TranCouponList from './BuyCoupon/List';
 export MamaHome from './Home';
+export MamaEverydayPush from './EverydayPush';
