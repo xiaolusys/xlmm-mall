@@ -11,7 +11,7 @@ import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import * as mamaBaseInfoAction from 'actions/mama/mamaBaseInfo';
 
-import './index.scss';
+import './makemoney.scss';
 
 const actionCreators = _.extend(mamaBaseInfoAction);
 
@@ -82,6 +82,20 @@ export default class MakemoneyTab extends Component {
     this.context.router.goBack();
   }
 
+  onMakemoneyClick = (e) => {
+    const { id } = e.currentTarget.dataset;
+      switch (id) {
+        case '1':
+          this.context.router.push('/');
+          break;
+        case '2':
+          this.context.router.push('/mama/everdaypush');
+          break;
+        default:
+      }
+    e.preventDefault();
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -107,11 +121,29 @@ export default class MakemoneyTab extends Component {
   }
 
   render() {
-    const { topTab, sticky } = this.state;
+    const { mamaFortune, mamaWebCfg } = this.props.mamaBaseInfo;
     const activityData = this.props.mamaBaseInfo.mamaWebCfg.success ? this.props.mamaBaseInfo.mamaWebCfg.data.results[0].mama_activities : [];
     return (
-      <div>
+      <div className="col-xs-12 no-padding">
         <div className="content makemoney-container">
+          <div className="row carryout bottom-border">
+            <div className="col-xs-6 week-carryout">
+              <p className="col-xs-12 text-center">本周收益</p>
+              <p className="col-xs-12 text-center">{(mamaFortune.success && mamaFortune.data) ? mamaFortune.data.extra_figures.week_duration_total : 0}</p>
+            </div>
+            <div className="col-xs-6 week-carryout">
+              <p className="text-center">今日收益</p>
+              <p className="text-center">{(mamaFortune.success && mamaFortune.data) ? mamaFortune.extra_figures.today_carry_record : 0}</p>
+            </div>
+          </div>
+          <div className="bottom-border cat4">
+            <div className="col-xs-3 makemoney-cat" data-id={1} onClick={this.onMakemoneyClick}>
+              <p className=" text-center">分享店铺</p>
+            </div>
+            <div className="col-xs-3 makemoney-cat" data-id={2} onClick={this.onMakemoneyClick}>
+              <p className=" text-center">每日推送</p>
+            </div>
+          </div>
         </div>
         { this.renderActivities(activityData) }
       </div>

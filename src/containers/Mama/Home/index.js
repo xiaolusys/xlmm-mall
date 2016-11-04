@@ -37,17 +37,14 @@ export default class MamaHome extends Component {
   }
 
   componentDidMount() {
-    this.addScrollListener();
+
   }
 
   componentWillReceiveProps(nextProps) {
   }
 
   componentWillUnmount() {
-    this.removeScrollListener();
-  }
 
-  onScroll = (e) => {
   }
 
   onLeftBtnClick = (e) => {
@@ -61,7 +58,6 @@ export default class MamaHome extends Component {
   }
 
   onTabClick = (e) => {
-    const { pageIndex, pageSize, lessonType, orderingBy } = this.state;
     const { id, type } = e.currentTarget.dataset;
       switch (id) {
         case 'makemoney':
@@ -86,24 +82,17 @@ export default class MamaHome extends Component {
     e.preventDefault();
   }
 
-  addScrollListener = () => {
-    window.addEventListener('scroll', this.onScroll);
-  }
-
-  removeScrollListener = () => {
-    window.removeEventListener('scroll', this.onScroll);
-  }
-
   render() {
-    const { topTab, bottomTab, sticky } = this.state;
-    const hasHeader = !utils.detector.isApp();
+    const { topTab } = this.state;
+
     return (
-      <div className="mamahome">
+      <div className="home-root">
         <Header title="妈妈中心" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
-        <div className="content home-container">
-          <MakemoneyTab/>
-        </div>
-        <div className="row no-margin top-border base-tab">
+        <div className="content mamahome">
+          <div className="mamahome-container">
+            <MakemoneyTab/>
+          </div>
+          <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">
               <li key={1} data-id="makemoney" onClick={this.onTabClick}>
                 <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'makemoney' ? ' active' : '')}>
@@ -121,8 +110,8 @@ export default class MamaHome extends Component {
                 </p>
               </li>
             </ul>
+          </div>
         </div>
-
       </div>
     );
   }

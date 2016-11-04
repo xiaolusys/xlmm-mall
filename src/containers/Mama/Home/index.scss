@@ -1,33 +1,28 @@
-.mamahome {
-  .home-container {
-    border: 1px solid green;
-  }
+.home-root {
+  float: left;
+  .mamahome {
 
-  .base-tab {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-    background-color: #fff;
-    > ul li {
-      p {
-        &.active {
-          color: #faac14;
+    .mamahome-container {
+
+    }
+
+    >.base-tab {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      background-color: #fff;
+      > ul li {
+        p {
+          &.active {
+            color: #faac14;
+          }
+          padding-top: 8px;
+          padding-bottom: 8px;
+          font-size: 1.5em;
         }
-        padding-top: 8px;
-        padding-bottom: 8px;
-        font-size: 24px;
       }
     }
-  }
-  a,
-  a:hover,
-  a:active,
-  a:focus,
-  a:visited {
-    color: #26262e;
-    text-decoration: none;
-  
   }
 }
