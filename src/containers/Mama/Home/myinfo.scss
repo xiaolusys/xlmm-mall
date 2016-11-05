@@ -1,0 +1,22 @@
+.myinfo-container {
+	.my-level {
+		height: 100px;
+		> p {
+			font-size: 1.5em;
+		}
+		.my-thumbnail {
+			padding-top: 20px;
+			height: 40px;
+			width: 40px;
+		}
+	}
+	.cat2 {
+
+		.info-cat {
+
+			padding-top: 8px;
+			height: 32px;
+			font-size: 0.75em;
+		}
+	}
+}
