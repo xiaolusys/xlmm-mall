@@ -94,7 +94,7 @@ export default class MamaHome extends Component {
           <div className="mamahome-container">
             <Choose>
             <When condition={topTab === 'makemoney'}>
-              <MakemoneyTab/>
+              <MakemoneyTab />
             </When>
             <When condition={topTab === 'myinfo'}>
               <MyInfoTab />

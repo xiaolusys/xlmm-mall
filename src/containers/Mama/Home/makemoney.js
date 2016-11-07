@@ -136,24 +136,28 @@ export default class MakemoneyTab extends Component {
           <div className="row carryout bottom-border">
             <div className="col-xs-6 week-carryout">
               <p className="col-xs-12 text-center">本周收益</p>
-              <p className="col-xs-12 text-center">{(mamaFortune.success && mamaFortune.data) ? mamaFortune.data.extra_figures.week_duration_total : 0}</p>
+              <p className="col-xs-12 text-center">{(mamaFortune.success && mamaFortune.data) ? mamaFortune.data.mama_fortune.extra_figures.week_duration_total : 0}</p>
             </div>
             <div className="col-xs-6 week-carryout">
               <p className="text-center">今日收益</p>
-              <p className="text-center">{(mamaFortune.success && mamaFortune.data) ? mamaFortune.extra_figures.today_carry_record : 0}</p>
+              <p className="text-center">{(mamaFortune.success && mamaFortune.data) ? mamaFortune.data.mama_fortune.extra_figures.today_carry_record : 0}</p>
             </div>
           </div>
           <div className="bottom-border cat4">
             <div className="col-xs-3 makemoney-cat" data-id={1} onClick={this.onMakemoneyClick}>
+              <div className="mama-shop-icon text-center" />
               <p className=" text-center">分享店铺</p>
             </div>
             <div className="col-xs-3 makemoney-cat" data-id={2} onClick={this.onMakemoneyClick}>
+              <div className="mama-push-icon text-center" />
               <p className=" text-center">每日推送</p>
             </div>
             <div className="col-xs-3 makemoney-cat" data-id={3} onClick={this.onMakemoneyClick}>
+              <div className="mama-select-icon text-center" />
               <p className=" text-center">精品汇</p>
             </div>
             <div className="col-xs-3 makemoney-cat" data-id={4} onClick={this.onMakemoneyClick}>
+              <div className="mama-invite-icon" />
               <p className=" text-center">邀请开店</p>
             </div>
           </div>
