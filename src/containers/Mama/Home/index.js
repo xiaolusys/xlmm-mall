@@ -10,6 +10,7 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import MakemoneyTab from './makemoney';
+import * as constants from 'constants';
 
 import './index.scss';
 
@@ -59,26 +60,26 @@ export default class MamaHome extends Component {
 
   onTabClick = (e) => {
     const { id, type } = e.currentTarget.dataset;
-      switch (id) {
-        case 'makemoney':
-          this.setState({
-            topTab: id,
-          });
+    switch (id) {
+      case 'makemoney':
+        this.setState({
+          topTab: id,
+        });
 
-          break;
-        case 'forum':
-          this.setState({
-            topTab: id,
+        break;
+      case 'forum':
+        this.setState({
+          topTab: id,
 
-          });
-          break;
-        case 'myinfo':
-          this.setState({
-            topTab: id,
-          });
-          break;
-        default:
-      }
+        });
+        break;
+      case 'myinfo':
+        this.setState({
+          topTab: id,
+        });
+        break;
+      default:
+    }
     e.preventDefault();
   }
 
@@ -95,7 +96,7 @@ export default class MamaHome extends Component {
               <MakemoneyTab/>
             </When>
             <When condition={topTab === 'forum'}>
-              <iframe src={'http://forum.xiaolumeimei.com'} />
+              <iframe src={constants.forum.forumUrl} />
             </When>
             </Choose>
           </div>

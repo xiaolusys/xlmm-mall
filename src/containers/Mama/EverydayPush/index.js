@@ -10,7 +10,7 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 
-const banner = 'http://img.xiaolumeimei.com/MG_1476807122352-_01.jpg?imageMogr2/strip/format/jpg/quality/90/interlace/1/thumbnail/640/';
+const banner = `${constants.image.imageUrl}/MG_1476807122352-_01.jpg?imageMogr2/strip/format/jpg/quality/90/interlace/1/thumbnail/640/`;
 
 export default class EverydayPush extends Component {
   static propTypes = {

@@ -7,7 +7,7 @@ import { Header } from 'components/Header';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
 
-const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-banner.jpg';
+const banner = '//og224uhh3.qnssl.com/mall/opening-shop-banner.jpg';
 
 export default class Agreement extends Component {
   static propTypes = {

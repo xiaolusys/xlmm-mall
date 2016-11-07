@@ -15,7 +15,7 @@ import * as plugins from 'plugins';
 
 import './index.scss';
 
-const base = '//img.xiaolumeimei.com/mall/v3/';
+const base = `${constants.image.imageUrl}/mall/v3/`;
 const actionCreators = _.extend(invitedAction, inviteSharingAction);
 const shareType = {
   full: 38,

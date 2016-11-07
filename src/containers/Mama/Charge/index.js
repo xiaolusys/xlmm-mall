@@ -10,6 +10,7 @@ import { Toast } from 'components/Toast';
 import { Popup } from 'components/Popup';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
+import * as constants from 'constants';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
@@ -28,7 +29,7 @@ const pageInfos = {
   },
   'mcf.html': {
     type: 'full',
-    banner: '//img.xiaolumeimei.com/mall/mama/open/v2/188.png',
+    banner: `${constants.image.imageUrl}/mall/mama/open/v2/188.png`,
     id: 0,
     shareId: 38,
     btn: '支付',
