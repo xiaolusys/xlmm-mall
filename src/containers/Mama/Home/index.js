@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
+import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import MakemoneyTab from './makemoney';
-import * as constants from 'constants';
 
 import './index.scss';
 

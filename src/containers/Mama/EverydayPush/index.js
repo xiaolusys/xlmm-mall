@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
+import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';

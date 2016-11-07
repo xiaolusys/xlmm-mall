@@ -12,6 +12,7 @@ import * as invitedAction from 'actions/mama/invited';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import moment from 'moment';
 import * as plugins from 'plugins';
+import * as constants from 'constants';
 
 import './index.scss';
 
