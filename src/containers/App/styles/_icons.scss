@@ -1,0 +1,396 @@
+@font-face {
+  font-family: "xlmm-font-awesome";
+  src: url('fonts/xlmm-font-awesome.eot?v=1.0.0');
+  src: url('fonts/xlmm-font-awesome.eot?#iefix&v=1.0.0') format('eot'),
+    url('fonts/xlmm-font-awesome.woff2?v=1.0.0') format('woff2'),
+    url('fonts/xlmm-font-awesome.woff?v=1.0.0') format('woff'),
+    url('fonts/xlmm-font-awesome.ttf?v=1.0.0') format('truetype'),
+    url('fonts/xlmm-font-awesome.svg?v=1.0.0') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin icon-styles {
+  font-family: "xlmm-font-awesome";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: top;
+  font-smoothing: antialiased;
+}
+
+%icon {
+  @include icon-styles;
+}
+
+@function icon-char($filename) {
+  $char: "";
+
+  @if $filename == activity {
+    $char: "\E001";
+  }
+  @if $filename == alipay-square {
+    $char: "\E002";
+  }
+  @if $filename == angle-down {
+    $char: "\E003";
+  }
+  @if $filename == angle-left {
+    $char: "\E004";
+  }
+  @if $filename == angle-right {
+    $char: "\E005";
+  }
+  @if $filename == angle-up {
+    $char: "\E006";
+  }
+  @if $filename == bag {
+    $char: "\E007";
+  }
+  @if $filename == bars {
+    $char: "\E008";
+  }
+  @if $filename == cart {
+    $char: "\E009";
+  }
+  @if $filename == close-o {
+    $char: "\E00A";
+  }
+  @if $filename == close {
+    $char: "\E00B";
+  }
+  @if $filename == cny {
+    $char: "\E00C";
+  }
+  @if $filename == copy-link {
+    $char: "\E00D";
+  }
+  @if $filename == coupon-o {
+    $char: "\E00E";
+  }
+  @if $filename == coupon {
+    $char: "\E00F";
+  }
+  @if $filename == course {
+    $char: "\E010";
+  }
+  @if $filename == database {
+    $char: "\E011";
+  }
+  @if $filename == do-not-bleach {
+    $char: "\E012";
+  }
+  @if $filename == do-not-dry-clean {
+    $char: "\E013";
+  }
+  @if $filename == do-not-iron {
+    $char: "\E014";
+  }
+  @if $filename == faq {
+    $char: "\E015";
+  }
+  @if $filename == favorite-empty {
+    $char: "\E016";
+  }
+  @if $filename == favorite-no {
+    $char: "\E017";
+  }
+  @if $filename == favorite-yes {
+    $char: "\E018";
+  }
+  @if $filename == headset {
+    $char: "\E019";
+  }
+  @if $filename == home {
+    $char: "\E01A";
+  }
+  @if $filename == location-gps {
+    $char: "\E01B";
+  }
+  @if $filename == location {
+    $char: "\E01C";
+  }
+  @if $filename == mail-open {
+    $char: "\E01D";
+  }
+  @if $filename == minus {
+    $char: "\E01E";
+  }
+  @if $filename == new {
+    $char: "\E01F";
+  }
+  @if $filename == order-o {
+    $char: "\E020";
+  }
+  @if $filename == order-square {
+    $char: "\E021";
+  }
+  @if $filename == order-succeed {
+    $char: "\E022";
+  }
+  @if $filename == order {
+    $char: "\E023";
+  }
+  @if $filename == plus {
+    $char: "\E024";
+  }
+  @if $filename == qq-square {
+    $char: "\E025";
+  }
+  @if $filename == qq {
+    $char: "\E026";
+  }
+  @if $filename == qzone {
+    $char: "\E027";
+  }
+  @if $filename == refund-common {
+    $char: "\E028";
+  }
+  @if $filename == refund-goods {
+    $char: "\E029";
+  }
+  @if $filename == refund-top-speed {
+    $char: "\E02A";
+  }
+  @if $filename == seven-o {
+    $char: "\E02B";
+  }
+  @if $filename == share {
+    $char: "\E02C";
+  }
+  @if $filename == shield {
+    $char: "\E02D";
+  }
+  @if $filename == truck-o {
+    $char: "\E02E";
+  }
+  @if $filename == truck {
+    $char: "\E02F";
+  }
+  @if $filename == wallet-open {
+    $char: "\E030";
+  }
+  @if $filename == wallet {
+    $char: "\E031";
+  }
+  @if $filename == warm {
+    $char: "\E032";
+  }
+  @if $filename == wechat-o {
+    $char: "\E033";
+  }
+  @if $filename == wechat-pay {
+    $char: "\E034";
+  }
+  @if $filename == wechat-snapshot {
+    $char: "\E035";
+  }
+  @if $filename == wechat-square {
+    $char: "\E036";
+  }
+  @if $filename == wechat {
+    $char: "\E037";
+  }
+  @if $filename == weibo-square {
+    $char: "\E038";
+  }
+  @if $filename == weibo {
+    $char: "\E039";
+  }
+  @if $filename == xiaolu {
+    $char: "\E03A";
+  }
+
+  @return $char;
+}
+
+@mixin icon($filename, $insert: before, $extend: true) {
+  &:#{$insert} {
+    @if $extend {
+      @extend %icon;
+    } @else {
+      @include icon-styles;
+    }
+    content: icon-char($filename);
+  }
+}
+
+.icon-activity {
+  @include icon(activity);
+}
+.icon-alipay-square {
+  @include icon(alipay-square);
+}
+.icon-angle-down {
+  @include icon(angle-down);
+}
+.icon-angle-left {
+  @include icon(angle-left);
+}
+.icon-angle-right {
+  @include icon(angle-right);
+}
+.icon-angle-up {
+  @include icon(angle-up);
+}
+.icon-bag {
+  @include icon(bag);
+}
+.icon-bars {
+  @include icon(bars);
+}
+.icon-cart {
+  @include icon(cart);
+}
+.icon-close-o {
+  @include icon(close-o);
+}
+.icon-close {
+  @include icon(close);
+}
+.icon-cny {
+  @include icon(cny);
+}
+.icon-copy-link {
+  @include icon(copy-link);
+}
+.icon-coupon-o {
+  @include icon(coupon-o);
+}
+.icon-coupon {
+  @include icon(coupon);
+}
+.icon-course {
+  @include icon(course);
+}
+.icon-database {
+  @include icon(database);
+}
+.icon-do-not-bleach {
+  @include icon(do-not-bleach);
+}
+.icon-do-not-dry-clean {
+  @include icon(do-not-dry-clean);
+}
+.icon-do-not-iron {
+  @include icon(do-not-iron);
+}
+.icon-faq {
+  @include icon(faq);
+}
+.icon-favorite-empty {
+  @include icon(favorite-empty);
+}
+.icon-favorite-no {
+  @include icon(favorite-no);
+}
+.icon-favorite-yes {
+  @include icon(favorite-yes);
+}
+.icon-headset {
+  @include icon(headset);
+}
+.icon-home {
+  @include icon(home);
+}
+.icon-location-gps {
+  @include icon(location-gps);
+}
+.icon-location {
+  @include icon(location);
+}
+.icon-mail-open {
+  @include icon(mail-open);
+}
+.icon-minus {
+  @include icon(minus);
+}
+.icon-new {
+  @include icon(new);
+}
+.icon-order-o {
+  @include icon(order-o);
+}
+.icon-order-square {
+  @include icon(order-square);
+}
+.icon-order-succeed {
+  @include icon(order-succeed);
+}
+.icon-order {
+  @include icon(order);
+}
+.icon-plus {
+  @include icon(plus);
+}
+.icon-qq-square {
+  @include icon(qq-square);
+}
+.icon-qq {
+  @include icon(qq);
+}
+.icon-qzone {
+  @include icon(qzone);
+}
+.icon-refund-common {
+  @include icon(refund-common);
+}
+.icon-refund-goods {
+  @include icon(refund-goods);
+}
+.icon-refund-top-speed {
+  @include icon(refund-top-speed);
+}
+.icon-seven-o {
+  @include icon(seven-o);
+}
+.icon-share {
+  @include icon(share);
+}
+.icon-shield {
+  @include icon(shield);
+}
+.icon-truck-o {
+  @include icon(truck-o);
+}
+.icon-truck {
+  @include icon(truck);
+}
+.icon-wallet-open {
+  @include icon(wallet-open);
+}
+.icon-wallet {
+  @include icon(wallet);
+}
+.icon-warm {
+  @include icon(warm);
+}
+.icon-wechat-o {
+  @include icon(wechat-o);
+}
+.icon-wechat-pay {
+  @include icon(wechat-pay);
+}
+.icon-wechat-snapshot {
+  @include icon(wechat-snapshot);
+}
+.icon-wechat-square {
+  @include icon(wechat-square);
+}
+.icon-wechat {
+  @include icon(wechat);
+}
+.icon-weibo-square {
+  @include icon(weibo-square);
+}
+.icon-weibo {
+  @include icon(weibo);
+}
+.icon-xiaolu {
+  @include icon(xiaolu);
+}
