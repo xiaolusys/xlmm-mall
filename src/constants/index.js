@@ -22,7 +22,7 @@ export const couponStatus = {
 
 export const forum = {
   forumUrl: '//forum.xiaolumeimei.com',
-}
+};
 
 export const shareType = {
   product: 'model',
