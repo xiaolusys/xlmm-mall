@@ -11,6 +11,7 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import MakemoneyTab from './makemoney';
+import MyInfoTab from './myinfo';
 
 import './index.scss';
 
@@ -60,26 +61,28 @@ export default class MamaHome extends Component {
 
   onTabClick = (e) => {
     const { id, type } = e.currentTarget.dataset;
-    switch (id) {
-      case 'makemoney':
-        this.setState({
-          topTab: id,
-        });
+      switch (id) {
+        case 'makemoney':
+          this.setState({
+            topTab: id,
+          });
 
-        break;
-      case 'forum':
-        this.setState({
-          topTab: id,
+          break;
+        case 'forum':
+          this.setState({
+            topTab: id,
 
-        });
-        break;
-      case 'myinfo':
-        this.setState({
-          topTab: id,
-        });
-        break;
-      default:
-    }
+          });
+          window.location.href = 'http://forum.xiaolumeimei.com';
+          break;
+        case 'myinfo':
+          this.setState({
+            topTab: id,
+          });
+          break;
+        default:
+      }
+
     e.preventDefault();
   }
 
@@ -93,10 +96,10 @@ export default class MamaHome extends Component {
           <div className="mamahome-container">
             <Choose>
             <When condition={topTab === 'makemoney'}>
-              <MakemoneyTab/>
+              <MakemoneyTab />
             </When>
-            <When condition={topTab === 'forum'}>
-              <iframe src={constants.forum.forumUrl} />
+            <When condition={topTab === 'myinfo'}>
+              <MyInfoTab />
             </When>
             </Choose>
           </div>
@@ -109,7 +112,7 @@ export default class MamaHome extends Component {
               </li>
               <li key={2} data-id="forum" onClick={this.onTabClick}>
                 <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'forum' ? ' active' : '')}>
-                  <span>论坛</span>
+                  <span>社交活动</span>
                 </p>
               </li>
               <li key={3} data-id="myinfo" onClick={this.onTabClick}>

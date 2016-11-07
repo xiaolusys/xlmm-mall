@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 import { If } from 'jsx-control-statements';
+import { Header } from 'components/Header';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
@@ -12,7 +13,9 @@ import * as invitedAction from 'actions/mama/invited';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import moment from 'moment';
 import * as plugins from 'plugins';
+import * as utils from 'utils';
 import * as constants from 'constants';
+
 
 import './index.scss';
 
@@ -111,6 +114,7 @@ export default class Invited extends Component {
     const { invited } = this.props;
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding invited">
+        <Header title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
         <ul className="row no-margin text-center tabs">
           <li id="full" className="col-xs-6 no-padding" style={{ marginTop: '16px' }} onClick={this.onTabItemClick}>
             <img style={{ width: '24px', marginBottom: '10px' }} src={`${base}full-icon${activeTab === 'full' ? '-active' : ''}.png`} />
