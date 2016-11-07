@@ -14,10 +14,12 @@ import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import moment from 'moment';
 import * as plugins from 'plugins';
 import * as utils from 'utils';
+import * as constants from 'constants';
+
 
 import './index.scss';
 
-const base = '//img.xiaolumeimei.com/mall/v3/';
+const base = `${constants.image.imageUrl}/mall/v3/`;
 const actionCreators = _.extend(invitedAction, inviteSharingAction);
 const shareType = {
   full: 38,
