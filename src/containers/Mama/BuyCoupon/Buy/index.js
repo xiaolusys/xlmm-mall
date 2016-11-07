@@ -69,6 +69,7 @@ export default class BuyCoupon extends Component {
   state = {
     payTypePopupActive: false,
     num: 5,
+    chargeEnable: true,
   }
 
   componentWillMount() {
@@ -150,6 +151,7 @@ export default class BuyCoupon extends Component {
       }
 
       if (order.success && !_.isEmpty(order.data) && order.data.code !== 0) {
+          this.setState({ chargeEnable: true });
           Toast.show(order.data.info);
       }
     }
@@ -203,6 +205,7 @@ export default class BuyCoupon extends Component {
         Toast.show('商品信息获取不全');
       }
     }
+    this.setState({ chargeEnable: false });
   }
 
   onPayTypeClick = (e) => {
@@ -273,7 +276,7 @@ export default class BuyCoupon extends Component {
   }
 
   togglePayTypePopupActive = () => {
-      this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
+      this.setState({ payTypePopupActive: !this.state.payTypePopupActive, chargeEnable: true });
   }
 
   payInfo = () => {
@@ -363,7 +366,7 @@ export default class BuyCoupon extends Component {
           <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版精英小鹿妈妈购买及流通使用。</p>
         </div>
         <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick}>{(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_elite_mama) ? '支付' : '申请'}</button>
+          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>{(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_elite_mama) ? '支付' : '申请'}</button>
         </div>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className="row no-margin bottom-border">
