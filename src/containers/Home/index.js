@@ -64,6 +64,7 @@ const tabs = {
     mamaInfo: state.mamaInfo,
     wechatSign: state.wechatSign,
     shopSharing: state.shopSharing,
+    profile: state.profile,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -84,6 +85,7 @@ export class Home extends Component {
     mamaInfo: React.PropTypes.any,
     wechatSign: React.PropTypes.object,
     shopSharing: React.PropTypes.object,
+    profile: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -244,8 +246,19 @@ export class Home extends Component {
   }
 
   enterMamahome = () => {
-    this.context.router.push('/mama/home');
-
+    const { profile } = this.props;
+    if (profile && profile.success && profile.data.xiaolumm && profile.data.xiaolumm.id > 0) {
+      this.context.router.push('/mama/home');
+      return;
+    }
+    if (profile && profile.success && (profile.data.xiaolumm === null)) {
+      Toast.show('您还不是小鹿妈妈，请关注小鹿美美公众号了解更多信息');
+      return;
+    }
+    if (profile && (!profile.success || profile.error)) {
+      Toast.show('您还没有登录，请登录后进入');
+      return;
+    }
   }
 
   render() {
