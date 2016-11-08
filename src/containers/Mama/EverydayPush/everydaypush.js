@@ -87,17 +87,34 @@ export default class EverydayPushTab extends Component {
     window.removeEventListener('scroll', this.onScroll);
   }
 
+  renderPics(pics) {
+    return (
+      <ul className="margin-bottom-lg">
+        {pics.map((item, index) => {
+          return (
+            <li className=" no-margin" key={index}>
+              <Image className="col-xs-4 no-padding" src={item} />
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+
   render() {
     const { ninepic } = this.props;
-    console.log(ninepic.data.length);
     return (
       <div className="col-xs-12 no-padding">
         <ul className="margin-bottom-lg">
         <If condition={ninepic && ninepic.success && ninepic.data.length > 0}>
           {ninepic.data.map((item, index) => {
             return (
-              <li className="row no-margin margin-top-xs" key={index}>
+              <li className="row no-margin margin-top-xs bottom-border" key={index}>
                 <p className="col-xs-12 no-padding" >{item.title_content}</p>
+                <p className="col-xs-6 no-padding" >{item.start_time}</p>
+                <p className="col-xs-12 no-padding" >{item.title}</p>
+                { this.renderPics(item.pic_arry) }
+                <p className="col-xs-12 no-padding" >{'分享次数' + item.save_times}</p>
               </li>
             );
           })}
