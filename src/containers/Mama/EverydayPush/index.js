@@ -31,6 +31,7 @@ export default class MamaEverydayPush extends Component {
 
   state = {
     topTab: 'day',
+    sticky: false,
   }
 
   componentWillMount() {
@@ -85,13 +86,13 @@ export default class MamaEverydayPush extends Component {
   }
 
   render() {
-    const { topTab } = this.state;
+    const { topTab, sticky } = this.state;
 
     return (
       <div className="push-root">
         <Header title="每日推送" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="content pushhome">
-          <div className="row no-margin bottom-border base-tab">
+          <div className={'row no-margin bottom-border base-tab '} >
             <ul className="row no-margin">
               <li key={1} data-id="day" onClick={this.onTabClick}>
                 <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'day' ? ' active' : '')}>

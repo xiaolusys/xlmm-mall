@@ -243,6 +243,11 @@ export class Home extends Component {
     });
   }
 
+  enterMamahome = () => {
+    this.context.router.push('/mama/home');
+
+  }
+
   render() {
     const { portal, product, children, mamaInfo } = this.props;
     const activities = portal.data.activitys || [];
@@ -260,7 +265,7 @@ export class Home extends Component {
         <Side />
         <div className="slide-menu-mask" onClick={this.toggleMenuActive}></div>
         <div className="home-container">
-          <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} hide={!hasHeader}/>
+          <Header title={logo} titleType="image" leftIcon="icon-bars" onLeftBtnClick={this.toggleMenuActive} rightText="我的微店" onRightBtnClick={this.enterMamahome} hide={!hasHeader}/>
           <div className="content content-white-bg">
             <If condition={!_.isEmpty(mamaInfo && mamaInfo.data)}>
               <div className="row no-margin focus-container">
