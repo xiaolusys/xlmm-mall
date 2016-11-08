@@ -2,27 +2,32 @@
 
   .pushhome {
 
-    .pushhome-container {
-      width: 100%;
-    }
-
-    >.base-tab {
+    .base-tab {
+      background-color: #fff;
+      height: 44px;
       width: 100%;
       position: fixed;
+      z-index: 10;
       top: 44px;
       left: 0;
-      z-index: 10;
-      background-color: #fff;
+      right: 0;
+
       > ul li {
         p {
           &.active {
             color: #faac14;
           }
-          padding-top: 8px;
-          padding-bottom: 8px;
-          font-size: 1em;
+          padding-top: 16px;
+          padding-bottom: 16px;
         }
       }
     }
+
+    .pushhome-container {
+      width: 100%;
+      margin-top: 88px;
+      background-color: #fff;
+    }
+    
   }
 }
