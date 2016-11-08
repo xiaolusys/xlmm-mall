@@ -38,10 +38,8 @@ export default class EverydayPushTab extends Component {
   }
 
   state = {
-
-    sticky: false,
-    hasMore: false,
-
+    page: 1,
+    pageSize: 3,
   }
 
   componentWillMount() {
@@ -67,6 +65,15 @@ export default class EverydayPushTab extends Component {
   }
 
   onScroll = (e) => {
+
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    if (scrollTop === documentHeight - windowHeight) {
+      this.setState({ page: this.state.page + 1 });
+    }
+
+
   }
 
   onLeftBtnClick = (e) => {
@@ -93,7 +100,7 @@ export default class EverydayPushTab extends Component {
         {pics.map((item, index) => {
           return (
             <li className=" no-margin" key={index}>
-              <Image className="col-xs-4 no-padding" src={item} />
+              <Image className="col-xs-4 no-padding" src={item} quality={90} thumbnail={640}/>
             </li>
           );
         })}
@@ -103,11 +110,19 @@ export default class EverydayPushTab extends Component {
 
   render() {
     const { ninepic } = this.props;
+    const renderNinePics = [];
+
+    if (ninepic && ninepic.success && ninepic.data.length > 0) {
+      for (let i = 0; i < this.state.page * this.state.pageSize; i++) {
+        renderNinePics.push(ninepic.data[i]);
+      }
+    }
+
     return (
-      <div className="col-xs-12 no-padding">
+      <div className="col-xs-12 ">
         <ul className="margin-bottom-lg">
         <If condition={ninepic && ninepic.success && ninepic.data.length > 0}>
-          {ninepic.data.map((item, index) => {
+          {renderNinePics.map((item, index) => {
             return (
               <li className="row no-margin margin-top-xs bottom-border" key={index}>
                 <p className="col-xs-12 no-padding" >{item.title_content}</p>

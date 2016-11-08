@@ -93,7 +93,7 @@ export default class MakemoneyTab extends Component {
           this.context.router.push('/mama/everydaypush');
           break;
         case '3':
-          this.context.router.push('/mama/elitemama');
+          this.context.router.replace('/mama/elitemama');
           break;
         case '4':
           this.context.router.push('/mama/invited');
