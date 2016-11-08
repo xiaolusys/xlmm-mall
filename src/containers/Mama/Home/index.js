@@ -73,7 +73,7 @@ export default class MamaHome extends Component {
             topTab: id,
 
           });
-          window.location.href = 'http://forum.xiaolumeimei.com';
+          window.location.href = constants.forum.forumUrl;
           break;
         case 'myinfo':
           this.setState({
