@@ -13,3 +13,4 @@ export MamaBuyCoupon from './BuyCoupon/Buy';
 export TranCouponList from './BuyCoupon/List';
 export MamaHome from './Home';
 export MamaEverydayPush from './EverydayPush';
+export EliteMama from './EliteMama';

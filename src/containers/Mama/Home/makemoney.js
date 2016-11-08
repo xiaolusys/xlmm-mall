@@ -93,7 +93,7 @@ export default class MakemoneyTab extends Component {
           this.context.router.push('/mama/everydaypush');
           break;
         case '3':
-          window.location.href = constants.baseUrl + '/rest/v2/mama/redirect_stats_link?link_id=6';
+          this.context.router.push('/mama/elitemama');
           break;
         case '4':
           this.context.router.push('/mama/invited');

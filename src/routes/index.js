@@ -82,6 +82,7 @@ import {
   MamaBuyCoupon,
   TranCouponList,
   MamaEverydayPush,
+  EliteMama,
 } from 'containers/Mama';
 
 import {
@@ -149,6 +150,7 @@ export default (
     <Route path="/buycoupon" component={MamaBuyCoupon} />
     <Route path="/trancoupon/list" component={TranCouponList} />
     <Route path="/mama/everydaypush" component={MamaEverydayPush} />
+    <Route path="/mama/elitemama" component={EliteMama} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>
