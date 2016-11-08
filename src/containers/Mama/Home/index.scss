@@ -1,0 +1,28 @@
+.home-root {
+
+  .mamahome {
+
+    .mamahome-container {
+      width: 100%;
+    }
+
+    >.base-tab {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      background-color: #fff;
+      > ul li {
+        p {
+          &.active {
+            color: #faac14;
+          }
+          padding-top: 8px;
+          padding-bottom: 8px;
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+}

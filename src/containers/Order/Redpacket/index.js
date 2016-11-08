@@ -17,7 +17,7 @@ import * as constants from 'constants';
 import './index.scss';
 
 const actionCreators = _.extend(profileAction, usersRedpacketAction, receiveRedpacketAction, shareRedpacketAction, wechatSignAction);
-const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/';
+const staticBase = '//og224uhh3.qnssl.com/mall/';
 
 @connect(
   state => ({

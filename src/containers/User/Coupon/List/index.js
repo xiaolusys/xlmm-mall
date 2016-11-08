@@ -160,7 +160,6 @@ export default class List extends Component {
     const { couponStatus } = constants;
     const coupons = this.getCoupons(activeTab);
 
-    console.log(negotiable);
     return (
       <div>
         <Header title="优惠劵" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>

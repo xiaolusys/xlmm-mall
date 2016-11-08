@@ -14,7 +14,7 @@ import _ from 'underscore';
 
 import './index.scss';
 
-const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/question/';
+const staticBase = '//og224uhh3.qnssl.com/mall/activity/exam/question/';
 @connect(
   state => ({
     exam: state.exam,
@@ -194,9 +194,9 @@ export default class Question extends Component {
         </If>
         <div>
           <If condition={(Number(type) === 1 && Number(id) !== -1) || Number(type) === 2 || Number(type) === 3 }>
-            <img className="pull-left previous-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/previous-btn.png" onClick={this.context.router.goBack} />
+            <img className="pull-left previous-btn" src="//og224uhh3.qnssl.com/mall/activity/exam/previous-btn.png" onClick={this.context.router.goBack} />
           </If>
-          <img className="pull-right next-btn" src="http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
+          <img className="pull-right next-btn" src="//og224uhh3.qnssl.com/mall/activity/exam/next-btn.png" onClick={this.onNextQuestionBtnClick} />
         </div>
         <Popup active={this.state.finishedPopupOpend} maxHeight="none">
           <img className="popup-bg col-xs-12 no-padding" src={`${staticBase}popup-red-bg.png`} />

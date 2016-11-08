@@ -106,15 +106,15 @@ export default class Rank extends Component {
             </p>
           </div>
           <div className="row no-margin">
-            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v2/banner-1.png'} />
+            <img className="col-xs-12 no-padding" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v2/banner-1.png'} />
           </div>
           <Link to="/activity/20160729/introduce">
             <div className="row no-margin">
-              <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-2.png'} />
+              <img className="col-xs-12 no-padding" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/banner-2.png'} />
             </div>
           </Link>
           <div className="row no-margin">
-            <img className="col-xs-12 no-padding" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-3.png'} />
+            <img className="col-xs-12 no-padding" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/banner-3.png'} />
           </div>
           <div className="rank-tabs text-center bottom-border">
             <ul className="row no-margin">
@@ -135,7 +135,7 @@ export default class Rank extends Component {
           </div>
           <div className="row no-margin margin-top-xs bottom-border">
             <div className="col-xs-5 padding-left-xxs">
-              <img className="pull-right rank" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/banner-rank.png'} />
+              <img className="pull-right rank" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/banner-rank.png'} />
             </div>
             <p className="col-xs-7 no-margin no-padding padding-top-xs padding-bottom-xs">{title[activeTab]}</p>
           </div>
@@ -147,17 +147,17 @@ export default class Rank extends Component {
                   <div className="col-xs-8 no-padding">
                     <If condition={item.rank === 1}>
                       <div className="col-xs-2 padding-left-xxs">
-                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-1.png'} />
+                        <img className="rank-icon" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/rank-1.png'} />
                       </div>
                     </If>
                     <If condition={item.rank === 2}>
                       <div className="col-xs-2 padding-left-xxs">
-                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-2.png'} />
+                        <img className="rank-icon" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/rank-2.png'} />
                       </div>
                     </If>
                     <If condition={item.rank === 3}>
                       <div className="col-xs-2 padding-left-xxs">
-                        <img className="rank-icon" src={'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/20160729/v1/rank-3.png'} />
+                        <img className="rank-icon" src={'//og224uhh3.qnssl.com/mall/activity/20160729/v1/rank-3.png'} />
                       </div>
                     </If>
                     <If condition={item.rank !== 1 && item.rank !== 2 && item.rank !== 3}>

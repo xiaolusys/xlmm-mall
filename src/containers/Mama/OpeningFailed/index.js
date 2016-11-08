@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const banner = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/opening-shop-failed.png';
+const banner = '//og224uhh3.qnssl.com/mall/opening-shop-failed.png';
 
 export default class Failed extends Component {
   static propTypes = {

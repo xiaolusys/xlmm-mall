@@ -1,0 +1,100 @@
+.mamainfo-container {
+
+	width: 100%;
+	height: 100%;
+
+	.my-level {
+		background-color: #fff;
+		height: 100px;
+		width: 100%;
+		.my-thumbnail {
+			padding: 16px 16px 16px 16px;
+			height: 80px;
+			width: 80px;
+		}
+		.my-mama-id {
+			padding-top: 30px;
+			font-size: 1em;
+		}
+		.my-mama-level {
+			padding-top: 30px;
+			border: none;
+			>div {
+				border: none;
+				.mama-diamonds-icon {
+					background: url('./images/mine/mamaUser_DiamondsIcon.png') center center no-repeat;
+					background-size: 100%;
+					width: 16px;
+					height: 16px;
+
+				}
+				.mama-crown-icon {
+				background: url('./images/mine/mamaCrown_orangeColor.png') center center no-repeat;
+				background-size: 100%;
+				width: 16px;
+				height: 16px;
+				border: none;
+				}
+			}
+			> p {
+				font-size: 0.75em;
+			}
+		}
+	}
+
+	.cat22 {
+		margin-top: 8px;
+		background-color: #fff;
+		.info-cat {
+			background-color: #fff;
+			padding-top: 8px;
+			height: 48px;
+			font-size: 0.75em;
+			> div {
+				height: 100%;
+				.mama-cash-icon{
+					background: url('./images/mine/wodetixian.png') center center no-repeat;
+					background-size: 100%;
+					width: 24px;
+					height: 24px;
+					border: none;
+				}
+				.mama-carryout-icon{
+					background: url('./images/mine/leijishouyi.png') center center no-repeat;
+					background-size: 100%;
+					width: 24px;
+					height: 24px;
+					border: none;
+				}
+				.mama-visitor-icon{
+					background: url('./images/mine/fangkejilu.png') center center no-repeat;
+					background-size: 100%;
+					width: 24px;
+					height: 24px;
+					border: none;
+				}
+				.mama-orderlist-icon{
+					background: url('./images/mine/dingdanjilu.png') center center no-repeat;
+					background-size: 100%;
+					width: 24px;
+					height: 24px;
+					border: none;
+				}
+				.mama-activenum-icon{
+					background: url('./images/mine/huoyuedu.png') center center no-repeat;
+					background-size: 100%;
+					width: 24px;
+					height: 24px;
+					border: none;
+				}
+				.mama-fans-icon{
+					background: url('./images/mine/wodefensi.png') center center no-repeat;
+					background-size: 100%;
+					width: 24px;
+					height: 24px;
+					border: none;
+				}
+			}
+		}
+	}
+}

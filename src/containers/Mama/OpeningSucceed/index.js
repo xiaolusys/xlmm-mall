@@ -18,7 +18,7 @@ import * as administratorInfoAction from 'actions/mama/administratorInfo';
 import './index.scss';
 
 const actionCreators = _.extend(inviteSharingAction, wechatSignAction, summerMatAction, administratorInfoAction);
-const banner = 'http://7xogkj.com1.z0.glb.clouddn.com//mall/mama/open/success/banner.jpg';
+const banner = '//og224uhh3.qnssl.com//mall/mama/open/success/banner.jpg';
 
 @connect(
   state => ({

@@ -23,7 +23,7 @@ export class WechatPopup extends Component {
     const { prefixCls, active, onCloseBtnClick } = this.props;
     return (
       <Popup className={prefixCls} active={active}>
-        <img src="http://7xogkj.com1.z0.glb.clouddn.com/mall/wechat-share.png" />
+        <img src="//og224uhh3.qnssl.com/mall/wechat-share.png" />
         <div className="text-center margin-top-lg">
           <i className="icon-close-o icon-2x icon-white" onClick={onCloseBtnClick}></i>
         </div>

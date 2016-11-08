@@ -67,6 +67,7 @@ import {
 } from 'containers/Complaint';
 
 import {
+  MamaHome,
   MamaCharge,
   MamaInvited,
   MamaOpeningFailed,
@@ -78,9 +79,9 @@ import {
   MamaNotificationDetail,
   MamaTeamIntroduce,
   MamaOpeningIntroduce,
-  MamaZeroOpeningIntroduce,
   MamaBuyCoupon,
   TranCouponList,
+  MamaEverydayPush,
 } from 'containers/Mama';
 
 import {
@@ -138,15 +139,16 @@ export default (
     <Route path="/mama/open/failed" component={MamaOpeningFailed} />
     <Route path="/mama/invited" component={MamaInvited} />
     {activityRoutes}
+    <Route path="/mama/home" component={MamaHome} />
     <Route path="/mama/university/home" component={MamaUniversityHome} />
     <Route path="/mama/university/course/detail" component={MamaUniversityCourseDetail} />
     <Route path="/mama/notification/list" component={MamaNotificationList} onEnter={utils.checkAuth} />
     <Route path="/mama/notification/detail" component={MamaNotificationDetail} onEnter={utils.checkAuth} />
     <Route path="/mama/team/introduce" component={MamaTeamIntroduce} />
     <Route path="/mama/open/introduce" component={MamaOpeningIntroduce} />
-    <Route path="/mama/open/zeroopen" component={MamaZeroOpeningIntroduce} />
     <Route path="/buycoupon" component={MamaBuyCoupon} />
     <Route path="/trancoupon/list" component={TranCouponList} />
+    <Route path="/mama/everydaypush" component={MamaEverydayPush} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>

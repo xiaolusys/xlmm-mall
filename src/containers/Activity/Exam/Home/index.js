@@ -16,7 +16,7 @@ const shareData = {
   active_id: 13,
 };
 
-const staticBase = 'http://7xogkj.com1.z0.glb.clouddn.com/mall/activity/exam/';
+const staticBase = '//og224uhh3.qnssl.com/mall/activity/exam/';
 @connect(
   state => ({
     exam: state.exam,
@@ -71,7 +71,7 @@ export default class Home extends Component {
       data: shareData,
     });*/
     Toast.show('查看分享教程');
-    window.location.href = 'http://mp.weixin.qq.com/s?__biz=MzIzODUyOTk1NA==&mid=2247483710&idx=1&sn=0395e08b6bac98cd3c95ae3ac87b8c55&chksm=e936bdf3de4134e5dc145838ca525007501d1b06229ad0647bedbde71f77c4bbeaa154471ebd#rd';
+    window.location.href = '//mp.weixin.qq.com/s?__biz=MzIzODUyOTk1NA==&mid=2247483710&idx=1&sn=0395e08b6bac98cd3c95ae3ac87b8c55&chksm=e936bdf3de4134e5dc145838ca525007501d1b06229ad0647bedbde71f77c4bbeaa154471ebd#rd';
   }
 
   onInviteBtnClick = (e) => {

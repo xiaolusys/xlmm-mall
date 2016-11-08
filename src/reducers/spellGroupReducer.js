@@ -27,7 +27,7 @@ export default (state = initState, action = null) => {
       const payload = action.payload;
       const details = [];
       for (let i = 0; i < (Number(payload.limit_person_num) - payload.detail_info.length); i++) {
-        details.push({ customer_thumbnail: 'http://7xogkj.com1.z0.glb.clouddn.com/mall/order/spell/group/unPresent.png' });
+        details.push({ customer_thumbnail: '//og224uhh3.qnssl.com/mall/order/spell/group/unPresent.png' });
       }
       payload.detail_info = _.union(payload.detail_info, details);
       return _.extend({}, state, {
