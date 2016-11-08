@@ -65,6 +65,7 @@ import * as mamaFocusAction from 'actions/mama/focus';
 import * as mamaQrcodeAction from 'actions/mama/mamaQrcode';
 import * as mamaShopSharingAction from 'actions/mama/shopSharing';
 import * as administratorInfoAction from 'actions/mama/administratorInfo';
+import * as ninepicAction from 'actions/mama/ninepic';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -130,6 +131,7 @@ const rootReducer = combineReducers({
   notification: notificationReducer,
   administratorInfo: createReducer(administratorInfoAction.name),
   userCashout: userCashoutReducer,
+  ninepic: createReducer(ninepicAction.name),
 });
 
 export default rootReducer;
