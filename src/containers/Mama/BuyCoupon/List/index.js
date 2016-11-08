@@ -110,7 +110,7 @@ export default class TranCouponList extends Component {
 
     return (
       <div className=" content-white-bg buycoupon">
-        <Header trasparent={trasparentHeader} title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
+        <Header trasparent={trasparentHeader} title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div>
         <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data}>
           {productDetails.data.map((item, index) => this.renderProduct(item, index))

@@ -1,0 +1,28 @@
+.push-root {
+
+  .pushhome {
+
+    .pushhome-container {
+      width: 100%;
+    }
+
+    >.base-tab {
+      width: 100%;
+      position: fixed;
+      top: 44px;
+      left: 0;
+      z-index: 10;
+      background-color: #fff;
+      > ul li {
+        p {
+          &.active {
+            color: #faac14;
+          }
+          padding-top: 8px;
+          padding-bottom: 8px;
+          font-size: 1em;
+        }
+      }
+    }
+  }
+}
