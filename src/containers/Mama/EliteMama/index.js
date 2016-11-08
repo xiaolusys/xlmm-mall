@@ -56,7 +56,7 @@ export default class EliteMama extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_elite_mama) {
+    if (mamaInfo.success && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].is_elite_mama) {
       window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
     }
 
@@ -84,7 +84,7 @@ export default class EliteMama extends Component {
     return (
       <div className="home-root">
         <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} hide={utils.detector.isApp()}/>
-        <If condition={mamaInfo.success && mamaInfo.data && (!mamaInfo.data[0].is_elite_mama)}>
+        <If condition={mamaInfo.success && mamaInfo.data && (mamaInfo.data.length > 0) && (!mamaInfo.data[0].is_elite_mama)}>
         <div className="container" id="id-container">
         <h3>小鹿美美｜加入精英妈妈精品汇！</h3>
           <div className="sub-title">
