@@ -12,6 +12,7 @@ import { BottomBar } from 'components/BottomBar';
 import { WechatPopup } from 'components/WechatPopup';
 import * as invitedAction from 'actions/mama/invited';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
+import * as wechatSignAction from 'actions/wechat/sign';
 import moment from 'moment';
 import * as plugins from 'plugins';
 import * as utils from 'utils';
@@ -21,7 +22,7 @@ import * as constants from 'constants';
 import './index.scss';
 
 const base = `${constants.image.imageUrl}/mall/v3/`;
-const actionCreators = _.extend(invitedAction, inviteSharingAction);
+const actionCreators = _.extend(invitedAction, inviteSharingAction, wechatSignAction);
 const shareType = {
   full: 38,
   trial: 27,
@@ -31,6 +32,7 @@ const shareType = {
   state => ({
     invited: state.invited,
     inviteSharing: state.inviteSharing,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -39,8 +41,10 @@ export default class Invited extends Component {
     children: React.PropTypes.array,
     invited: React.PropTypes.object,
     inviteSharing: React.PropTypes.object,
+    wechatSign: React.PropTypes.object,
     fetchInvited: React.PropTypes.func,
     fetchInviteSharing: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -59,6 +63,7 @@ export default class Invited extends Component {
 
   componentWillMount() {
     const { activeTab } = this.state;
+    this.props.fetchWechatSign();
     this.props.fetchInvited(activeTab);
     this.props.fetchInviteSharing(shareType[activeTab]);
   }
@@ -77,6 +82,23 @@ export default class Invited extends Component {
         title: inviteSharing.data.title || '邀请您加入小鹿正式会员',
       },
     });
+
+    if (nextProps.wechatSign.success && !nextProps.wechatSign.isLoading && this.props.wechatSign.isLoading) {
+      utils.wechat.config(nextProps.wechatSign);
+    }
+
+    if (inviteSharing.success && !inviteSharing.isLoading && this.props.inviteSharing.isLoading) {
+      const shareInfo = {
+        success: inviteSharing.success,
+        data: {
+          title: inviteSharing.data.title,
+          desc: inviteSharing.data.active_dec,
+          share_link: inviteSharing.data.share_link,
+          share_img: inviteSharing.data.share_icon,
+        },
+      };
+      utils.wechat.configShareContent(shareInfo);
+    }
   }
 
   componentWillUnmount() {
