@@ -131,7 +131,7 @@ export default class EverydayPushTab extends Component {
         {pics.map((item, index) => {
           return (
             <li className=" no-margin" key={index}>
-              <Image className="col-xs-4 no-padding" style={{ height: '25%' }} src={item} quality={90} thumbnail={640}/>
+              <Image className="col-xs-4 no-padding" style={{ height: '120px' }} src={item} quality={90} thumbnail={640}/>
             </li>
           );
         })}
