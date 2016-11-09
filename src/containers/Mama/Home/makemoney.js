@@ -85,12 +85,13 @@ export default class MakemoneyTab extends Component {
 
   onMakemoneyClick = (e) => {
     const { id } = e.currentTarget.dataset;
+    const { mamaFortune } = this.props.mamaBaseInfo;
       switch (id) {
         case '1':
           this.context.router.push('/');
           break;
         case '2':
-          this.context.router.push('/mama/everydaypush');
+          this.context.router.push('/mama/everydaypush?mm_linkid=' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : ''));
           break;
         case '3':
           this.context.router.replace('/mama/elitemama');

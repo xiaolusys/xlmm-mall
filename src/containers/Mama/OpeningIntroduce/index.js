@@ -35,10 +35,15 @@ export default class OpeningIntroduce extends Component {
     context.router;
   }
 
+  state = {
+    remaining: 2,
+  }
+
   componentWillMount() {
     const mamaLinkId = utils.cookie.getCookie('mm_linkid');
     if (mamaLinkId && (mamaLinkId !== undefined)) {
       this.props.fetchMamaQrcode(mamaLinkId);
+      this.interval = setInterval(this.tick, 2000);
     }
   }
 
@@ -61,14 +66,32 @@ export default class OpeningIntroduce extends Component {
     window.location.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/mcf.html?mama_id=${mamaLinkId}`;
   }
 
-  /* <Image src={`${constants.image.imageUrl}/mall/mama/open/v2/zeroopeninfo.png`} quality={80}/> */
+  tick = () => {
+    let remaining = this.state.remaining;
+    if (remaining > 0) {
+      remaining--;
+    }
+    this.setState({ remaining: remaining });
+    if (remaining === 0) {
+      clearInterval(this.interval);
+    }
+    if (this.props.mamaQrcode && this.props.mamaQrcode.success && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link)) {
+      clearInterval(this.interval);
+    } else {
+      const mamaLinkId = utils.cookie.getCookie('mm_linkid');
+      if (mamaLinkId && (mamaLinkId !== undefined)) {
+        this.props.fetchMamaQrcode(mamaLinkId);
+      }
+    }
+  }
+
   render() {
     return (
       <div>
         <Header title="开店介绍" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content open-introduce-container">
             <Image src={`${constants.image.imageUrl}/mall/mama/open/v2/zeroopenbanner.png`} quality={80}/>
-            <If condition={this.props.mamaQrcode && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link)}>
+            <If condition={this.props.mamaQrcode && this.props.mamaQrcode.success && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link)}>
               <Image className="qrcode" src ={this.props.mamaQrcode.data.qrcode_link} quality={90} />
             </If>
             <div >
