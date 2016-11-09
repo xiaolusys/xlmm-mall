@@ -73,7 +73,7 @@ export default class Invited extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { inviteSharing } = nextProps;
+    const { inviteSharing, wechatSign } = nextProps;
     const { activeTab } = this.state;
     plugins.invoke({
       method: 'changeId',
@@ -83,11 +83,11 @@ export default class Invited extends Component {
       },
     });
 
-    if (nextProps.wechatSign.success && !nextProps.wechatSign.isLoading && this.props.wechatSign.isLoading) {
-      utils.wechat.config(nextProps.wechatSign);
+    if (wechatSign.success && !wechatSign.isLoading && this.props.wechatSign.isLoading) {
+      utils.wechat.config(wechatSign);
     }
 
-    if (inviteSharing.success && !inviteSharing.isLoading && this.props.inviteSharing.isLoading) {
+    if (inviteSharing.success && !inviteSharing.isLoading && this.props.inviteSharing.isLoading && wechatSign.success) {
       const shareInfo = {
         success: inviteSharing.success,
         data: {
@@ -150,7 +150,7 @@ export default class Invited extends Component {
     const { invited } = this.props;
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding invited">
-        <Header title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
+        <Header title="邀请开店" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} hide={utils.detector.isApp()}/>
         <ul className="row no-margin text-center tabs">
           <li id="full" className="col-xs-6 no-padding" style={{ marginTop: '16px' }} onClick={this.onTabItemClick}>
             <img style={{ width: '24px', marginBottom: '10px' }} src={`${base}full-icon${activeTab === 'full' ? '-active' : ''}.png`} />
