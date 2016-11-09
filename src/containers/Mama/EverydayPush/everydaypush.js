@@ -44,7 +44,7 @@ export default class EverydayPushTab extends Component {
 
   state = {
     page: 1,
-    pageSize: 3,
+    pageSize: 2,
     remaining: 2,
   }
 

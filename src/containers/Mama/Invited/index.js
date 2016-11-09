@@ -9,6 +9,7 @@ import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
 import { BottomBar } from 'components/BottomBar';
+import { WechatPopup } from 'components/WechatPopup';
 import * as invitedAction from 'actions/mama/invited';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import moment from 'moment';
@@ -51,7 +52,10 @@ export default class Invited extends Component {
     context.router;
   }
 
-  state = { activeTab: 'full' }
+  state = {
+    activeTab: 'full',
+    popupActive: false,
+ }
 
   componentWillMount() {
     const { activeTab } = this.state;
@@ -96,6 +100,12 @@ export default class Invited extends Component {
 
   onShareClick = (e) => {
     const shareInfo = this.props.inviteSharing.data || {};
+
+    if (utils.detector.isWechat()) {
+      this.setState({ popupActive: true });
+      return;
+    }
+
     plugins.invoke({
       method: 'callNativeUniShareFunc',
       data: {
@@ -107,6 +117,10 @@ export default class Invited extends Component {
         link: shareInfo.share_link,
       },
     });
+  }
+
+  onCloseBtnClick = (e) => {
+    this.setState({ popupActive: false });
   }
 
   render() {
@@ -144,9 +158,9 @@ export default class Invited extends Component {
         <div className="invited-list text-center">
           <h5>{`邀请${invited.data.count || 0}位好友`}</h5>
           <ul>
-            {_.map(invited.data.results, (item) => {
+            {_.map(invited.data.results, (item, index) => {
               return (
-                <li className="row no-margin margin-top-xxs">
+                <li className="row no-margin margin-top-xxs" key={index}>
                   <img className="pull-left avatar" src={item.thumbnail} />
                   <div style={{ display: 'inline-block', maxWidth: '70%' }} className="no-wrap">
                     <p style={{ color: '#666' }}>{moment(item.charge_time).format('YYYY-MM-DD hh:mm:ss')}</p>
@@ -166,6 +180,7 @@ export default class Invited extends Component {
             <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareClick}>分享</button>
           </div>
         </BottomBar>
+        <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>
     );
   }
