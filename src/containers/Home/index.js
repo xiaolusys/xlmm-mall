@@ -249,7 +249,7 @@ export class Home extends Component {
     const { profile } = this.props;
     if (profile && profile.success && profile.data.xiaolumm && profile.data.xiaolumm.id > 0) {
       // this.context.router.push('/mama/home');
-      window.location.href = '/mama/home';
+      window.location.href = '/mall/mama/home';
       return;
     }
     if (profile && profile.success && (profile.data.xiaolumm === null)) {
