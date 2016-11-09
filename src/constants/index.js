@@ -1,4 +1,4 @@
-export const baseUrl = 'https://api.xiaolumeimei.com';
+export const baseUrl = '//m.xiaolumeimei.com';
 
 export const baseEndpoint = '/rest/v2/';
 
@@ -21,7 +21,7 @@ export const couponStatus = {
 };
 
 export const forum = {
-  forumUrl: 'https://forum.xiaolumeimei.com',
+  forumUrl: '//forum.xiaolumeimei.com',
 };
 
 export const shareType = {
