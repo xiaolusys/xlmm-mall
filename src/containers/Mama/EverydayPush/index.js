@@ -18,6 +18,7 @@ export default class MamaEverydayPush extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     dispatch: React.PropTypes.func,
+    location: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -114,7 +115,7 @@ export default class MamaEverydayPush extends Component {
           <div className="pushhome-container">
             <Choose>
             <When condition={topTab === 'day'}>
-              <EverydayPushTab />
+              <EverydayPushTab { ...this.props } />
             </When>
             <When condition={topTab === 'category'}>
               <EverydayPushTab />
