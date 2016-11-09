@@ -248,7 +248,8 @@ export class Home extends Component {
   enterMamahome = () => {
     const { profile } = this.props;
     if (profile && profile.success && profile.data.xiaolumm && profile.data.xiaolumm.id > 0) {
-      this.context.router.push('/mama/home');
+      // this.context.router.push('/mama/home');
+      window.location.href = '/mama/home';
       return;
     }
     if (profile && profile.success && (profile.data.xiaolumm === null)) {

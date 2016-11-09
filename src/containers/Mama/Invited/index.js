@@ -83,11 +83,10 @@ export default class Invited extends Component {
       },
     });
 
-    if (wechatSign.success && !wechatSign.isLoading && this.props.wechatSign.isLoading) {
+    if (inviteSharing.success && !inviteSharing.isLoading
+        && wechatSign.success && !wechatSign.isLoading
+        && (this.props.inviteSharing.isLoading || this.props.wechatSign.isLoading)) {
       utils.wechat.config(wechatSign);
-    }
-
-    if (inviteSharing.success && !inviteSharing.isLoading && this.props.inviteSharing.isLoading && wechatSign.success) {
       const shareInfo = {
         success: inviteSharing.success,
         data: {
