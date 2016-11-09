@@ -94,7 +94,7 @@ export default class MakemoneyTab extends Component {
           this.context.router.push('/mama/everydaypush?mm_linkid=' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : ''));
           break;
         case '3':
-          this.context.router.replace('/mama/elitemama');
+          this.context.router.push('/mama/elitemama');
           break;
         case '4':
           this.context.router.push('/mama/invited');
