@@ -84,7 +84,8 @@ export default class Home extends Component {
       data: shareData,
     });*/
     Toast.show('点击分享按钮邀请好友');
-    this.context.router.push('/mama/invited');
+    // this.context.router.push('/mama/invited');
+    window.location.href = '/mall/mama/invited';
   }
 
   onTakeExamBtnClick = (e) => {
