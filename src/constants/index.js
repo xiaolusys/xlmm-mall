@@ -21,7 +21,7 @@ export const couponStatus = {
 };
 
 export const forum = {
-  forumUrl: '//forum.xiaolumeimei.com',
+  forumUrl: '//forum.xiaolumeimei.com/accounts/xlmm/login/',
 };
 
 export const shareType = {

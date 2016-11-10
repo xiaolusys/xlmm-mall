@@ -29,8 +29,6 @@ export default class AppDetail extends Component {
     details: React.PropTypes.object,
     isLoading: React.PropTypes.bool,
     fetchProductDetails: React.PropTypes.func,
-    fetchWechatSign: React.PropTypes.func,
-    wechatSign: React.PropTypes.object,
     resetProductDetails: React.PropTypes.func,
   };
 

@@ -324,7 +324,7 @@ export default class BuyCoupon extends Component {
       window.pingpp.createPayment(data.charge, (result, error) => {
         if (result === 'success') {
           Toast.show('支付成功');
-          window.location.replace(`${data.success_url}`);
+          window.location.href = `${data.success_url}`;
           return;
         }
         Toast.show('支付失败');
