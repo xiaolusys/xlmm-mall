@@ -45,6 +45,7 @@ export default class BuyCoupon extends Component {
     // addProductToShopBag: React.PropTypes.func,
     // fetchPayInfo: React.PropTypes.func,
     // commitOrder: React.PropTypes.func,
+    fetchProductDetails: React.PropTypes.func,
     fetchBuyNowPayInfo: React.PropTypes.func,
     buyNowCommitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
@@ -75,26 +76,28 @@ export default class BuyCoupon extends Component {
   componentWillMount() {
     const { query } = this.props.location;
 
-    if (query.index && this.props.productDetails) {
-      this.setState({ productDetail: this.props.productDetails.data[query.index] });
-    }
     this.props.fetchMamaInfo();
+    this.props.fetchProductDetails(query.modelid);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, payInfo, order, coupons } = nextProps;
+    const { mamaInfo, productDetails, payInfo, order, coupons } = nextProps;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && this.state.productDetail) {
-      for (let i = 0; i < this.state.productDetail.sku_info.length; i++) {
-        if (this.state.productDetail.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
-          this.setState({ sku: this.state.productDetail.sku_info[i] });
+    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
+      for (let i = 0; i < productDetails.data.sku_info.length; i++) {
+        if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
+          this.setState({ sku: productDetails.data.sku_info[i] });
         }
       }
+    }
+
+    if (productDetails.success && productDetails.data && this.props.productDetails.isLoading) {
+      this.setState({ productDetail: productDetails.data });
     }
 
     // Add product resp
