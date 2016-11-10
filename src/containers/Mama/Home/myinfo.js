@@ -110,18 +110,20 @@ export default class MyInfoTab extends Component {
           <div className="col-xs-3">
             <img className="my-thumbnail" src ={(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.extra_info.thumbnail : ''} />
           </div>
-          <p className="col-xs-3 text-center my-mama-id">{'ID:' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : '')}</p>
-          <div className="col-xs-3 my-mama-level no-padding">
+          <div className="col-xs-2">
+            <p className="text-center my-mama-id">{'ID:' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : '')}</p>
+          </div>
+          <div className="my-mama-level no-padding col-xs-3">
             <div className="col-xs-1" >
               <div className="mama-diamonds-icon" />
             </div>
-            <p className="col-xs-7 text-center">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_level_display : ''}</p>
+            <p className="text-left">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_level_display : ''}</p>
           </div>
-          <div className="col-xs-3 my-mama-level no-padding">
+          <div className="my-mama-level no-padding col-xs-3">
             <div className="col-xs-1" >
               <div className="mama-crown-icon" />
             </div>
-            <p className="col-xs-7 text-center">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.extra_info.agencylevel_display : 0}</p>
+            <p className="text-left ">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.extra_info.agencylevel_display : 0}</p>
           </div>
         </div>
         <div className="bottom-border cat22">

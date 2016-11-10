@@ -215,7 +215,7 @@ export default class Detail extends Component {
   onProductClick = (e) => {
     const { modelid } = e.currentTarget.dataset;
     // this.context.router.push(`/product/details/${modelid}`);
-    window.location.href = `/product/details/${modelid}`;
+    window.location.href = `/mall/product/details/${modelid}`;
   }
 
   onLogisticsClick = (e) => {
