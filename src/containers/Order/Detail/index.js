@@ -214,7 +214,8 @@ export default class Detail extends Component {
 
   onProductClick = (e) => {
     const { modelid } = e.currentTarget.dataset;
-    this.context.router.push(`/product/details/${modelid}`);
+    // this.context.router.push(`/product/details/${modelid}`);
+    window.location.href = `/product/details/${modelid}`;
   }
 
   onLogisticsClick = (e) => {
@@ -233,7 +234,8 @@ export default class Detail extends Component {
   pay = (charge, trade) => {
     window.pingpp.createPayment(charge, (result, error) => {
       if (result === 'success') {
-        window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
+        // window.location.replace(`${constants.paymentResults.success}/${trade.id}/${trade.tid}`);
+        window.location.href = `${constants.paymentResults.success}/${trade.id}/${trade.tid}`;
         return;
       }
       window.location.replace(constants.paymentResults.error);

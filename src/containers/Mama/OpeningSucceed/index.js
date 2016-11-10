@@ -10,20 +10,16 @@ import { Input } from 'components/Input';
 import { WechatPopup } from 'components/WechatPopup';
 import { DownloadAppBanner } from 'components/DownloadAppBanner';
 import * as utils from 'utils';
-import * as inviteSharingAction from 'actions/mama/inviteSharing';
-import * as wechatSignAction from 'actions/wechat/sign';
 import * as summerMatAction from 'actions/activity/summerMat';
 import * as administratorInfoAction from 'actions/mama/administratorInfo';
 
 import './index.scss';
 
-const actionCreators = _.extend(inviteSharingAction, wechatSignAction, summerMatAction, administratorInfoAction);
+const actionCreators = _.extend(summerMatAction, administratorInfoAction);
 const banner = '//og224uhh3.qnssl.com//mall/mama/open/success/banner.jpg';
 
 @connect(
   state => ({
-    inviteSharing: state.inviteSharing,
-    wechatSign: state.wechatSign,
     summerMat: state.summerMat,
     administratorInfo: state.administratorInfo,
   }),
@@ -58,8 +54,6 @@ export default class Succeed extends Component {
 
   componentWillMount() {
     this.props.signUp();
-    this.props.fetchWechatSign();
-    this.props.fetchInviteSharing(27);
     this.props.fetchAdministratorInfo();
   }
 
@@ -68,37 +62,10 @@ export default class Succeed extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaCharge, wechatSign, inviteSharing } = nextProps;
-    utils.wechat.config(wechatSign);
-
-    if (!inviteSharing.isLoading && inviteSharing.success) {
-      const shareInfo = {
-        success: inviteSharing.success,
-        data: {
-          title: inviteSharing.data.title,
-          desc: inviteSharing.data.active_dec,
-          share_link: inviteSharing.data.share_link,
-          share_img: inviteSharing.data.share_icon,
-        },
-      };
-      utils.wechat.configShareContent(shareInfo);
-    }
-
   }
 
   componentWillUnmount() {
     document.body.classList.remove('content-white-bg');
-  }
-
-  onShareBtnClick = (e) => {
-    if (utils.detector.isWechat()) {
-      this.setState({ sharePopupActive: true });
-      return;
-    }
-  }
-
-  onCloseBtnClick = (e) => {
-    this.setState({ sharePopupActive: false });
   }
 
   render() {
@@ -124,10 +91,6 @@ export default class Succeed extends Component {
             </div>
           </div>
         </If>
-        //<div className="row no-margin text-center margin-bottom-xs">
-        //<button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onShareBtnClick}>邀请好友开店</button>
-        //</div>
-        <WechatPopup active={this.state.sharePopupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>
     );
   }

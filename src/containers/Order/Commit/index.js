@@ -394,7 +394,8 @@ export default class Commit extends Component {
     this.togglePayTypePopupActive();
     window.pingpp.createPayment(data.charge, (result, error) => {
       if (result === 'success') {
-        window.location.push(`${data.success_url}`);
+        // window.location.push(`${data.success_url}`);
+        window.location.href = `${data.success_url}`;
         return;
       }
       window.location.replace(`${data.fail_url}`);
