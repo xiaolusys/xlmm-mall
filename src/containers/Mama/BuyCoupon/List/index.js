@@ -69,7 +69,8 @@ export default class TranCouponList extends Component {
 
   onProductClick = (e) => {
     const { index } = e.currentTarget.dataset;
-    this.context.router.push('/buycoupon?index=' + index);
+    // this.context.router.push('/buycoupon?index=' + index);
+    window.location.href = '/buycoupon?index=' + index;
   }
 
   renderProduct = (product, index) => {
