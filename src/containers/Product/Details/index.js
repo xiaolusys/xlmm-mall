@@ -656,7 +656,6 @@ export default class Detail extends Component {
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
-            <DownloadAppBanner />
             {this.renderProductInfo(details.detail_content)}
             {this.renderPromotion()}
             {this.renderProductProps(details.comparison.attributes)}

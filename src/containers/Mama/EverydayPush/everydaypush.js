@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
+import { Toast } from 'components/Toast';
 import * as ninepicAction from 'actions/mama/ninepic';
 import * as fetchMamaQrcodeAction from 'actions/mama/mamaQrcode';
 
@@ -98,12 +99,28 @@ export default class EverydayPushTab extends Component {
     this.context.router.goBack();
   }
 
+  onShareClick = (e) => {
+    const { title } = e.currentTarget.dataset;
+    this.copy(title);
+    Toast.show('分享文字内容已经复制到剪贴板，请长按图片保存到本地，然后再到朋友圈选择图片分享。');
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
 
   removeScrollListener = () => {
     window.removeEventListener('scroll', this.onScroll);
+  }
+
+   copy = (str) => {
+    const save = function(e) {
+      e.clipboardData.setData('text/plain', str);
+      e.preventDefault();
+    };
+    document.addEventListener('copy', save);
+    document.execCommand('copy');
+    document.removeEventListener('copy', save);
   }
 
   tick = () => {
@@ -166,6 +183,7 @@ export default class EverydayPushTab extends Component {
                 <p className="col-xs-12 no-padding" >{item.title}</p>
                 { this.renderPics(item.pic_arry) }
                 <p className="col-xs-12 no-padding" >{'分享次数' + item.save_times}</p>
+                <button className="col-xs-10 col-xs-offset-1 button button-energized" data-title={item.title} onClick={this.onShareClick}>分享</button>
               </li>
             );
           })}
