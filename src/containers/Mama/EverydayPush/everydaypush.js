@@ -102,7 +102,7 @@ export default class EverydayPushTab extends Component {
   onShareClick = (e) => {
     const { title } = e.currentTarget.dataset;
     this.copy(title);
-    Toast.show('分享文字内容已经复制到剪贴板，请长按图片保存到本地，然后再到朋友圈选择图片分享。');
+    Toast.show('请长按图片保存到本地，然后再到朋友圈选择图片分享。');
   }
 
   addScrollListener = () => {
