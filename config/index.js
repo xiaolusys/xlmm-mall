@@ -30,8 +30,8 @@ module.exports = {
     port: 7070,
   },
   imeron: {
-    apiHost: 'euho.xiaolumm.com',
-    apiPort: 80,
+    apiHost: '192.168.1.11',
+    apiPort: 9000,
     port: 7070,
   },
 };
