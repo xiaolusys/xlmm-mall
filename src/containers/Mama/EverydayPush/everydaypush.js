@@ -13,13 +13,15 @@ import { Image } from 'components/Image';
 import { Toast } from 'components/Toast';
 import * as ninepicAction from 'actions/mama/ninepic';
 import * as fetchMamaQrcodeAction from 'actions/mama/mamaQrcode';
+import * as wechatSignAction from 'actions/wechat/sign';
 
-const actionCreators = _.extend(ninepicAction, fetchMamaQrcodeAction);
+const actionCreators = _.extend(ninepicAction, fetchMamaQrcodeAction, wechatSignAction);
 
 @connect(
   state => ({
     ninepic: state.ninepic,
     mamaQrcode: state.mamaQrcode,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -32,6 +34,8 @@ export default class EverydayPushTab extends Component {
     fetchNinePic: React.PropTypes.func,
     mamaQrcode: React.PropTypes.object,
     fetchMamaQrcode: React.PropTypes.func,
+    wechatSign: React.PropTypes.object,
+    fetchWechatSign: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -52,6 +56,7 @@ export default class EverydayPushTab extends Component {
   componentWillMount() {
     const { mm_linkid } = this.props.location.query;
 
+    this.props.fetchWechatSign();
     this.props.fetchNinePic('', '');
     if (!_.isEmpty(mm_linkid)) {
       this.props.fetchMamaQrcode(mm_linkid);
@@ -65,6 +70,10 @@ export default class EverydayPushTab extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { ninepic } = nextProps;
+
+    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success && this.props.wechatSign.isLoading) {
+      utils.wechat.config(nextProps.wechatSign);
+    }
 
     if (ninepic.isLoading) {
       utils.ui.loadingSpinner.show();
@@ -100,9 +109,20 @@ export default class EverydayPushTab extends Component {
   }
 
   onShareClick = (e) => {
-    const { title } = e.currentTarget.dataset;
-    this.copy(title);
-    Toast.show('分享文字内容已经复制到剪贴板，请长按图片保存到本地，然后再到朋友圈选择图片分享。');
+    const { title, pic } = e.currentTarget.dataset;
+    // this.copy(title);
+    Toast.show('请先点击分享按钮保存信息，然后点击右上角分享到朋友圈。');
+    console.log(pic);
+
+    utils.wechat.configShareContent({
+        success: true,
+        data: {
+          title: title,
+          desc: title,
+          share_link: pic,
+          share_img: pic,
+        },
+      });
   }
 
   addScrollListener = () => {
@@ -113,7 +133,7 @@ export default class EverydayPushTab extends Component {
     window.removeEventListener('scroll', this.onScroll);
   }
 
-   copy = (str) => {
+  copy = (str) => {
     const save = function(e) {
       e.clipboardData.setData('text/plain', str);
       e.preventDefault();
@@ -183,7 +203,7 @@ export default class EverydayPushTab extends Component {
                 <p className="col-xs-12 no-padding" >{item.title}</p>
                 { this.renderPics(item.pic_arry) }
                 <p className="col-xs-12 no-padding" >{'分享次数' + item.save_times}</p>
-                <button className="col-xs-10 col-xs-offset-1 button button-energized" data-title={item.title} onClick={this.onShareClick}>分享</button>
+                <button className="col-xs-10 col-xs-offset-1 button button-energized" data-title={item.title} data-pic={item.pic_arry[0]} onClick={this.onShareClick}>分享</button>
               </li>
             );
           })}

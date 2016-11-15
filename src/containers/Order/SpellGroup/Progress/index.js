@@ -55,6 +55,7 @@ export default class Progress extends Component {
     location: React.PropTypes.object,
     spellGroup: React.PropTypes.any,
     fetchWechatSign: React.PropTypes.func,
+    wechatSign: React.PropTypes.object,
     fetchSpellGroupDetails: React.PropTypes.func,
   };
 
@@ -83,7 +84,7 @@ export default class Progress extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { progress, share } = nextProps.spellGroup;
-    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
+    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success && this.props.wechatSign.isLoading) {
       utils.wechat.config(nextProps.wechatSign);
     }
     if (!nextProps.spellGroup.share.isLoading && nextProps.spellGroup.share.success) {
