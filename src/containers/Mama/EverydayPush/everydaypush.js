@@ -112,14 +112,15 @@ export default class EverydayPushTab extends Component {
     const { title, pic } = e.currentTarget.dataset;
     // this.copy(title);
     Toast.show('请先点击分享按钮保存信息，然后点击右上角分享到朋友圈。');
-    console.log(pic);
+    const link = title.split('http');
+    console.log(link[link.length - 1]);
 
     utils.wechat.configShareContent({
         success: true,
         data: {
           title: title,
           desc: title,
-          share_link: pic,
+          share_link: 'http' + link[link.length - 1],
           share_img: pic,
         },
       });
