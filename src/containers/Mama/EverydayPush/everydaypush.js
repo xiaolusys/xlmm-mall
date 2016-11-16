@@ -113,7 +113,6 @@ export default class EverydayPushTab extends Component {
     // this.copy(title);
     Toast.show('请先点击分享按钮保存信息，然后点击右上角分享到朋友圈。下载APP分享更方便更有趣。');
     const link = title.split('http');
-    console.log(link[link.length - 1]);
 
     utils.wechat.configShareContent({
         success: true,
@@ -184,7 +183,7 @@ export default class EverydayPushTab extends Component {
     if (ninepic && ninepic.success && ninepic.data.length > 0) {
       for (let i = 0; i < this.state.page * this.state.pageSize; i++) {
         renderNinePics.push(ninepic.data[i]);
-        if (renderNinePics[renderNinePics.length - 1].pic_arry.length > 1
+        if (renderNinePics[renderNinePics.length - 1].pic_arry && (renderNinePics[renderNinePics.length - 1].pic_arry.length > 1)
            && (this.props.mamaQrcode && this.props.mamaQrcode.success && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link))) {
           const index = Math.round((renderNinePics[renderNinePics.length - 1].pic_arry.length + 1) / 2) - 1;
           renderNinePics[renderNinePics.length - 1].pic_arry[index] = this.props.mamaQrcode.data.qrcode_link;
