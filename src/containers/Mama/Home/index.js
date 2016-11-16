@@ -68,6 +68,13 @@ export default class MamaHome extends Component {
           });
 
           break;
+        case 'boutique':
+          this.setState({
+            topTab: id,
+
+          });
+          window.location.href = '/mama/elitemama';
+          break;
         case 'forum':
           this.setState({
             topTab: id,
@@ -106,17 +113,22 @@ export default class MamaHome extends Component {
           <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">
               <li key={1} data-id="makemoney" onClick={this.onTabClick}>
-                <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'makemoney' ? ' active' : '')}>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'makemoney' ? ' active' : '')}>
                   <span>我要赚钱</span>
                 </p>
               </li>
-              <li key={2} data-id="forum" onClick={this.onTabClick}>
-                <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'forum' ? ' active' : '')}>
+              <li key={2} data-id="boutique" onClick={this.onTabClick}>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'boutique' ? ' active' : '')}>
+                  <span>精品汇</span>
+                </p>
+              </li>
+              <li key={3} data-id="forum" onClick={this.onTabClick}>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'forum' ? ' active' : '')}>
                   <span>社交活动</span>
                 </p>
               </li>
-              <li key={3} data-id="myinfo" onClick={this.onTabClick}>
-                <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'myinfo' ? ' active' : '')}>
+              <li key={4} data-id="myinfo" onClick={this.onTabClick}>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'myinfo' ? ' active' : '')}>
                   <span>我的</span>
                 </p>
               </li>
