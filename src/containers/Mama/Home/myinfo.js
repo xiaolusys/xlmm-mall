@@ -110,10 +110,10 @@ export default class MyInfoTab extends Component {
           <div className="col-xs-3">
             <img className="my-thumbnail" src ={(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.extra_info.thumbnail : ''} />
           </div>
-          <div className="col-xs-2">
-            <p className="text-center my-mama-id">{'ID:' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : '')}</p>
+          <div className="col-xs-9">
+            <p className="my-mama-id">{'ID:' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : '')}</p>
           </div>
-          <div className="my-mama-level no-padding col-xs-3">
+          <div className="my-mama-level no-padding col-xs-4">
             <div className="col-xs-1" >
               <div className="mama-diamonds-icon" />
             </div>
