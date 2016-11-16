@@ -178,6 +178,9 @@ export default class TopTenModel2 extends Component {
 
   onShareBtnClick = (e) => {
     const { shareActivity } = this.props;
+    if (!(shareActivity.success && shareActivity.data)) {
+      return;
+    }
     const shareData = {
       share_title: shareActivity.data.title,
       share_to: '',
