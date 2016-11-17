@@ -207,7 +207,7 @@ export default class Detail extends Component {
       cartId = shopBag.data[0].id;
       if (Number(shopBag.data[0].type) === 3) {
         window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
-      } else if (nextProps.details && nextProps.details.detail_content.is_onsale) {
+      } else if (nextProps.details && nextProps.details.detail_content && nextProps.details.detail_content.is_onsale) {
         // 特卖抢购商品直接进入支付页面
         window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
       }
