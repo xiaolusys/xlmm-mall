@@ -194,16 +194,18 @@ export default class EverydayPushTab extends Component {
     return (
       <div className="col-xs-12 ">
         <ul className="margin-bottom-lg">
-        <If condition={ninepic && ninepic.success && ninepic.data.length > 0}>
+        <If condition={ninepic && ninepic.success && renderNinePics.length > 0}>
           {renderNinePics.map((item, index) => {
             return (
               <li className="row no-margin margin-top-xs bottom-border" key={index}>
                 <p className="col-xs-12 no-padding" >{item.title_content}</p>
                 <p className="col-xs-6 no-padding" >{item.start_time}</p>
                 <p className="col-xs-12 no-padding" >{item.title}</p>
-                { this.renderPics(item.pic_arry) }
-                <p className="col-xs-12 no-padding" >{'分享次数' + item.save_times}</p>
-                <button className="col-xs-10 col-xs-offset-1 button button-energized" data-title={item.title} data-pic={item.pic_arry[0]} onClick={this.onShareClick}>分享</button>
+                <If condition={item.pic_arry && item.pic_arry.length > 0}>
+                  { this.renderPics(item.pic_arry) }
+                  <p className="col-xs-12 no-padding" >{'分享次数' + item.save_times}</p>
+                  <button className="col-xs-10 col-xs-offset-1 button button-energized" data-title={item.title} data-pic={item.pic_arry[0]} onClick={this.onShareClick}>分享</button>
+                </If>
               </li>
             );
           })}
