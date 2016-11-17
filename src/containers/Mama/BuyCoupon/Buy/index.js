@@ -141,6 +141,10 @@ export default class BuyCoupon extends Component {
 
     // payinfo resp
     if (this.props.payInfo.isLoading) {
+      if (payInfo.error) {
+        this.setState({ chargeEnable: true });
+        Toast.show('获取支付信息错误');
+      }
       // pop pay
       if (payInfo.success && !_.isEmpty(payInfo.data)) {
         this.setState({ payTypePopupActive: true });
@@ -284,7 +288,7 @@ export default class BuyCoupon extends Component {
 
   payInfo = () => {
     let payInfo = {};
-    if (!_.isEmpty(this.props.payInfo.data)) {
+    if (this.props.payInfo.success && (!_.isEmpty(this.props.payInfo.data))) {
       payInfo = this.props.payInfo.data;
       payInfo.channels = [];
       if (utils.detector.isApp()) {
@@ -381,7 +385,7 @@ export default class BuyCoupon extends Component {
               <span className="font-lg font-orange">{`￥${payInfo.total_payment && payInfo.total_payment.toFixed(2)}`}</span>
             </p>
           </div>
-          {payInfo.channels && payInfo.channels.map((channel) =>
+          {payInfo.channels && (payInfo.channels.length > 0) && payInfo.channels.map((channel) =>
             (
               <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
                 <If condition={channel.id.indexOf('wx') >= 0 }>
