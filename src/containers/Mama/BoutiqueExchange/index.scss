@@ -1,0 +1,56 @@
+.boutiqueexchg-container {
+
+	width: 100%;
+	height: 100%;
+
+	.mama-leader {
+		.leader-head {
+			padding-top: 4px;
+			padding-left: 8px;
+			background-color: #fff;
+		}
+
+		.leader-info {
+			background-color: #fff;
+			height: 100px;
+			width: 100%;
+			.my-thumbnail {
+				padding: 16px 16px 16px 16px;
+				height: 80px;
+				width: 80px;
+			}
+			.my-mama-id {
+				padding-top: 10px;
+				font-size: 1em;
+			}
+			
+		}
+
+		.leader-foot {
+			padding-left: 4px;
+			font-size: 0.75em;
+			background-color: #fff;
+		}
+	}
+
+	.cat22 {
+		margin-top: 8px;
+		background-color: #fff;
+		.info-cat {
+			background-color: #fff;
+			padding-top: 8px;
+			height: 40px;
+			font-size: 0.75em;
+			border: 1px solid #dadada;
+			> div {
+				height: 100%;
+				
+			}
+		}
+	}
+
+	.rtn-info {
+		padding: 32px 32px 32px 32px;
+		background-color: #fff;
+	}
+}

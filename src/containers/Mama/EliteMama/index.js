@@ -57,7 +57,7 @@ export default class EliteMama extends Component {
     }
 
     if (mamaInfo.success && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].is_elite_mama) {
-      window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
+      // window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
     }
 
   }
@@ -84,7 +84,6 @@ export default class EliteMama extends Component {
     return (
       <div className="home-root">
         <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} hide={utils.detector.isApp()}/>
-        <If condition={mamaInfo.success && mamaInfo.data && (mamaInfo.data.length > 0) && (!mamaInfo.data[0].is_elite_mama)}>
         <div className="container" id="id-container">
         <h3>小鹿美美｜加入精英妈妈精品汇！</h3>
           <div className="sub-title">
@@ -119,7 +118,6 @@ export default class EliteMama extends Component {
             <a href="#" className="list-group-item">请联系管理员或上属妈妈咨询。</a>
           </div>
         </div>
-        </If>
       </div>
     );
   }

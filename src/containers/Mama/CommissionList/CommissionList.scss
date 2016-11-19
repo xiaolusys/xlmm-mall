@@ -1,0 +1,38 @@
+.commission-list {
+
+  .product-list-tabs {
+    background-color: #fff;
+    &.sticky {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      right: 0;
+      z-index: 9;
+      &.has-header {
+        top: 44px;
+      }
+    }
+    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
+        }
+      }
+    }
+  }
+
+  .product-list-p {
+    img {
+        margin: 8px;
+        // border: 1px solid #979797;
+        border-radius: 10px;
+        width: 60px;
+        overflow: hidden;
+        height: 60px;
+      }
+  }
+
+}

@@ -73,7 +73,7 @@ export default class MamaHome extends Component {
             topTab: id,
 
           });
-          window.location.href = '/mama/elitemama';
+          window.location.href = '/mama/boutique';
           break;
         case 'forum':
           this.setState({
