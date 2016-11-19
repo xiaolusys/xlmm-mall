@@ -15,6 +15,18 @@ const initState = {
     success: false,
     data: {},
   },
+  mamaLeader: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  mamaTeamMember: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -47,6 +59,32 @@ export default (state = initState, action = null) => {
     case mamaBaseInfoAction.names.FETCH_MAMA_WEBVIEW_CONFIG + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         mamaWebCfg: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+      case mamaBaseInfoAction.names.FETCH_MAMA_LEADER + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        mamaLeader: { isLoading: true, data: state.mamaLeader.data, error: false, success: false },
+      });
+    case mamaBaseInfoAction.names.FETCH_MAMA_LEADER + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        mamaLeader: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case mamaBaseInfoAction.names.FETCH_MAMA_LEADER + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        mamaLeader: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+      case mamaBaseInfoAction.names.FETCH_TEAM_MEMBER + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        mamaTeamMember: { isLoading: true, data: state.mamaTeamMember.data, error: false, success: false },
+      });
+    case mamaBaseInfoAction.names.FETCH_TEAM_MEMBER + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        mamaTeamMember: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case mamaBaseInfoAction.names.FETCH_TEAM_MEMBER + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        mamaTeamMember: { isLoading: false, data: action.payload, error: true, success: false },
       });
     default:
       return state;
