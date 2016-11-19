@@ -19,6 +19,8 @@ import mamaFocusReducer from './mamaFocusReducer';
 import spellGroupReducer from './spellGroupReducer';
 import userCashoutReducer from './userCashoutReducer';
 import mamaBaseInfoReducer from './mamaBaseInfoReducer';
+import mamaBoutiqueCouponReducer from './boutiqueCouponReducer';
+import mamaCommissionReducer from './commissionListReducer';
 import * as faqCategoriesAction from 'actions/faq/faqcategories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -132,6 +134,8 @@ const rootReducer = combineReducers({
   administratorInfo: createReducer(administratorInfoAction.name),
   userCashout: userCashoutReducer,
   ninepic: createReducer(ninepicAction.name),
+  boutiqueCoupon: mamaBoutiqueCouponReducer,
+  mamaCommission: mamaCommissionReducer,
 });
 
 export default rootReducer;

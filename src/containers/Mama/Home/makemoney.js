@@ -94,7 +94,7 @@ export default class MakemoneyTab extends Component {
           this.context.router.push('/mama/everydaypush?mm_linkid=' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : ''));
           break;
         case '3':
-          this.context.router.push('/mama/elitemama');
+          this.context.router.push('/mama/commission');
           break;
         case '4':
           // this.context.router.push('/mama/invited');
@@ -156,7 +156,7 @@ export default class MakemoneyTab extends Component {
             </div>
             <div className="col-xs-3 makemoney-cat" data-id={3} onClick={this.onMakemoneyClick}>
               <div className="mama-select-icon text-center" />
-              <p className=" text-center">精品汇</p>
+              <p className=" text-center">选品佣金</p>
             </div>
             <div className="col-xs-3 makemoney-cat" data-id={4} onClick={this.onMakemoneyClick}>
               <div className="mama-invite-icon" />
