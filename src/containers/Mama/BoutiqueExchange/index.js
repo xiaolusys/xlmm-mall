@@ -137,7 +137,7 @@ export default class BoutiqueExchg extends Component {
         </If>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0 || mamaLeader.data.code === 1 || mamaLeader.data.code === 3)}>
         <div className="bottom-border cat22">
-          <div className="col-xs-6 info-cat" data-id={1} onClick={this.onInfoClick}>
+          <div className="col-xs-6 info-cat no-padding" data-id={1} onClick={this.onInfoClick}>
             <div className="col-xs-3" >
               <div className="icon-xiaolu" />
             </div>
@@ -145,15 +145,15 @@ export default class BoutiqueExchg extends Component {
               <p className=" ">我的精品券</p>
             </div>
           </div>
-          <div className="col-xs-6 info-cat" data-id={2} onClick={this.onInfoClick}>
+          <div className="col-xs-6 info-cat no-padding" data-id={2} onClick={this.onInfoClick}>
             <div className="col-xs-3" >
               <div className="icon-xiaolu" />
             </div>
             <div className="col-xs-9" >
-              <p className=" ">我的精英团队</p>
+              <p className=" ">精英团队</p>
             </div>
           </div>
-          <div className="col-xs-6 info-cat" data-id={3} onClick={this.onInfoClick}>
+          <div className="col-xs-6 info-cat no-padding" data-id={3} onClick={this.onInfoClick}>
             <div className="col-xs-3" >
               <div className="icon-xiaolu" />
             </div>
@@ -161,7 +161,7 @@ export default class BoutiqueExchg extends Component {
               <p className=" ">入券</p>
             </div>
           </div>
-          <div className="col-xs-6 info-cat" data-id={4} onClick={this.onInfoClick}>
+          <div className="col-xs-6 info-cat no-padding" data-id={4} onClick={this.onInfoClick}>
             <div className="col-xs-3" >
               <div className="icon-xiaolu" />
             </div>
@@ -172,7 +172,7 @@ export default class BoutiqueExchg extends Component {
         </div>
         </If>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 2 || mamaLeader.data.code === 4)}>
-          <div className="rtn-info">{'小提示：' + (mamaLeader.data.info)}</div>
+          <div className="rtn-info">{'提示：' + (mamaLeader.data.info)}</div>
           <div className="col-xs-offset-1">请点击右上角介绍按钮了解更多信息</div>
         </If>
       </div>
