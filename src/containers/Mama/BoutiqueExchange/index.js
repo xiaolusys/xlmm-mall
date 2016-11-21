@@ -173,6 +173,7 @@ export default class BoutiqueExchg extends Component {
         </If>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 2 || mamaLeader.data.code === 4)}>
           <div className="rtn-info">{'小提示：' + (mamaLeader.data.info)}</div>
+          <div className="col-xs-offset-1">请点击右上角介绍按钮了解更多信息</div>
         </If>
       </div>
     );
