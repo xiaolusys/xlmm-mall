@@ -95,10 +95,11 @@ export default class TranCouponList extends Component {
             <p className="no-padding no-wrap font-xs">{(productDetails.detail_content && sku) ? productDetails.detail_content.name + '/' + sku.name : '' }</p>
           </div>
           <div className="row no-margin">
-            <p className="col-xs-6 no-padding">
+            <p className="">
               <span className="font-xs">{'￥' + (sku ? sku.agent_price : '')}</span>
               <span className="font-grey">/</span>
               <span className="font-xs font-grey-light text-line-through">{'￥' + (sku ? sku.std_sale_price : '')}</span>
+              <span className="font-grey font-xs" style={{ paddingLeft: '8px' }}>{(sku) ? '积分' + sku.elite_score : ''}</span>
             </p>
           </div>
         </div>
