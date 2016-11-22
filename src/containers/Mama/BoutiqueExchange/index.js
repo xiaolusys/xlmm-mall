@@ -72,12 +72,6 @@ export default class BoutiqueExchg extends Component {
   }
 
   onLeftBtnClick = (e) => {
-    if (utils.detector.isApp()) {
-      plugins.invoke({
-        method: 'callNativeBack',
-      });
-      return;
-    }
     this.context.router.goBack();
   }
 
@@ -112,9 +106,11 @@ export default class BoutiqueExchg extends Component {
 
   render() {
     const { mamaLeader } = this.props.mamaBaseInfo;
+    const hasHeader = !utils.detector.isApp();
+
     return (
       <div className="boutiqueexchg-container no-padding">
-        <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce}/>
+        <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce} hide={!hasHeader}/>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0)}>
         <div className="mama-leader no-padding bottom-border">
           <div className="text-left leader-head">我的上级信息：</div>
