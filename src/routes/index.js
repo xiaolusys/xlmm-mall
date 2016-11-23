@@ -86,6 +86,7 @@ import {
   BoutiqueExchg,
   MamaTeamMember,
   MamaCommission,
+  BoutiqueCoupon,
 } from 'containers/Mama';
 
 import {
@@ -157,6 +158,7 @@ export default (
     <Route path="/mama/boutique" component={BoutiqueExchg} />
     <Route path="/mama/teammember" component={MamaTeamMember} />
     <Route path="/mama/commission" component={MamaCommission} />
+    <Route path="/mama/boutiquecoupon" component={BoutiqueCoupon} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>

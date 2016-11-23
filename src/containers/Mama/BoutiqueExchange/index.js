@@ -11,14 +11,16 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import * as mamaBaseInfoAction from 'actions/mama/mamaBaseInfo';
+import * as boutiqueCouponAction from 'actions/mama/boutiqueCoupon';
 
 import './index.scss';
 
-const actionCreators = _.extend(mamaBaseInfoAction);
+const actionCreators = _.extend(mamaBaseInfoAction, boutiqueCouponAction);
 
 @connect(
   state => ({
     mamaBaseInfo: state.mamaBaseInfo,
+    boutiqueCoupon: state.boutiqueCoupon,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -28,6 +30,8 @@ export default class BoutiqueExchg extends Component {
     dispatch: React.PropTypes.func,
     mamaBaseInfo: React.PropTypes.any,
     fetchMamaLeader: React.PropTypes.func,
+    fetchMamaTranCouponProfile: React.PropTypes.func,
+    boutiqueCoupon: React.PropTypes.any,
   };
 
   static contextTypes = {
@@ -48,6 +52,7 @@ export default class BoutiqueExchg extends Component {
 
   componentWillMount() {
     this.props.fetchMamaLeader();
+    this.props.fetchMamaTranCouponProfile();
   }
 
   componentDidMount() {
@@ -56,8 +61,9 @@ export default class BoutiqueExchg extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { mamaLeader } = nextProps.mamaBaseInfo;
+    const { mamaTranCouponProfile } = nextProps.boutiqueCoupon;
 
-    if (mamaLeader.isLoading) {
+    if (mamaLeader.isLoading || mamaTranCouponProfile.isLoading) {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
@@ -78,6 +84,9 @@ export default class BoutiqueExchg extends Component {
   onInfoClick = (e) => {
     const { id } = e.currentTarget.dataset;
       switch (id) {
+        case '1':
+          this.context.router.push('/mama/boutiquecoupon');
+          break;
         case '2':
           this.context.router.push('/mama/teammember');
           break;
@@ -106,11 +115,20 @@ export default class BoutiqueExchg extends Component {
 
   render() {
     const { mamaLeader } = this.props.mamaBaseInfo;
+    const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
     const hasHeader = !utils.detector.isApp();
 
     return (
       <div className="boutiqueexchg-container no-padding">
         <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce} hide={!hasHeader}/>
+        <If condition={!hasHeader}>
+          <div className="intro-div">
+            <button className="intro-btn icon-yellow" onClick={this.enterEliteIntroduce}>精品汇介绍</button>
+          </div>
+        </If>
+        <div className="elite-score">
+          <p className="elite-score-p">{'我的积分:' + ((mamaTranCouponProfile.success && mamaTranCouponProfile.data) ? mamaTranCouponProfile.data.elite_score : '')}</p>
+        </div>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0)}>
         <div className="mama-leader no-padding bottom-border">
           <div className="text-left leader-head">我的上级信息：</div>
