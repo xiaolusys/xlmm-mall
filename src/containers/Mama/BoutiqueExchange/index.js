@@ -19,7 +19,7 @@ const actionCreators = _.extend(mamaBaseInfoAction, boutiqueCouponAction);
 
 @connect(
   state => ({
-    mamaBaseInfo: state.mamaBaseInfo,
+    mamaBaseInfo: state.mamaDetailInfo,
     boutiqueCoupon: state.boutiqueCoupon,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
