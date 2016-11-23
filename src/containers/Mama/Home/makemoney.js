@@ -10,11 +10,11 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
-import * as mamaBaseInfoAction from 'actions/mama/mamaBaseInfo';
+import * as mamaDetailAction from 'actions/mama/mamaDetailInfo';
 
 import './makemoney.scss';
 
-const actionCreators = _.extend(mamaBaseInfoAction);
+const actionCreators = _.extend(mamaDetailAction);
 
 @connect(
   state => ({
