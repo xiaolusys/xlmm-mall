@@ -18,7 +18,7 @@ import entrepreneurshipReducer from './entrepreneurshipReducer';
 import mamaFocusReducer from './mamaFocusReducer';
 import spellGroupReducer from './spellGroupReducer';
 import userCashoutReducer from './userCashoutReducer';
-import mamaBaseInfoReducer from './mamaBaseInfoReducer';
+import mamaDetailInfoReducer from './mamaDetailInfoReducer';
 import mamaBoutiqueCouponReducer from './boutiqueCouponReducer';
 import mamaCommissionReducer from './commissionListReducer';
 import * as faqCategoriesAction from 'actions/faq/faqcategories';
@@ -119,7 +119,7 @@ const rootReducer = combineReducers({
   summerMat: summerMatReducer,
   invited: createReducer(invitedAction.name),
   inviteSharing: createReducer(inviteSharingAction.name),
-  mamaBaseInfo: mamaBaseInfoReducer,
+  mamaDetailInfo: mamaDetailInfoReducer,
   mamaInfo: createReducer(mamaInfoAction.name),
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
