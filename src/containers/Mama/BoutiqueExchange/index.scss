@@ -2,6 +2,22 @@
 
 	width: 100%;
 	height: 100%;
+	.intro-div {
+		height: 44px;
+		.intro-btn {
+		position: absolute;
+        top: 5px;
+        right: 5px;
+		}
+	}	
+
+	.elite-score {
+		background-color: #fff;
+		.elite-score-p {
+			padding-top: 4px;
+			padding-left: 16px;
+		}	
+	}
 
 	.mama-leader {
 		.leader-head {
