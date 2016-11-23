@@ -106,7 +106,6 @@ export default class BoutiqueCoupon extends Component {
 
   render() {
     const { mamaLeftTranCoupon } = this.props.boutiqueCoupon;
-    console.log(mamaLeftTranCoupon);
 
     return (
       <div className="boutiquecoupon-container no-padding">
