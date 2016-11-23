@@ -112,12 +112,12 @@ export default class MamaTeamMember extends Component {
   renderMember = (member, index) => {
 
     return (
-      <li key={index} className=" member-item bottom-border" data-index={index} onClick={this.onProductClick}>
-        <div className="col-xs-4 no-margin">
+      <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} onClick={this.onProductClick}>
+        <div className="col-xs-4 no-margin member-img-div">
           <Image className="member-img" src={member.thumbnail} quality={70} />
         </div>
         <div className="col-xs-4 no-margin">
-          <p className="text-left font-xs">{member.nick.length <= 10 ? member.nick : member.nick.substring(0, 9)}</p>
+          <p className="text-center font-xs">{member.nick.length <= 10 ? member.nick : member.nick.substring(0, 9)}</p>
         </div>
         <div className="col-xs-4 no-margin">
           <p className="text-left font-xs">{member.mobile}</p>
