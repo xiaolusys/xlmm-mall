@@ -3,7 +3,7 @@ import axios from 'axios';
 import createAction from '../createAction';
 import qs from 'qs';
 
-export const names = {
+export const actionNames = {
   FETCH_MAMA_FORTUNE: 'FETCH_MAMA_FORTUNE',
   FETCH_MAMA_WEBVIEW_CONFIG: 'FETCH_MAMA_WEBVIEW_CONFIG',
   FETCH_MAMA_LEADER: 'FETCH_MAMA_LEADER',
@@ -11,7 +11,7 @@ export const names = {
 };
 
 export const fetchMamaFortune = () => {
-  const action = createAction(names.FETCH_MAMA_FORTUNE);
+  const action = createAction(actionNames.FETCH_MAMA_FORTUNE);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpoint}mama/fortune`)
@@ -25,7 +25,7 @@ export const fetchMamaFortune = () => {
 };
 
 export const fetchMamaWebCfg = () => {
-  const action = createAction(names.FETCH_MAMA_WEBVIEW_CONFIG);
+  const action = createAction(actionNames.FETCH_MAMA_WEBVIEW_CONFIG);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpointV1}mmwebviewconfig?version=1.0`)
@@ -39,7 +39,7 @@ export const fetchMamaWebCfg = () => {
 };
 
 export const fetchMamaLeader = () => {
-  const action = createAction(names.FETCH_MAMA_LEADER);
+  const action = createAction(actionNames.FETCH_MAMA_LEADER);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpointV1}pmt/xlmm/get_my_leader_mama_baseinfo`)
@@ -53,7 +53,7 @@ export const fetchMamaLeader = () => {
 };
 
 export const fetchMamaTeamMember = () => {
-  const action = createAction(names.FETCH_TEAM_MEMBER);
+  const action = createAction(actionNames.FETCH_TEAM_MEMBER);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpointV1}pmt/xlmm/get_elite_team_members`)
