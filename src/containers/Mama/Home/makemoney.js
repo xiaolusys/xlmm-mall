@@ -18,7 +18,7 @@ const actionCreators = _.extend(mamaDetailAction);
 
 @connect(
   state => ({
-    mamaBaseInfo: state.mamaBaseInfo,
+    mamaBaseInfo: state.mamaDetailInfo,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )

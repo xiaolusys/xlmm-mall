@@ -15,16 +15,21 @@
 		margin-top: 8px;
 		background-color: #fff;
 		.member-item {
-			height: 48px;
-			.member-img {
-				width: 32px;
-				height: 32px;
+			height: 64px;
+
+			.member-img-div {
+				width: 48px;
+				height: 48px;
 				margin-left: 8px;
 				margin-top: 8px;
+				.member-img {
+					width: 48px;
+					height: 48px;
+				}
 			}
 			>div >p {
-				margin-top: 8px;
-				padding-top: 4px;
+				margin-top: 16px;
+				padding-top: 8px;
 				height: 32px;
 			}
 		}
