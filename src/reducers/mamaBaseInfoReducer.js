@@ -1,6 +1,6 @@
 import * as actionTypes from 'actions/actionTypes';
 import _ from 'underscore';
-import * as mamaBaseInfoAction from 'actions/mama/mamaBaseInfo';
+import * as mamaDetailInfoAction from 'actions/mama/mamaDetailInfo';
 
 const initState = {
   mamaFortune: {
@@ -31,58 +31,58 @@ const initState = {
 
 export default (state = initState, action = null) => {
   switch (action.type) {
-    case mamaBaseInfoAction.names.FETCH_MAMA_FORTUNE + '_' + actionTypes.REQUEST:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_FORTUNE + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         mamaFortune: { isLoading: true, data: state.mamaFortune.data, error: false, success: false },
       });
-    case mamaBaseInfoAction.names.FETCH_MAMA_FORTUNE + '_' + actionTypes.SUCCESS:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_FORTUNE + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         mamaFortune: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case mamaBaseInfoAction.names.FETCH_MAMA_FORTUNE + '_' + actionTypes.FAILURE:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_FORTUNE + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         mamaFortune: { isLoading: false, data: action.payload, error: true, success: false },
       });
-    case mamaBaseInfoAction.names.FETCH_MAMA_FORTUNE + '_' + actionTypes.RESET:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_FORTUNE + '_' + actionTypes.RESET:
       return _.extend({}, state, {
         mamaFortune: { isLoading: false, data: {}, error: false, success: false },
       });
 
-    case mamaBaseInfoAction.names.FETCH_MAMA_WEBVIEW_CONFIG + '_' + actionTypes.REQUEST:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_WEBVIEW_CONFIG + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         mamaWebCfg: { isLoading: true, data: state.mamaWebCfg.data, error: false, success: false },
       });
-    case mamaBaseInfoAction.names.FETCH_MAMA_WEBVIEW_CONFIG + '_' + actionTypes.SUCCESS:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_WEBVIEW_CONFIG + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         mamaWebCfg: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case mamaBaseInfoAction.names.FETCH_MAMA_WEBVIEW_CONFIG + '_' + actionTypes.FAILURE:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_WEBVIEW_CONFIG + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         mamaWebCfg: { isLoading: false, data: action.payload, error: true, success: false },
       });
 
-      case mamaBaseInfoAction.names.FETCH_MAMA_LEADER + '_' + actionTypes.REQUEST:
+      case mamaDetailInfoAction.actionNames.FETCH_MAMA_LEADER + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         mamaLeader: { isLoading: true, data: state.mamaLeader.data, error: false, success: false },
       });
-    case mamaBaseInfoAction.names.FETCH_MAMA_LEADER + '_' + actionTypes.SUCCESS:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_LEADER + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         mamaLeader: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case mamaBaseInfoAction.names.FETCH_MAMA_LEADER + '_' + actionTypes.FAILURE:
+    case mamaDetailInfoAction.actionNames.FETCH_MAMA_LEADER + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         mamaLeader: { isLoading: false, data: action.payload, error: true, success: false },
       });
 
-      case mamaBaseInfoAction.names.FETCH_TEAM_MEMBER + '_' + actionTypes.REQUEST:
+      case mamaDetailInfoAction.actionNames.FETCH_TEAM_MEMBER + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         mamaTeamMember: { isLoading: true, data: state.mamaTeamMember.data, error: false, success: false },
       });
-    case mamaBaseInfoAction.names.FETCH_TEAM_MEMBER + '_' + actionTypes.SUCCESS:
+    case mamaDetailInfoAction.actionNames.FETCH_TEAM_MEMBER + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         mamaTeamMember: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case mamaBaseInfoAction.names.FETCH_TEAM_MEMBER + '_' + actionTypes.FAILURE:
+    case mamaDetailInfoAction.actionNames.FETCH_TEAM_MEMBER + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         mamaTeamMember: { isLoading: false, data: action.payload, error: true, success: false },
       });

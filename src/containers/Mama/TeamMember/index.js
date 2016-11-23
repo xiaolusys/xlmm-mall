@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
-import * as mamaBaseInfoAction from 'actions/mama/mamaBaseInfo';
+import * as mamaBaseInfoAction from 'actions/mama/mamaDetailInfo';
 
 import './index.scss';
 
@@ -129,7 +129,7 @@ export default class MamaTeamMember extends Component {
   render() {
     const { mamaFortune, mamaTeamMember } = this.props.mamaBaseInfo;
     return (
-      <div className="boutiqueexchg-container no-padding">
+      <div className="teammember-container no-padding">
         <Header title="我的精品团队" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="my-level bottom-border">
           <div className="col-xs-3">
