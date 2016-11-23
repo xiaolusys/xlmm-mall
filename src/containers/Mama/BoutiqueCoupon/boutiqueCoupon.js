@@ -93,12 +93,12 @@ export default class BoutiqueCoupon extends Component {
   renderMember = (member, index) => {
 
     return (
-      <li key={index} className=" member-item bottom-border" data-index={index} onClick={this.onProductClick}>
-        <div className="col-xs-4 no-margin">
+      <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} onClick={this.onProductClick}>
+        <div className="col-xs-4 member-img-div no-padding">
           <img className="member-img" src={member.product_img} />
         </div>
-        <div className="col-xs-4">
-          <p className="text-left ">{member.coupon_num + '张'}</p>
+        <div className="col-xs-8">
+          <p className="text-center ">{member.coupon_num + '张'}</p>
         </div>
       </li>
     );
