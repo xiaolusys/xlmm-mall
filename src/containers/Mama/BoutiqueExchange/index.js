@@ -123,7 +123,7 @@ export default class BoutiqueExchg extends Component {
         <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce} hide={!hasHeader}/>
         <If condition={!hasHeader}>
           <div className="intro-div">
-            <button className="intro-btn icon-yellow" onClick={this.enterEliteIntroduce}>精品汇介绍</button>
+            <p className="intro-btn icon-yellow" onClick={this.enterEliteIntroduce}>精品汇介绍</p>
           </div>
         </If>
         <div className="elite-score">
@@ -131,7 +131,7 @@ export default class BoutiqueExchg extends Component {
         </div>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0)}>
         <div className="mama-leader no-padding bottom-border">
-          <div className="text-left leader-head">我的上级信息：</div>
+          <div className="text-left leader-head">我的推荐人信息：</div>
           <div className="leader-info">
             <div className="col-xs-3">
               <img className="my-thumbnail" src ={(mamaLeader.success && mamaLeader.data) ? mamaLeader.data.thumbnail : ''} />
@@ -146,7 +146,7 @@ export default class BoutiqueExchg extends Component {
               <p className="text-left ">{'电话：' + ((mamaLeader.success && mamaLeader.data) ? mamaLeader.data.mobile : '')}</p>
             </div>
           </div>
-          <div className="leader-foot bottom-border">小提示：入出券等操作都需要上级妈妈支持，如长时间未处理可自行联系</div>
+          <div className="leader-foot bottom-border">小提示：入出券等操作都需要推荐妈妈支持，如长时间未处理可自行联系</div>
         </div>
         </If>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0 || mamaLeader.data.code === 1 || mamaLeader.data.code === 3)}>
