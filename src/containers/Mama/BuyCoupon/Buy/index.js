@@ -191,6 +191,12 @@ export default class BuyCoupon extends Component {
       return;
     }
 
+    if (this.props.productDetails.data.extras.min_buy_num
+      && Number(this.state.num) < this.props.productDetails.data.extras.min_buy_num) {
+      Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.props.productDetails.data.extras.min_buy_num);
+      return;
+    }
+
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
         && (mamaInfo.data[0].is_elite_mama) && mamaInfo.data[0].is_buyable) {
       if (this.state.sku) {
@@ -261,12 +267,18 @@ export default class BuyCoupon extends Component {
       e.preventDefault();
       return false;
     }
+
     switch (action) {
       case 'plus':
         this.setState({ num: this.state.num + 1 });
         break;
       case 'minus':
-      this.setState({ num: this.state.num - 1 });
+        if (this.props.productDetails.data.extras.min_buy_num
+          && Number(this.state.num - 1) < this.props.productDetails.data.extras.min_buy_num) {
+          Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.props.productDetails.data.extras.min_buy_num);
+          break;
+        }
+        this.setState({ num: this.state.num - 1 });
         break;
       default:
         break;
@@ -279,6 +291,13 @@ export default class BuyCoupon extends Component {
       Toast.show('输入个数不能为0或超过10000');
       return;
     }
+
+    if (this.props.productDetails.data.extras.min_buy_num && (Number(value.target.value) > 0)
+        && Number(value.target.value) < this.props.productDetails.data.extras.min_buy_num) {
+      Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.props.productDetails.data.extras.min_buy_num);
+      return;
+    }
+
     this.setState({ num: Number(value.target.value) });
   }
 
