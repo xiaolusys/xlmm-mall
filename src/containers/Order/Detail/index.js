@@ -77,6 +77,7 @@ export default class Detail extends Component {
     isShowPopup: false,
     refundChecked: false,
     isShowDialog: false,
+    isBondedGoods: false,
   }
 
   componentWillMount() {
@@ -103,6 +104,8 @@ export default class Detail extends Component {
       logisticsCompany = fetchOrder.data.logistics_company && fetchOrder.data.logistics_company.name || '小鹿推荐';
       addressId = fetchOrder.data && fetchOrder.data.user_adress.id;
       this.setState({ logisticsCompanyName: logisticsCompany, addressid: addressId });
+
+      this.getBondedGoods(fetchOrder.data);
     }
     if (deleteOrder.success) {
       Toast.show(deleteOrder.data.info);
@@ -225,10 +228,35 @@ export default class Detail extends Component {
     }
   }
 
+  getBondedGoods = (data) => {
+    let isBondedGoods = false;
+    let i = 0;
+
+    if (!data.packages || data.packages.length === 0) {
+      return;
+    }
+    for (i = 0; i < data.packages.length; i++) {
+      for (let j = 0; j < data.packages[i].orders.length; j++) {
+        const item = data.packages[i].orders[j];
+        if (item.is_bonded_goods) {
+          isBondedGoods = true;
+          break;
+        }
+      }
+    }
+
+    this.setState({ isBondedGoods: isBondedGoods });
+  }
+
   getClosedDate = (dateString) => {
     const date = moment(dateString).toDate();
     date.setMinutes(date.getMinutes() + 20);
     return date.toISOString();
+  }
+
+  writeCerID = (e) => {
+    this.context.router.push(`user/address/edit/${this.props.order.fetchOrder.data.user_adress.id}?is_bonded_goods=${this.state.isBondedGoods}`);
+    e.preventDefault();
   }
 
   pay = (charge, trade) => {
@@ -469,6 +497,14 @@ export default class Detail extends Component {
                 <button className="button button-md button-energized" type="button" data-action={tradeOperation.action} data-tradeid={trade.id} onClick={this.onTradesBtnClick}>{tradeOperation.tag}</button>
               </div>
             </BottomBar>
+          </If>
+          <If condition={trade.status === 2 && this.state.isBondedGoods}>
+            <div className="write-cerid">
+              <p className="font-xs">由于海关政策要求，保税区发货包裹需要提供身份证。请填写身份证，信息加密保存，仅用于海关清关。</p>
+              <div>
+              <button className="col-xs-8 col-xs-offset-2 button button-energized font-xs" onClick={this.writeCerID}>填写收件人身份证号码</button>
+              </div>
+            </div>
           </If>
         </div>
         </If>
