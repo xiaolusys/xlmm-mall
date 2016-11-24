@@ -20,7 +20,7 @@ module.exports = {
     port: 7070,
   },
   test: {
-    apiHost: '192.168.1.56',
+    apiHost: '192.168.1.51',
     apiPort: 8000,
     port: 7070,
   },
