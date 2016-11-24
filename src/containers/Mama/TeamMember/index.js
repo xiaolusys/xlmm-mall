@@ -76,12 +76,6 @@ export default class MamaTeamMember extends Component {
   }
 
   onLeftBtnClick = (e) => {
-    if (utils.detector.isApp()) {
-      plugins.invoke({
-        method: 'callNativeBack',
-      });
-      return;
-    }
     this.context.router.goBack();
   }
 
