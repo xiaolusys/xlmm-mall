@@ -153,6 +153,13 @@ export default class Commit extends Component {
       Toast.show('请勾选购买条款！');
       return;
     }
+
+    if (this.checkNeedIdentification()) {
+      Toast.show('订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码。此信息加密保存，只用于此订单海关通关。请您点击收货地址进行修改');
+      this.context.router.push(`user/address/edit/${address.data.user_adress.id}?is_bonded_goods=true`);
+      return;
+    }
+
     if (walletChecked && walletBalance >= payInfo.data.total_fee && _.isEmpty(coupon.data)) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
@@ -400,6 +407,25 @@ export default class Commit extends Component {
       }
       window.location.replace(`${data.fail_url}`);
     });
+  }
+
+  checkNeedIdentification = () => {
+    const { address, payInfo } = this.props;
+    if (address.success && address.data && payInfo.success && payInfo.data) {
+      let isBondedGoods = false;
+      for (let i = 0; i < payInfo.data.cart_list.length; i++) {
+        if (payInfo.data.cart_list[i].is_bonded_goods) {
+          isBondedGoods = true;
+          break;
+        }
+      }
+
+      if (isBondedGoods && _.isEmpty(address.data.identification_no)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   renderProducts(products = []) {
