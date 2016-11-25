@@ -156,7 +156,7 @@ export default class Commit extends Component {
 
     if (this.checkNeedIdentification()) {
       Toast.show('订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码。此信息加密保存，只用于此订单海关通关。请您点击收货地址进行修改');
-      this.context.router.push(`user/address/edit/${address.data.user_adress.id}?is_bonded_goods=true`);
+      this.context.router.push(`user/address/edit/${address.data.id}?is_bonded_goods=true`);
       return;
     }
 
