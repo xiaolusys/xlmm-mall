@@ -18,3 +18,4 @@ export BoutiqueExchg from './BoutiqueExchange';
 export MamaTeamMember from './TeamMember';
 export MamaCommission from './CommissionList/CommissionList';
 export BoutiqueCoupon from './BoutiqueCoupon/boutiqueCoupon';
+export ExchangeOrder from './ExchangeOrder/exchangeOrder';

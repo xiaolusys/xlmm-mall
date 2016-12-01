@@ -56,7 +56,7 @@ export const exchgOrder = (orderId, templateId, num) => {
   const action = createAction(names.EXCHG_ORDER);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(`${constants.baseEndpoint}mama/exchgorder/start_exchange`, { params: { order_id: orderId, exchg_template_id: templateId, coupon_num: num } })
+    return axios.post(`${constants.baseEndpoint}mama/exchgorder/start_exchange`, qs.stringify({ order_id: orderId, exchg_template_id: templateId, coupon_num: num }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
