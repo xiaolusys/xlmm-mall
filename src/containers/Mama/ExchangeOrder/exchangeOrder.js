@@ -69,9 +69,9 @@ export default class ExchangeOrder extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
-    if(nextProps.boutiqueCoupon.exchangeOrder.success && nextProps.boutiqueCoupon.exchangeOrder.data) {
+    if (nextProps.boutiqueCoupon.exchangeOrder.success && nextProps.boutiqueCoupon.exchangeOrder.data) {
       if (nextProps.boutiqueCoupon.exchangeOrder.data.code === 2) {
-        this.setState({isShowDialog: true});
+        this.setState({ isShowDialog: true });
         Toast.show(nextProps.boutiqueCoupon.exchangeOrder.data.info);
       } else {
         Toast.show(nextProps.boutiqueCoupon.exchangeOrder.data.info);
