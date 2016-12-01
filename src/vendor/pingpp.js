@@ -7,7 +7,7 @@ var
   cfg = {
     PINGPP_NOTIFY_URL: 'https://api.pingxx.com/notify/charges/',
     UPACP_WAP_URL: 'https://gateway.95516.com/gateway/api/frontTransReq.do',
-    ALIPAY_WAP_URL: 'https://wappaygw.alipay.com/service/rest.htm',
+    ALIPAY_WAP_URL: 'https://openapi.alipay.com/gateway.do',
     UPMP_WAP_URL: 'uppay://uppayservice/?style=token&paydata=',
     JDPAY_WAP_URL: 'https://m.jdpay.com/wepay/web/pay',
     YEEPAY_WAP_URL: 'https://ok.yeepay.com/paymobile/api/pay/request',
@@ -100,7 +100,7 @@ PingppSDK.prototype = {
     } else if (channel == channels.upacp_wap) {
       form_submit(cfg.UPACP_WAP_URL, 'post', credential);
     } else if (channel == channels.alipay_wap) {  // 调起支付宝手机网页支付
-      credential['_input_charset'] = 'utf-8';
+      // credential['_input_charset'] = 'utf-8';
       if (isWechat()) {
         var query = stringify_data(credential, channel, true);
         window.location.replace('/mall/alipay?url=' + encodeURIComponent(cfg.ALIPAY_WAP_URL + "?" + query));
