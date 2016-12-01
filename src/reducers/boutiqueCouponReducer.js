@@ -15,6 +15,18 @@ const initState = {
     success: false,
     data: {},
   },
+  mamaCanExchgOrders: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  exchangeOrder: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -51,6 +63,40 @@ export default (state = initState, action = null) => {
     case boutiqueCouponAction.names.FETCH_MAMA_LEFT_TRANCOUPON + '_' + actionTypes.RESET:
       return _.extend({}, state, {
         mamaLeftTranCoupon: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.names.FETCH_CAN_EXCHG_ORDERS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        mamaCanExchgOrders: { isLoading: true, data: state.mamaCanExchgOrders.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.names.FETCH_CAN_EXCHG_ORDERS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        mamaCanExchgOrders: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.names.FETCH_CAN_EXCHG_ORDERS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        mamaCanExchgOrders: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case boutiqueCouponAction.names.FETCH_CAN_EXCHG_ORDERS + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        mamaCanExchgOrders: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.names.EXCHG_ORDER + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        exchangeOrder: { isLoading: true, data: state.exchangeOrder.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.names.EXCHG_ORDER + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        exchangeOrder: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.names.EXCHG_ORDER + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        exchangeOrder: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case boutiqueCouponAction.names.EXCHG_ORDER + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        exchangeOrder: { isLoading: false, data: {}, error: false, success: false },
       });
 
     default:
