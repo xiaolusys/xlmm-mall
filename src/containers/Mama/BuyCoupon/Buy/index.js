@@ -98,6 +98,9 @@ export default class BuyCoupon extends Component {
 
     if (productDetails.success && productDetails.data && this.props.productDetails.isLoading) {
       this.setState({ productDetail: productDetails.data });
+      if (productDetails.data.extras.min_buy_num) {
+        this.setState({ num: productDetails.data.extras.min_buy_num });
+      }
     }
 
     // Add product resp
