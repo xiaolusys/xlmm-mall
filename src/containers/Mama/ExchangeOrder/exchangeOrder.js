@@ -91,7 +91,12 @@ export default class ExchangeOrder extends Component {
   }
 
   onExchgClick = (e) => {
-    const { templateid, num, order } = e.currentTarget.dataset;
+    const { templateid, num, order, status } = e.currentTarget.dataset;
+    if (Number(status) !== 2 ) {
+      Toast.show("订单还未到确认收益状态，还无法兑换");
+      e.preventDefault();
+      return;
+    }
     this.setState({ templateId: templateid });
     this.props.exchgOrder(order, templateid, num);
     e.preventDefault();
@@ -130,14 +135,14 @@ export default class ExchangeOrder extends Component {
         <div className="col-xs-6">
           <div className="col-xs-12">
             <p className=" text-left font-xs">{member.contributor_nick}</p>
-            <p className="text-left font-xs">{member.status}</p>
+            <p className="text-left font-xs">{member.status_display}</p>
           </div>
           <div className="col-xs-12">
             <p className=" text-left font-xs">{member.num + '张'}</p>
           </div>
         </div>
         <div className="col-xs-2">
-          <button className="button icon-yellow" onClick={this.onExchgClick} data-templateid={member.exchg_template_id} data-num={member.num} data-order={member.order_id} >兑换</button>
+          <button className="button icon-yellow" onClick={this.onExchgClick} disabled={ member.status !== 2} data-templateid={member.exchg_template_id} data-num={member.num} data-order={member.order_id} data-status={member.status}>兑换</button>
         </div>
       </li>
     );
@@ -150,7 +155,7 @@ export default class ExchangeOrder extends Component {
       <div className="exchgorder-container no-padding">
         <Header title="我的精品券" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="jump-div bg-white">
-          <p className="font-blue font-xs" >说明：分享出去的商品是精品汇商品，客户购买后精英妈妈可以使用精品券兑换获取收益。</p>
+          <p className="font-blue font-xs" >说明：分享出去的商品是精品汇商品，客户购买后精英妈妈可以使用精品券兑换获取收益。订单发货后进入确认收益状态即可兑换，未发货前无法兑换。</p>
         </div>
         <div className="tran-coupons bg-white">
           <If condition={mamaCanExchgOrders.success && mamaCanExchgOrders.data && mamaCanExchgOrders.data.length > 0}>
