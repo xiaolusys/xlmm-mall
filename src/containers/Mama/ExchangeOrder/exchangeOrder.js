@@ -92,7 +92,7 @@ export default class ExchangeOrder extends Component {
 
   onExchgClick = (e) => {
     const { templateid, num, order, status } = e.currentTarget.dataset;
-    if (Number(status) !== 2 ) {
+    if (Number(status) !== 2) {
       Toast.show("订单还未到确认收益状态，还无法兑换");
       e.preventDefault();
       return;
