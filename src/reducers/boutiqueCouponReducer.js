@@ -92,7 +92,7 @@ export default (state = initState, action = null) => {
       });
     case boutiqueCouponAction.names.EXCHG_ORDER + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
-        exchangeOrder: { isLoading: false, data: action.payload, error: true, success: false },
+        exchangeOrder: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
       });
     case boutiqueCouponAction.names.EXCHG_ORDER + '_' + actionTypes.RESET:
       return _.extend({}, state, {
