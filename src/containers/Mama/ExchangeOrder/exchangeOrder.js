@@ -159,7 +159,7 @@ export default class ExchangeOrder extends Component {
 
     return (
       <div className="exchgorder-container no-padding">
-        <Header title="我的精品券" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
+        <Header title="精品券兑换订单" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="jump-div bg-white">
           <p className="font-blue font-xs" >说明：分享出去的商品是精品汇商品，客户购买后精英妈妈可以使用精品券兑换获取收益。订单发货后进入确认收益状态即可兑换，未发货前无法兑换。</p>
         </div>
