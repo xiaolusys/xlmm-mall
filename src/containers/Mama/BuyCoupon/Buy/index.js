@@ -229,6 +229,8 @@ export default class BuyCoupon extends Component {
     const { paytype } = e.currentTarget.dataset;
     const mmLinkId = mamaInfo.data ? mamaInfo.data.id : 0;
 
+    this.setState({ payTypePopupActive: false });
+
     if (mmLinkId === 0) {
       Toast.show('小鹿妈妈信息获取不全，请重进此页面！！');
       e.preventDefault();
@@ -305,7 +307,7 @@ export default class BuyCoupon extends Component {
   }
 
   togglePayTypePopupActive = () => {
-      this.setState({ payTypePopupActive: !this.state.payTypePopupActive, chargeEnable: true });
+      this.setState({ payTypePopupActive: false, chargeEnable: true });
   }
 
   payInfo = () => {
@@ -343,7 +345,7 @@ export default class BuyCoupon extends Component {
   }
 
   pay = (data) => {
-    this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
+    this.setState({ payTypePopupActive: false });
     if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'callNativePurchase',

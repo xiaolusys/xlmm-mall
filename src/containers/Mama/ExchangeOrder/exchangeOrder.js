@@ -77,6 +77,12 @@ export default class ExchangeOrder extends Component {
         Toast.show(nextProps.boutiqueCoupon.exchangeOrder.data.info);
       }
     }
+
+    if (!nextProps.boutiqueCoupon.exchangeOrder.success && nextProps.boutiqueCoupon.exchangeOrder.error) {
+      if (nextProps.boutiqueCoupon.exchangeOrder.status === 500) {
+        Toast.show(nextProps.boutiqueCoupon.exchangeOrder.data.detail);
+      }
+    }
   }
 
   componentWillUnmount() {
