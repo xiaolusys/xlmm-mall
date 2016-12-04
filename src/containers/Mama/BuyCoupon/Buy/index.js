@@ -70,6 +70,7 @@ export default class BuyCoupon extends Component {
   state = {
     payTypePopupActive: false,
     num: 5,
+    minBuyNum: 5,
     chargeEnable: true,
   }
 
@@ -99,7 +100,13 @@ export default class BuyCoupon extends Component {
     if (productDetails.success && productDetails.data && this.props.productDetails.isLoading) {
       this.setState({ productDetail: productDetails.data });
       if (productDetails.data.extras.min_buy_num) {
-        this.setState({ num: productDetails.data.extras.min_buy_num });
+        this.setState({ num: productDetails.data.extras.min_buy_num, minBuyNum: productDetails.data.extras.min_buy_num });
+      } else {
+        if (productDetails.data.sku_info[0].elite_score * 5 > 30) {
+          this.setState({ num: 3, minBuyNum: 3 });
+        } else {
+          this.setState({ num: 5, minBuyNum: 5 });
+        }
       }
     }
 
@@ -278,9 +285,8 @@ export default class BuyCoupon extends Component {
         this.setState({ num: this.state.num + 1 });
         break;
       case 'minus':
-        if (this.props.productDetails.data.extras.min_buy_num
-          && Number(this.state.num - 1) < this.props.productDetails.data.extras.min_buy_num) {
-          Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.props.productDetails.data.extras.min_buy_num);
+        if (Number(this.state.num - 1) < this.state.minBuyNum) {
+          Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
           break;
         }
         this.setState({ num: this.state.num - 1 });
@@ -297,9 +303,9 @@ export default class BuyCoupon extends Component {
       return;
     }
 
-    if (this.props.productDetails.data.extras.min_buy_num && (Number(value.target.value) > 0)
-        && Number(value.target.value) < this.props.productDetails.data.extras.min_buy_num) {
-      Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.props.productDetails.data.extras.min_buy_num);
+    if ((Number(value.target.value) > 0)
+        && Number(value.target.value) < this.state.minBuyNum) {
+      Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
       return;
     }
 
