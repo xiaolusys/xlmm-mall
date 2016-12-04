@@ -26,6 +26,8 @@ const payTypeIcons = {
   alipay: 'icon-alipay-square icon-alipay-blue',
 };
 
+const minBuyScore = 30;
+
 const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction);
 
 @connect(
@@ -102,10 +104,15 @@ export default class BuyCoupon extends Component {
       if (productDetails.data.extras.min_buy_num) {
         this.setState({ num: productDetails.data.extras.min_buy_num, minBuyNum: productDetails.data.extras.min_buy_num });
       } else {
-        if (productDetails.data.sku_info[0].elite_score * 5 > 30) {
-          this.setState({ num: 3, minBuyNum: 3 });
+        if (productDetails.data.sku_info[0].elite_score >= minBuyScore) {
+          this.setState({ num: 1, minBuyNum: 1 });
         } else {
-          this.setState({ num: 5, minBuyNum: 5 });
+          if (productDetails.data.sku_info[0].elite_score * 5 < minBuyScore) {
+            this.setState({ num: 5, minBuyNum: 5 });
+          } else {
+            const buyNum = Math.ceil(minBuyScore / productDetails.data.sku_info[0].elite_score);
+            this.setState({ num: buyNum, minBuyNum: buyNum });
+          }
         }
       }
     }
