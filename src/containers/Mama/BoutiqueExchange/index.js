@@ -175,15 +175,7 @@ export default class BoutiqueExchg extends Component {
               <div className="icon-xiaolu" />
             </div>
             <div className="col-xs-9" >
-              <p className=" ">入券</p>
-            </div>
-          </div>
-          <div className="col-xs-6 info-cat no-padding" data-id={4} onClick={this.onInfoClick}>
-            <div className="col-xs-3" >
-              <div className="icon-xiaolu" />
-            </div>
-            <div className="col-xs-9" >
-              <p className=" ">出券</p>
+              <p className=" ">入券出券</p>
             </div>
           </div>
           <div className="col-xs-6 info-cat no-padding" data-id={5} onClick={this.onInfoClick}>
