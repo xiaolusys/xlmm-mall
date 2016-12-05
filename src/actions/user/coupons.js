@@ -4,7 +4,7 @@ import qs from 'qs';
 import _ from 'underscore';
 import createAction from '../createAction';
 
-export const names = {
+export const couponsNames = {
   FETCH_COUPONS_BY_STATUS: 'FETCH_COUPONS_BY_STATUS',
   FETCH_NEGOTIABLE_COUPONS: 'FETCH_NEGOTIABLE_COUPONS',
   APPLY_NEGOTIABLE_COUPONS: 'APPLY_NEGOTIABLE_COUPONS',
@@ -14,9 +14,9 @@ export const names = {
 export const fetchCouponsByStatus = (status, couponType = null) => {
   let name = '';
   if (couponType) {
-    name = names.FETCH_NEGOTIABLE_COUPONS;
+    name = couponsNames.FETCH_NEGOTIABLE_COUPONS;
   } else {
-    name = names.FETCH_COUPONS_BY_STATUS;
+    name = couponsNames.FETCH_COUPONS_BY_STATUS;
   }
   const action = createAction(name);
   return (dispatch) => {
@@ -36,7 +36,7 @@ export const fetchCouponsByStatus = (status, couponType = null) => {
 };
 
 export const applyNegotiableCoupons = (productId, num) => {
-  const action = createAction(names.APPLY_NEGOTIABLE_COUPONS);
+  const action = createAction(couponsNames.APPLY_NEGOTIABLE_COUPONS);
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpoint + 'mama/trancoupon/start_transfer', qs.stringify({ product_id: productId, coupon_num: num }))
@@ -50,7 +50,7 @@ export const applyNegotiableCoupons = (productId, num) => {
 };
 
 export const fetchUnusedBoutiqueCoupons = () => {
-  const action = createAction(names.FETCH_UNUSED_BOTIQUE_COUPONS);
+  const action = createAction(couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'usercoupon/get_unused_boutique_coupons')
