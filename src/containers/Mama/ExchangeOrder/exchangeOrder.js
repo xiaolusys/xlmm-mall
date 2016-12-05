@@ -99,7 +99,7 @@ export default class ExchangeOrder extends Component {
   onExchgClick = (e) => {
     const { templateid, num, order, status } = e.currentTarget.dataset;
     if (Number(status) !== 2) {
-      Toast.show('订单还未到确认收益状态，还无法兑换');
+      Toast.show('订单还未发货，未到确认收益状态，还无法兑换');
       e.preventDefault();
       return;
     }
@@ -148,7 +148,7 @@ export default class ExchangeOrder extends Component {
           </div>
         </div>
         <div className="col-xs-2">
-          <button className="button icon-yellow" onClick={this.onExchgClick} disabled={ member.status !== 2} data-templateid={member.exchg_template_id} data-num={member.num} data-order={member.order_id} data-status={member.status}>兑换</button>
+          <button className="button icon-yellow" onClick={this.onExchgClick} data-templateid={member.exchg_template_id} data-num={member.num} data-order={member.order_id} data-status={member.status}>兑换</button>
         </div>
       </li>
     );
