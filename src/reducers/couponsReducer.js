@@ -40,6 +40,12 @@ const initState = {
     success: false,
     data: [],
   },
+  unusedBotique: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
 };
 
 const success = (state, action) => {
@@ -91,6 +97,19 @@ export default (state = initState, action = null) => {
     case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         applynegotiable: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+    case couponsAction.names.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        unusedBotique: { isLoading: true, data: state.unusedBotique.data, error: false, success: false },
+      });
+    case couponsAction.names.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        unusedBotique: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case couponsAction.names.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        unusedBotique: { isLoading: false, data: action.payload, error: true, success: false },
       });
     default:
       return state;
