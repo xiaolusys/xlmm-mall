@@ -50,7 +50,7 @@ const initState = {
 
 const success = (state, action) => {
   switch (action.type) {
-    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
+    case couponsAction.couponsNames.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
       switch (action.payload.status) {
         case couponStatus.available:
           return _.extend({}, state, { available: { isLoading: false, error: false, success: true, data: action.payload } });
@@ -64,9 +64,9 @@ const success = (state, action) => {
           return state;
       }
       break;
-    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+    case couponsAction.couponsNames.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, { negotiable: { isLoading: false, error: false, success: true, data: action.payload } });
-    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+    case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, { applynegotiable: { isLoading: false, error: false, success: true, data: action.payload } });
     default:
       return state;
@@ -76,38 +76,38 @@ const success = (state, action) => {
 
 export default (state = initState, action = null) => {
   switch (action.type) {
-    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.REQUEST:
+    case couponsAction.couponsNames.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.REQUEST:
       return _.extend({}, state);
-    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
+    case couponsAction.couponsNames.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
       return success(state, action);
-    case couponsAction.names.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.FAILURE:
+    case couponsAction.couponsNames.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.FAILURE:
       return _.extend({}, state);
-    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.REQUEST:
+    case couponsAction.couponsNames.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.REQUEST:
       return _.extend({}, state);
-    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+    case couponsAction.couponsNames.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
       return success(state, action);
-    case couponsAction.names.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
+    case couponsAction.couponsNames.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state);
-    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.REQUEST:
+    case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         applynegotiable: { isLoading: true, data: state.applynegotiable.data, error: false, success: false },
       });
-    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
+    case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
       return success(state, action);
-    case couponsAction.names.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
+    case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         applynegotiable: { isLoading: false, data: action.payload, error: true, success: false },
       });
 
-    case couponsAction.names.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.REQUEST:
+    case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         unusedBotique: { isLoading: true, data: state.unusedBotique.data, error: false, success: false },
       });
-    case couponsAction.names.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.SUCCESS:
+    case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
         unusedBotique: { isLoading: false, data: action.payload, error: false, success: true },
       });
-    case couponsAction.names.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.FAILURE:
+    case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         unusedBotique: { isLoading: false, data: action.payload, error: true, success: false },
       });

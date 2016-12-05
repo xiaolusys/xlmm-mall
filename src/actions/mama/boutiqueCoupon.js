@@ -3,7 +3,7 @@ import axios from 'axios';
 import createAction from '../createAction';
 import qs from 'qs';
 
-export const names = {
+export const boutiqueCouponNames = {
   FETCH_MAMA_TRANCOUPON: 'FETCH_MAMA_TRANCOUPON',
   FETCH_MAMA_LEFT_TRANCOUPON: 'FETCH_MAMA_LEFT_TRANCOUPON',
   FETCH_CAN_EXCHG_ORDERS: 'FETCH_CAN_EXCHG_ORDERS',
@@ -11,7 +11,7 @@ export const names = {
 };
 
 export const fetchMamaTranCouponProfile = () => {
-  const action = createAction(names.FETCH_MAMA_TRANCOUPON);
+  const action = createAction(boutiqueCouponNames.FETCH_MAMA_TRANCOUPON);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpoint}mama/trancoupon/profile`)
@@ -25,7 +25,7 @@ export const fetchMamaTranCouponProfile = () => {
 };
 
 export const fetchMamaLeftTranCoupon = () => {
-  const action = createAction(names.FETCH_MAMA_LEFT_TRANCOUPON);
+  const action = createAction(boutiqueCouponNames.FETCH_MAMA_LEFT_TRANCOUPON);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpoint}mama/trancoupon/list_mama_left_coupons`)
@@ -39,7 +39,7 @@ export const fetchMamaLeftTranCoupon = () => {
 };
 
 export const fetchCanExchgOrders = () => {
-  const action = createAction(names.FETCH_CAN_EXCHG_ORDERS);
+  const action = createAction(boutiqueCouponNames.FETCH_CAN_EXCHG_ORDERS);
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpoint}mama/exchgorder/list_can_exchg_orders`)
@@ -53,7 +53,7 @@ export const fetchCanExchgOrders = () => {
 };
 
 export const exchgOrder = (orderId, templateId, num) => {
-  const action = createAction(names.EXCHG_ORDER);
+  const action = createAction(boutiqueCouponNames.EXCHG_ORDER);
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(`${constants.baseEndpoint}mama/exchgorder/start_exchange`, qs.stringify({ order_id: orderId, exchg_template_id: templateId, coupon_num: num }))
