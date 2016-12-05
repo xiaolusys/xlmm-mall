@@ -11,14 +11,16 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import * as boutiqueCouponAction from 'actions/mama/boutiqueCoupon';
+import * as userCouponAction from 'actions/user/coupons';
 
 import './boutiqueCoupon.scss';
 
-const actionCreators = _.extend(boutiqueCouponAction);
+const actionCreators = _.extend(boutiqueCouponAction, userCouponAction);
 
 @connect(
   state => ({
     boutiqueCoupon: state.boutiqueCoupon,
+    coupons: state.coupons,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -28,6 +30,8 @@ export default class BoutiqueCoupon extends Component {
     dispatch: React.PropTypes.func,
     boutiqueCoupon: React.PropTypes.any,
     fetchMamaLeftTranCoupon: React.PropTypes.func,
+    coupons: React.PropTypes.any,
+    fetchUnusedBoutiqueCoupons: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -48,6 +52,7 @@ export default class BoutiqueCoupon extends Component {
 
   componentWillMount() {
     this.props.fetchMamaLeftTranCoupon();
+    this.props.fetchUnusedBoutiqueCoupons();
   }
 
   componentDidMount() {
@@ -56,12 +61,13 @@ export default class BoutiqueCoupon extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { mamaLeftTranCoupon } = this.props.boutiqueCoupon;
+    const { unusedBotique } = this.props.coupons;
 
-    if (mamaLeftTranCoupon.isLoading) {
+    if (mamaLeftTranCoupon.isLoading || unusedBotique.isLoading) {
       utils.ui.loadingSpinner.show();
     }
 
-    if (!nextProps.boutiqueCoupon.mamaLeftTranCoupon.isLoading) {
+    if (!nextProps.boutiqueCoupon.mamaLeftTranCoupon.isLoading && !nextProps.coupons.unusedBotique.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
   }
