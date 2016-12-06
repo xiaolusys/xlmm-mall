@@ -9,6 +9,9 @@ export const couponsNames = {
   FETCH_NEGOTIABLE_COUPONS: 'FETCH_NEGOTIABLE_COUPONS',
   APPLY_NEGOTIABLE_COUPONS: 'APPLY_NEGOTIABLE_COUPONS',
   FETCH_UNUSED_BOTIQUE_COUPONS: 'FETCH_UNUSED_BOTIQUE_COUPONS',
+  FETCH_FREEZED_BOTIQUE_COUPONS: 'FETCH_FREEZED_BOTIQUE_COUPONS',
+  APPLY_RETURN_COUPONS: 'APPLY_RETURN_COUPONS',
+  RETURN_FREEZE_COUPONS: 'RETURN_FREEZE_COUPONS',
 };
 
 export const fetchCouponsByStatus = (status, couponType = null) => {
@@ -54,6 +57,48 @@ export const fetchUnusedBoutiqueCoupons = () => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'usercoupon/get_unused_boutique_coupons')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchFreezedBoutiqueCoupons = () => {
+  const action = createAction(couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'usercoupon?status=freeze')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const applyReturnCoupons = (ids) => {
+  const action = createAction(couponsNames.APPLY_RETURN_COUPONS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.post(constants.baseEndpoint + 'usercoupon/apply_return_boutique_coupons', qs.stringify({ coupon_ids: ids }))
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const returnFreezeCoupons = (ids) => {
+  const action = createAction(couponsNames.RETURN_FREEZE_COUPONS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.post(constants.baseEndpoint + 'usercoupon/return_freeze_boutique_coupons_2_upper', qs.stringify({ coupon_ids: ids }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

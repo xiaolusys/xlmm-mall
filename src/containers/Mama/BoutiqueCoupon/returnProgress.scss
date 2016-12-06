@@ -1,0 +1,49 @@
+.return-list {
+  background-color: #fff;
+  .return-list-p {
+    background-color: #fff;
+
+    .member-item {
+      height: 96px;
+      background-color: #fff;
+      .member-img-div {
+        height: 100%;
+        .member-img {
+          width: 48px;
+          height: 48px;
+          margin-top: 8px;
+          margin-left: 12px;
+        }
+        .member-num {
+          margin-top: 8px;
+        }
+      }
+      
+    }
+  }
+
+  .return-list-tabs {
+    background-color: #fff;
+    &.sticky {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      right: 0;
+      z-index: 9;
+      &.has-header {
+        top: 44px;
+      }
+    }
+    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
+        }
+      }
+    }
+  }
+
+}

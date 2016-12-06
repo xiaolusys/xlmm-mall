@@ -46,6 +46,24 @@ const initState = {
     success: false,
     data: [],
   },
+  freezedBotique: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
+  applyReturn: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
+  returnFreeze: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
 };
 
 const success = (state, action) => {
@@ -110,6 +128,45 @@ export default (state = initState, action = null) => {
     case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         unusedBotique: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+    case couponsAction.couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        freezedBotique: { isLoading: true, data: state.freezedBotique.data, error: false, success: false },
+      });
+    case couponsAction.couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        freezedBotique: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case couponsAction.couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        freezedBotique: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+      case couponsAction.couponsNames.APPLY_RETURN_COUPONS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        applyReturn: { isLoading: true, data: state.applyReturn.data, error: false, success: false },
+      });
+    case couponsAction.couponsNames.APPLY_RETURN_COUPONS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        applyReturn: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case couponsAction.couponsNames.APPLY_RETURN_COUPONS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        applyReturn: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+
+      case couponsAction.couponsNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        returnFreeze: { isLoading: true, data: state.returnFreeze.data, error: false, success: false },
+      });
+    case couponsAction.couponsNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        returnFreeze: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case couponsAction.couponsNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        returnFreeze: { isLoading: false, data: action.payload, error: true, success: false },
       });
     default:
       return state;

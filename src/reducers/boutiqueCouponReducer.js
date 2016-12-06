@@ -27,6 +27,24 @@ const initState = {
     success: false,
     data: {},
   },
+  verifyReturnCoupon: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  myReturnCoupon: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  tomeReturnCoupon: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -99,6 +117,56 @@ export default (state = initState, action = null) => {
         exchangeOrder: { isLoading: false, data: {}, error: false, success: false },
       });
 
+    case boutiqueCouponAction.boutiqueCouponNames.VERIFY_RETURN_COUPON + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        verifyReturnCoupon: { isLoading: true, data: state.verifyReturnCoupon.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.VERIFY_RETURN_COUPON + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        verifyReturnCoupon: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.VERIFY_RETURN_COUPON + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        verifyReturnCoupon: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.VERIFY_RETURN_COUPON + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        verifyReturnCoupon: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_RETURN_COUPON_TO_ME + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        tomeReturnCoupon: { isLoading: true, data: state.tomeReturnCoupon.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_RETURN_COUPON_TO_ME + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        tomeReturnCoupon: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_RETURN_COUPON_TO_ME + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        tomeReturnCoupon: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_RETURN_COUPON_TO_ME + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        tomeReturnCoupon: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_RETURN_COUPON + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        myReturnCoupon: { isLoading: true, data: state.myReturnCoupon.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_RETURN_COUPON + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        myReturnCoupon: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_RETURN_COUPON + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        myReturnCoupon: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_RETURN_COUPON + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        myReturnCoupon: { isLoading: false, data: {}, error: false, success: false },
+      });
     default:
       return state;
   }
