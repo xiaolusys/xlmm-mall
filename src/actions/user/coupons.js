@@ -11,7 +11,6 @@ export const couponsNames = {
   FETCH_UNUSED_BOTIQUE_COUPONS: 'FETCH_UNUSED_BOTIQUE_COUPONS',
   FETCH_FREEZED_BOTIQUE_COUPONS: 'FETCH_FREEZED_BOTIQUE_COUPONS',
   APPLY_RETURN_COUPONS: 'APPLY_RETURN_COUPONS',
-  RETURN_FREEZE_COUPONS: 'RETURN_FREEZE_COUPONS',
 };
 
 export const fetchCouponsByStatus = (status, couponType = null) => {
@@ -85,20 +84,6 @@ export const applyReturnCoupons = (ids) => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.post(constants.baseEndpoint + 'usercoupon/apply_return_boutique_coupons', qs.stringify({ coupon_ids: ids }))
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp));
-      });
-  };
-};
-
-export const returnFreezeCoupons = (ids) => {
-  const action = createAction(couponsNames.RETURN_FREEZE_COUPONS);
-  return (dispatch) => {
-    dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'usercoupon/return_freeze_boutique_coupons_2_upper', qs.stringify({ coupon_ids: ids }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

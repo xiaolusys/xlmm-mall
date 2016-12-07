@@ -11,6 +11,7 @@ export const boutiqueCouponNames = {
   VERIFY_RETURN_COUPON: 'VERIFY_RETURN_COUPON',
   FETCH_RETURN_COUPON_TO_ME: 'FETCH_RETURN_COUPON_TO_ME',
   FETCH_MY_RETURN_COUPON: 'FETCH_MY_RETURN_COUPON',
+  RETURN_FREEZE_COUPONS: 'RETURN_FREEZE_COUPONS',
 };
 
 export const fetchMamaTranCouponProfile = () => {
@@ -69,11 +70,11 @@ export const exchgOrder = (orderId, templateId, num) => {
   };
 };
 
-export const verifyReturnCoupon = (id) => {
+export const verifyReturnCoupon = (id, type) => {
   const action = createAction(boutiqueCouponNames.VERIFY_RETURN_COUPON);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(`${constants.baseEndpoint}trancoupon/verify_return_transfer_record`, qs.stringify({ transfer_record_id: id }))
+    return axios.post(`${constants.baseEndpoint}trancoupon/verify_return_transfer_record`, qs.stringify({ transfer_record_id: id, verify_func: type }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -102,6 +103,20 @@ export const fetchMyReturnCoupon = () => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpoint}trancoupon/list_apply_transfer_record`)
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const returnFreezeCoupons = (id) => {
+  const action = createAction(boutiqueCouponNames.RETURN_FREEZE_COUPONS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.post(constants.baseEndpoint + 'trancoupon/return_transfer_coupons_2_upper', qs.stringify({ transfer_record_id: id }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

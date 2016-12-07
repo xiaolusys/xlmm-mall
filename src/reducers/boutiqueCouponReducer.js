@@ -45,6 +45,12 @@ const initState = {
     success: false,
     data: {},
   },
+  returnFreeze: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: [],
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -166,6 +172,19 @@ export default (state = initState, action = null) => {
     case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_RETURN_COUPON + '_' + actionTypes.RESET:
       return _.extend({}, state, {
         myReturnCoupon: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.boutiqueCouponNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        returnFreeze: { isLoading: true, data: state.returnFreeze.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        returnFreeze: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        returnFreeze: { isLoading: false, data: action.payload, error: true, success: false },
       });
     default:
       return state;

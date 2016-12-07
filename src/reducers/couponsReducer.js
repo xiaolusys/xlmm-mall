@@ -58,12 +58,6 @@ const initState = {
     success: false,
     data: [],
   },
-  returnFreeze: {
-    isLoading: false,
-    error: false,
-    success: false,
-    data: [],
-  },
 };
 
 const success = (state, action) => {
@@ -156,18 +150,6 @@ export default (state = initState, action = null) => {
         applyReturn: { isLoading: false, data: action.payload, error: true, success: false },
       });
 
-      case couponsAction.couponsNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.REQUEST:
-      return _.extend({}, state, {
-        returnFreeze: { isLoading: true, data: state.returnFreeze.data, error: false, success: false },
-      });
-    case couponsAction.couponsNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.SUCCESS:
-      return _.extend({}, state, {
-        returnFreeze: { isLoading: false, data: action.payload, error: false, success: true },
-      });
-    case couponsAction.couponsNames.RETURN_FREEZE_COUPONS + '_' + actionTypes.FAILURE:
-      return _.extend({}, state, {
-        returnFreeze: { isLoading: false, data: action.payload, error: true, success: false },
-      });
     default:
       return state;
   }
