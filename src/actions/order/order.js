@@ -1,5 +1,6 @@
 import * as constants from 'constants';
 import axios from 'axios';
+import qs from 'qs';
 import createAction from '../createAction';
 
 export const names = {
@@ -71,10 +72,10 @@ export const resetDeleteOrder = () => {
   };
 };
 
-export const chargeOrder = (tradeId) => {
+export const chargeOrder = (tradeId, channel) => {
   return (dispatch) => {
     dispatch(chargeOrderaction.request());
-    return axios.post(constants.baseEndpoint + 'trades/' + tradeId + '/charge')
+    return axios.post(constants.baseEndpoint + 'trades/' + tradeId + '/charge', qs.stringify({ channel: channel }))
       .then((resp) => {
         dispatch(chargeOrderaction.success(resp.data));
       })
