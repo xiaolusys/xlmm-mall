@@ -56,6 +56,13 @@ export const fetchCanExchgOrders = () => {
   };
 };
 
+export const resetCanExchgOrders = () => {
+  const action = createAction(boutiqueCouponNames.FETCH_CAN_EXCHG_ORDERS);
+  return (dispatch) => {
+    dispatch(action.reset());
+  };
+};
+
 export const exchgOrder = (orderId, templateId, num) => {
   const action = createAction(boutiqueCouponNames.EXCHG_ORDER);
   return (dispatch) => {
@@ -116,7 +123,7 @@ export const returnFreezeCoupons = (id) => {
   const action = createAction(boutiqueCouponNames.RETURN_FREEZE_COUPONS);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'trancoupon/return_transfer_coupons_2_upper', qs.stringify({ transfer_record_id: id }))
+    return axios.post(constants.baseEndpoint + 'trancoupon/return_transfer_coupon_2_upper', qs.stringify({ transfer_record_id: id }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

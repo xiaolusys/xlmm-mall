@@ -66,6 +66,7 @@ export default class ReturnProgress extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { verifyReturnCoupon, returnFreeze } = this.props.boutiqueCoupon;
     let count = 0;
     let size = 0;
     let data = null;
@@ -84,6 +85,14 @@ export default class ReturnProgress extends Component {
       size = data.results.length;
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
+    }
+
+    if (verifyReturnCoupon.isLoading || returnFreeze.isLoading) {
+      if (this.state.activeTab === 'default') {
+        this.props.fetchMyReturnCoupon();
+      } else {
+        this.props.fetchReturnCouponToMe();
+      }
     }
   }
 
