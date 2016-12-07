@@ -30,6 +30,7 @@ export default class ExchangeOrder extends Component {
     dispatch: React.PropTypes.func,
     boutiqueCoupon: React.PropTypes.any,
     fetchCanExchgOrders: React.PropTypes.func,
+    resetCanExchgOrders: React.PropTypes.func,
     exchgOrder: React.PropTypes.func,
   };
 
@@ -76,6 +77,9 @@ export default class ExchangeOrder extends Component {
       } else {
         Toast.show(nextProps.boutiqueCoupon.exchangeOrder.data.info);
       }
+
+      this.props.resetCanExchgOrders();
+      this.props.fetchCanExchgOrders();
     }
 
     if (!nextProps.boutiqueCoupon.exchangeOrder.success && nextProps.boutiqueCoupon.exchangeOrder.error) {
