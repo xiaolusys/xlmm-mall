@@ -45,6 +45,11 @@ export const gaPayTypes = {
   budget: 'Xiaolu Wallet',
 };
 
+export const payTypeIcons = {
+  wx_pub: 'icon-wechat-pay icon-wechat-green',
+  alipay_wap: 'icon-alipay-square icon-alipay-blue',
+};
+
 export const downloadAppUri = '/sale/promotion/appdownload/';
 
 export const disabledDownloadApp = [

@@ -9,6 +9,8 @@ export const couponsNames = {
   FETCH_NEGOTIABLE_COUPONS: 'FETCH_NEGOTIABLE_COUPONS',
   APPLY_NEGOTIABLE_COUPONS: 'APPLY_NEGOTIABLE_COUPONS',
   FETCH_UNUSED_BOTIQUE_COUPONS: 'FETCH_UNUSED_BOTIQUE_COUPONS',
+  FETCH_FREEZED_BOTIQUE_COUPONS: 'FETCH_FREEZED_BOTIQUE_COUPONS',
+  APPLY_RETURN_COUPONS: 'APPLY_RETURN_COUPONS',
 };
 
 export const fetchCouponsByStatus = (status, couponType = null) => {
@@ -54,6 +56,34 @@ export const fetchUnusedBoutiqueCoupons = () => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'usercoupon/get_unused_boutique_coupons')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchFreezedBoutiqueCoupons = () => {
+  const action = createAction(couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'usercoupon?status=freeze')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const applyReturnCoupons = (ids) => {
+  const action = createAction(couponsNames.APPLY_RETURN_COUPONS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.post(constants.baseEndpoint + 'usercoupon/apply_return_boutique_coupons', qs.stringify({ coupon_ids: ids }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

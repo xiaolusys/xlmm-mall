@@ -74,6 +74,7 @@ export default class Detail extends Component {
     logisticsPopupShow: false,
     logisticsCompanyName: '',
     logisticsCompanyCode: '',
+    payTypePopupActive: false,
     isShowPopup: false,
     refundChecked: false,
     isShowDialog: false,
@@ -179,7 +180,7 @@ export default class Detail extends Component {
     const { router } = this.context;
     switch (dataSet.action) {
       case constants.tradeOperations['1'].action:
-        this.props.chargeOrder(dataSet.tradeid);
+        this.togglePayTypePopupActive();
         break;
       case constants.tradeOperations['2'].action:
         this.props.remindShipment(dataSet.tradeid);
@@ -213,6 +214,11 @@ export default class Detail extends Component {
       default:
         break;
     }
+  }
+
+  onPayTypeClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    this.props.chargeOrder(dataSet.tradeid, dataSet.paytype);
   }
 
   onProductClick = (e) => {
@@ -257,6 +263,10 @@ export default class Detail extends Component {
   writeCerID = (e) => {
     this.context.router.push(`user/address/edit/${this.props.order.fetchOrder.data.user_adress.id}?is_bonded_goods=${this.state.isBondedGoods}`);
     e.preventDefault();
+  }
+
+  togglePayTypePopupActive = () => {
+    this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
   }
 
   pay = (charge, trade) => {
@@ -358,6 +368,7 @@ export default class Detail extends Component {
     const trade = this.props.order.fetchOrder.data || {};
     const receiver = trade.user_adress || {};
     const tradeOperation = constants.tradeOperations[trade.status] || {};
+    const channels = trade.extras ? (trade.extras.channels || []) : [];
     const logisticsCompanies = express.data || [];
     const packages = trade.packages || {};
     const type = Number(this.props.location.query.type);
@@ -508,6 +519,26 @@ export default class Detail extends Component {
           </If>
         </div>
         </If>
+        <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
+          <div className={`row no-margin bottom-border `}>
+            <i className="col-xs-1 padding-left-xxs padding-top-xxs icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
+            <div className="col-xs-11">
+              <p className="no-margin text-center font-xs">应付款金额</p>
+              <p className="no-margin text-center font-lg font-orange">{'￥' + Number(trade.pay_cash).toFixed(2)}</p>
+            </div>
+          </div>
+          {channels.map((channel) => {
+            if (!channel.payable) {
+              return null;
+            }
+            return (
+              <div className="bottom-border pay-type-item" key={channel.id} data-tradeid={trade.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
+                <i className={`${constants.payTypeIcons[channel.id]} icon-2x margin-right-xxs`}></i>
+                <span className="inline-block margin-top-xxs">{channel.name}</span>
+              </div>
+            );
+          })}
+        </Popup>
         <Popup active={this.state.isShowPopup}>
           <div className="col-xs-12 bottom-border padding-bottom-xxs">
             <i className="col-xs-1 margin-top-xxs no-padding icon-1x text-left icon-close font-orange" onClick={this.onColsePopupClick}></i>

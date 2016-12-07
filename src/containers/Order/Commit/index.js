@@ -23,10 +23,6 @@ import * as commitOrderAction from 'actions/order/commit';
 import './index.scss';
 
 const actionCreators = _.extend(addressAction, couponAction, payInfoAction, commitOrderAction);
-const payTypeIcons = {
-  wx_pub: 'icon-wechat-pay icon-wechat-green',
-  alipay_wap: 'icon-alipay-square icon-alipay-blue',
-};
 
 @connect(
   state => ({
@@ -572,7 +568,7 @@ export default class Commit extends Component {
             }
             return (
               <div className="bottom-border pay-type-item" key={channel.id} data-paytype={channel.id} onClick={this.onPayTypeClick}>
-                <i className={`${payTypeIcons[channel.id]} icon-2x margin-right-xxs`}></i>
+                <i className={`${constants.payTypeIcons[channel.id]} icon-2x margin-right-xxs`}></i>
                 <span className="inline-block margin-top-xxs">{channel.name}</span>
               </div>
             );
