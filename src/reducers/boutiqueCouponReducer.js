@@ -54,6 +54,7 @@ const initState = {
 };
 
 export default (state = initState, action = null) => {
+  let payload = {};
   switch (action.type) {
     case boutiqueCouponAction.boutiqueCouponNames.FETCH_MAMA_TRANCOUPON + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
@@ -145,6 +146,8 @@ export default (state = initState, action = null) => {
         tomeReturnCoupon: { isLoading: true, data: state.tomeReturnCoupon.data, error: false, success: false },
       });
     case boutiqueCouponAction.boutiqueCouponNames.FETCH_RETURN_COUPON_TO_ME + '_' + actionTypes.SUCCESS:
+      payload = action.payload;
+      payload.results = _.chain(state.tomeReturnCoupon.data.results || []).union(payload.results || []).unique('id').value();
       return _.extend({}, state, {
         tomeReturnCoupon: { isLoading: false, data: action.payload, error: false, success: true },
       });
@@ -162,6 +165,8 @@ export default (state = initState, action = null) => {
         myReturnCoupon: { isLoading: true, data: state.myReturnCoupon.data, error: false, success: false },
       });
     case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_RETURN_COUPON + '_' + actionTypes.SUCCESS:
+      payload = action.payload;
+      payload.results = _.chain(state.myReturnCoupon.data.results || []).union(payload.results || []).unique('id').value();
       return _.extend({}, state, {
         myReturnCoupon: { isLoading: false, data: action.payload, error: false, success: true },
       });

@@ -31,6 +31,8 @@ export default class ReturnProgress extends Component {
   static propTypes = {
     location: React.PropTypes.object,
     fetchMyReturnCoupon: React.PropTypes.func,
+    resetMyReturnCoupon: React.PropTypes.func,
+    resetReturnCouponToMe: React.PropTypes.func,
     fetchReturnCouponToMe: React.PropTypes.func,
     verifyReturnCoupon: React.PropTypes.func,
     boutiqueCoupon: React.PropTypes.any,
@@ -89,8 +91,10 @@ export default class ReturnProgress extends Component {
 
     if (verifyReturnCoupon.isLoading || returnFreeze.isLoading) {
       if (this.state.activeTab === 'default') {
+        this.props.resetMyReturnCoupon();
         this.props.fetchMyReturnCoupon();
       } else {
+        this.props.resetReturnCouponToMe();
         this.props.fetchReturnCouponToMe();
       }
     }
@@ -108,8 +112,10 @@ export default class ReturnProgress extends Component {
       pageIndex: 0,
     });
     if (type === 'default') {
+      this.props.resetMyReturnCoupon();
       this.props.fetchMyReturnCoupon();
     } else {
+      this.props.resetReturnCouponToMe();
       this.props.fetchReturnCouponToMe();
     }
   }
