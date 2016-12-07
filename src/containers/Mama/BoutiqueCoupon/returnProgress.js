@@ -150,7 +150,7 @@ export default class ReturnProgress extends Component {
   }
 
   onAgreeBtnClick = (e) => {
-    this.props.returnFreezeCoupons(this.state.id);
+    // this.props.returnFreezeCoupons(this.state.id);
     this.setState({ isShowDialog: false });
     e.preventDefault();
   }
@@ -162,7 +162,8 @@ export default class ReturnProgress extends Component {
 
   confirmClick = (e) => {
     const { id } = e.currentTarget.dataset;
-    this.setState({ isShowDialog: true, id: id });
+    this.props.returnFreezeCoupons(id);
+    // this.setState({ isShowDialog: true, id: id });
   }
 
   addScrollListener = () => {
@@ -185,12 +186,12 @@ export default class ReturnProgress extends Component {
             <p className="col-xs-8 text-left font-xs no-padding">{'接收人:' + member.to_mama_nick}</p>
           </div>
           <div className="col-xs-12 no-padding">
-            <p className="col-xs-8 text-left font-xs no-padding">{'数量' + member.coupon_num + '张 ' + member.transfer_status_display}</p>
+            <p className="col-xs-7 text-left font-xs no-padding">{'数量' + member.coupon_num + '张 ' + member.transfer_status_display}</p>
             <If condition={member.transfer_status === 1 && this.state.activeTab === 'tome'}>
-              <button className="button button-sm button-light col-xs-3 font-xs return-btn no-padding" type="button" data-id={member.id} onClick={this.verifyClick} >审核</button>
+              <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding" type="button" data-id={member.id} onClick={this.verifyClick} >同意退券</button>
             </If>
             <If condition={member.transfer_status === 2 && this.state.activeTab === 'default'}>
-              <button className="button button-sm button-light col-xs-3 font-xs return-btn no-padding" type="button" data-id={member.id} onClick={this.confirmClick} >确认收钱</button>
+              <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding" type="button" data-id={member.id} onClick={this.confirmClick} >确认已收钱</button>
             </If>
           </div>
           <div className="col-xs-12 no-padding">
