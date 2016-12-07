@@ -52,9 +52,7 @@ export default class BoutiqueCoupon extends Component {
   }
 
   componentWillMount() {
-    // this.props.fetchMamaLeftTranCoupon();
     this.props.fetchUnusedBoutiqueCoupons();
-    this.props.fetchFreezedBoutiqueCoupons();
   }
 
   componentDidMount() {
