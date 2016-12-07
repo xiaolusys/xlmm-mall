@@ -68,9 +68,20 @@ export default class ReturnProgress extends Component {
   componentWillReceiveProps(nextProps) {
     let count = 0;
     let size = 0;
-    if (nextProps.boutiqueCoupon.success) {
-      count = nextProps.boutiqueCoupon.data.count;
-      size = nextProps.boutiqueCoupon.data.results.length;
+    let data = null;
+    if (this.state.activeTab === 'default') {
+      if (nextProps.boutiqueCoupon.myReturnCoupon.success) {
+        data = nextProps.boutiqueCoupon.myReturnCoupon.data;
+      }
+    } else {
+      if (nextProps.boutiqueCoupon.tomeReturnCoupon.success) {
+        data = nextProps.boutiqueCoupon.tomeReturnCoupon.data;
+      }
+    }
+
+    if (data) {
+      count = data.count;
+      size = data.results.length;
       this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
       this.setState({ hasMore: count > size });
     }
@@ -124,19 +135,19 @@ export default class ReturnProgress extends Component {
   }
 
   onAgreeBtnClick = (e) => {
-
+    this.props.returnFreezeCoupons(this.state.id);
     this.setState({ isShowDialog: false });
     e.preventDefault();
   }
 
   verifyClick = (e) => {
     const { id } = e.currentTarget.dataset;
-    this.props.verifyReturnCoupon(id);
+    this.props.verifyReturnCoupon(id, 'agree');
   }
 
   confirmClick = (e) => {
     const { id } = e.currentTarget.dataset;
-    this.setState({ isShowDialog: true });
+    this.setState({ isShowDialog: true, id: id });
   }
 
   addScrollListener = () => {

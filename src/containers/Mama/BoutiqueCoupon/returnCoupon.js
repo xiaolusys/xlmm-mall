@@ -72,12 +72,9 @@ export default class ReturnBoutiqueCoupon extends Component {
       utils.ui.loadingSpinner.show();
     }
 
-    console.log(nextProps.coupons.applyReturn);
     if (!nextProps.coupons.applyReturn.isLoading) {
-      console.log('11');
       utils.ui.loadingSpinner.hide();
       if (nextProps.coupons.applyReturn.success && nextProps.coupons.applyReturn.data) {
-        console.log('22');
         Toast.show(nextProps.coupons.applyReturn.data.info);
         this.setState({ returnEnable: true });
         if (nextProps.coupons.applyReturn.data.code === 0) {
