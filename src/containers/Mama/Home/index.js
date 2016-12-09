@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
+import { Toast } from 'components/Toast';
 import MakemoneyTab from './makemoney';
 import MyInfoTab from './myinfo';
 
@@ -73,7 +74,8 @@ export default class MamaHome extends Component {
             topTab: id,
 
           });
-          window.location.href = '/mall/mama/boutique';
+          // window.location.href = '/mall/mama/boutique';
+          Toast.show('精品汇功能在今晚9-10点之间进行升级，相关功能暂停');
           break;
         case 'forum':
           this.setState({
