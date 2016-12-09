@@ -79,11 +79,11 @@ export const fetchFreezedBoutiqueCoupons = () => {
   };
 };
 
-export const applyReturnCoupons = (ids) => {
+export const applyReturnCoupons = (ids, type) => {
   const action = createAction(couponsNames.APPLY_RETURN_COUPONS);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'usercoupon/apply_return_boutique_coupons', qs.stringify({ coupon_ids: ids }))
+    return axios.post(constants.baseEndpoint + 'usercoupon/apply_return_boutique_coupons', qs.stringify({ coupon_ids: ids, return_to: type }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
