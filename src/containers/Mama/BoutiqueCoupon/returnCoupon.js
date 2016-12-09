@@ -148,7 +148,17 @@ export default class ReturnBoutiqueCoupon extends Component {
           params += ',';
         }
       }
-      this.props.applyReturnCoupons(params);
+      this.props.applyReturnCoupons(params, 'upper_mama');
+    } else if (this.state.type === 'direct') {
+      const coupons = this.state.coupon.from_sys_coupon_ids.slice(0, this.state.num);
+      let params = '';
+      for (let i = 0; i < coupons.length; i++) {
+        params += coupons[i];
+        if (i < coupons.length - 1) {
+          params += ',';
+        }
+      }
+      this.props.applyReturnCoupons(params, 'sys');
     }
     this.setState({ returnEnable: false });
     e.preventDefault();

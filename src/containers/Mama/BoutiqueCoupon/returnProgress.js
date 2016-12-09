@@ -56,11 +56,12 @@ export default class ReturnProgress extends Component {
     activeTab: 'default',
     sticky: false,
     isShowDialog: false,
+    status: 0,
   }
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    this.props.fetchMyReturnCoupon(pageIndex + 1, pageSize);
+    this.props.fetchMyReturnCoupon(this.state.status, pageIndex + 1, pageSize);
   }
 
   componentDidMount() {
@@ -92,10 +93,10 @@ export default class ReturnProgress extends Component {
     if (verifyReturnCoupon.isLoading || returnFreeze.isLoading) {
       if (this.state.activeTab === 'default') {
         this.props.resetMyReturnCoupon();
-        this.props.fetchMyReturnCoupon();
+        this.props.fetchMyReturnCoupon(this.state.status, 1, this.state.pageSize);
       } else {
         this.props.resetReturnCouponToMe();
-        this.props.fetchReturnCouponToMe();
+        this.props.fetchReturnCouponToMe(this.state.status, 1, this.state.pageSize);
       }
     }
   }
@@ -110,13 +111,15 @@ export default class ReturnProgress extends Component {
     this.setState({
       activeTab: type,
       pageIndex: 0,
+      status: 0,
+      rselected: 0,
     });
     if (type === 'default') {
       this.props.resetMyReturnCoupon();
-      this.props.fetchMyReturnCoupon();
+      this.props.fetchMyReturnCoupon(0, 1, this.state.pageSize);
     } else {
       this.props.resetReturnCouponToMe();
-      this.props.fetchReturnCouponToMe();
+      this.props.fetchReturnCouponToMe(0, 1, this.state.pageSize);
     }
   }
 
@@ -130,10 +133,10 @@ export default class ReturnProgress extends Component {
 
     if (scrollTop === documentHeight - windowHeight && this.state.hasMore) {
       if (this.state.activeTab === 'default' && !this.props.boutiqueCoupon.myReturnCoupon.isLoading) {
-        this.props.fetchMyReturnCoupon(pageIndex + 1, pageSize);
+        this.props.fetchMyReturnCoupon(this.state.status, pageIndex + 1, pageSize);
       }
       if (this.state.activeTab === 'tome' && !this.props.boutiqueCoupon.tomeReturnCoupon.isLoading) {
-        this.props.fetchReturnCouponToMe(pageIndex + 1, pageSize);
+        this.props.fetchReturnCouponToMe(this.state.status, pageIndex + 1, pageSize);
       }
     }
 
@@ -150,7 +153,7 @@ export default class ReturnProgress extends Component {
   }
 
   onAgreeBtnClick = (e) => {
-    // this.props.returnFreezeCoupons(this.state.id);
+    this.props.returnFreezeCoupons(this.state.id);
     this.setState({ isShowDialog: false });
     e.preventDefault();
   }
@@ -162,8 +165,19 @@ export default class ReturnProgress extends Component {
 
   confirmClick = (e) => {
     const { id } = e.currentTarget.dataset;
-    this.props.returnFreezeCoupons(id);
-    // this.setState({ isShowDialog: true, id: id });
+    // this.props.returnFreezeCoupons(id);
+    this.setState({ isShowDialog: true, id: id });
+  }
+
+  selectChange = (event) => {
+    this.setState({ status: Number(event.target.value), rselected: event.target.value });
+    if (this.state.activeTab === 'default') {
+      this.props.resetMyReturnCoupon();
+      this.props.fetchMyReturnCoupon(Number(event.target.value), 1, this.state.pageSize);
+    } else {
+      this.props.resetReturnCouponToMe();
+      this.props.fetchReturnCouponToMe(Number(event.target.value), 1, this.state.pageSize);
+    }
   }
 
   addScrollListener = () => {
@@ -220,11 +234,20 @@ export default class ReturnProgress extends Component {
         <div className="content no-padding">
           <div className={'return-list-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
             <ul className="row no-margin">
-              <li className={'col-xs-6' + (activeTab === 'default' ? ' active' : '')} data-type={'default'} onClick={this.onTabItemClick}>
+              <li className={'col-xs-4' + (activeTab === 'default' ? ' active' : '')} data-type={'default'} onClick={this.onTabItemClick}>
                 <div>我的退券</div>
               </li>
-              <li className={'col-xs-6' + (activeTab === 'tome' ? ' active' : '')} data-type={'tome'} onClick={this.onTabItemClick}>
+              <li className={'col-xs-4' + (activeTab === 'tome' ? ' active' : '')} data-type={'tome'} onClick={this.onTabItemClick}>
                 <div>退券给我</div>
+              </li>
+              <li className="col-xs-4">
+                <select className="select col-xs-10" value={this.state.rselected} onChange={this.selectChange}>
+                    <option value="0">全部</option>
+                    <option value="1">待审核</option>
+                    <option value="2">待发放</option>
+                    <option value="3">已完成</option>
+                    <option value="4">已取消</option>
+                </select>
               </li>
             </ul>
           </div>

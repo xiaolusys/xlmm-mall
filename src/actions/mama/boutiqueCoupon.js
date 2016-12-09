@@ -91,11 +91,17 @@ export const verifyReturnCoupon = (id, type) => {
   };
 };
 
-export const fetchReturnCouponToMe = (pageIndex, pageSize) => {
+export const fetchReturnCouponToMe = (status, pageIndex, pageSize) => {
   const action = createAction(boutiqueCouponNames.FETCH_RETURN_COUPON_TO_ME);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(`${constants.baseEndpoint}trancoupon/list_return_transfer_record`, { params: { page: pageIndex, page_size: pageSize } })
+    let params = {};
+    if (status === 0) {
+      params = { page: pageIndex, page_size: pageSize };
+    } else {
+      params = { transfer_status: status, page: pageIndex, page_size: pageSize };
+    }
+    return axios.get(`${constants.baseEndpoint}trancoupon/list_return_transfer_record`, { params })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -112,11 +118,18 @@ export const resetReturnCouponToMe = () => {
   };
 };
 
-export const fetchMyReturnCoupon = (pageIndex, pageSize) => {
+export const fetchMyReturnCoupon = (status, pageIndex, pageSize) => {
   const action = createAction(boutiqueCouponNames.FETCH_MY_RETURN_COUPON);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(`${constants.baseEndpoint}trancoupon/list_apply_transfer_record`, { params: { page: pageIndex, page_size: pageSize } })
+    let params = {};
+    if (status === 0) {
+      params = { page: pageIndex, page_size: pageSize };
+    } else {
+      params = { transfer_status: status, page: pageIndex, page_size: pageSize };
+    }
+
+    return axios.get(`${constants.baseEndpoint}trancoupon/list_from_my_records`, { params })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

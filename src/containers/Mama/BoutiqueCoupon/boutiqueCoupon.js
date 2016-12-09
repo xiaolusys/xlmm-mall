@@ -113,7 +113,7 @@ export default class BoutiqueCoupon extends Component {
         <div className="col-xs-9 member-detail no-padding">
           <div className="col-xs-12 bottom-border no-padding">
             <p className="col-xs-8 text-left font-xs no-padding">{'直接购买 ' + member.from_sys_coupon_ids.length + '张'}</p>
-            <If condition={ false }>
+            <If condition={ member.can_return_upper && member.from_sys_coupon_ids.length > 0 }>
               <button className="button button-sm button-light col-xs-3 font-xs return-btn no-padding" type="button" data-type={'direct'} data-index={index} onClick={this.directReturnClick} >退券</button>
             </If>
           </div>
@@ -124,7 +124,9 @@ export default class BoutiqueCoupon extends Component {
             </If>
           </div>
           <div className="col-xs-12 no-padding">
+            <If condition={member.gift_transfer_coupon_ids.length > 0}>
             <p className="text-left font-xs no-padding">{'赠送券 ' + member.gift_transfer_coupon_ids.length + '张'}</p>
+            </If>
           </div>
         </div>
       </li>
