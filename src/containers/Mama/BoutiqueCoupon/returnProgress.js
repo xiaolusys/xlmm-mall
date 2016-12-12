@@ -52,7 +52,7 @@ export default class ReturnProgress extends Component {
   state = {
     hasMore: true,
     pageIndex: 0,
-    pageSize: 20,
+    pageSize: 10,
     activeTab: 'default',
     sticky: false,
     isShowDialog: false,
