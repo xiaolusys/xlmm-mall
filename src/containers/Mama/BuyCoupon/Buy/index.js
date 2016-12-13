@@ -9,6 +9,7 @@ import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 import { Popup } from 'components/Popup';
+import { BottomBar } from 'components/BottomBar';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
@@ -37,6 +38,7 @@ const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, pa
     payInfo: state.payInfo,
     order: state.commitOrder,
     coupons: state.coupons,
+    shopBag: state.shopBag,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -44,10 +46,12 @@ export default class BuyCoupon extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     location: React.PropTypes.object,
-    // addProductToShopBag: React.PropTypes.func,
+    addProductToShopBag: React.PropTypes.func,
     // fetchPayInfo: React.PropTypes.func,
     // commitOrder: React.PropTypes.func,
     fetchProductDetails: React.PropTypes.func,
+    resetProductDetails: React.PropTypes.func,
+    resetAddProductToShopBag: React.PropTypes.func,
     fetchBuyNowPayInfo: React.PropTypes.func,
     buyNowCommitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
@@ -195,7 +199,8 @@ export default class BuyCoupon extends Component {
   }
 
   componentWillUnmount() {
-
+    this.props.resetAddProductToShopBag();
+    this.props.resetProductDetails();
   }
 
   onChargeClick = (e) => {
@@ -292,10 +297,10 @@ export default class BuyCoupon extends Component {
         this.setState({ num: this.state.num + 1 });
         break;
       case 'minus':
-        if (Number(this.state.num - 1) < this.state.minBuyNum) {
+        /* if (Number(this.state.num - 1) < this.state.minBuyNum) {
           Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
           break;
-        }
+        }*/
         this.setState({ num: this.state.num - 1 });
         break;
       default:
@@ -310,13 +315,27 @@ export default class BuyCoupon extends Component {
       return;
     }
 
-    if ((Number(value.target.value) > 0)
+    /* if ((Number(value.target.value) > 0)
         && Number(value.target.value) < this.state.minBuyNum) {
       Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
       return;
-    }
+    }*/
 
     this.setState({ num: Number(value.target.value) });
+  }
+
+  onShopbagClick = (e) => {
+    this.context.router.push('/shop/bag');
+    e.preventDefault();
+  }
+
+  onAddToShopBagClick = (e) => {
+    const { sku, num } = this.state;
+    const { type } = e.currentTarget.dataset;
+
+    this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num);
+
+    e.preventDefault();
   }
 
   togglePayTypePopupActive = () => {
@@ -379,11 +398,16 @@ export default class BuyCoupon extends Component {
   }
 
   render() {
-    const { mamaInfo } = this.props;
+    const { mamaInfo, shopBag } = this.props;
     const imgSrc = (this.state.productDetail && this.state.productDetail.detail_content) ? this.state.productDetail.detail_content.head_img : '';
     const payInfo = this.payInfo();
     const sku = this.state.sku ? this.state.sku : null;
     const trasparentHeader = true;
+    const disabled = false;
+    let badge = 0;
+    if (shopBag.shopBagQuantity.data) {
+      badge = shopBag.shopBagQuantity.data.result;
+    }
 
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg buycoupon">
@@ -412,9 +436,22 @@ export default class BuyCoupon extends Component {
         <div>
           <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版精英小鹿妈妈购买及流通使用。</p>
         </div>
-        <div className="row no-margin text-center margin-bottom-xs">
-          <button className="col-xs-10 col-xs-offset-1 button button-energized" onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>{(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_elite_mama) ? '支付' : '申请'}</button>
-        </div>
+        <BottomBar className="clearfix" size="medium">
+            <div className="col-xs-2 no-padding shop-cart">
+              <div onClick={this.onShopbagClick}>
+                <i className="icon-cart icon-yellow"></i>
+                <If condition={badge > 0}>
+                  <span className="shop-cart-badge no-wrap">{badge}</span>
+                </If>
+              </div>
+            </div>
+            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
+              {'加入购物车'}
+            </button>
+            <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
+              {'直接' + (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_elite_mama) ? '支付' : '申请'}
+            </button>
+          </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className="row no-margin bottom-border">
             <i className="col-xs-1 no-padding icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
