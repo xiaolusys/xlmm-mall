@@ -90,7 +90,6 @@ export default class OpeningIntroduce extends Component {
       <div>
         <Header title="开店介绍" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
           <div className="content open-introduce-container">
-            <Image src={`${constants.image.imageUrl}/mall/mama/open/v2/zeroopenbanner.png`} quality={80}/>
             <If condition={this.props.mamaQrcode && this.props.mamaQrcode.success && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link)}>
               <Image className="qrcode" src ={this.props.mamaQrcode.data.qrcode_link} quality={90} />
             </If>
