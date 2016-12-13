@@ -95,7 +95,7 @@ export default class EliteMama extends Component {
           </div>
           <div className="list-group">
             <a href="#" className="list-group-item" style={{ color: '#FF1493' }}><b>2. 精品汇意味着高佣金吗？</b></a>
-            <a href="#" className="list-group-item">YES。 <br/><br/>每件精品汇的商品售出，<b>佣金在10元～100元！</b></a>
+            <a href="#" className="list-group-item">YES。 <br/><br/>每件精品汇的商品售出，<b>佣金在10元～200元！</b></a>
           </div>
           <div className="list-group">
             <a href="#" className="list-group-item" style={{ color: '#FF1493' }}><b>3. 谁可以销售精品汇商品？</b></a>
