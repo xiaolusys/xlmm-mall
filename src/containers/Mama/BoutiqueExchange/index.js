@@ -94,9 +94,12 @@ export default class BoutiqueExchg extends Component {
           window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
           break;
         case '4':
-          this.context.router.push('/mama/returncoupon/progress');
+          this.context.router.push('/trancoupon/list');
           break;
         case '5':
+          this.context.router.push('/mama/returncoupon/progress');
+          break;
+        case '6':
           this.context.router.push('/mama/exchgorder');
           break;
         default:
@@ -183,10 +186,18 @@ export default class BoutiqueExchg extends Component {
               <div className="icon-xiaolu" />
             </div>
             <div className="col-xs-9" >
-              <p className=" ">退券进展</p>
+              <p className=" ">买券</p>
             </div>
           </div>
           <div className="col-xs-6 info-cat no-padding" data-id={5} onClick={this.onInfoClick}>
+            <div className="col-xs-3" >
+              <div className="icon-xiaolu" />
+            </div>
+            <div className="col-xs-9" >
+              <p className=" ">退券进展</p>
+            </div>
+          </div>
+          <div className="col-xs-6 info-cat no-padding" data-id={6} onClick={this.onInfoClick}>
             <div className="col-xs-3" >
               <div className="icon-xiaolu" />
             </div>

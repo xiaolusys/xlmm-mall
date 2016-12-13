@@ -364,7 +364,8 @@ export default class BuyCoupon extends Component {
     const { sku, num } = this.state;
     const { type } = e.currentTarget.dataset;
 
-    this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num);
+    Toast.show('功能即将开放');
+    // this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num);
 
     e.preventDefault();
   }
