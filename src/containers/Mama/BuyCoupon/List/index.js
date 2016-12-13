@@ -70,7 +70,7 @@ export default class TranCouponList extends Component {
   onProductClick = (e) => {
     const { index } = e.currentTarget.dataset;
     const modelid = this.props.productDetails.data[index].id;
-    // this.context.router.push('/buycoupon?index=' + index);
+    // this.context.router.push('/product/details/' + modelid);
     window.location.href = '/mall/buycoupon?index=' + index + '&modelid=' + modelid;
   }
 
