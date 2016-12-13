@@ -325,7 +325,38 @@ export default class BuyCoupon extends Component {
   }
 
   onShopbagClick = (e) => {
-    this.context.router.push('/shop/bag');
+    if (utils.detector.isApp()) {
+      const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart';
+      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+        const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
+        if (appVersion < 20161019 && appVersion >= 20160815) {
+          window.AndroidBridge.jumpToNativeLocation(jumpUrl);
+          return;
+        }
+        if (utils.detector.isApp()) {
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
+          return;
+        }
+      }
+      if (utils.detector.isIOS() && utils.detector.isApp()) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: jumpUrl },
+        });
+        return;
+      }
+
+      /* plugins.invoke({
+        method: 'jumpToNativeLocation',
+        data: { target_url: 'com.jimei.xlmm://app/v1/shopping_cart' },
+        callback: (resp) => {},
+      });*/
+    } else {
+      this.context.router.push('/shop/bag');
+    }
     e.preventDefault();
   }
 
