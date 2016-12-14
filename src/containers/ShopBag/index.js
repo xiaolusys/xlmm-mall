@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as constants from 'constants';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 import * as shopbagAction from 'actions/shopBag';
 import * as couponAction from 'actions/user/coupons';
 import { Header } from 'components/Header';
@@ -97,6 +98,24 @@ export class ShopBag extends Component {
       goodsNum += item.num;
     });
     if (Number(isBuyable)) {
+      const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + encodeURIComponent(cartIds.join(',')) + '&type=0';
+      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+        const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
+        if (appVersion >= 20161214) {
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
+          return;
+        }
+      }
+      if (utils.detector.isIOS() && utils.detector.appVersion() >= 221) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: jumpUrl },
+        });
+        return;
+      }
       window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
     } else {
       if (score >= 30 || goodsNum >= 5) {

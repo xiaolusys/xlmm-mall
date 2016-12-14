@@ -389,6 +389,44 @@ export default class Commit extends Component {
     return discount.toFixed(2);
   }
 
+  getChannel = () => {
+    let payInfo = {};
+    const channels = [];
+    if (this.props.payInfo.success && (!_.isEmpty(this.props.payInfo.data))) {
+      payInfo = this.props.payInfo.data;
+      if (utils.detector.isApp()) {
+        channels.push({
+          id: 'wx',
+          icon: 'icon-wechat-pay icon-wechat-green',
+          name: '微信支付',
+          payable: true,
+        });
+
+        channels.push({
+          id: 'alipay',
+          icon: 'icon-alipay-square icon-alipay-blue',
+          name: '支付宝',
+          payable: true,
+        });
+      } else {
+        channels.push({
+          id: 'wx_pub',
+          icon: 'icon-wechat-pay icon-wechat-green',
+          name: '微信支付',
+          payable: true,
+        });
+
+        channels.push({
+          id: 'alipay_wap',
+          icon: 'icon-alipay-square icon-alipay-blue',
+          name: '支付宝',
+          payable: true,
+        });
+      }
+    }
+    return channels;
+  }
+
   togglePayTypePopupActive = () => {
     this.setState({ payTypePopupActive: !this.state.payTypePopupActive });
   }
@@ -455,7 +493,8 @@ export default class Commit extends Component {
     const logisticsCompanies = payInfo.data.logistics_companys || [];
     const payExtras = payInfo.data.pay_extras || [];
     const address = this.props.address.data || {};
-    const channels = this.props.payInfo.data.channels || [];
+    const channels = this.getChannel();
+    console.log(channels);
     const { pathname, query } = this.props.location;
     const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
                     + (query.teambuyId ? '&teambuyId=' + query.teambuyId : '')
