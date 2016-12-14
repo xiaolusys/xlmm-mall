@@ -50,7 +50,9 @@ export class ShopBag extends Component {
 
   componentWillMount() {
     const { is_buyable } = this.props.location.query;
-    this.setState({ isBuyable: is_buyable });
+    if (this.props.location.query && (this.props.location.query.is_buyable !== undefined)) {
+      this.setState({ isBuyable: is_buyable });
+    }
     this.props.fetchShopBag();
     this.props.fetchShopBagHistory();
   }
