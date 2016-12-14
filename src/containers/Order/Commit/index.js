@@ -576,7 +576,7 @@ export default class Commit extends Component {
                 }
                 return (
                   <div className={`row no-margin bottom-border ${prefixCls}-row`} key={item.pid}>
-                    <p className="col-xs-5 no-padding">小鹿钱包</p>
+                    <p className="col-xs-5 no-padding">小鹿零钱</p>
                     <p className="col-xs-7 no-padding">
                       <span className="col-xs-10 no-padding text-right">{item.value}</span>
                       <Checkbox className="col-xs-2" checked={this.state.walletChecked} walletBalance={item.value} payType={item.channel} onChange={this.onWalletChange}/>
