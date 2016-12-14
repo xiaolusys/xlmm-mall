@@ -5,26 +5,32 @@ import { connect } from 'react-redux';
 import _ from 'underscore';
 import * as constants from 'constants';
 import * as utils from 'utils';
-import * as actionCreators from 'actions/shopBag';
+import * as shopbagAction from 'actions/shopBag';
+import * as couponAction from 'actions/user/coupons';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { BottomBar } from 'components/BottomBar';
 
 import './index.scss';
 
+const actionCreators = _.extend(shopbagAction, couponAction);
 @connect(
   state => ({
     shopBag: state.shopBag,
+    coupons: state.coupons,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
 export class ShopBag extends Component {
   static propTypes = {
+    location: React.PropTypes.object,
     shopBag: React.PropTypes.object,
     fetchShopBag: React.PropTypes.func,
     fetchShopBagHistory: React.PropTypes.func,
+    applyNegotiableCoupons: React.PropTypes.func,
     updateQuantity: React.PropTypes.func,
     rebuy: React.PropTypes.func,
+    coupons: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -36,15 +42,21 @@ export class ShopBag extends Component {
     context.router;
   }
 
-  state = {}
+  state = {
+    isBuyable: true,
+    applyNum: 0,
+  }
 
   componentWillMount() {
+    const { is_buyable } = this.props.location.query;
+    this.setState({ isBuyable: is_buyable });
     this.props.fetchShopBag();
     this.props.fetchShopBagHistory();
   }
 
   componentWillReceiveProps(nextProps) {
     const { updateQuantity, shopBag, shopBagHistory } = nextProps.shopBag;
+    const { coupons } = nextProps;
     if (updateQuantity.success && updateQuantity.data.code === 2) {
       Toast.show(updateQuantity.data.info);
     }
@@ -52,6 +64,19 @@ export class ShopBag extends Component {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
+    }
+
+    // apply coupon
+    if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code === 0) {
+        if (this.state.applyNum + 1 === shopBag.data.length) {
+          Toast.show('申请精品券成功');
+          window.location.href = window.location.origin + '/tran_coupon/html/trancoupon.html';
+        }
+        this.setState({ applyNum: this.state.applyNum + 1 });
+    }
+
+    if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code !== 0) {
+        Toast.show(coupons.applynegotiable.data.info);
     }
   }
 
@@ -63,10 +88,25 @@ export class ShopBag extends Component {
   onBuyNowClick = (e) => {
     const { shopBag } = this.props.shopBag;
     const cartIds = [];
+    const isBuyable = this.state.isBuyable;
+    let score = 0;
+    let goodsNum = 0;
     _.each(shopBag.data, (item) => {
       cartIds.push(item.id);
+      score += item.num * item.elite_score;
+      goodsNum += item.num;
     });
-    window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
+    if (isBuyable === true) {
+      window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
+    } else {
+      if (score >= 30 || goodsNum >= 5) {
+        _.each(shopBag.data, (item) => {
+          this.props.applyNegotiableCoupons(item.item_id, item.num);
+        });
+      } else {
+        Toast.show('特卖商品券购买个数不能小于5张或30积分，当前张数' + goodsNum + '张，当前积分' + score);
+      }
+    }
   }
 
   onUpdateQuantityClick = (e) => {
@@ -168,7 +208,7 @@ export class ShopBag extends Component {
               <span className="font-xs">应付款金额</span>
               <span className="font-lg font-orange">{'￥' + this.totalPrice()}</span>
             </p>
-            <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>购买</button>
+            <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{(this.state.isBuyable === true) ? '购买' : '申请'}</button>
           </BottomBar>
         </If>
       </div>
