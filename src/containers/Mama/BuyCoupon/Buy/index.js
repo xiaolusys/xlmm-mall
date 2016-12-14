@@ -213,9 +213,8 @@ export default class BuyCoupon extends Component {
       return;
     }
 
-    if (this.props.productDetails.data.extras.min_buy_num
-      && Number(this.state.num) < this.props.productDetails.data.extras.min_buy_num) {
-      Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.props.productDetails.data.extras.min_buy_num);
+    if (Number(this.state.num) < this.state.minBuyNum) {
+      Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
       return;
     }
 
@@ -325,38 +324,7 @@ export default class BuyCoupon extends Component {
   }
 
   onShopbagClick = (e) => {
-    if (utils.detector.isApp()) {
-      const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart';
-      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
-        const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
-        if (appVersion < 20161019 && appVersion >= 20160815) {
-          window.AndroidBridge.jumpToNativeLocation(jumpUrl);
-          return;
-        }
-        if (utils.detector.isApp()) {
-          plugins.invoke({
-            method: 'jumpToNativeLocation',
-            data: { target_url: jumpUrl },
-          });
-          return;
-        }
-      }
-      if (utils.detector.isIOS() && utils.detector.isApp()) {
-        plugins.invoke({
-          method: 'jumpToNativeLocation',
-          data: { target_url: jumpUrl },
-        });
-        return;
-      }
-
-      /* plugins.invoke({
-        method: 'jumpToNativeLocation',
-        data: { target_url: 'com.jimei.xlmm://app/v1/shopping_cart' },
-        callback: (resp) => {},
-      });*/
-    } else {
-      this.context.router.push('/shop/bag');
-    }
+    this.context.router.push('/shop/bag');
     e.preventDefault();
   }
 
@@ -364,7 +332,6 @@ export default class BuyCoupon extends Component {
     const { sku, num } = this.state;
     const { type } = e.currentTarget.dataset;
 
-    Toast.show('功能即将开放');
     // this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num);
 
     e.preventDefault();
