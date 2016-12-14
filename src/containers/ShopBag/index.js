@@ -43,7 +43,7 @@ export class ShopBag extends Component {
   }
 
   state = {
-    isBuyable: true,
+    isBuyable: 1,
     applyNum: 0,
   }
 
@@ -96,7 +96,7 @@ export class ShopBag extends Component {
       score += item.num * item.elite_score;
       goodsNum += item.num;
     });
-    if (isBuyable === true) {
+    if (Number(isBuyable)) {
       window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
     } else {
       if (score >= 30 || goodsNum >= 5) {
@@ -208,7 +208,7 @@ export class ShopBag extends Component {
               <span className="font-xs">应付款金额</span>
               <span className="font-lg font-orange">{'￥' + this.totalPrice()}</span>
             </p>
-            <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{(this.state.isBuyable === true) ? '购买' : '申请'}</button>
+            <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{Number(this.state.isBuyable) ? '购买' : '申请'}</button>
           </BottomBar>
         </If>
       </div>
