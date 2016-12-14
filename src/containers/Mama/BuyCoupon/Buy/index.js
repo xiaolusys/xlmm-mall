@@ -324,7 +324,8 @@ export default class BuyCoupon extends Component {
   }
 
   onShopbagClick = (e) => {
-    this.context.router.push('/shop/bag');
+    const { mamaInfo } = this.props;
+    this.context.router.push('/shop/bag?is_buyable=' + (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable));
     e.preventDefault();
   }
 
@@ -332,7 +333,7 @@ export default class BuyCoupon extends Component {
     const { sku, num } = this.state;
     const { type } = e.currentTarget.dataset;
 
-    // this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num);
+    this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num);
 
     e.preventDefault();
   }
@@ -448,7 +449,7 @@ export default class BuyCoupon extends Component {
               {'加入购物车'}
             </button>
             <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
-              {'直接' + (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_elite_mama) ? '支付' : '申请'}
+              {(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '直接支付' : '直接申请'}
             </button>
           </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
