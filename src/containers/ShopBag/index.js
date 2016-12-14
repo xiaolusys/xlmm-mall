@@ -98,7 +98,7 @@ export class ShopBag extends Component {
       goodsNum += item.num;
     });
     if (Number(isBuyable)) {
-      const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart';
+      const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + encodeURIComponent(cartIds.join(',')) + '&type=0';
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
         if (appVersion >= 20161214) {
