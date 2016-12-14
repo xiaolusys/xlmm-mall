@@ -325,7 +325,7 @@ export default class BuyCoupon extends Component {
 
   onShopbagClick = (e) => {
     const { mamaInfo } = this.props;
-    this.context.router.push('/shop/bag?is_buyable=' + (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable));
+    this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0'));
     e.preventDefault();
   }
 
