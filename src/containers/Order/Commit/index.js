@@ -13,6 +13,7 @@ import { Toast } from 'components/Toast';
 import classnames from 'classnames';
 import * as constants from 'constants';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 import pingpp from 'vendor/pingpp';
 import _ from 'underscore';
 import * as addressAction from 'actions/user/address';
@@ -26,6 +27,8 @@ const actionCreators = _.extend(addressAction, couponAction, payInfoAction, comm
 const payTypeIcons = {
   wx_pub: 'icon-wechat-pay icon-wechat-green',
   alipay_wap: 'icon-alipay-square icon-alipay-blue',
+  wx: 'icon-wechat-pay icon-wechat-green',
+  alipay: 'icon-alipay-square icon-alipay-blue',
 };
 
 @connect(
@@ -437,14 +440,23 @@ export default class Commit extends Component {
 
   pay = (data) => {
     this.togglePayTypePopupActive();
-    window.pingpp.createPayment(data.charge, (result, error) => {
-      if (result === 'success') {
-        // window.location.push(`${data.success_url}`);
-        window.location.href = `${data.success_url}`;
-        return;
-      }
-      window.location.replace(`${data.fail_url}`);
-    });
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativePurchase',
+        data: data,
+      });
+    } else {
+      window.pingpp.createPayment(data.charge, (result, error) => {
+        if (result === 'success') {
+          Toast.show('支付成功');
+          // window.location.push(`${data.success_url}`);
+          window.location.href = `${data.success_url}`;
+          return;
+        }
+        Toast.show('支付失败');
+        window.location.replace(`${data.fail_url}`);
+      });
+    }
   }
 
   checkNeedIdentification = () => {
