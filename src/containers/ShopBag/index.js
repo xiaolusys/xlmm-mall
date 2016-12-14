@@ -102,7 +102,10 @@ export class ShopBag extends Component {
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
         if (appVersion >= 20161214) {
-          window.AndroidBridge.jumpToNativeLocation(jumpUrl);
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
           return;
         }
       }
