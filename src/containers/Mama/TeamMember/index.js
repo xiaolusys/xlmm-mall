@@ -107,14 +107,17 @@ export default class MamaTeamMember extends Component {
 
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} onClick={this.onProductClick}>
-        <div className="col-xs-4 no-margin member-img-div">
+        <div className="col-xs-3 no-margin member-img-div no-padding">
           <Image className="member-img" src={member.thumbnail} quality={70} />
         </div>
-        <div className="col-xs-4 no-margin">
+        <div className="col-xs-3 no-margin no-padding">
           <p className="text-center font-xs">{member.nick.length <= 10 ? member.nick : member.nick.substring(0, 9)}</p>
         </div>
-        <div className="col-xs-4 no-margin">
+        <div className="col-xs-3 no-margin no-padding">
           <p className="text-left font-xs">{member.mobile}</p>
+        </div>
+        <div className="col-xs-3 no-margin no-padding">
+          <p className="text-left font-xs">{member.elite_score + '积分' }</p>
         </div>
       </li>
     );

@@ -219,7 +219,7 @@ export default class BoutiqueInvite extends Component {
       uuid: payInfo.data.uuid,
       item_id: payInfo.data.sku.product.id,
       sku_id: payInfo.data.sku.id,
-      num: this.state.num,
+      num: 5,
       payment: payInfo.data.total_payment,
       post_fee: payInfo.data.post_fee,
       discount_fee: payInfo.data.discount_fee,
