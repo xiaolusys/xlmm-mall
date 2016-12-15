@@ -233,7 +233,7 @@ export default class BoutiqueInvite extends Component {
   }
 
   onAdministratorClick = (e) => {
-    this.context.router.push('/mama/administrator');
+    this.context.router.push('/mama/open/succeed');
     e.preventDefault();
   }
 

@@ -221,13 +221,15 @@ export default class Edit extends Component {
 
   onSaveBntClick = (e) => {
     const id = Number(this.props.params.id);
+    const isBondedGoods = this.props.location.query ? this.props.location.query.is_bonded_goods : false;
+
     if ((typeof(this.state.address.receiver_mobile) !== 'undefined') && this.state.address.receiver_mobile.length !== 11) {
       Toast.show('手机号长度不对，请修改！！！');
       e.preventDefault();
       return;
     }
 
-    if ((typeof(this.state.address.identification_no) !== 'undefined') && this.state.address.identification_no.length !== 18) {
+    if (isBondedGoods && (typeof(this.state.address.identification_no) !== 'undefined') && this.state.address.identification_no.length !== 18) {
       Toast.show('身份证号长度不对，请修改！！！');
       e.preventDefault();
       return;
