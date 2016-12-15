@@ -9,6 +9,7 @@ import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
 import { WechatPopup } from 'components/WechatPopup';
 import { DownloadAppBanner } from 'components/DownloadAppBanner';
+import { Header } from 'components/Header';
 import * as utils from 'utils';
 import * as summerMatAction from 'actions/activity/summerMat';
 import * as administratorInfoAction from 'actions/mama/administratorInfo';
@@ -70,7 +71,7 @@ export default class Succeed extends Component {
 
   render() {
     const data = this.props.administratorInfo && this.props.administratorInfo.data || [];
-    return (
+    /* return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
         <DownloadAppBanner />
         <Image style={{ width: '100%' }} src={banner} quality={50}/>
@@ -91,6 +92,20 @@ export default class Succeed extends Component {
             </div>
           </div>
         </If>
+      </div>
+    );*/
+    return (
+      <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
+      <Header title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <DownloadAppBanner />
+        <div className="qr-code-bg-v3">
+          <Image className="qr-code" src={data.qr_img} quality={50}/>
+        </div>
+        <div className="row no-margin">
+          <p className="col-xs-12 margin-top-xxs text-center">
+            如果加管理员后5分钟没有响应，可以重新进入此页面加其它管理员
+          </p>
+        </div>
       </div>
     );
   }
