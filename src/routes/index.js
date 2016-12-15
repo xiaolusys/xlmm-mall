@@ -90,6 +90,7 @@ import {
   ExchangeOrder,
   ReturnBoutiqueCoupon,
   ReturnProgress,
+  BoutiqueInvite,
 } from 'containers/Mama';
 
 import {
@@ -146,6 +147,7 @@ export default (
     <Route path="/mama/open/succeed" component={MamaOpeningSucceed} />
     <Route path="/mama/open/failed" component={MamaOpeningFailed} />
     <Route path="/mama/invited" component={MamaInvited} />
+    <Route path="/mama/boutiqueinvite" component={BoutiqueInvite} />
     {activityRoutes}
     <Route path="/mama/home" component={MamaHome} />
     <Route path="/mama/university/home" component={MamaUniversityHome} />
