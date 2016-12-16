@@ -174,16 +174,20 @@ export default class BoutiqueInvite extends Component {
     const skus = productDetails.data.sku_info;
 
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0)) {
-      if (this.state.sku) {
-        // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
-        // 精品券默认是在app上支付
-        if (utils.detector.isApp()) {
-          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'app');
-        } else {
-          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'wap');
-        }
+      if (mamaInfo.data[0].is_elite_mama) {
+        Toast.show('您已经是精英妈妈了，不能再次购买新人券，如需购券，请进入我的微店操作！');
       } else {
-        Toast.show('商品信息获取不全');
+        if (this.state.sku) {
+          // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
+          // 精品券默认是在app上支付
+          if (utils.detector.isApp()) {
+            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'app');
+          } else {
+            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'wap');
+          }
+        } else {
+          Toast.show('商品信息获取不全');
+        }
       }
     }
     this.setState({ chargeEnable: false });
