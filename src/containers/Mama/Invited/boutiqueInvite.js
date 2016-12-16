@@ -12,6 +12,7 @@ import { Popup } from 'components/Popup';
 import { BottomBar } from 'components/BottomBar';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
+import * as constants from 'constants';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as detailsAction from 'actions/product/details';
 import * as shopBagAction from 'actions/shopBag';
@@ -77,7 +78,7 @@ export default class BoutiqueInvite extends Component {
 
   componentWillMount() {
     this.props.fetchMamaInfo();
-    this.props.fetchProductDetails(24155);
+    this.props.fetchProductDetails(25115);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,9 +91,7 @@ export default class BoutiqueInvite extends Component {
 
     if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
       for (let i = 0; i < productDetails.data.sku_info.length; i++) {
-        if (productDetails.data.sku_info[i].name.indexOf('Associate') >= 0) {
-          this.setState({ sku: productDetails.data.sku_info[i] });
-        }
+        this.setState({ sku: productDetails.data.sku_info[0] });
       }
     }
 
@@ -179,9 +178,9 @@ export default class BoutiqueInvite extends Component {
         // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
         // 精品券默认是在app上支付
         if (utils.detector.isApp()) {
-          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 5, 'app');
+          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'app');
         } else {
-          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 5, 'wap');
+          this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'wap');
         }
       } else {
         Toast.show('商品信息获取不全');
@@ -219,7 +218,7 @@ export default class BoutiqueInvite extends Component {
       uuid: payInfo.data.uuid,
       item_id: payInfo.data.sku.product.id,
       sku_id: payInfo.data.sku.id,
-      num: 5,
+      num: 1,
       payment: payInfo.data.total_payment,
       post_fee: payInfo.data.post_fee,
       discount_fee: payInfo.data.discount_fee,
@@ -308,12 +307,12 @@ export default class BoutiqueInvite extends Component {
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg boutique-invite">
         <Header trasparent={trasparentHeader} title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="invite-imgs">
-          <Image className="coupon-img" src={'//7xkyoy.com1.z0.glb.clouddn.com/mall/mama/invite/boutique_01.png'} quality={70} />
-          <Image className="coupon-img" src={'//7xkyoy.com1.z0.glb.clouddn.com/mall/mama/invite/boutique_02.png'} quality={70} />
-          <Image className="coupon-img" src={'//7xkyoy.com1.z0.glb.clouddn.com/mall/mama/invite/boutique_03.png'} quality={70} />
-          <Image className="coupon-img" src={'//7xkyoy.com1.z0.glb.clouddn.com/mall/mama/invite/boutique_04.png'} quality={70} />
-          <Image className="coupon-img" src={'//7xkyoy.com1.z0.glb.clouddn.com/mall/mama/invite/boutique_05.png'} quality={70} />
-          <Image className="coupon-img" src={'//7xkyoy.com1.z0.glb.clouddn.com/mall/mama/invite/boutique_06.jpg'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_01.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_02.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_03.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_04.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_05.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_06.jpg'} quality={70} />
         </div>
         <BottomBar className="clearfix" size="medium">
             <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAdministratorClick} disabled={disabled}>
