@@ -292,6 +292,7 @@ export default class BoutiqueInvite extends Component {
           window.location.href = `${data.success_url}`;
           return;
         }
+        console.log(result, error);
         Toast.show('支付失败');
         window.location.replace(`${data.fail_url}`);
       });
