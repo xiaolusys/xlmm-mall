@@ -147,7 +147,7 @@ export default (
     <Route path="/mama/open/succeed" component={MamaOpeningSucceed} />
     <Route path="/mama/open/failed" component={MamaOpeningFailed} />
     <Route path="/mama/invited" component={MamaInvited} />
-    <Route path="/mama/boutiqueinvite" component={BoutiqueInvite} />
+    <Route path="/boutiqueinvite" component={BoutiqueInvite} />
     {activityRoutes}
     <Route path="/mama/home" component={MamaHome} />
     <Route path="/mama/university/home" component={MamaUniversityHome} />
