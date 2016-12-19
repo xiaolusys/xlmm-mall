@@ -185,12 +185,12 @@ export default class BoutiqueInvite extends Component {
           } else {
             this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'wap');
           }
+          this.setState({ chargeEnable: false });
         } else {
           Toast.show('商品信息获取不全');
         }
       }
     }
-    this.setState({ chargeEnable: false });
   }
 
   onPayTypeClick = (e) => {
@@ -292,6 +292,7 @@ export default class BoutiqueInvite extends Component {
           window.location.href = `${data.success_url}`;
           return;
         }
+        console.log(result, error);
         Toast.show('支付失败');
         window.location.replace(`${data.fail_url}`);
       });
