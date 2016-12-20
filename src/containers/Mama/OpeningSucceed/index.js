@@ -97,13 +97,12 @@ export default class Succeed extends Component {
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
       <Header title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-        <DownloadAppBanner />
-        <div className="qr-code-bg-v3">
+        <div className="">
           <Image className="qr-code" src={data.qr_img} quality={50}/>
         </div>
         <div className="row no-margin">
           <p className="col-xs-12 margin-top-xxs text-center">
-            如果加管理员后5分钟没有响应，可以重新进入此页面加其它管理员
+            长按屏幕几秒后点击识别二维码添加管理员，如果加管理员后5分钟没有响应，可以重新进入此页面加其它管理员
           </p>
         </div>
       </div>
