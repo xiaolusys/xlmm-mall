@@ -19,6 +19,7 @@ import * as shopBagAction from 'actions/shopBag';
 import * as payInfoAction from 'actions/order/payInfo';
 import * as commitOrderAction from 'actions/order/commit';
 import * as couponAction from 'actions/user/coupons';
+import * as wechatSignAction from 'actions/wechat/sign';
 import * as plugins from 'plugins';
 
 import './boutiqueInvite.scss';
@@ -28,7 +29,7 @@ const payTypeIcons = {
   alipay: 'icon-alipay-square icon-alipay-blue',
 };
 
-const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction);
+const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction, wechatSignAction);
 
 @connect(
   state => ({
@@ -54,12 +55,14 @@ export default class BoutiqueInvite extends Component {
     fetchBuyNowPayInfo: React.PropTypes.func,
     buyNowCommitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
+    fetchWechatSign: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
     shopBag: React.PropTypes.object,
     order: React.PropTypes.object,
     payInfo: React.PropTypes.object,
     coupons: React.PropTypes.object,
     productDetails: React.PropTypes.object,
+    wechatSign: React.PropTypes.object,
   };
 
   static contextTypes = {
@@ -79,14 +82,29 @@ export default class BoutiqueInvite extends Component {
   componentWillMount() {
     this.props.fetchMamaInfo();
     this.props.fetchProductDetails(25115);
+    this.props.fetchWechatSign();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, productDetails, payInfo, order, coupons } = nextProps;
+    const { mamaInfo, productDetails, payInfo, order, coupons, wechatSign } = nextProps;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
       utils.ui.loadingSpinner.hide();
+    }
+
+    if (wechatSign && wechatSign.data && mamaInfo.success && mamaInfo.data) {
+      utils.wechat.config(wechatSign);
+      const shareInfo = {
+        success: true,
+        data: {
+          title: '邀请您加入精品汇',
+          desc: '组建团队，成就梦想，给您准备优质产品和流量支持',
+          share_link: 'https://m.xiaolumeimei.com/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?mama_id=' + mamaInfo.data[0].id,
+          share_img: 'http://7xogkj.com2.z0.glb.qiniucdn.com/222-ohmydeer.png?imageMogr2/thumbnail/60/format/png',
+        },
+      };
+      utils.wechat.configShareContent(shareInfo);
     }
 
     if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
@@ -196,7 +214,8 @@ export default class BoutiqueInvite extends Component {
   onPayTypeClick = (e) => {
     const { payInfo, mamaInfo } = this.props;
     const { paytype } = e.currentTarget.dataset;
-    const mmLinkId = mamaInfo.data ? mamaInfo.data.id : 0;
+    const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
+    const { mama_id } = this.props.location.query;
 
     this.setState({ payTypePopupActive: false });
 
@@ -228,7 +247,7 @@ export default class BoutiqueInvite extends Component {
       discount_fee: payInfo.data.discount_fee,
       total_fee: payInfo.data.total_fee,
       channel: paytype,
-      mm_linkid: mmLinkId,
+      mm_linkid: this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId,
       order_type: 4, // 对应后台的电子商品类型，不校验地址
     });
 
