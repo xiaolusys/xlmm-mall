@@ -39,6 +39,7 @@ const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, pa
     order: state.commitOrder,
     coupons: state.coupons,
     shopBag: state.shopBag,
+    wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -93,7 +94,7 @@ export default class BoutiqueInvite extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (wechatSign && wechatSign.data && mamaInfo.success && mamaInfo.data) {
+    if (wechatSign && wechatSign.success && wechatSign.data && mamaInfo.success && mamaInfo.data) {
       utils.wechat.config(wechatSign);
       const shareInfo = {
         success: true,
