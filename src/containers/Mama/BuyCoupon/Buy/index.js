@@ -105,18 +105,14 @@ export default class BuyCoupon extends Component {
 
     if (productDetails.success && productDetails.data && this.props.productDetails.isLoading) {
       this.setState({ productDetail: productDetails.data });
-      if (productDetails.data.extras.min_buy_num) {
-        this.setState({ num: productDetails.data.extras.min_buy_num, minBuyNum: productDetails.data.extras.min_buy_num });
+      if (productDetails.data.sku_info[0].elite_score >= minBuyScore) {
+        this.setState({ num: 1, minBuyNum: 1 });
       } else {
-        if (productDetails.data.sku_info[0].elite_score >= minBuyScore) {
-          this.setState({ num: 1, minBuyNum: 1 });
+        if (productDetails.data.sku_info[0].elite_score * 5 < minBuyScore) {
+          this.setState({ num: 5, minBuyNum: 5 });
         } else {
-          if (productDetails.data.sku_info[0].elite_score * 5 < minBuyScore) {
-            this.setState({ num: 5, minBuyNum: 5 });
-          } else {
-            const buyNum = Math.ceil(minBuyScore / productDetails.data.sku_info[0].elite_score);
-            this.setState({ num: buyNum, minBuyNum: buyNum });
-          }
+          const buyNum = Math.ceil(minBuyScore / productDetails.data.sku_info[0].elite_score);
+          this.setState({ num: buyNum, minBuyNum: buyNum });
         }
       }
     }
@@ -245,7 +241,7 @@ export default class BuyCoupon extends Component {
   onPayTypeClick = (e) => {
     const { payInfo, mamaInfo } = this.props;
     const { paytype } = e.currentTarget.dataset;
-    const mmLinkId = mamaInfo.data ? mamaInfo.data.id : 0;
+    const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
 
     this.setState({ payTypePopupActive: false });
 
