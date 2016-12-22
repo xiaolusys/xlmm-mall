@@ -288,11 +288,12 @@ export default class Detail extends Component {
   }
 
   onBackBtnClick = (e) => {
-    if (utils.detector.isApp()) {
-      plugins.invoke({ method: 'callNativeBack' });
-    } else {
-      this.context.router.goSmartBack();
-    }
+    // if (utils.detector.isApp()) {
+    //   plugins.invoke({ method: 'callNativeBack' });
+    // } else {
+    //   this.context.router.goSmartBack();
+    // }
+    this.context.router.goSmartBack();
     e.preventDefault();
   }
 
@@ -654,7 +655,12 @@ export default class Detail extends Component {
     }
     return (
       <div className={`${prefixCls}`}>
+        <If condition={!utils.detector.isApp()}>
         <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" rightIcon={utils.detector.isApp() ? 'icon-share' : ''} onLeftBtnClick={this.onBackBtnClick} onRightBtnClick={this.onShareBtnClick} />
+        </If>
+        <If condition={utils.detector.isApp()}>
+        <Header trasparent={trasparentHeader} title="商品详情" leftIcon="icon-angle-left" onLeftBtnClick={this.onBackBtnClick} />
+        </If>
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
