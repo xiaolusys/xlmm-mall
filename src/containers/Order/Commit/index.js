@@ -479,6 +479,23 @@ export default class Commit extends Component {
     return false;
   }
 
+  checkAllVirtualProduct = (products) => {
+    let result = false;
+    let num = 0;
+    if (products.length === 0) {
+      return result;
+    }
+    for (let i = 0; i < products.length; i++) {
+      if (products[i].product_type === 1) {
+        num += 1;
+      }
+    }
+    if (num === products.length) {
+      result = true;
+    }
+    return result;
+  }
+
   renderProducts(products = []) {
     const { prefixCls } = this.props;
     return (
@@ -510,6 +527,7 @@ export default class Commit extends Component {
     const logisticsCompanies = payInfo.data.logistics_companys || [];
     const payExtras = payInfo.data.pay_extras || [];
     const address = this.props.address.data || {};
+    const isAllVirtualProduct = this.checkAllVirtualProduct(products);
     const channels = this.getChannel();
     const { pathname, query } = this.props.location;
     const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
@@ -525,6 +543,7 @@ export default class Commit extends Component {
       <div className={`${prefixCls}`}>
         <Header title="确认订单" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content">
+          <If condition={!isAllVirtualProduct}>
           <div className={`row no-margin bottom-border ${prefixCls}-address`} data-to={addressLink} onClick={this.onLinkClick}>
             <If condition={!_.isEmpty(address)}>
               <i className="col-xs-1 no-padding margin-top-xxs icon-location icon-2x icon-yellow-light"></i>
@@ -547,6 +566,7 @@ export default class Commit extends Component {
               <i className="col-xs-1 no-padding margin-top-28 text-right icon-angle-right icon-grey"></i>
             </div>
           </div>
+          </If>
           {this.renderProducts(products)}
           {payExtras.map((item) => {
             switch (item.pid) {

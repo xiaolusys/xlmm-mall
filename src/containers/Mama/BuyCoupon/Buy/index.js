@@ -244,7 +244,7 @@ export default class BuyCoupon extends Component {
     const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
 
     this.setState({ payTypePopupActive: false });
-
+    console.log(mmLinkId);
     if (mmLinkId === 0) {
       Toast.show('小鹿妈妈信息获取不全，请重进此页面！！');
       e.preventDefault();
