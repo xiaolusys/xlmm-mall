@@ -138,7 +138,7 @@ export default class BoutiqueExchg extends Component {
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0)}>
         <div className="mama-leader no-padding bottom-border">
           <div className="text-left leader-head">我的推荐人信息：</div>
-          <div className="leader-info">
+          <div className="leader-info col-xs-12">
             <div className="col-xs-3">
               <img className="my-thumbnail" src ={(mamaLeader.success && mamaLeader.data) ? mamaLeader.data.thumbnail : ''} />
             </div>
