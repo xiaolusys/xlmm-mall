@@ -107,17 +107,17 @@ export default class MamaTeamMember extends Component {
 
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} onClick={this.onProductClick}>
-        <div className="col-xs-3 no-margin member-img-div no-padding">
-          <Image className="member-img" src={member.thumbnail} quality={70} />
+        <div className="col-xs-3 member-img-div no-padding no-margin">
+          <Image className="member-img no-padding no-margin" src={member.thumbnail} quality={70} />
         </div>
-        <div className="col-xs-3 no-margin no-padding">
-          <p className="text-center font-xs">{member.nick.length <= 10 ? member.nick : member.nick.substring(0, 9)}</p>
+        <div className="col-xs-3 no-padding no-margin">
+          <p className="text-center font-xs no-margin">{member.nick.length <= 10 ? member.nick : member.nick.substring(0, 9)}</p>
         </div>
-        <div className="col-xs-3 no-margin no-padding">
-          <p className="text-left font-xs">{member.mobile}</p>
+        <div className="col-xs-3 no-padding no-margin">
+          <p className="text-left font-xs no-margin">{member.mobile}</p>
         </div>
-        <div className="col-xs-3 no-margin no-padding">
-          <p className="text-left font-xs">{member.elite_score + '积分' }</p>
+        <div className="col-xs-3 member-score no-padding no-margin">
+          <p className="text-left font-xs ">{member.elite_score + '积分' }</p>
         </div>
       </li>
     );
