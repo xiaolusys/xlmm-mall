@@ -69,7 +69,7 @@ export const fetchFreezedBoutiqueCoupons = () => {
   const action = createAction(couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'usercoupon?status=freeze')
+    return axios.get(constants.baseEndpoint + 'usercoupon?status=2')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
