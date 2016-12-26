@@ -194,22 +194,22 @@ export default class ReturnProgress extends Component {
         <div className="col-xs-3 member-img-div no-padding">
           <img className="col-xs-12 member-img no-padding" src={member.product_img} />
         </div>
-        <div className="col-xs-9 member-detail no-padding">
-          <div className="col-xs-12 no-padding">
-            <p className="col-xs-8 text-left font-xs no-padding">{'发起人:' + member.from_mama_nick}</p>
-            <p className="col-xs-8 text-left font-xs no-padding">{'接收人:' + member.to_mama_nick}</p>
+        <div className="col-xs-9 member-detail no-padding no-margin">
+          <div className="col-xs-12 no-padding no-margin">
+            <p className="col-xs-8 text-left font-xs no-padding no-margin">{'发起人:' + member.from_mama_nick}</p>
+            <p className="col-xs-8 text-left font-xs no-padding no-margin">{'接收人:' + member.to_mama_nick}</p>
           </div>
-          <div className="col-xs-12 no-padding">
-            <p className="col-xs-7 text-left font-xs no-padding">{'数量' + member.coupon_num + '张 ' + member.transfer_status_display}</p>
+          <div className="col-xs-12 no-padding no-margin">
+            <p className="col-xs-7 text-left font-xs no-padding no-margin">{'数量' + member.coupon_num + '张 ' + member.transfer_status_display}</p>
             <If condition={member.transfer_status === 1 && this.state.activeTab === 'tome'}>
-              <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding" type="button" data-id={member.id} onClick={this.verifyClick} >同意退券</button>
+              <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding no-margin" type="button" data-id={member.id} onClick={this.verifyClick} >同意退券</button>
             </If>
             <If condition={member.transfer_status === 2 && this.state.activeTab === 'default'}>
-              <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding" type="button" data-id={member.id} onClick={this.confirmClick} >确认已收钱</button>
+              <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding no-margin" type="button" data-id={member.id} onClick={this.confirmClick} >确认已收钱</button>
             </If>
           </div>
-          <div className="col-xs-12 no-padding">
-            <p className="text-left font-xs no-padding">{member.date_field}</p>
+          <div className="col-xs-12 no-padding no-margin">
+            <p className="text-left font-xs no-padding no-margin">{member.date_field}</p>
           </div>
         </div>
       </li>

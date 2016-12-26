@@ -18,6 +18,17 @@
           margin-top: 8px;
         }
       }
+
+      .member-detail {
+        > div {
+          >p {
+            height: 24px;
+            display:inline-block;
+            vertical-align:middle;
+            line-height: 24px;
+          }
+        }
+      }
       
     }
   }
