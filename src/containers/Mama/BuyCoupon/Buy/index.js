@@ -435,14 +435,14 @@ export default class BuyCoupon extends Component {
         <BottomBar className="clearfix" size="medium">
             <div className="col-xs-2 no-padding shop-cart">
               <div onClick={this.onShopbagClick}>
-                <i className="icon-cart icon-yellow"></i>
+                <i className="icon-coupon-o icon-yellow"></i>
                 <If condition={badge > 0}>
                   <span className="shop-cart-badge no-wrap">{badge}</span>
                 </If>
               </div>
             </div>
             <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
-              {'加入购物车'}
+              {'加入购券组合'}
             </button>
             <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
               {(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '直接支付' : '直接申请'}
