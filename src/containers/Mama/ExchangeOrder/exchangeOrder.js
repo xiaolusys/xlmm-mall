@@ -138,19 +138,19 @@ export default class ExchangeOrder extends Component {
 
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
-        <div className="col-xs-12 order-time">
+        <div className="col-xs-12 order-time no-padding">
           <p className=" text-left no-padding">{member.date_field}</p>
         </div>
         <div className="col-xs-4 member-img-div no-padding">
           <img className="member-img" src={member.sku_img} />
         </div>
         <div className="col-xs-6">
-          <div className="col-xs-12">
-            <p className=" text-left font-xs">{member.contributor_nick}</p>
-            <p className="text-left font-xs">{member.status_display}</p>
+          <div className="col-xs-12 no-padding">
+            <p className="text-left font-xs no-padding no-margin">{member.contributor_nick}</p>
+            <p className="text-left font-xs no-padding no-margin">{member.status_display}</p>
           </div>
-          <div className="col-xs-12">
-            <p className=" text-left font-xs">{member.num + '张'}</p>
+          <div className="col-xs-12 no-padding">
+            <p className=" text-left font-xs">{'需券' + member.num + '张' + '可兑' + (member.order_value / 100).toFixed(2) + '元'}</p>
           </div>
         </div>
         <div className="col-xs-2">
