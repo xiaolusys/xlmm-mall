@@ -209,7 +209,7 @@ export default class Detail extends Component {
         window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
       } else if (nextProps.details && nextProps.details.detail_content && nextProps.details.detail_content.is_boutique) {
         // 特卖抢购商品直接进入支付页面
-        window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+       window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
       }
     }
   }
@@ -383,8 +383,13 @@ export default class Detail extends Component {
   }
 
   onConfirmAddToShopBagClick = (e) => {
+    const { details } = this.props;
     const { productId, skuId, num } = this.state;
-    this.props.addProductToShopBag(productId, skuId, num);
+    if (details && details.detail_content.is_boutique) {
+      this.props.addProductToShopBag(productId, skuId, num, 5);
+    } else {
+      this.props.addProductToShopBag(productId, skuId, num);
+    }
     e.preventDefault();
   }
   onFavoriteBtnClick = (e) => {
