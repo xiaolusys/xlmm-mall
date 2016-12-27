@@ -50,10 +50,13 @@ export class ShopBag extends Component {
 
   componentWillMount() {
     const { is_buyable } = this.props.location.query;
+    const type = this.props.location.query.type ? this.props.location.query.type : 0;
+    this.setState({ type: type });
     if (this.props.location.query && (this.props.location.query.is_buyable !== undefined)) {
       this.setState({ isBuyable: is_buyable });
     }
-    this.props.fetchShopBag();
+
+    this.props.fetchShopBag(type);
     this.props.fetchShopBagHistory();
   }
 
@@ -133,16 +136,16 @@ export class ShopBag extends Component {
   onUpdateQuantityClick = (e) => {
     const { action, id, num } = e.currentTarget.dataset;
     if (action === 'minus' && Number(num) === 1) {
-      this.props.updateQuantity(id, 'delete_carts');
+      this.props.updateQuantity(id, 'delete_carts', this.state.type);
       e.preventDefault();
       return false;
     }
     switch (action) {
       case 'plus':
-        this.props.updateQuantity(id, 'plus_product_carts');
+        this.props.updateQuantity(id, 'plus_product_carts', this.state.type);
         break;
       case 'minus':
-        this.props.updateQuantity(id, 'minus_product_carts');
+        this.props.updateQuantity(id, 'minus_product_carts', this.state.type);
         break;
       default:
         break;
