@@ -216,8 +216,9 @@ export default class BoutiqueInvite extends Component {
     const { payInfo, mamaInfo } = this.props;
     const { paytype } = e.currentTarget.dataset;
     const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
-    const { mama_id } = this.props.location.query;
+    const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
 
+    console.log(referalMamaid);
     this.setState({ payTypePopupActive: false });
 
     if (mmLinkId === 0) {
@@ -248,7 +249,7 @@ export default class BoutiqueInvite extends Component {
       discount_fee: payInfo.data.discount_fee,
       total_fee: payInfo.data.total_fee,
       channel: paytype,
-      mm_linkid: this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId,
+      mm_linkid: referalMamaid,
       order_type: 4, // 对应后台的电子商品类型，不校验地址
     });
 
