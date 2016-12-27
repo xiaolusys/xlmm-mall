@@ -321,7 +321,7 @@ export default class BuyCoupon extends Component {
 
   onShopbagClick = (e) => {
     const { mamaInfo } = this.props;
-    this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0'));
+    this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0') + '&type=6');
     e.preventDefault();
   }
 
@@ -329,7 +329,7 @@ export default class BuyCoupon extends Component {
     const { sku, num } = this.state;
     const { type } = e.currentTarget.dataset;
 
-    this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num);
+    this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num, 6); // use vitual cart type
 
     e.preventDefault();
   }

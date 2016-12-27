@@ -13,7 +13,7 @@ export const names = {
 };
 
 /**
-* @type 商品类型；0：普通，3:团购
+* @type 商品类型；0：普通，3:团购, 5:优惠券订单,只能用优惠券购买，即精品汇商品
 **/
 export const fetchShopBag = (type) => {
   const action = createAction(names.FETCH_SHOP_BAG);
@@ -48,7 +48,7 @@ export const fetchShopBagHistory = () => {
  * @action 增加：plus_product_carts 减少: minus_product_carts
  *
  */
-export const updateQuantity = (id, requestAction) => {
+export const updateQuantity = (id, requestAction, type) => {
   const action = createAction(names.UPDATE_QUANTITY);
   return (dispatch) => {
     dispatch(action.request());
@@ -56,7 +56,7 @@ export const updateQuantity = (id, requestAction) => {
       .then((resp) => {
         dispatch(action.success(resp.data));
         if (resp.data.code === 0) {
-          dispatch(fetchShopBag());
+          dispatch(fetchShopBag(type));
           dispatch(fetchShopBagHistory());
         }
       })
@@ -70,7 +70,7 @@ export const fetchShopBagQuantity = (type) => {
   const action = createAction(names.FETCH_SHOP_BAG_QUANTITY);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'carts/show_carts_num')
+    return axios.get(constants.baseEndpoint + 'carts/show_carts_num?type=' + type)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -105,7 +105,7 @@ export const addProductToShopBag = (productId, skuId, num, type) => {
     return axios.post(constants.baseEndpoint + 'carts', qs.stringify({ item_id: productId, sku_id: skuId, num: num, type: type }))
       .then((resp) => {
         dispatch(action.success(resp.data));
-        dispatch(fetchShopBagQuantity());
+        dispatch(fetchShopBagQuantity(type));
         dispatch(fetchShopBag(type));
       })
       .catch((resp) => {
