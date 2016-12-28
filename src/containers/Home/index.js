@@ -199,7 +199,9 @@ export class Home extends Component {
   onOpenShopClick = (e) => {
     const mmLinkId = this.props.location.query.mm_linkid;
     const { protocol, host } = window.location;
-    window.location.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/boutiqueinvite?mama_id=${mmLinkId}`;
+    console.log(protocol, host);
+    console.log(`${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?mama_id=${mmLinkId}`);
+    window.location.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?mama_id=${mmLinkId}`;
     e.preventDefault();
   }
 

@@ -105,7 +105,12 @@ export const addProductToShopBag = (productId, skuId, num, type) => {
     return axios.post(constants.baseEndpoint + 'carts', qs.stringify({ item_id: productId, sku_id: skuId, num: num, type: type }))
       .then((resp) => {
         dispatch(action.success(resp.data));
-        dispatch(fetchShopBagQuantity(type));
+        // 券商品场景，使用单独的购物车，需要更新券购物车的数目，其它场景查普通购物车
+        if (type === 6) {
+          dispatch(fetchShopBagQuantity(type));
+        } else {
+          dispatch(fetchShopBagQuantity());
+        }
         dispatch(fetchShopBag(type));
       })
       .catch((resp) => {
