@@ -205,11 +205,20 @@ export default class Detail extends Component {
 
     if (shopBag.success && !_.isEmpty(shopBag.data)) {
       cartId = shopBag.data[0].id;
+
       if (Number(shopBag.data[0].type) === 3) {
         window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
       } else if (nextProps.details && nextProps.details.detail_content && nextProps.details.detail_content.is_boutique) {
         // 特卖抢购商品直接进入支付页面
-       window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+        if (utils.detector.isApp()) {
+          const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + cartId + '&type=' + shopBag.data[0].type;
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
+        } else {
+          window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+        }
       }
     }
   }
