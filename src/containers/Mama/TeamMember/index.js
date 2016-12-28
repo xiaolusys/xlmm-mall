@@ -117,7 +117,7 @@ export default class MamaTeamMember extends Component {
           <p className="text-left font-xs no-margin">{member.mobile}</p>
         </div>
         <div className="col-xs-3 member-score no-padding no-margin">
-          <p className="text-left font-xs ">{member.elite_score + '积分' }</p>
+          <p className="text-center font-xs no-margin">{member.elite_score + '积分' }</p>
         </div>
       </li>
     );
