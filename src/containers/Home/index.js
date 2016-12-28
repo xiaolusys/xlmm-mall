@@ -196,6 +196,13 @@ export class Home extends Component {
     this.context.router.replace(`/?active=${e.currentTarget.id}`);
   }
 
+  onOpenShopClick = (e) => {
+    const mmLinkId = this.props.location.query.mm_linkid;
+    const { protocol, host } = window.location;
+    window.location.href = `${protocol}//${host}/rest/v1/users/weixin_login/?next=/boutiqueinvite?mama_id=${mmLinkId}`;
+    e.preventDefault();
+  }
+
   onFocusClick = (e) => {
     const mmLinkId = this.props.location.query.mm_linkid;
     if (mmLinkId && Number(mmLinkId) > 0) {
@@ -276,7 +283,6 @@ export class Home extends Component {
       ['menu-active']: this.state.menuActive,
     });
     const hasHeader = !utils.detector.isApp();
-    const mmLinkId = this.props.location.query.mm_linkid;
 
     return (
       <div className={mainCls}>
@@ -293,9 +299,9 @@ export class Home extends Component {
                 <div className="col-xs-4 no-padding">
                   <p className="no-margin margin-top-xs no-wrap">{`${mamaInfo.data.nick}`}</p>
                 </div>
-                <Link className="col-xs-3 no-padding" to={`/boutiqueinvite?mama_id=${mmLinkId}`}>
-                  <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button">我要开店</button>
-                </Link>
+                <div className="col-xs-3 no-padding">
+                  <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onOpenShopClick}>我要开店</button>
+                </div>
                 <div className="padding-left-xs">
                   <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onFocusClick}>+关注</button>
                 </div>
