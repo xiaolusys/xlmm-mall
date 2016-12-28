@@ -91,6 +91,7 @@ export default class Detail extends Component {
     productId: 0,
     skuId: 0,
     favoriteStatus: false,
+    confirmAddBagDisable: false,
   }
 
   componentWillMount() {
@@ -203,7 +204,11 @@ export default class Detail extends Component {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
 
-    if (shopBag.success && !_.isEmpty(shopBag.data)) {
+    if ((shopBag.success || shopBag.error) && this.props.shopBag.shopBag.isLoading) {
+      this.setState({ confirmAddBagDisable: false });
+    }
+
+    if (shopBag.success && !_.isEmpty(shopBag.data) && this.props.shopBag.shopBag.isLoading) {
       cartId = shopBag.data[0].id;
 
       if (Number(shopBag.data[0].type) === 3) {
@@ -394,11 +399,13 @@ export default class Detail extends Component {
   onConfirmAddToShopBagClick = (e) => {
     const { details } = this.props;
     const { productId, skuId, num } = this.state;
+    this.setState({ confirmAddBagDisable: true });
     if (details && details.detail_content.is_boutique) {
       this.props.addProductToShopBag(productId, skuId, num, 5);
     } else {
       this.props.addProductToShopBag(productId, skuId, num);
     }
+
     e.preventDefault();
   }
   onFavoriteBtnClick = (e) => {
@@ -737,7 +744,7 @@ export default class Detail extends Component {
                 </p>
               </div>
               <BottomBar size="medium">
-                <button className="button button-energized col-xs-10 col-xs-offset-1 no-padding" type="button" onClick={this.onConfirmAddToShopBagClick}>确定</button>
+                <button className="button button-energized col-xs-10 col-xs-offset-1 no-padding" type="button" onClick={this.onConfirmAddToShopBagClick} disabled={this.state.confirmAddBagDisable}>确定</button>
               </BottomBar>
             </Popup>
           </If>
