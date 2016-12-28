@@ -12,6 +12,7 @@ import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import MakemoneyTab from './makemoney';
 import MyInfoTab from './myinfo';
+import BoutiqueExchg from '../BoutiqueExchange';
 
 import './index.scss';
 
@@ -31,7 +32,7 @@ export default class MamaHome extends Component {
   }
 
   state = {
-    topTab: 'makemoney',
+    topTab: 'boutique',
   }
 
   componentWillMount() {
@@ -73,7 +74,7 @@ export default class MamaHome extends Component {
             topTab: id,
 
           });
-          window.location.href = '/mall/mama/boutique';
+          // window.location.href = '/mall/mama/boutique';
           break;
         case 'forum':
           this.setState({
@@ -102,6 +103,9 @@ export default class MamaHome extends Component {
         <div className="content mamahome">
           <div className="mamahome-container">
             <Choose>
+            <When condition={topTab === 'boutique'}>
+              <BoutiqueExchg />
+            </When>
             <When condition={topTab === 'makemoney'}>
               <MakemoneyTab />
             </When>
@@ -112,14 +116,14 @@ export default class MamaHome extends Component {
           </div>
           <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">
-              <li key={1} data-id="makemoney" onClick={this.onTabClick}>
-                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'makemoney' ? ' active' : '')}>
-                  <span>我要赚钱</span>
-                </p>
-              </li>
               <li key={2} data-id="boutique" onClick={this.onTabClick}>
                 <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'boutique' ? ' active' : '')}>
                   <span>精品汇</span>
+                </p>
+              </li>
+              <li key={1} data-id="makemoney" onClick={this.onTabClick}>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'makemoney' ? ' active' : '')}>
+                  <span>我要赚钱</span>
                 </p>
               </li>
               <li key={3} data-id="forum" onClick={this.onTabClick}>
