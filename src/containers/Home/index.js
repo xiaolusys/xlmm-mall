@@ -198,7 +198,9 @@ export class Home extends Component {
 
   onFocusClick = (e) => {
     const mmLinkId = this.props.location.query.mm_linkid;
-    this.props.focusMamaById(mmLinkId);
+    if (mmLinkId && Number(mmLinkId) > 0) {
+      this.props.focusMamaById(mmLinkId);
+    }
     e.preventDefault();
   }
 
@@ -291,7 +293,7 @@ export class Home extends Component {
                 <div className="col-xs-4 no-padding">
                   <p className="no-margin margin-top-xs no-wrap">{`${mamaInfo.data.nick}`}</p>
                 </div>
-                <Link className="col-xs-3 no-padding" to={`/mama/boutiqueinvite?mama_id=` + mmLinkId}>
+                <Link className="col-xs-3 no-padding" to={`/mama/boutiqueinvite?mama_id=${mmLinkId}`}>
                   <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button">我要开店</button>
                 </Link>
                 <div className="padding-left-xs">
