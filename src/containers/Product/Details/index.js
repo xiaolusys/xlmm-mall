@@ -443,6 +443,9 @@ export default class Detail extends Component {
     if (detail.sale_state === 'on' && detail.is_sale_out) {
       return '已抢光';
     }
+    if (detail.is_boutique || detail.is_onsale) {
+      return '立即购买';
+    }
     return '加入购物车';
   }
 

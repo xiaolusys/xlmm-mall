@@ -123,12 +123,12 @@ export class ShopBag extends Component {
       }
       window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
     } else {
-      if (score >= 30 || goodsNum >= 5) {
+      if (score >= constants.minBuyScore || goodsNum >= 5) {
         _.each(shopBag.data, (item) => {
           this.props.applyNegotiableCoupons(item.item_id, item.num);
         });
       } else {
-        Toast.show('特卖商品券购买个数不能小于5张或30积分，当前张数' + goodsNum + '张，当前积分' + score);
+        Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
       }
     }
   }
