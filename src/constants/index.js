@@ -64,3 +64,5 @@ export const disabledDownloadApp = [
   'mama/open/failed',
   'mama/invited',
 ];
+
+export const minBuyScore = 30;
