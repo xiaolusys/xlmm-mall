@@ -19,6 +19,7 @@ import * as payInfoAction from 'actions/order/payInfo';
 import * as commitOrderAction from 'actions/order/commit';
 import * as couponAction from 'actions/user/coupons';
 import * as plugins from 'plugins';
+import * as constants from 'constants';
 
 import './index.scss';
 
@@ -26,8 +27,6 @@ const payTypeIcons = {
   wx: 'icon-wechat-pay icon-wechat-green',
   alipay: 'icon-alipay-square icon-alipay-blue',
 };
-
-const minBuyScore = 30;
 
 const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction);
 
@@ -105,13 +104,13 @@ export default class BuyCoupon extends Component {
 
     if (productDetails.success && productDetails.data && this.props.productDetails.isLoading) {
       this.setState({ productDetail: productDetails.data });
-      if (productDetails.data.sku_info[0].elite_score >= minBuyScore) {
+      if (productDetails.data.sku_info[0].elite_score >= constants.minBuyScore) {
         this.setState({ num: 1, minBuyNum: 1 });
       } else {
-        if (productDetails.data.sku_info[0].elite_score * 5 < minBuyScore) {
+        if (productDetails.data.sku_info[0].elite_score * 5 < constants.minBuyScore) {
           this.setState({ num: 5, minBuyNum: 5 });
         } else {
-          const buyNum = Math.ceil(minBuyScore / productDetails.data.sku_info[0].elite_score);
+          const buyNum = Math.ceil(constants.minBuyScore / productDetails.data.sku_info[0].elite_score);
           this.setState({ num: buyNum, minBuyNum: buyNum });
         }
       }
@@ -210,7 +209,7 @@ export default class BuyCoupon extends Component {
     }
 
     if (Number(this.state.num) < this.state.minBuyNum) {
-      Toast.show('特卖商品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
+      Toast.show('精品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
       return;
     }
 
