@@ -208,9 +208,18 @@ export default class BuyCoupon extends Component {
       return;
     }
 
-    if (Number(this.state.num) < this.state.minBuyNum) {
-      Toast.show('精品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
-      return;
+    if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].elite_level !== 'Associate') {
+      if (Number(this.state.num) < this.state.minBuyNum) {
+        Toast.show('精品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
+        return;
+      }
+    } else if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].elite_level === 'Associate') {
+      if (constants.restrictAssociateBuyScore) {
+        if (Number(this.state.num) < this.state.minBuyNum) {
+          Toast.show('精品券购买个数不能小于最低购买张数' + this.state.minBuyNum + '张');
+          return;
+        }
+      }
     }
 
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
@@ -320,7 +329,7 @@ export default class BuyCoupon extends Component {
 
   onShopbagClick = (e) => {
     const { mamaInfo } = this.props;
-    this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0') + '&type=6');
+    this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0') + '&type=6' + '&elite_level=' + mamaInfo.data[0].elite_level);
     e.preventDefault();
   }
 

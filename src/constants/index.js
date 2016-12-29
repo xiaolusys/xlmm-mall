@@ -66,3 +66,4 @@ export const disabledDownloadApp = [
 ];
 
 export const minBuyScore = 30;
+export const restrictAssociateBuyScore = true;

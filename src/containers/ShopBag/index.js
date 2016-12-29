@@ -49,12 +49,10 @@ export class ShopBag extends Component {
   }
 
   componentWillMount() {
-    const { is_buyable } = this.props.location.query;
     const type = this.props.location.query.type ? this.props.location.query.type : 0;
-    this.setState({ type: type });
-    if (this.props.location.query && (this.props.location.query.is_buyable !== undefined)) {
-      this.setState({ isBuyable: is_buyable });
-    }
+    const buyable = this.props.location.query.is_buyable ? this.props.location.query.is_buyable : 1;
+    const level = this.props.location.query.elite_level ? this.props.location.query.elite_level : '';
+    this.setState({ type: type, isBuyable: buyable, eliteLevel: level });
 
     this.props.fetchShopBag(type);
     this.props.fetchShopBagHistory();
@@ -102,8 +100,26 @@ export class ShopBag extends Component {
       score += item.num * item.elite_score;
       goodsNum += item.num;
     });
+
+    // 购买精品券需要做积分检查, associate can change restrict
+    if (Number(this.state.type) === 6) {
+      if (this.state.eliteLevel !== 'Associate') {
+        if (score < constants.minBuyScore && goodsNum < 5) {
+          Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
+          return;
+        }
+      } else if (this.state.eliteLevel === 'Associate') {
+        if (constants.restrictAssociateBuyScore) {
+          if (score < constants.minBuyScore && goodsNum < 5) {
+            Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
+            return;
+          }
+        }
+      }
+    }
+
     if (Number(isBuyable)) {
-      const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + encodeURIComponent(cartIds.join(',')) + '&type=0';
+      const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + encodeURIComponent(cartIds.join(',')) + '&type=' + this.state.type;
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
         if (appVersion >= 20161214) {
@@ -123,13 +139,9 @@ export class ShopBag extends Component {
       }
       window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
     } else {
-      if (score >= constants.minBuyScore || goodsNum >= 5) {
-        _.each(shopBag.data, (item) => {
-          this.props.applyNegotiableCoupons(item.item_id, item.num);
-        });
-      } else {
-        Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
-      }
+      _.each(shopBag.data, (item) => {
+        this.props.applyNegotiableCoupons(item.item_id, item.num);
+      });
     }
   }
 
