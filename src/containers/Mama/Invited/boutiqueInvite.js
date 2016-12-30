@@ -78,9 +78,18 @@ export default class BoutiqueInvite extends Component {
   state = {
     payTypePopupActive: false,
     chargeEnable: true,
+    index: 0,
   }
 
   componentWillMount() {
+    const num = this.props.location.query.num ? this.props.location.query.num : 5;
+    let index = 0;
+    if (Number(num) === 5) {
+      index = 0;
+    } else if (Number(num) === 3) {
+      index = 1;
+    }
+    this.setState({ index: index });
     this.props.fetchMamaInfo();
     this.props.fetchProductDetails(25115);
     this.props.fetchWechatSign();
@@ -200,9 +209,9 @@ export default class BoutiqueInvite extends Component {
           // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
           // 精品券默认是在app上支付
           if (utils.detector.isApp()) {
-            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'app');
+            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[this.state.index].sku_id, 1, 'app');
           } else {
-            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, 1, 'wap');
+            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[this.state.index].sku_id, 1, 'wap');
           }
           this.setState({ chargeEnable: false });
         } else {
@@ -334,7 +343,12 @@ export default class BoutiqueInvite extends Component {
         <Header trasparent={trasparentHeader} title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="invite-imgs">
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_01.png'} quality={70} />
+          <If condition={this.state.index === 0}>
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_02.png'} quality={70} />
+          </If>
+          <If condition={this.state.index === 1}>
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_02_2.png'} quality={70} />
+          </If>
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_03.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_04.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_05.png'} quality={70} />

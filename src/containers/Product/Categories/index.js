@@ -75,7 +75,12 @@ export default class List extends Component {
 
   onItemClick = (e) => {
     const dataSet = e.currentTarget.dataset;
-    window.location.href = `/mall/product/list?cid=${dataSet.cid}&title=${dataSet.name}`;
+    const productType = this.props.location.query.product_type;
+    if (productType && productType === 'coupon') {
+      window.location.href = `/mall/trancoupon/list?cid=${dataSet.cid}`;
+    } else {
+      window.location.href = `/mall/product/list?cid=${dataSet.cid}&title=${dataSet.name}`;
+    }
   }
 
   onTabItemClick = (e) => {
