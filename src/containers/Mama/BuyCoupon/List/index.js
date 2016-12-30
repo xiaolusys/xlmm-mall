@@ -74,6 +74,14 @@ export default class TranCouponList extends Component {
     window.location.href = '/mall/buycoupon?index=' + index + '&modelid=' + modelid;
   }
 
+  onCategoryClick = (e) => {
+    let { cid } = this.props.location.query;
+    if (!cid) {
+      cid = 0;
+    }
+    window.location.href = '/mall/product/categories' + (cid ? `?cid=${cid}` : '') + '&title=分类' + '&product_type=coupon';
+  }
+
   renderProduct = (product, index) => {
     const { mamaInfo } = this.props;
     const productDetails = product;
