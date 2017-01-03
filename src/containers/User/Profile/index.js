@@ -67,6 +67,7 @@ export default class Profile extends Component {
 
     if (nextProps.error) {
       switch (nextProps.status) {
+        case 401:
         case 403:
           if (utils.detector.isApp()) {
             plugins.invoke({ method: 'jumpToNativeLogin' });
