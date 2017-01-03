@@ -4,7 +4,7 @@
 	height: 100%;
 
 	.jump-div {
-		height: 64px;
+		height: 80px;
 		padding-left: 16px;
 		padding-right: 8px;
 		padding-top: 8px;
@@ -13,7 +13,6 @@
 	}
 
 	.tran-coupons {
-		margin-top: 8px;
 		background-color: #fff;
 
 		.member-item {
@@ -46,5 +45,29 @@
 			padding-top: 32px;
 			padding-bottom: 32px;
 		}
+	}
+
+	.return-list-tabs {
+	    background-color: #fff;
+	    &.sticky {
+	      position: fixed;
+	      top: 0px;
+	      left: 0;
+	      right: 0;
+	      z-index: 9;
+	      &.has-header {
+	        top: 44px;
+	      }
+	    }
+	    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
+        }
+      }
+    }
 	}
 }

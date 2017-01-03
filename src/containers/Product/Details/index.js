@@ -210,7 +210,6 @@ export default class Detail extends Component {
 
     if (shopBag.success && !_.isEmpty(shopBag.data) && this.props.shopBag.shopBag.isLoading) {
       cartId = shopBag.data[0].id;
-
       if (Number(shopBag.data[0].type) === 3) {
         window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
       } else if (nextProps.details && nextProps.details.detail_content && nextProps.details.detail_content.is_boutique) {

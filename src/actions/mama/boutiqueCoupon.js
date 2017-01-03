@@ -56,6 +56,20 @@ export const fetchCanExchgOrders = () => {
   };
 };
 
+export const fetchExchangedOrders = () => {
+  const action = createAction(boutiqueCouponNames.FETCH_CAN_EXCHG_ORDERS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(`${constants.baseEndpoint}mama/exchgorder/list_exchanged_orders`)
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
 export const resetCanExchgOrders = () => {
   const action = createAction(boutiqueCouponNames.FETCH_CAN_EXCHG_ORDERS);
   return (dispatch) => {
