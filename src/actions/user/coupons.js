@@ -13,7 +13,7 @@ export const couponsNames = {
   APPLY_RETURN_COUPONS: 'APPLY_RETURN_COUPONS',
 };
 
-export const fetchCouponsByStatus = (status, couponType = null) => {
+export const fetchCouponsByStatus = (status, couponType = null, page = 1) => {
   let name = '';
   if (couponType) {
     name = couponsNames.FETCH_NEGOTIABLE_COUPONS;
@@ -23,8 +23,7 @@ export const fetchCouponsByStatus = (status, couponType = null) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'usercoupons/get_user_coupons?status=' + status
-              + (couponType ? ('&coupon_type=' + couponType) : ''))
+    return axios.get(constants.baseEndpoint + 'usercoupon', { params: { page: page, coupon_type: couponType, status: status } })
       .then((resp) => {
         const data = resp.data;
         data.status = status;
@@ -65,17 +64,31 @@ export const fetchUnusedBoutiqueCoupons = () => {
   };
 };
 
-export const fetchFreezedBoutiqueCoupons = () => {
+export const resetUnusedBoutiqueCoupons = () => {
+  const action = createAction(couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS);
+  return (dispatch) => {
+    dispatch(action.reset());
+  };
+};
+
+export const fetchFreezedBoutiqueCoupons = (page) => {
   const action = createAction(couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'usercoupon?status=2')
+    return axios.get(constants.baseEndpoint + 'usercoupon', { params: { page: page, coupon_type: 8, status: 2 } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
       .catch((resp) => {
         dispatch(action.failure(resp));
       });
+  };
+};
+
+export const resetFreezedBoutiqueCoupons = () => {
+  const action = createAction(couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS);
+  return (dispatch) => {
+    dispatch(action.reset());
   };
 };
 

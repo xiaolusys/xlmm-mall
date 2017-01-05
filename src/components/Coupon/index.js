@@ -31,18 +31,18 @@ export class Coupon extends Component {
     return (
       <div className={`${prefixCls} ${couponStatus[status]} bottom-border`} {...props}>
         <div className="coupon-right-top">
-          <p className={'no-margin coupon-value'}>{'¥' + couponItem.coupon_value}</p>
+          <p className={'no-margin coupon-value'}>{'¥' + couponItem.value}</p>
           <div className="coupon-detail">
             <p className="no-margin">{couponItem.title}</p>
-            <p className="no-margin">{couponItem.use_fee_des}</p>
+            <p className="no-margin">{'满' + couponItem.use_fee + '可用'}</p>
             <p className="no-margin">{couponItem.pros_desc}</p>
           </div>
         </div>
         <p className="coupon-validity">
         <span>期限 </span>
-        <span className="coupon-date">{couponItem.start_time.replace('T', ' ').substring(0, 16)} </span>
+        <span className="coupon-date">{couponItem.start_use_time.replace('T', ' ').substring(0, 16)} </span>
         <span>至 </span>
-        <span className="coupon-date">{couponItem.deadline.replace('T', ' ').substring(0, 16)}</span>
+        <span className="coupon-date">{couponItem.expires_time.replace('T', ' ').substring(0, 16)}</span>
         </p>
       </div>
     );

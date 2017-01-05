@@ -160,6 +160,7 @@ export const resetMyReturnCoupon = () => {
   };
 };
 
+// 退券场景下级收钱后转券给上级
 export const returnFreezeCoupons = (id) => {
   const action = createAction(boutiqueCouponNames.RETURN_FREEZE_COUPONS);
   return (dispatch) => {

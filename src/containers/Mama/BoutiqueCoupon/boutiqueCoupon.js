@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
+import { Coupon } from 'components/Coupon';
 import * as boutiqueCouponAction from 'actions/mama/boutiqueCoupon';
 import * as userCouponAction from 'actions/user/coupons';
 
@@ -33,6 +34,8 @@ export default class BoutiqueCoupon extends Component {
     coupons: React.PropTypes.any,
     fetchUnusedBoutiqueCoupons: React.PropTypes.func,
     fetchFreezedBoutiqueCoupons: React.PropTypes.func,
+    resetUnusedBoutiqueCoupons: React.PropTypes.func,
+    resetFreezedBoutiqueCoupons: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -45,14 +48,16 @@ export default class BoutiqueCoupon extends Component {
   }
 
   state = {
-
+    pageIndex: 0,
+    pageSize: 10,
     sticky: false,
     hasMore: false,
-
+    activeTab: 'default',
   }
 
   componentWillMount() {
     this.props.fetchUnusedBoutiqueCoupons();
+    this.props.fetchFreezedBoutiqueCoupons(1);
   }
 
   componentDidMount() {
@@ -61,14 +66,30 @@ export default class BoutiqueCoupon extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { mamaLeftTranCoupon } = this.props.boutiqueCoupon;
-    const { unusedBotique } = this.props.coupons;
+    const { unusedBoutique } = this.props.coupons;
+    let count = 0;
+    let size = 0;
+    let data = null;
 
-    if (mamaLeftTranCoupon.isLoading || unusedBotique.isLoading) {
+    if (mamaLeftTranCoupon.isLoading || unusedBoutique.isLoading) {
       utils.ui.loadingSpinner.show();
     }
 
-    if (!nextProps.boutiqueCoupon.mamaLeftTranCoupon.isLoading && !nextProps.coupons.unusedBotique.isLoading) {
+    if (!nextProps.boutiqueCoupon.mamaLeftTranCoupon.isLoading && !nextProps.coupons.unusedBoutique.isLoading) {
       utils.ui.loadingSpinner.hide();
+    }
+
+    if (this.state.activeTab === 'freezed') {
+      if (nextProps.coupons.freezedBoutique.success) {
+        data = nextProps.coupons.freezedBoutique.data;
+      }
+    }
+
+    if (data) {
+      count = data.count;
+      size = data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
+      this.setState({ hasMore: count > size });
     }
   }
 
@@ -76,7 +97,42 @@ export default class BoutiqueCoupon extends Component {
     this.removeScrollListener();
   }
 
+  onTabItemClick = (e) => {
+    const { type } = e.currentTarget.dataset;
+    this.setState({
+      activeTab: type,
+      pageIndex: 0,
+      status: 0,
+      rselected: 0,
+    });
+    if (type === 'default') {
+      this.props.resetUnusedBoutiqueCoupons();
+      this.props.fetchUnusedBoutiqueCoupons();
+    } else {
+      this.props.resetFreezedBoutiqueCoupons();
+      this.props.fetchFreezedBoutiqueCoupons(1);
+    }
+  }
+
   onScroll = (e) => {
+    const { freezedBoutique } = this.props.coupons;
+    const { pageSize, pageIndex, activeTab } = this.state;
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    const tabsOffsetTop = utils.dom.offsetTop('.return-list-tabs');
+
+    if (this.state.activeTab === 'freezed') {
+      if (scrollTop === documentHeight - windowHeight && !freezedBoutique.isLoading && this.state.hasMore) {
+        this.props.fetchFreezedBoutiqueCoupons(pageIndex + 1);
+      }
+    }
+
+    if (scrollTop > tabsOffsetTop) {
+      this.setState({ sticky: true });
+    } else {
+      this.setState({ sticky: false });
+    }
   }
 
   onLeftBtnClick = (e) => {
@@ -133,23 +189,46 @@ export default class BoutiqueCoupon extends Component {
     );
   }
 
+  renderFreezedMember = (member, index) => {
+    return (
+      <li key={index} className="col-xs-12 member-item bottom-border no-padding" data-index={index} >
+          <Coupon status={'available'} couponItem={member} key={index} data-status={member.status} data-id={member.id} />
+      </li>
+    );
+  }
+
   render() {
-    const { unusedBotique } = this.props.coupons;
+    const { unusedBoutique, freezedBoutique } = this.props.coupons;
+    const { activeTab, sticky } = this.state;
 
     return (
       <div className="boutiquecoupon-container no-padding">
         <Header title="我的精品券" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="jump-div bg-white">
-          <p className="font-blue font-xs" onClick={this.onJumpClick} >进入入券出券界面>>></p>
+          <p className="font-blue font-xs" >说明：提交退券申请后，券会被暂时冻结，退券流程处理完进行转移和解冻。客户退货后，如果订单使用券兑换，扣除您个人帐户兑换金额时金额不足会暂时冻结券，帐户恢复后自动解冻。</p>
+        </div>
+        <div className={'return-list-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + 'has-header' }>
+          <ul className="row no-margin">
+            <li className={'col-xs-6' + (activeTab === 'default' ? ' active' : '')} data-type={'default'} onClick={this.onTabItemClick}>
+              <div>{'可使用(' + ((unusedBoutique.success && unusedBoutique.data) ? unusedBoutique.data.length : 0) + ')'}</div>
+            </li>
+            <li className={'col-xs-6' + (activeTab === 'freezed' ? ' active' : '')} data-type={'freezed'} onClick={this.onTabItemClick}>
+              <div>{'已冻结(' + ((freezedBoutique.success && freezedBoutique.data) ? freezedBoutique.data.results.length : 0) + ')'}</div>
+            </li>
+          </ul>
         </div>
         <div className="tran-coupons bg-white no-padding">
-          <If condition={unusedBotique.success && unusedBotique.data && unusedBotique.data.length > 0}>
             <ul className="col-xs-12 no-padding tran-ul">
-            {unusedBotique.data.map((item, index) => this.renderMember(item, index))
+            <If condition={activeTab === 'default' && unusedBoutique.success && unusedBoutique.data && unusedBoutique.data.length > 0}>
+            {unusedBoutique.data.map((item, index) => this.renderMember(item, index))
             }
+            </If>
+            <If condition={activeTab === 'freezed' && freezedBoutique.success && freezedBoutique.data && freezedBoutique.data.results.length > 0}>
+            {freezedBoutique.data.results.map((item, index) => this.renderFreezedMember(item, index))
+            }
+            </If>
             </ul>
-          </If>
-          <If condition={unusedBotique.success && unusedBotique.data && unusedBotique.data.length === 0}>
+          <If condition={activeTab === 'default' && unusedBoutique.success && unusedBoutique.data && unusedBoutique.data.length === 0}>
             <div className="no-coupon-members bg-white">
               <p className=" font-xs" >您没有任何精品券剩余，赶紧去逛逛吧</p>
             </div>

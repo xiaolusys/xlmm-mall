@@ -40,17 +40,17 @@ const initState = {
     success: false,
     data: [],
   },
-  unusedBotique: {
+  unusedBoutique: {
     isLoading: false,
     error: false,
     success: false,
     data: [],
   },
-  freezedBotique: {
+  freezedBoutique: {
     isLoading: false,
     error: false,
     success: false,
-    data: [],
+    data: {},
   },
   applyReturn: {
     isLoading: false,
@@ -61,23 +61,44 @@ const initState = {
 };
 
 const success = (state, action) => {
+  let payload = {};
   switch (action.type) {
     case couponsAction.couponsNames.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
       switch (action.payload.status) {
         case couponStatus.available:
-          return _.extend({}, state, { available: { isLoading: false, error: false, success: true, data: action.payload } });
+          payload = action.payload;
+          payload.results = _.chain(state.available.data.results || []).union(payload.results || []).unique('id').value();
+          return _.extend({}, state, {
+            available: { isLoading: false, data: payload, error: false, success: true },
+          });
         case couponStatus.used:
-          return _.extend({}, state, { used: { isLoading: false, error: false, success: true, data: action.payload } });
+          payload = action.payload;
+          payload.results = _.chain(state.used.data.results || []).union(payload.results || []).unique('id').value();
+          return _.extend({}, state, {
+            used: { isLoading: false, data: payload, error: false, success: true },
+          });
         case couponStatus.unavailable:
-          return _.extend({}, state, { unavailable: { isLoading: false, error: false, success: true, data: action.payload } });
+          payload = action.payload;
+          payload.results = _.chain(state.unavailable.data.results || []).union(payload.results || []).unique('id').value();
+          return _.extend({}, state, {
+            unavailable: { isLoading: false, data: payload, error: false, success: true },
+          });
         case couponStatus.expired:
-          return _.extend({}, state, { expired: { isLoading: false, error: false, success: true, data: action.payload } });
+          payload = action.payload;
+          payload.results = _.chain(state.expired.data.results || []).union(payload.results || []).unique('id').value();
+          return _.extend({}, state, {
+            expired: { isLoading: false, data: payload, error: false, success: true },
+          });
         default:
           return state;
       }
       break;
     case couponsAction.couponsNames.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
-      return _.extend({}, state, { negotiable: { isLoading: false, error: false, success: true, data: action.payload } });
+      payload = action.payload;
+      payload.results = _.chain(state.negotiable.data.results || []).union(payload.results || []).unique('id').value();
+      return _.extend({}, state, {
+        negotiable: { isLoading: false, data: payload, error: false, success: true },
+      });
     case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, { applynegotiable: { isLoading: false, error: false, success: true, data: action.payload } });
     default:
@@ -113,28 +134,39 @@ export default (state = initState, action = null) => {
 
     case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
-        unusedBotique: { isLoading: true, data: state.unusedBotique.data, error: false, success: false },
+        unusedBoutique: { isLoading: true, data: state.unusedBoutique.data, error: false, success: false },
       });
     case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.SUCCESS:
       return _.extend({}, state, {
-        unusedBotique: { isLoading: false, data: action.payload, error: false, success: true },
+        unusedBoutique: { isLoading: false, data: action.payload, error: false, success: true },
       });
     case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
-        unusedBotique: { isLoading: false, data: action.payload, error: true, success: false },
+        unusedBoutique: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        unusedBoutique: { isLoading: false, data: {}, error: false, success: false },
       });
 
     case couponsAction.couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
-        freezedBotique: { isLoading: true, data: state.freezedBotique.data, error: false, success: false },
+        freezedBoutique: { isLoading: true, data: state.freezedBoutique.data, error: false, success: false },
       });
     case couponsAction.couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS + '_' + actionTypes.SUCCESS:
+      let payload = {};
+      payload = action.payload;
+      payload.results = _.chain(state.freezedBoutique.data.results || []).union(payload.results || []).unique('id').value();
       return _.extend({}, state, {
-        freezedBotique: { isLoading: false, data: action.payload, error: false, success: true },
+        freezedBoutique: { isLoading: false, data: payload, error: false, success: true },
       });
     case couponsAction.couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
-        freezedBotique: { isLoading: false, data: action.payload, error: true, success: false },
+        freezedBoutique: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case couponsAction.couponsNames.FETCH_FREEZED_BOTIQUE_COUPONS + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        freezedBoutique: { isLoading: false, data: {}, error: false, success: false },
       });
 
       case couponsAction.couponsNames.APPLY_RETURN_COUPONS + '_' + actionTypes.REQUEST:
