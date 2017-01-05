@@ -167,29 +167,29 @@ export default class List extends Component {
           <div className={'coupon-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
             <ul className="row no-margin">
               <li id="available" className={'col-xs-3' + (activeTab === couponStatus.available ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>未使用({available.data && available.data.coupons && available.data.coupons.length})</div>
+                <div>未使用({available.data && available.data.results && available.data.results.length})</div>
               </li>
               <li id="negotiable" className={'col-xs-3' + (activeTab === couponStatus.negotiable ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>精品券({negotiable.data && negotiable.data.coupons && negotiable.data.coupons.length})</div>
+                <div>精品券({negotiable.data && negotiable.data.results && negotiable.data.results.length})</div>
               </li>
               <li id="used" className={'col-xs-3' + (activeTab === couponStatus.used ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>已使用({used.data && used.data.coupons && used.data.coupons.length})</div>
+                <div>已使用({used.data && used.data.results && used.data.results.length})</div>
               </li>
               <li id="expired" className={'col-xs-3' + (activeTab === couponStatus.expired ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>已过期({expired.data && expired.data.coupons && expired.data.coupons.length})</div>
+                <div>已过期({expired.data && expired.data.results && expired.data.results.length})</div>
               </li>
             </ul>
           </div>
-          <If condition={!_.isEmpty(coupons.data && coupons.data.coupons)}>
+          <If condition={!_.isEmpty(coupons.data && coupons.data.results)}>
             <ul className="coupon-list">
-              {coupons.data.coupons.map((item, index) => {
+              {coupons.data.results.map((item, index) => {
                 return (
                   <Coupon status={item.status} couponItem={item} key={index} data-status={item.status} data-id={item.id} onClick={this.onCouponItemClick}/>
                 );
               })}
             </ul>
           </If>
-          <If condition={_.isEmpty(coupons.data && coupons.data.coupons) || available.isLoading || used.isLoading || unavailable.isLoading || expired.isLoading || negotiable.isLoading}>
+          <If condition={_.isEmpty(coupons.data && coupons.data.results) || available.isLoading || used.isLoading || unavailable.isLoading || expired.isLoading || negotiable.isLoading}>
             <div className="text-center coupon-list-empty">
               <i className="icon-coupon-o icon-6x font-grey"/>
               <p>您暂时还没有优惠劵哦～</p>
