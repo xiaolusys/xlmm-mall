@@ -22,3 +22,4 @@ export ExchangeOrder from './ExchangeOrder/exchangeOrder';
 export ReturnBoutiqueCoupon from './BoutiqueCoupon/returnCoupon';
 export ReturnProgress from './BoutiqueCoupon/returnProgress';
 export BoutiqueInvite from './Invited/boutiqueInvite';
+export InOutCoupon from './InOutCoupon/inoutCoupon';

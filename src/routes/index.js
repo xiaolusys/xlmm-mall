@@ -91,6 +91,7 @@ import {
   ReturnBoutiqueCoupon,
   ReturnProgress,
   BoutiqueInvite,
+  InOutCoupon,
 } from 'containers/Mama';
 
 import {
@@ -167,6 +168,7 @@ export default (
     <Route path="/mama/exchgorder" component={ExchangeOrder} />
     <Route path="/mama/returncoupon" component={ReturnBoutiqueCoupon} />
     <Route path="/mama/returncoupon/progress" component={ReturnProgress} />
+    <Route path="/mama/inoutcoupon" component={InOutCoupon} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>
