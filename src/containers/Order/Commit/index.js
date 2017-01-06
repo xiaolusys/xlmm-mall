@@ -399,38 +399,10 @@ export default class Commit extends Component {
 
   getChannel = () => {
     let payInfo = {};
-    const channels = [];
+    let channels = [];
     if (this.props.payInfo.success && (!_.isEmpty(this.props.payInfo.data))) {
       payInfo = this.props.payInfo.data;
-      if (utils.detector.isApp()) {
-        channels.push({
-          id: 'wx',
-          icon: 'icon-wechat-pay icon-wechat-green',
-          name: '微信支付',
-          payable: true,
-        });
-
-        channels.push({
-          id: 'alipay',
-          icon: 'icon-alipay-square icon-alipay-blue',
-          name: '支付宝',
-          payable: true,
-        });
-      } else {
-        channels.push({
-          id: 'wx_pub',
-          icon: 'icon-wechat-pay icon-wechat-green',
-          name: '微信支付',
-          payable: true,
-        });
-
-        channels.push({
-          id: 'alipay_wap',
-          icon: 'icon-alipay-square icon-alipay-blue',
-          name: '支付宝',
-          payable: true,
-        });
-      }
+      channels = payInfo.channels;
     }
     return channels;
   }
