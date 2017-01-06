@@ -200,6 +200,12 @@ export default class BoutiqueCoupon extends Component {
   render() {
     const { unusedBoutique, freezedBoutique } = this.props.coupons;
     const { activeTab, sticky } = this.state;
+    let unusedNum = 0;
+    if (activeTab === 'default' && unusedBoutique.success && unusedBoutique.data && unusedBoutique.data.length > 0) {
+      for (let i = unusedBoutique.data.length - 1; i >= 0; i--) {
+        unusedNum += unusedBoutique.data[i].coupon_num;
+      }
+    }
 
     return (
       <div className="boutiquecoupon-container no-padding">
@@ -210,7 +216,7 @@ export default class BoutiqueCoupon extends Component {
         <div className={'return-list-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + 'has-header' }>
           <ul className="row no-margin">
             <li className={'col-xs-6' + (activeTab === 'default' ? ' active' : '')} data-type={'default'} onClick={this.onTabItemClick}>
-              <div>{'可使用(' + ((unusedBoutique.success && unusedBoutique.data) ? unusedBoutique.data.length : 0) + ')'}</div>
+              <div>{'可使用(' + (unusedNum) + ')'}</div>
             </li>
             <li className={'col-xs-6' + (activeTab === 'freezed' ? ' active' : '')} data-type={'freezed'} onClick={this.onTabItemClick}>
               <div>{'已冻结(' + ((freezedBoutique.success && freezedBoutique.data) ? freezedBoutique.data.results.length : 0) + ')'}</div>
