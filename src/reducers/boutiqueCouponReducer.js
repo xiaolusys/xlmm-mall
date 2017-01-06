@@ -51,6 +51,36 @@ const initState = {
     success: false,
     data: [],
   },
+  myInCoupon: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  myOutCoupon: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  cancelTransfer: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  sendTransfer: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
+  processTransfer: {
+    isLoading: false,
+    error: false,
+    success: false,
+    data: {},
+  },
 };
 
 export default (state = initState, action = null) => {
@@ -191,6 +221,96 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, {
         returnFreeze: { isLoading: false, data: action.payload, error: true, success: false },
       });
+
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_IN_COUPON + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        myInCoupon: { isLoading: true, data: state.myInCoupon.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_IN_COUPON + '_' + actionTypes.SUCCESS:
+      payload = action.payload;
+      payload.results = _.chain(state.myInCoupon.data.results || []).union(payload.results || []).unique('id').value();
+      return _.extend({}, state, {
+        myInCoupon: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_IN_COUPON + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        myInCoupon: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_IN_COUPON + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        myInCoupon: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_OUT_COUPON + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        myOutCoupon: { isLoading: true, data: state.myOutCoupon.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_OUT_COUPON + '_' + actionTypes.SUCCESS:
+      payload = action.payload;
+      payload.results = _.chain(state.myOutCoupon.data.results || []).union(payload.results || []).unique('id').value();
+      return _.extend({}, state, {
+        myOutCoupon: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_OUT_COUPON + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        myOutCoupon: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.FETCH_MY_OUT_COUPON + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        myOutCoupon: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.boutiqueCouponNames.CANCEL_TRANSFER_COUPON + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        cancelTransfer: { isLoading: true, data: state.cancelTransfer.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.CANCEL_TRANSFER_COUPON + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        cancelTransfer: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.CANCEL_TRANSFER_COUPON + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        cancelTransfer: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.CANCEL_TRANSFER_COUPON + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        cancelTransfer: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.boutiqueCouponNames.SEND_TRANSFER_COUPON + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        sendTransfer: { isLoading: true, data: state.sendTransfer.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.SEND_TRANSFER_COUPON + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        sendTransfer: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.SEND_TRANSFER_COUPON + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        sendTransfer: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.SEND_TRANSFER_COUPON + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        sendTransfer: { isLoading: false, data: {}, error: false, success: false },
+      });
+
+    case boutiqueCouponAction.boutiqueCouponNames.PROCESS_TRANSFER_COUPON + '_' + actionTypes.REQUEST:
+      return _.extend({}, state, {
+        processTransfer: { isLoading: true, data: state.processTransfer.data, error: false, success: false },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.PROCESS_TRANSFER_COUPON + '_' + actionTypes.SUCCESS:
+      return _.extend({}, state, {
+        processTransfer: { isLoading: false, data: action.payload, error: false, success: true },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.PROCESS_TRANSFER_COUPON + '_' + actionTypes.FAILURE:
+      return _.extend({}, state, {
+        processTransfer: { isLoading: false, data: action.payload, error: true, success: false, status: action.status },
+      });
+    case boutiqueCouponAction.boutiqueCouponNames.PROCESS_TRANSFER_COUPON + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        processTransfer: { isLoading: false, data: {}, error: false, success: false },
+      });
+
     default:
       return state;
   }

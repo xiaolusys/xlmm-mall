@@ -350,7 +350,7 @@ export default class BuyCoupon extends Component {
     let payInfo = {};
     if (this.props.payInfo.success && (!_.isEmpty(this.props.payInfo.data))) {
       payInfo = this.props.payInfo.data;
-      payInfo.channels = [];
+      /* payInfo.channels = [];
       if (utils.detector.isApp()) {
         payInfo.channels.push({
           id: 'wx',
@@ -375,7 +375,7 @@ export default class BuyCoupon extends Component {
           icon: 'icon-alipay-square icon-alipay-blue',
           name: '支付宝',
         });
-      }
+      }*/
     }
     return payInfo;
   }

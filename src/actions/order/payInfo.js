@@ -4,11 +4,11 @@ import createAction from '../createAction';
 
 export const name = 'FETCH_PAY_INFO';
 
-export const fetchPayInfo = (cartIds, couponId) => {
+export const fetchPayInfo = (cartIds, couponId, device) => {
   const action = createAction(name);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'carts/carts_payinfo', { params: { cart_ids: cartIds, coupon_id: couponId } })
+    return axios.get(constants.baseEndpoint + 'carts/carts_payinfo', { params: { cart_ids: cartIds, coupon_id: couponId, device: device } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
