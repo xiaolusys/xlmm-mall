@@ -132,9 +132,24 @@ export default class BoutiqueExchg extends Component {
             <p className="intro-btn icon-yellow" onClick={this.enterEliteIntroduce}>精品汇介绍</p>
           </div>
         </If>
-        <div className="elite-score">
-          <p className="elite-score-p">{'我的积分:' + ((mamaTranCouponProfile.success && mamaTranCouponProfile.data) ? mamaTranCouponProfile.data.elite_score : '')}</p>
+        <If condition={(mamaTranCouponProfile.success && mamaTranCouponProfile.data)}>
+        <div className="elite-score bottom-border">
+          <div className="elite-score-p">
+            <span>{'我的ID:' + mamaTranCouponProfile.data.mama_id + ',总共购入' + mamaTranCouponProfile.data.bought_num + '张券,积分:'}</span>
+            <span className="font-orange">{mamaTranCouponProfile.data.elite_score}</span>
+            <span>{',还差' + mamaTranCouponProfile.data.upgrade_score + '积分升级。'}</span>
+          </div>
+          <div className="elite-score-p">
+            <span>{'您现有'}</span>
+            <span className="font-orange">{mamaTranCouponProfile.data.stock_num}</span>
+            <span>{'张券可以使用。您目前有'}</span>
+            <span className="font-orange">{mamaTranCouponProfile.data.waiting_in_num}</span>
+            <span>{'张券等待被发放，有'}</span>
+            <span className="font-orange">{mamaTranCouponProfile.data.waiting_out_num}</span>
+            <span>{'张券等待您审核！'}</span>
+          </div>
         </div>
+        </If>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0)}>
         <div className="mama-leader no-padding bottom-border">
           <div className="text-left leader-head">我的推荐人信息：</div>
