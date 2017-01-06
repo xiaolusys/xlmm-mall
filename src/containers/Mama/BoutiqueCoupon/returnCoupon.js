@@ -51,11 +51,11 @@ export default class ReturnBoutiqueCoupon extends Component {
   }
 
   componentWillMount() {
-    const { unusedBotique } = this.props.coupons;
+    const { unusedBoutique } = this.props.coupons;
     const { index, type } = this.props.location.query;
 
-    if (unusedBotique && Number(index) >= 0) {
-      const coupon = unusedBotique.data[Number(index)];
+    if (unusedBoutique && Number(index) >= 0) {
+      const coupon = unusedBoutique.data[Number(index)];
       this.setState({ coupon: coupon, type: type });
     }
   }
