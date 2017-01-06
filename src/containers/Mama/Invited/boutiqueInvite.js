@@ -110,7 +110,7 @@ export default class BoutiqueInvite extends Component {
         data: {
           title: '邀请您加入精品汇',
           desc: '组建团队，成就梦想，给您准备优质产品和流量支持',
-          share_link: 'https://m.xiaolumeimei.com/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?num=3&mama_id=' + mamaInfo.data[0].id,
+          share_link: 'https://m.xiaolumeimei.com/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?mama_id=' + mamaInfo.data[0].id,
           share_img: 'http://7xogkj.com2.z0.glb.qiniucdn.com/222-ohmydeer.png?imageMogr2/thumbnail/60/format/png',
         },
       };
