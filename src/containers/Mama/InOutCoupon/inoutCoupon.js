@@ -36,6 +36,8 @@ export default class InOutCoupon extends Component {
     boutiqueCoupon: React.PropTypes.any,
     fetchMamaTranCouponProfile: React.PropTypes.func,
     cancelTransferCoupon: React.PropTypes.func,
+    sendTransferCoupon: React.PropTypes.func,
+    processTransferCoupon: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -185,19 +187,16 @@ export default class InOutCoupon extends Component {
 
   transferOutClick = (e) => {
     const { id } = e.currentTarget.dataset;
-    
     this.setState({ isSendShowDialog: true, id: id, btnEnable: false });
   }
 
   verifyOutClick = (e) => {
     const { id } = e.currentTarget.dataset;
-    
     this.setState({ isProcessShowDialog: true, id: id, btnEnable: false });
   }
 
   cancelInClick = (e) => {
     const { id } = e.currentTarget.dataset;
-    
     this.setState({ isCancelShowDialog: true, id: id, btnEnable: false });
   }
 
