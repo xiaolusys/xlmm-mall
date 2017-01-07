@@ -55,6 +55,7 @@ export default class BoutiqueInvite extends Component {
     resetAddProductToShopBag: React.PropTypes.func,
     fetchBuyNowPayInfo: React.PropTypes.func,
     buyNowCommitOrder: React.PropTypes.func,
+    saveMamaInfo: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
@@ -82,6 +83,7 @@ export default class BoutiqueInvite extends Component {
   }
 
   componentWillMount() {
+    const { mama_id } = this.props.location.query;
     const num = this.props.location.query.num ? this.props.location.query.num : 3;
     let index = 0;
     if (Number(num) === 5) {
@@ -90,6 +92,10 @@ export default class BoutiqueInvite extends Component {
       index = 1;
     }
     this.setState({ index: index });
+
+    this.props.saveMamaInfo({
+      mama_id: mama_id,
+    });
     this.props.fetchMamaInfo();
     this.props.fetchProductDetails(25115);
     this.props.fetchWechatSign();
