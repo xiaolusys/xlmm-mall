@@ -68,6 +68,7 @@ import * as mamaQrcodeAction from 'actions/mama/mamaQrcode';
 import * as mamaShopSharingAction from 'actions/mama/shopSharing';
 import * as administratorInfoAction from 'actions/mama/administratorInfo';
 import * as ninepicAction from 'actions/mama/ninepic';
+import * as recruitAction from 'actions/mama/recruit';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -136,6 +137,7 @@ const rootReducer = combineReducers({
   ninepic: createReducer(ninepicAction.name),
   boutiqueCoupon: mamaBoutiqueCouponReducer,
   mamaCommission: mamaCommissionReducer,
+  recruit: createReducer(recruitAction.name),
 });
 
 export default rootReducer;

@@ -95,6 +95,16 @@ export default class InOutCoupon extends Component {
     }
 
     if (cancelTransfer.isLoading || sendTransfer.isLoading || processTransfer.isLoading) {
+      if (nextProps.boutiqueCoupon.cancelTransfer.success && nextProps.boutiqueCoupon.cancelTransfer.data) {
+        Toast.show(nextProps.boutiqueCoupon.cancelTransfer.data.info);
+      }
+      if (nextProps.boutiqueCoupon.sendTransfer.success && nextProps.boutiqueCoupon.sendTransfer.data) {
+        Toast.show(nextProps.boutiqueCoupon.sendTransfer.data.info);
+      }
+      if (nextProps.boutiqueCoupon.processTransfer.success && nextProps.boutiqueCoupon.processTransfer.data) {
+        Toast.show(nextProps.boutiqueCoupon.processTransfer.data.info);
+      }
+
       if (this.state.activeTab === 'default') {
         this.props.resetMyInCoupon();
         this.props.fetchMyInCoupon(this.state.status, 1, this.state.pageSize);
@@ -103,15 +113,6 @@ export default class InOutCoupon extends Component {
         this.props.fetchMyOutCoupon(this.state.status, 1, this.state.pageSize);
       }
       this.setState({ btnEnable: true });
-      if (cancelTransfer.success && cancelTransfer.data) {
-        Toast.show(cancelTransfer.data.info);
-      }
-      if (sendTransfer.success && sendTransfer.data) {
-        Toast.show(sendTransfer.data.info);
-      }
-      if (processTransfer.success && processTransfer.data) {
-        Toast.show(processTransfer.data.info);
-      }
     }
   }
 
@@ -145,10 +146,10 @@ export default class InOutCoupon extends Component {
     const tabsOffsetTop = utils.dom.offsetTop('.return-list-tabs');
 
     if (scrollTop === documentHeight - windowHeight && this.state.hasMore) {
-      if (this.state.activeTab === 'default' && !this.props.boutiqueCoupon.myReturnCoupon.isLoading) {
+      if (this.state.activeTab === 'default' && !this.props.boutiqueCoupon.myInCoupon.isLoading) {
         this.props.fetchMyInCoupon(this.state.status, pageIndex + 1, pageSize);
       }
-      if (this.state.activeTab === 'out' && !this.props.boutiqueCoupon.tomeReturnCoupon.isLoading) {
+      if (this.state.activeTab === 'out' && !this.props.boutiqueCoupon.myOutCoupon.isLoading) {
         this.props.fetchMyOutCoupon(this.state.status, pageIndex + 1, pageSize);
       }
     }
@@ -233,12 +234,14 @@ export default class InOutCoupon extends Component {
           <div className="col-xs-12 no-padding no-margin">
             <p className="col-xs-7 text-left font-xs no-padding no-margin">{'数量' + member.coupon_num + '张 ' + member.transfer_status_display}</p>
             <If condition={this.state.activeTab === 'out'}>
-              <If condition={member.is_buyable}>
+              <Choose>
+              <When condition={member.is_buyable}>
                 <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding no-margin" type="button" data-id={member.id} onClick={this.transferOutClick} disabled={!this.state.btnEnable}>发放</button>
-              </If>
-              <If condition={member.is_processable}>
+              </When>
+              <When condition={member.is_processable}>
                 <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding no-margin" type="button" data-id={member.id} onClick={this.verifyOutClick} disabled={!this.state.btnEnable}>审核</button>
-              </If>
+              </When>
+              </Choose>
             </If>
             <If condition={member.is_cancelable && this.state.activeTab === 'default'}>
               <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding no-margin" type="button" data-id={member.id} onClick={this.cancelInClick} disabled={!this.state.btnEnable}>取消</button>
