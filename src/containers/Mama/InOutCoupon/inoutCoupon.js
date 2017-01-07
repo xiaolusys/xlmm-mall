@@ -228,7 +228,7 @@ export default class InOutCoupon extends Component {
           <p className="col-xs-12 text-center font-xs no-padding no-margin">{'面值:' + member.coupon_value + '元'}</p>
         </div>
         <div className="col-xs-9 member-detail no-padding no-margin">
-        <div className="col-xs-12 no-padding no-margin">
+          <div className="col-xs-12 no-padding no-margin">
             <p className="col-xs-12 text-left font-xs no-padding no-margin">{member.template_name ? member.template_name.substring(0, 16) : ''}</p>
           </div>
           <div className="col-xs-12 no-padding no-margin">
