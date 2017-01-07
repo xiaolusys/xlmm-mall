@@ -225,8 +225,12 @@ export default class InOutCoupon extends Component {
       <li key={index} className="col-xs-12 member-item bottom-border no-padding" data-index={index} >
         <div className="col-xs-3 member-img-div no-padding">
           <img className="col-xs-12 member-img no-padding" src={member.product_img} />
+          <p className="col-xs-12 text-center font-xs no-padding no-margin">{'面值:' + member.coupon_value + '元'}</p>
         </div>
         <div className="col-xs-9 member-detail no-padding no-margin">
+          <div className="col-xs-12 no-padding no-margin">
+            <p className="col-xs-12 text-left font-xs no-padding no-margin">{member.template_name ? member.template_name.substring(0, 16) : ''}</p>
+          </div>
           <div className="col-xs-12 no-padding no-margin">
             <p className="col-xs-8 text-left font-xs no-padding no-margin">{'发放人:' + member.from_mama_nick}</p>
             <p className="col-xs-8 text-left font-xs no-padding no-margin">{'接收人:' + member.to_mama_nick}</p>
@@ -248,7 +252,7 @@ export default class InOutCoupon extends Component {
             </If>
           </div>
           <div className="col-xs-12 no-padding no-margin">
-            <p className="text-left font-xs no-padding no-margin">{member.created.replace('T', ' ')}</p>
+            <p className="text-left font-xs no-padding no-margin">{member.created ? member.created.replace('T', ' ') : member.date_field}</p>
           </div>
         </div>
       </li>
