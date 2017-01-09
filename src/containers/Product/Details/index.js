@@ -301,12 +301,13 @@ export default class Detail extends Component {
   }
 
   onBackBtnClick = (e) => {
-    // if (utils.detector.isApp()) {
-    //   plugins.invoke({ method: 'callNativeBack' });
-    // } else {
-    //   this.context.router.goSmartBack();
-    // }
-    this.context.router.goSmartBack();
+    // 活动中只有一个商品，打开的是一个详情页，那么会退要调用app的back函数
+    if (utils.detector.isApp()) {
+      plugins.invoke({ method: 'callNativeBack' });
+    } else {
+      this.context.router.goSmartBack();
+    }
+    // this.context.router.goSmartBack();
     e.preventDefault();
   }
 
