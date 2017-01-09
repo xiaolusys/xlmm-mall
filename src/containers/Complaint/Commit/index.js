@@ -10,6 +10,7 @@ import { Toast } from 'components/Toast';
 import { Checkbox } from 'components/Checkbox';
 import * as actionCreators from 'actions/complaint/commit';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 
 import './index.scss';
 
@@ -101,10 +102,20 @@ export default class Commit extends Component {
     e.preventDefault();
   }
 
+  onLeftBtnClick = (e) => {
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeBack',
+      });
+      return;
+    }
+    this.context.router.goBack();
+  }
+
   render() {
     return (
       <div>
-        <Header title="投诉建议" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText="历史记录" onRightBtnClick={this.onRightBtnClick} />
+        <Header title="投诉建议" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="历史记录" onRightBtnClick={this.onRightBtnClick} />
         <div className="content complaint-container">
           <div className="col-xs-12 padding-bottom-xs complaint-type">
             <Checkbox className="col-xs-4 padding-top-xs no-padding" value="1" checked={this.state.typeIndex === 1} onChange={this.onComplaintTypeChange}> 订单相关</Checkbox>

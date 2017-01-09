@@ -6,6 +6,8 @@ import _ from 'underscore';
 import * as actionCreators from 'actions/faq/faqcategories';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
+import * as utils from 'utils';
+import * as plugins from 'plugins';
 
 import './index.scss';
 
@@ -39,6 +41,16 @@ export default class FaqCategory extends Component {
     this.props.fetchCategories();
   }
 
+  onLeftBtnClick = (e) => {
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeBack',
+      });
+      return;
+    }
+    this.context.router.goBack();
+  }
+
   render() {
     const props = this.props;
     const { children, isLoading, error } = this.props;
@@ -48,7 +60,7 @@ export default class FaqCategory extends Component {
     }
     return (
       <div>
-        <Header title="常见问题" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="常见问题" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} />
         <div className="content">
           {isLoading ? <Loader/> : null}
           <ul className="faq-list">

@@ -78,6 +78,17 @@ export default class BoutiqueExchg extends Component {
   }
 
   onLeftBtnClick = (e) => {
+    if (utils.detector.isApp() && utils.detector.isIOS()) {
+      plugins.invoke({
+        method: 'callNativeBackToHome',
+      });
+      return;
+    } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
+      plugins.invoke({
+        method: 'callNativeBack',
+      });
+      return;
+    }
     this.context.router.goBack();
   }
 
@@ -126,16 +137,21 @@ export default class BoutiqueExchg extends Component {
   render() {
     const { mamaLeader } = this.props.mamaBaseInfo;
     const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
-    const hasHeader = !utils.detector.isApp();
+    let hasHeader = true;
+    // temp code
+    if (utils.detector.isApp() && utils.detector.isIOS()) {
+      if (utils.detector.appVersion() <= 223) {
+        hasHeader = false;
+      }
+    } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
+        if (utils.detector.appVersion() <= 138) {
+          hasHeader = false;
+        }
+    }
 
     return (
       <div className="boutiqueexchg-container no-padding">
         <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce} hide={!hasHeader}/>
-        <If condition={!hasHeader}>
-          <div className="intro-div">
-            <p className="intro-btn icon-yellow" onClick={this.enterEliteIntroduce}>精品汇介绍</p>
-          </div>
-        </If>
         <If condition={(mamaTranCouponProfile.success && mamaTranCouponProfile.data)}>
         <div className="elite-score bottom-border">
           <div className="elite-score-p">
