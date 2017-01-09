@@ -78,7 +78,12 @@ export default class BoutiqueExchg extends Component {
   }
 
   onLeftBtnClick = (e) => {
-    if (utils.detector.isApp()) {
+    if (utils.detector.isApp() && utils.detector.isIOS()) {
+      plugins.invoke({
+        method: 'callNativeBackToHome',
+      });
+      return;
+    } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
       plugins.invoke({
         method: 'callNativeBack',
       });
