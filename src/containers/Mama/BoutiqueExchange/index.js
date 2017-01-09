@@ -142,11 +142,6 @@ export default class BoutiqueExchg extends Component {
     return (
       <div className="boutiqueexchg-container no-padding">
         <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce} />
-        <If condition={!hasHeader}>
-          <div className="intro-div">
-            <p className="intro-btn icon-yellow" onClick={this.enterEliteIntroduce}>精品汇介绍</p>
-          </div>
-        </If>
         <If condition={(mamaTranCouponProfile.success && mamaTranCouponProfile.data)}>
         <div className="elite-score bottom-border">
           <div className="elite-score-p">

@@ -83,7 +83,7 @@ export default class EliteMama extends Component {
 
     return (
       <div className="home-root">
-        <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} hide={utils.detector.isApp()}/>
+        <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} />
         <div className="container" id="id-container">
         <h3>小鹿美美｜加入精英妈妈精品汇！</h3>
           <div className="sub-title">
