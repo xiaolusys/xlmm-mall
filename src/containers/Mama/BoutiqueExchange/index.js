@@ -137,11 +137,21 @@ export default class BoutiqueExchg extends Component {
   render() {
     const { mamaLeader } = this.props.mamaBaseInfo;
     const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
-    const hasHeader = !utils.detector.isApp();
+    let hasHeader = true;
+    // temp code
+    if (utils.detector.isApp() && utils.detector.isIOS()) {
+      if (utils.detector.appVersion() <= 223) {
+        hasHeader = false;
+      }
+    } else if (utils.detector.isApp() && utils.detector.isAndroid()) {
+        if (utils.detector.appVersion() <= 138) {
+          hasHeader = false;
+        }
+    }
 
     return (
       <div className="boutiqueexchg-container no-padding">
-        <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce} />
+        <Header title="精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="介绍" onRightBtnClick={this.enterEliteIntroduce} hide={!hasHeader}/>
         <If condition={(mamaTranCouponProfile.success && mamaTranCouponProfile.data)}>
         <div className="elite-score bottom-border">
           <div className="elite-score-p">
