@@ -67,12 +67,12 @@ export default class EliteMama extends Component {
   }
 
   onLeftBtnClick = (e) => {
-    if (utils.detector.isApp()) {
+    /* if (utils.detector.isApp()) {
       plugins.invoke({
         method: 'callNativeBack',
       });
       return;
-    }
+    }*/
     this.context.router.goBack();
   }
 

@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import _ from 'underscore';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
+import * as plugins from 'plugins';
 import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
@@ -92,6 +93,16 @@ export default class List extends Component {
     }
   }
 
+  onLeftBtnClick = (e) => {
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeBack',
+      });
+      return;
+    }
+    this.context.router.goBack();
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -105,7 +116,7 @@ export default class List extends Component {
     const profileData = this.props.profile.data && this.props.profile.data || [];
     return (
       <div>
-        <Header title="历史记录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title="历史记录" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="content">
           <ul className="complaint-reply-list">
             {data.map((complaint) => {
