@@ -476,11 +476,12 @@ export default class Detail extends Component {
 
   renderProductInfo(info) {
     const { favoriteStatus } = this.state;
+    console.log(info.name);
     return (
       <div>
         <div className="product-info bottom-border bg-white">
           <div className="row no-margin">
-            <p className="col-xs-8 no-padding no-wrap font-md">{info.name}</p>
+            <p className="col-xs-8 no-padding font-xs">{info.name}</p>
             <div className="col-xs-4 no-padding icon-favorite" onClick={this.onFavoriteBtnClick}>
               <If condition={favoriteStatus}>
                 <i className="col-xs-3 icon-favorite-yes font-lg text-left"></i>
