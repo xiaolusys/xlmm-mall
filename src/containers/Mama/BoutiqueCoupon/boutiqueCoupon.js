@@ -139,11 +139,6 @@ export default class BoutiqueCoupon extends Component {
     this.context.router.goBack();
   }
 
-  onJumpClick = (e) => {
-    window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
-    e.preventDefault();
-  }
-
   directReturnClick = (e) => {
     const { index, type } = e.currentTarget.dataset;
     this.context.router.push('/mama/returncoupon/?index=' + index + '&type=' + type);

@@ -422,6 +422,24 @@ export default class Detail extends Component {
     e.preventDefault();
   }
 
+  onClickJumpToBuyCoupon = (e) => {
+    const { url } = e.currentTarget.dataset;
+    const prefix = 'com.jimei.xlmm://app/v1/webview?';
+    let param = '';
+    if (url) {
+      param = url.substring(prefix.length);
+      const params = param.split('&');
+      let jumpUrl = '';
+      if (params[0].indexOf('is_native') >= 0) {
+        jumpUrl = params[1].substring(4);
+      } else {
+        jumpUrl = params[0].substring(4);
+      }
+      window.location.href = jumpUrl;
+    }
+    e.preventDefault();
+  }
+
   getProduct = (productId) => {
     const skus = this.props.details.sku_info;
     let product = {};
@@ -475,9 +493,10 @@ export default class Detail extends Component {
     );
   }
 
-  renderProductInfo(info) {
+  renderProductInfo(details) {
     const { favoriteStatus } = this.state;
-    console.log(info.name);
+    const info = details.detail_content;
+
     return (
       <div>
         <div className="product-info bottom-border bg-white">
@@ -504,6 +523,12 @@ export default class Detail extends Component {
             </p>
           </div>
         </div>
+        <If condition={info.is_boutique}>
+          <p className="boutique_buy_coupon bottom-border bg-white margin-bottom-xxs">
+            <span>精品商品</span>
+            <span className="pull-right font-orange" data-url={details.buy_coupon_url} onClick={this.onClickJumpToBuyCoupon}>前往购券></span>
+          </p>
+        </If>
         <p className="on-shelf-countdown bottom-border bg-white margin-bottom-xxs">
           <span>剩余时间</span>
           <Timer className="pull-right" endDateString={info.offshelf_time} />
@@ -689,7 +714,7 @@ export default class Detail extends Component {
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             {this.renderCarousel(details.detail_content.head_imgs)}
-            {this.renderProductInfo(details.detail_content)}
+            {this.renderProductInfo(details)}
             {this.renderPromotion()}
             {this.renderProductProps(details.comparison.attributes)}
             <If condition={!_.isEmpty(details.comparison)}>
