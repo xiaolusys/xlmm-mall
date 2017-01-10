@@ -102,6 +102,24 @@ export default class BuyCoupon extends Component {
       }
     }
 
+    if (nextProps.mamaInfo.error) {
+      switch (nextProps.mamaInfo.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
+          return;
+        case 500:
+          Toast.show(nextProps.mamaInfo.data.detail);
+          break;
+        default:
+          Toast.show(nextProps.mamaInfo.data.detail);
+          break;
+      }
+    }
+
     if (productDetails.success && productDetails.data && this.props.productDetails.isLoading) {
       this.setState({ productDetail: productDetails.data });
       if (productDetails.data.sku_info[0].elite_score >= constants.minBuyScore) {
