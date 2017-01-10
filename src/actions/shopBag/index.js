@@ -15,7 +15,7 @@ export const names = {
 /**
 * @type 商品类型；0：普通，3:团购, 5:优惠券订单,只能用优惠券购买，即精品汇商品
 **/
-export const fetchShopBag = (type) => {
+export const fetchShopBag = (type = 0) => {
   const action = createAction(names.FETCH_SHOP_BAG);
   return (dispatch) => {
     dispatch(action.request());
@@ -66,7 +66,7 @@ export const updateQuantity = (id, requestAction, type) => {
   };
 };
 
-export const fetchShopBagQuantity = (type) => {
+export const fetchShopBagQuantity = (type = 0) => {
   const action = createAction(names.FETCH_SHOP_BAG_QUANTITY);
   return (dispatch) => {
     dispatch(action.request());
