@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'underscore';
-import { Header } from 'components/Header';
+import { InputHeader } from 'components/InputHeader';
 import { Image } from 'components/Image';
 import { Checkbox } from 'components/Checkbox';
 import { Input } from 'components/Input';
@@ -46,7 +46,6 @@ export default class TranCouponList extends Component {
   }
 
   state = {
-
   }
 
   componentWillMount() {
@@ -80,6 +79,17 @@ export default class TranCouponList extends Component {
       cid = 0;
     }
     window.location.href = '/mall/product/categories' + (cid ? `?cid=${cid}` : '') + '&title=分类' + '&product_type=coupon';
+  }
+
+  onInputChange = (e) => {
+    const value = e.target.value;
+    this.setState({ searchName: value });
+  }
+
+  onSearchClick = (e) => {
+    if (this.state.searchName && this.state.searchName.length > 0) {
+      console.log(this.state.searchName);
+    }
   }
 
   renderProduct = (product, index) => {
@@ -117,11 +127,11 @@ export default class TranCouponList extends Component {
 
   render() {
     const { productDetails, mamaInfo } = this.props;
-    const trasparentHeader = true;
+    const trasparentHeader = false;
 
     return (
       <div className=" content-white-bg buycoupon">
-        <Header trasparent={trasparentHeader} title="入券" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <InputHeader placeholder="输入查询的商品" onInputChange={this.onInputChange} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText="搜索" onRightBtnClick={this.onSearchClick} />
         <div>
         <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data}>
           {productDetails.data.map((item, index) => this.renderProduct(item, index))
