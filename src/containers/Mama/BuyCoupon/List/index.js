@@ -13,16 +13,18 @@ import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as detailsAction from 'actions/product/details';
+import * as searchAction from 'actions/product/search';
 import * as plugins from 'plugins';
 
 import './index.scss';
 
-const actionCreators = _.extend(mamaInfoAction, detailsAction);
+const actionCreators = _.extend(mamaInfoAction, detailsAction, searchAction);
 
 @connect(
   state => ({
     mamaInfo: state.mamaInfo,
     productDetails: state.productDetails,
+    search: state.searchProduct,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -34,6 +36,8 @@ export default class TranCouponList extends Component {
     fetchMamaInfo: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
     productDetails: React.PropTypes.object,
+    search: React.PropTypes.object,
+    searchProduct: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -46,6 +50,7 @@ export default class TranCouponList extends Component {
   }
 
   state = {
+    searchFlag: false,
   }
 
   componentWillMount() {
@@ -54,12 +59,14 @@ export default class TranCouponList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, productDetails } = nextProps;
+    const { mamaInfo, productDetails, search } = nextProps;
+
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
+
   }
 
   componentWillUnmount() {
@@ -81,6 +88,15 @@ export default class TranCouponList extends Component {
     window.location.href = '/mall/product/categories' + (cid ? `?cid=${cid}` : '') + '&title=分类' + '&product_type=coupon';
   }
 
+  onLeftBtnClick = (e) => {
+    if (this.state.searchFlag) {
+      this.setState({ searchFlag: false, searchName: '' });
+      this.context.router.replace('/trancoupon/list');
+    } else {
+      this.context.router.goBack();
+    }
+  }
+
   onInputChange = (e) => {
     const value = e.target.value;
     this.setState({ searchName: value });
@@ -88,7 +104,8 @@ export default class TranCouponList extends Component {
 
   onSearchClick = (e) => {
     if (this.state.searchName && this.state.searchName.length > 0) {
-      console.log(this.state.searchName);
+      this.props.searchProduct(this.state.searchName, 1);
+      this.setState({ searchFlag: true });
     }
   }
 
@@ -97,6 +114,27 @@ export default class TranCouponList extends Component {
     const productDetails = product;
     const imgSrc = (productDetails && productDetails.detail_content) ? productDetails.detail_content.head_img : '';
     let sku = null;
+
+    if (this.state.searchFlag) {
+      return (
+      <div key={index} className="col-xs-6 product-item bottom-border" data-index={index} onClick={this.onProductClick}>
+        <Image className="coupon-img" src={product.head_img} quality={70} />
+        <div className="product-info bg-white">
+          <div className="row no-margin">
+            <p className="no-padding no-wrap font-xs">{product.name }</p>
+          </div>
+          <div className="row no-margin">
+            <p className="no-wrap">
+              <span className="font-xs">{'￥' + (product.lowest_agent_price)}</span>
+              <span className="font-grey">/</span>
+              <span className="font-xs font-grey-light text-line-through">{'￥' + (product.lowest_std_sale_price)}</span>
+              <span className="font-grey font-xs" style={{ paddingLeft: '8px' }}>{(product.elite_score) ? '积分' + product.elite_score : ''}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+    }
 
     for (let i = 0; i < productDetails.sku_info.length; i++) {
       if (productDetails.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
@@ -113,7 +151,7 @@ export default class TranCouponList extends Component {
             <p className="no-padding no-wrap font-xs">{(productDetails.detail_content && sku) ? productDetails.detail_content.name + '/' + sku.name : '' }</p>
           </div>
           <div className="row no-margin">
-            <p className="">
+            <p className="no-wrap">
               <span className="font-xs">{'￥' + (sku ? sku.agent_price : '')}</span>
               <span className="font-grey">/</span>
               <span className="font-xs font-grey-light text-line-through">{'￥' + (sku ? sku.std_sale_price : '')}</span>
@@ -126,16 +164,25 @@ export default class TranCouponList extends Component {
   }
 
   render() {
-    const { productDetails, mamaInfo } = this.props;
+    const { productDetails, mamaInfo, search } = this.props;
     const trasparentHeader = false;
 
     return (
       <div className=" content-white-bg buycoupon">
-        <InputHeader placeholder="输入查询的商品" onInputChange={this.onInputChange} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} rightText="搜索" onRightBtnClick={this.onSearchClick} />
+        <InputHeader placeholder="输入查询的商品" onInputChange={this.onInputChange} leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="搜索" onRightBtnClick={this.onSearchClick} />
         <div>
-        <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data}>
+        <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data && !this.state.searchFlag}>
           {productDetails.data.map((item, index) => this.renderProduct(item, index))
           }
+        </If>
+        <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count > 0) && mamaInfo.success && mamaInfo.data && this.state.searchFlag}>
+          {search.searchProduct.data.results.map((item, index) => this.renderProduct(item, index))
+          }
+        </If>
+        <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count === 0) && this.state.searchFlag}>
+          <div className="empty-search">
+            <p>抱歉，商城没有您要查询的商品！</p>
+          </div>
         </If>
         </div>
       </div>

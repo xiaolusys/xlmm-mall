@@ -117,6 +117,16 @@ export default class BoutiqueExchg extends Component {
         case '7':
           this.context.router.push('/mama/recruit');
           break;
+        case '8':
+          if (utils.detector.isApp()) {
+            plugins.invoke({
+              method: 'jumpToNativeLocation',
+              data: { target_url: 'com.jimei.xlmm://app/v1/vip_0day' },
+            });
+          } else {
+            this.context.router.push('/mama/everydaypush');
+          }
+          break;
         default:
       }
     e.preventDefault();
@@ -246,6 +256,14 @@ export default class BoutiqueExchg extends Component {
             </div>
             <div className="col-xs-9" >
               <p className=" ">招募妈妈</p>
+            </div>
+          </div>
+          <div className="col-xs-6 info-cat no-padding" data-id={8} onClick={this.onInfoClick}>
+            <div className="col-xs-3" >
+              <div className="icon-xiaolu" />
+            </div>
+            <div className="col-xs-9" >
+              <p className=" ">每日推送</p>
             </div>
           </div>
         </div>
