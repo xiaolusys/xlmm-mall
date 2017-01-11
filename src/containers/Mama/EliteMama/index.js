@@ -107,7 +107,7 @@ export default class EliteMama extends Component {
           </div>
           <div className="list-group">
             <a href="#" className="list-group-item" style={{ color: '#FF1493' }}><b>5. 如何成为精英妈妈？</b></a>
-            <a href="#" className="list-group-item">精英妈妈实行邀请制，第一批精英妈妈在现有小鹿妈妈群体中由系统评估并邀请产生。<br/><br/>若您想要成为精英妈妈，请联系您的上属妈妈，或者直接联系管理员。</a>
+            <a href="#" className="list-group-item">精英妈妈实行邀请制，第一批精英妈妈在现有小鹿妈妈群体中由系统评估并邀请产生。<br/><br/>若您想要成为精英妈妈，请联系您的上属妈妈，或者关注小鹿美美公众号直接联系管理员。</a>
           </div>
           <div className="list-group">
             <a href="#" className="list-group-item" style={{ color: '#FF1493' }}><b>6. 精品汇将带来何种变革？</b></a>
@@ -115,7 +115,7 @@ export default class EliteMama extends Component {
           </div>
           <div className="list-group">
             <a href="#" className="list-group-item" style={{ color: '#FF1493' }}><b>7. 其他问题？</b></a>
-            <a href="#" className="list-group-item">请联系管理员或上属妈妈咨询。</a>
+            <a href="#" className="list-group-item">请关注小鹿美美公众号联系管理员或上属妈妈咨询。</a>
           </div>
         </div>
       </div>
