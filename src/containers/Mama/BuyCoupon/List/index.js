@@ -38,6 +38,7 @@ export default class TranCouponList extends Component {
     productDetails: React.PropTypes.object,
     search: React.PropTypes.object,
     searchProduct: React.PropTypes.func,
+    resetSearchProduct: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -104,6 +105,7 @@ export default class TranCouponList extends Component {
 
   onSearchClick = (e) => {
     if (this.state.searchName && this.state.searchName.length > 0) {
+      this.props.resetSearchProduct();
       this.props.searchProduct(this.state.searchName, 1);
       this.setState({ searchFlag: true });
     }
