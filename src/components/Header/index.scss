@@ -32,11 +32,11 @@ $bar-bg: #fff !default;
     > .title {
       position: absolute;
       top: 0;
-      right: 0;
-      left: 0;
+      right: 40px;
+      left: 40px;
       z-index: 0;
       overflow: hidden;
-      margin: 0 10px;
+      margin: 0 8px;
       min-width: 30px;
       height: 43px;
       text-align: center;
