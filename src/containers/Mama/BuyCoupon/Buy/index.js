@@ -94,6 +94,12 @@ export default class BuyCoupon extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
+    if (mamaInfo.success && mamaInfo.data && mamaInfo.data.length === 0) {
+        Toast.show('您还不是小鹿妈妈，无法购买精品券。请关注小鹿美美公众号或联系客服了解更多信息。');
+        this.context.router.replace('/mama/elitemama');
+        return;
+    }
+
     if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
       for (let i = 0; i < productDetails.data.sku_info.length; i++) {
         if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
@@ -113,10 +119,10 @@ export default class BuyCoupon extends Component {
           return;
         case 500:
           Toast.show(nextProps.mamaInfo.data.detail);
-          break;
+          return;
         default:
           Toast.show(nextProps.mamaInfo.data.detail);
-          break;
+          return;
       }
     }
 
