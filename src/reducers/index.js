@@ -21,6 +21,7 @@ import userCashoutReducer from './userCashoutReducer';
 import mamaDetailInfoReducer from './mamaDetailInfoReducer';
 import mamaBoutiqueCouponReducer from './boutiqueCouponReducer';
 import mamaCommissionReducer from './commissionListReducer';
+import productSearchReducer from './productSearchReducer';
 import * as faqCategoriesAction from 'actions/faq/faqcategories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -138,6 +139,7 @@ const rootReducer = combineReducers({
   boutiqueCoupon: mamaBoutiqueCouponReducer,
   mamaCommission: mamaCommissionReducer,
   recruit: createReducer(recruitAction.name),
+  searchProduct: productSearchReducer,
 });
 
 export default rootReducer;
