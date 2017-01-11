@@ -44,8 +44,9 @@ $bar-bg: #fff !default;
       white-space: nowrap;
       font-size: 14px;
       font-weight: 500;
-      line-height: 44px;
+      line-height: 33px;
       border: 1px solid #f5a623;
+      vertical-align:middle;
     }
     > .image-title {
       position: absolute;
