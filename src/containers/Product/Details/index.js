@@ -523,7 +523,7 @@ export default class Detail extends Component {
             </p>
           </div>
         </div>
-        <If condition={info.is_boutique}>
+        <If condition={info.is_boutique && this.props.shopBag.shopBagQuantity.success && this.props.shopBag.shopBagQuantity.data}>
           <p className="boutique_buy_coupon bottom-border bg-white margin-bottom-xxs">
             <span>精品商品</span>
             <span className="pull-right font-orange" data-url={details.buy_coupon_url} onClick={this.onClickJumpToBuyCoupon}>前往购券></span>
