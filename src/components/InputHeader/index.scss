@@ -32,7 +32,7 @@ $bar-bg: #fff !default;
     > .title {
       position: absolute;
       top: 0;
-      right: 0;
+      right: 40px;
       left: 64px;
       z-index: 0;
       overflow: hidden;
@@ -42,7 +42,7 @@ $bar-bg: #fff !default;
       text-align: left;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: 17px;
+      font-size: 14px;
       font-weight: 500;
       line-height: 44px;
       border: 1px solid #f5a623;
