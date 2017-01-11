@@ -75,8 +75,7 @@ export default class TranCouponList extends Component {
   }
 
   onProductClick = (e) => {
-    const { index } = e.currentTarget.dataset;
-    const modelid = this.props.productDetails.data[index].id;
+    const { index, modelid } = e.currentTarget.dataset;
     // this.context.router.push('/product/details/' + modelid);
     window.location.href = '/mall/buycoupon?index=' + index + '&modelid=' + modelid;
   }
@@ -119,7 +118,7 @@ export default class TranCouponList extends Component {
 
     if (this.state.searchFlag) {
       return (
-      <div key={index} className="col-xs-6 product-item bottom-border" data-index={index} onClick={this.onProductClick}>
+      <div key={index} className="col-xs-6 product-item bottom-border" data-index={index} data-modelid={product.id} onClick={this.onProductClick}>
         <Image className="coupon-img" src={product.head_img} quality={70} />
         <div className="product-info bg-white">
           <div className="row no-margin">
@@ -146,7 +145,7 @@ export default class TranCouponList extends Component {
     }
 
     return (
-      <div key={index} className="col-xs-6 product-item bottom-border" data-index={index} onClick={this.onProductClick}>
+      <div key={index} className="col-xs-6 product-item bottom-border" data-index={index} data-modelid={product.id} onClick={this.onProductClick}>
         <Image className="coupon-img" src={imgSrc} quality={70} />
         <div className="product-info bg-white">
           <div className="row no-margin">
