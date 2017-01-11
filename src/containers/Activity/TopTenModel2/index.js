@@ -257,7 +257,7 @@ export default class TopTenModel2 extends Component {
                       <Image quality={50} src={product.pic} data-modelid={product.modelId} onClick={this.onProductClick}/>
                       <div className="row no-margin">
                         <div className="col-xs-8">
-                          <p className="row no-margin no-wrap">{product.productName}</p>
+                          <p className="row no-margin">{product.productName}</p>
                           <p className="row no-margin">
                             <span className="actual-pice">{`¥${product.lowestPrice}`}</span>
                             <span className="original-price font-grey-light text-line-through">{product.stdPrice}</span>
