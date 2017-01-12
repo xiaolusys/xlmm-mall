@@ -112,7 +112,7 @@ export default class BuyCoupon extends Component {
       }
     }
 
-    if (!(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].charge_status === 'charged'
+    if (this.props.mamaInfo.isLoading && mamaInfo.success && mamaInfo.data && !(mamaInfo.data[0].charge_status === 'charged'
         && (mamaInfo.data[0].is_elite_mama))) {
         Toast.show('您还不是小鹿精英妈妈，无法申请或购买精品券。请关注小鹿美美公众号或联系客服了解更多信息。');
         this.context.router.replace('/mama/elitemama');
