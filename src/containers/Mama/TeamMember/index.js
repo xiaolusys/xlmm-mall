@@ -91,7 +91,8 @@ export default class MamaTeamMember extends Component {
   }
 
   onJumpClick = (e) => {
-    window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
+    // window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
+    this.context.router.push('/mama/inoutcoupon');
     e.preventDefault();
   }
 
