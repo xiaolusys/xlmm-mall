@@ -132,6 +132,30 @@ export default class BoutiqueExchg extends Component {
     e.preventDefault();
   }
 
+  getLevelName = (name) => {
+    let levelName = '';
+    switch (name) {
+      case 'Associate':
+        levelName = '经理';
+        break;
+      case 'Director':
+        levelName = '主管';
+        break;
+      case 'Partner':
+        levelName = '合伙人';
+        break;
+      case 'SP':
+        levelName = '高级合伙人';
+        break;
+      case 'VP':
+        levelName = '副总裁';
+        break;
+      default:
+        break;
+    }
+    return levelName;
+  }
+
  enterEliteIntroduce = (e) => {
     this.context.router.push('/mama/elitemama');
   }
@@ -148,6 +172,7 @@ export default class BoutiqueExchg extends Component {
     const { mamaLeader } = this.props.mamaBaseInfo;
     const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
     let hasHeader = true;
+    const level = this.getLevelName(mamaTranCouponProfile.data.elite_level);
     // temp code
     if (utils.detector.isApp() && utils.detector.isIOS()) {
       if (utils.detector.appVersion() <= 223) {
@@ -165,7 +190,10 @@ export default class BoutiqueExchg extends Component {
         <If condition={(mamaTranCouponProfile.success && mamaTranCouponProfile.data)}>
         <div className="elite-score bottom-border">
           <div className="elite-score-p">
-            <span>{'我的ID:' + mamaTranCouponProfile.data.mama_id + ',总共购入' + mamaTranCouponProfile.data.bought_num + '张券,积分:'}</span>
+            <span>{'ID:' + mamaTranCouponProfile.data.mama_id + '   ' + '当前等级:' + level}</span>
+          </div>
+          <div className="elite-score-p">
+            <span>{'积分:'}</span>
             <span className="font-orange">{mamaTranCouponProfile.data.elite_score}</span>
             <span>{',还差' + mamaTranCouponProfile.data.upgrade_score + '积分升级。'}</span>
           </div>
