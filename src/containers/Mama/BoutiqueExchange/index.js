@@ -141,14 +141,14 @@ export default class BoutiqueExchg extends Component {
       case 'Director':
         levelName = '主管';
         break;
+      case 'VP':
+        levelName = '副总裁';
+        break;
       case 'Partner':
         levelName = '合伙人';
         break;
       case 'SP':
         levelName = '高级合伙人';
-        break;
-      case 'VP':
-        levelName = '副总裁';
         break;
       default:
         break;
