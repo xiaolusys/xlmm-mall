@@ -51,7 +51,9 @@ export default class List extends Component {
 
   componentWillMount() {
     const { query } = this.props.location;
-    this.props.fetchCouponsByCartid(query.cartIds);
+    if (query.cartIds) {
+      this.props.fetchCouponsByCartid(query.cartIds);
+    }
   }
 
   componentDidMount() {

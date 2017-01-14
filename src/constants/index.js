@@ -67,3 +67,14 @@ export const disabledDownloadApp = [
 
 export const minBuyScore = 30;
 export const restrictAssociateBuyScore = false;
+
+export const transferTypes = [
+  '退券',
+  '转给下属',
+  '买货',
+  '买券',
+  '下属退券',
+  '退货退券',
+  '系统赠送',
+  '兑换订单',
+];
