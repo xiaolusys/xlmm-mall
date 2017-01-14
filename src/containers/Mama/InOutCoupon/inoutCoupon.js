@@ -236,7 +236,7 @@ export default class InOutCoupon extends Component {
             <p className="col-xs-8 text-left font-xs no-padding no-margin">{'接收人:' + ((member.coupon_to_mama_id === 0) ? '小鹿精品商城' : member.to_mama_nick)}</p>
           </div>
           <div className="col-xs-12 no-padding no-margin">
-            <p className="col-xs-7 text-left font-xs no-padding no-margin">{'数量' + member.coupon_num + '张 ' + member.transfer_status_display}</p>
+            <p className="col-xs-7 text-left font-xs no-padding no-margin">{member.coupon_num + '张 ' + constants.transferTypes[member.transfer_type - 1] + ' ' + member.transfer_status_display}</p>
             <If condition={this.state.activeTab === 'out'}>
               <Choose>
               <When condition={member.is_buyable}>
