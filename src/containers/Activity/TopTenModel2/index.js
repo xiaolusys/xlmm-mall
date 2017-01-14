@@ -209,7 +209,7 @@ export default class TopTenModel2 extends Component {
   render() {
     const modelData = this.props.topTen.data || {};
     return (
-      <div>
+      <div className="xiaolu_activity">
         <Header title={modelData.title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()} />
         <div className="content activity-topTen-model-2 bg-white">
           <Image quality={50} className="col-md-6 col-md-offset-3 col-xs-12 no-padding" src={modelData.banner} />
