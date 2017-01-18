@@ -602,7 +602,7 @@ export default class Commit extends Component {
                   </div>
                 );
               case 4:
-                if (item.pid === 4 && !item.use_coin_allowed) {
+                if (!(item.pid === 4 && item.use_coin_allowed && item.value > 0)) {
                   return null;
                 }
                 return (
