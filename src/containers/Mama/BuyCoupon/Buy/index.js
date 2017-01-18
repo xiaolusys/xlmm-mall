@@ -371,7 +371,9 @@ export default class BuyCoupon extends Component {
     const { sku, num } = this.state;
     const { type } = e.currentTarget.dataset;
 
-    this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num, 6); // use vitual cart type
+    if (sku) {
+      this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num, 6); // use vitual cart type
+    }
 
     e.preventDefault();
   }
