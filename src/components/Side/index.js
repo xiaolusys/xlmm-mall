@@ -69,10 +69,10 @@ export class Side extends Component {
           </div>
           <div className="col-xs-4">
             <Link to="/user/point">
-              <p>{profile.score || 0}</p>
+              <p>{profile.xiaolu_coin || 0}</p>
               <p>
                 <i className="icon-database"></i>
-                <span>积分</span>
+                <span>小鹿币</span>
               </p>
             </Link>
           </div>
