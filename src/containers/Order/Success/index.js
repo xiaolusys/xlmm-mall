@@ -105,6 +105,7 @@ export default class Success extends Component {
               <button className="button button-stable" type="button" onClick={this.onViewOrderBtnClick}>查看订单</button>
             </If>
           </div>
+          <If condition={false}>
           <div className="redpacket-container text-center">
             <div className="redpacket">
               <img src="//og224uhh3.qnssl.com/mall/redpacket-bg.jpg" />
@@ -115,6 +116,7 @@ export default class Success extends Component {
               </div>
             </div>
           </div>
+          </If>
         </div>
         <WechatPopup active={this.state.sharePopupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>
