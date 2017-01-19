@@ -146,9 +146,10 @@ export default class Commit extends Component {
 
   onCommitOrderClick = (e) => {
     const { address, payInfo, coupon } = this.props;
-    const { walletChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
+    const { walletChecked, xiaoluCoinChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
     const mmLinkId = this.props.location.query.mmLinkId;
     const teambuyId = this.props.location.query.teambuyId;
+    console.log('commit');
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
       return;
@@ -164,7 +165,7 @@ export default class Commit extends Component {
       return;
     }
 
-    if (walletChecked && walletBalance >= payInfo.data.total_fee && _.isEmpty(coupon.data)) {
+    if ((walletChecked || xiaoluCoinChecked) && walletBalance >= payInfo.data.total_fee && _.isEmpty(coupon.data)) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
         cart_ids: payInfo.data.cart_ids,
@@ -175,12 +176,13 @@ export default class Commit extends Component {
         addr_id: address.data.id,
         channel: 'budget',
         logistics_company_id: logisticsCompanyId,
+        pay_extras: this.getPayExtras(),
         teambuy_id: teambuyId,
         mm_linkid: mmLinkId,
       });
       return;
     }
-    if (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum)) {
+    if ((walletChecked || xiaoluCoinChecked) && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum)) {
       this.props.commitOrder({
         uuid: payInfo.data.uuid,
         cart_ids: payInfo.data.cart_ids,
@@ -249,11 +251,21 @@ export default class Commit extends Component {
   }
 
   onWalletChange = (e) => {
-    this.setState({
-      walletChecked: !this.state.walletChecked,
-      walletBalance: Number(e.target.walletBalance),
-      walletPayType: e.target.payType,
-    });
+    if (e.target.payType === 'budget') {
+      this.setState({
+        walletChecked: !this.state.walletChecked,
+        walletBalance: Number(e.target.walletBalance),
+        walletPayType: e.target.payType,
+        xiaoluCoinChecked: false,
+      });
+    } else if (e.target.payType === 'xiaolucoin') {
+      this.setState({
+        walletChecked: false,
+        walletBalance: Number(e.target.walletBalance),
+        walletPayType: e.target.payType,
+        xiaoluCoinChecked: !this.state.xiaoluCoinChecked,
+      });
+    }
     e.preventDefault();
   }
 
@@ -298,14 +310,27 @@ export default class Commit extends Component {
   getPayExtras = () => {
     const self = this;
     const { coupon, payInfo } = this.props;
-    const { walletChecked, walletBalance, walletPayType } = this.state;
+    const { walletChecked, xiaoluCoinChecked, walletBalance, walletPayType } = this.state;
     const payExtras = [];
+    let couponValue = 0;
+
+    if (coupon && coupon.data && coupon.data.coupon_value) {
+      couponValue = coupon.data.coupon_value * this.state.couponNum;
+    }
+
     _.each(payInfo.data.pay_extras, (extra) => {
+      console.log(extra.pid === 4, xiaoluCoinChecked, walletBalance, payInfo.data.total_fee, couponValue);
       if (extra.pid === 3 && walletChecked && walletBalance > 0 && self.getDisplayPrice(payInfo.data.total_fee) > 0) {
         payExtras.push('pid:' + extra.pid + ':value:' + extra.value);
       }
-      if (extra.pid === 3 && walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum)) {
-        payExtras.push('pid:' + extra.pid + ':budget:' + (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum).toFixed(2));
+      if (extra.pid === 3 && walletChecked && walletBalance >= (payInfo.data.total_fee - couponValue)) {
+        payExtras.push('pid:' + extra.pid + ':budget:' + (payInfo.data.total_fee - couponValue).toFixed(2));
+      }
+      if (extra.pid === 4 && xiaoluCoinChecked && walletBalance > 0 && self.getDisplayPrice(payInfo.data.total_fee) > 0) {
+        payExtras.push('pid:' + extra.pid + ':value:' + extra.value);
+      }
+      if (extra.pid === 4 && xiaoluCoinChecked && walletBalance >= (payInfo.data.total_fee - couponValue)) {
+        payExtras.push('pid:' + extra.pid + ':budget:' + (payInfo.data.total_fee - couponValue).toFixed(2));
       }
       if (extra.pid === 2 && self.getDiscountValue() > 0) {
         payExtras.push('pid:' + extra.pid + ':value:' + self.getDiscountValue() + ':couponid:' + this.props.location.query.couponId);
@@ -316,9 +341,9 @@ export default class Commit extends Component {
 
   getPayType = (payType) => {
     const { coupon, payInfo } = this.props;
-    const { walletChecked, walletBalance, walletPayType } = this.state;
+    const { walletChecked, xiaoluCoinChecked, walletBalance, walletPayType } = this.state;
     if (coupon.data.coupon_value * this.state.couponNum >= payInfo.data.total_fee
-      || (walletChecked && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum))) {
+      || ((walletChecked || xiaoluCoinChecked) && walletBalance >= (payInfo.data.total_fee - coupon.data.coupon_value * this.state.couponNum))) {
       return 'budget';
     }
     if (walletChecked && payInfo.data.total_fee <= walletBalance) {
@@ -345,13 +370,23 @@ export default class Commit extends Component {
 
   getDisplayPrice = (totalPrice) => {
     const { coupon, payInfo } = this.props;
-    const { walletChecked, walletBalance } = this.state;
+    const { walletChecked, xiaoluCoinChecked, walletBalance } = this.state;
     let displayPrice = payInfo.data.total_fee || 0;
-    if (totalPrice && walletChecked && walletBalance >= payInfo.data.total_fee) {
-      displayPrice = 0;
-    }
-    if (totalPrice && walletChecked && walletBalance < payInfo.data.total_fee) {
-      displayPrice = displayPrice - walletBalance;
+    // 目前实现小鹿币和零钱互斥，只能选1个支付
+    if (walletChecked) {
+      if (totalPrice && walletChecked && walletBalance >= payInfo.data.total_fee) {
+        displayPrice = 0;
+      }
+      if (totalPrice && walletChecked && walletBalance < payInfo.data.total_fee) {
+        displayPrice = displayPrice - walletBalance;
+      }
+    } else if (xiaoluCoinChecked) {
+      if (totalPrice && xiaoluCoinChecked && walletBalance >= payInfo.data.total_fee) {
+        displayPrice = 0;
+      }
+      if (totalPrice && xiaoluCoinChecked && walletBalance < payInfo.data.total_fee) {
+        displayPrice = displayPrice - walletBalance;
+      }
     }
     if (displayPrice > 0 && coupon.success && coupon.data.status === 0 && payInfo.data.total_fee >= coupon.data.use_fee) {
       displayPrice = displayPrice - coupon.data.coupon_value * this.state.couponNum;
@@ -572,6 +607,19 @@ export default class Commit extends Component {
                     <p className="col-xs-7 no-padding">
                       <span className="col-xs-10 no-padding text-right">{item.value}</span>
                       <Checkbox className="col-xs-2" checked={this.state.walletChecked} walletBalance={item.value} payType={item.channel} onChange={this.onWalletChange}/>
+                    </p>
+                  </div>
+                );
+              case 4:
+                if (!(item.pid === 4 && item.use_coin_allowed && item.value > 0)) {
+                  return null;
+                }
+                return (
+                  <div className={`row no-margin bottom-border ${prefixCls}-row`} key={item.pid}>
+                    <p className="col-xs-5 no-padding">小鹿币</p>
+                    <p className="col-xs-7 no-padding">
+                      <span className="col-xs-10 no-padding text-right">{item.value}</span>
+                      <Checkbox className="col-xs-2" checked={this.state.xiaoluCoinChecked} walletBalance={item.value} payType={item.channel} onChange={this.onWalletChange}/>
                     </p>
                   </div>
                 );

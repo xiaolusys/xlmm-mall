@@ -99,7 +99,7 @@ export default class BoutiqueExchg extends Component {
           this.context.router.push('/mama/boutiquecoupon');
           break;
         case '2':
-          this.context.router.push('/mama/teammember');
+          this.context.router.push('/recharge');
           break;
         case '3':
           // window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
@@ -126,6 +126,9 @@ export default class BoutiqueExchg extends Component {
           } else {
             this.context.router.push('/mama/everydaypush');
           }
+          break;
+        case '9':
+          this.context.router.push('/mama/teammember');
           break;
         default:
       }
@@ -243,7 +246,7 @@ export default class BoutiqueExchg extends Component {
               <div className="icon-xiaolu" />
             </div>
             <div className="col-xs-9" >
-              <p className=" ">精英团队</p>
+              <p className=" ">充值</p>
             </div>
           </div>
           <div className="col-xs-6 info-cat no-padding" data-id={3} onClick={this.onInfoClick}>
@@ -276,6 +279,16 @@ export default class BoutiqueExchg extends Component {
             </div>
             <div className="col-xs-9" >
               <p className=" ">订单兑券</p>
+            </div>
+          </div>
+        </div>
+        <div className="bottom-border cat22">
+          <div className="col-xs-6 info-cat no-padding" data-id={9} onClick={this.onInfoClick}>
+            <div className="col-xs-3" >
+              <div className="icon-xiaolu" />
+            </div>
+            <div className="col-xs-9" >
+              <p className=" ">精英团队</p>
             </div>
           </div>
           <div className="col-xs-6 info-cat no-padding" data-id={7} onClick={this.onInfoClick}>
