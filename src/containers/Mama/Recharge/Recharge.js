@@ -314,7 +314,7 @@ export default class Recharge extends Component {
           )}
         </div>
         <div>
-          <p className="col-xs-offset-1">规则说明：小鹿精品币仅限专业版精英小鹿妈妈购买及使用。小鹿精品币智能用来购买精品券，不能退还，不能提现。</p>
+          <p className="col-xs-offset-1">购买条款说明：小鹿精品币仅限专业版精英妈妈充值及使用，充值越多越优惠。小鹿精品币能方便和自由的用来购买各种精品券，减少换券的烦恼。小鹿精品币不能退还，不能提现。购买即表明同意此条款。</p>
         </div>
         <BottomBar className="clearfix" size="medium">
           <button className="button button-energized col-xs-10 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
