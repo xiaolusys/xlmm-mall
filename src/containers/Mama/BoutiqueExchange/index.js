@@ -196,7 +196,9 @@ export default class BoutiqueExchg extends Component {
             <span>{'ID:' + mamaTranCouponProfile.data.mama_id + '   ' + '当前等级:' + level}</span>
           </div>
           <div className="elite-score-p">
-            <span>{'积分:'}</span>
+            <span>{'小鹿币:'}</span>
+            <span className="font-orange">{mamaTranCouponProfile.data.xiaolucoin_cash}</span>
+            <span>{',积分:'}</span>
             <span className="font-orange">{mamaTranCouponProfile.data.elite_score}</span>
             <span>{',还差' + mamaTranCouponProfile.data.upgrade_score + '积分升级。'}</span>
           </div>
