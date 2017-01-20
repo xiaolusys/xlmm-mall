@@ -111,10 +111,11 @@ export default class MamaTeamMember extends Component {
         <div className="col-xs-3 member-img-div no-padding no-margin">
           <Image className="member-img no-padding no-margin" src={member.thumbnail} quality={70} />
         </div>
-        <div className="col-xs-3 no-padding no-margin">
+        <div className="col-xs-3 no-padding no-margin member-name">
           <p className="text-center font-xs no-margin">{member.nick.length <= 10 ? member.nick : member.nick.substring(0, 9)}</p>
+          <p className="text-center font-xs no-margin">{'ID:' + member.mama_id}</p>
         </div>
-        <div className="col-xs-3 no-padding no-margin">
+        <div className="col-xs-3 no-padding no-margin member-mobile">
           <p className="text-left font-xs no-margin">{member.mobile}</p>
         </div>
         <div className="col-xs-3 member-score no-padding no-margin">

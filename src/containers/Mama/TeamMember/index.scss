@@ -32,6 +32,7 @@
 		.member-item {
 			height: 64px;
 			background-color: #fff;
+
 			.member-img-div {
 				width: 48px;
 				height: 48px;
@@ -41,11 +42,30 @@
 					height: 48px;
 				}
 			}
-			>div >p {
+			.member-name { 
+				margin-top: 16px;
+				>span {
+					padding-left: 4px;
+				}
+				>p {
+					padding-left: 4px;
+				}
+			}
+			.member-mobile { 
+				>p {
 				margin-top: 16px;
 				padding-top: 8px;
 				padding-left: 4px;
 				height: 32px;
+				}
+			}
+			.member-score { 
+				>p {
+				margin-top: 16px;
+				padding-top: 8px;
+				padding-left: 4px;
+				height: 32px;
+				}
 			}
 		}
 		.no-team-members {
