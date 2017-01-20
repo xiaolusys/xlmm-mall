@@ -68,7 +68,7 @@ export class Side extends Component {
             </Link>
           </div>
           <div className="col-xs-4">
-            <Link to="/user/point">
+            <Link to={'/user/coin?coin=' + (profile.xiaolu_coin ? profile.xiaolu_coin : 0)}>
               <p>{profile.xiaolu_coin || 0}</p>
               <p>
                 <i className="icon-database"></i>
