@@ -88,6 +88,7 @@ export default class BuyCoupon extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { mamaInfo, productDetails, payInfo, order, coupons } = nextProps;
+    let mmLinkId = '';
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
@@ -120,6 +121,7 @@ export default class BuyCoupon extends Component {
     }
 
     if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
+      mmLinkId = mamaInfo.data[0].id;
       for (let i = 0; i < productDetails.data.sku_info.length; i++) {
         if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
           this.setState({ sku: productDetails.data.sku_info[i] });
@@ -142,7 +144,6 @@ export default class BuyCoupon extends Component {
     }
 
     // Add product resp
-    /*
     if (this.props.shopBag.addProduct.isLoading) {
       if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.code === 0) {
         // Toast.show(nextProps.shopBag.addProduct.data.info);
@@ -172,13 +173,25 @@ export default class BuyCoupon extends Component {
       }
     }
 
-    // query shopbag resp
-    if (this.props.shopBag.shopBag.isLoading) {
-      if (shopBag.shopBag.success && !_.isEmpty(shopBag.shopBag.data)) {
-        const cartIds = shopBag.shopBag.data[0].id;
-        this.props.fetchPayInfo(cartIds);
+
+    // add shop bag
+    const { shopBag } = nextProps.shopBag;
+    if (shopBag.success && !_.isEmpty(shopBag.data) && this.props.shopBag.shopBag.isLoading && !this.state.chargeEnable) {
+      const cartId = shopBag.data[0].id;
+      console.log(productDetails);
+      if (productDetails.data && productDetails.data.detail_content && productDetails.data.detail_content.is_boutique) {
+        // 特卖抢购商品直接进入支付页面
+        if (utils.detector.isApp()) {
+          const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + cartId + '&type=' + shopBag.data[0].type;
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
+        } else {
+          window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+        }
       }
-    }*/
+    }
 
     // payinfo resp
     if (this.props.payInfo.isLoading) {
@@ -252,6 +265,12 @@ export default class BuyCoupon extends Component {
         && (mamaInfo.data[0].is_elite_mama)) {
       if (mamaInfo.data[0].is_buyable) {
         if (this.state.sku) {
+          this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num, 6); // use vitual cart type
+        } else {
+          Toast.show('商品信息获取不全');
+        }
+        /* 20170120 购券支付同意该到commit order页面，此处类似精品汇或团购直接购买，不经过购物车直接跳转
+          if (this.state.sku) {
           // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
           // 精品券默认是在app上支付
           if (utils.detector.isApp()) {
@@ -261,7 +280,7 @@ export default class BuyCoupon extends Component {
           }
         } else {
           Toast.show('商品信息获取不全');
-        }
+        }*/
       } else {
         // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
         if (this.state.sku) {
