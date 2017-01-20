@@ -623,7 +623,7 @@ export default class Detail extends Component {
         {product.sku_items.map((item) => {
           if (item.sku_id === skuId) {
             return (
-              <div className="col-xs-7 no-padding">
+              <div className="col-xs-9 no-padding">
                 <p className="product-name">{details.detail_content.name + '/' + product.name + '/' + item.name}</p>
                 <p>
                   <span className="font-26">{'￥' + item.agent_price.toFixed(2)}</span>
