@@ -31,6 +31,7 @@ import {
   CashoutList,
   Cashout,
   CashoutDetail,
+  XiaoluCoin,
 } from 'containers/User';
 
 import {
@@ -115,6 +116,7 @@ export default (
     <Route path="/user/password/reset" component={Password}/>
     <Route path="/user/password/set" component={Password} onEnter={utils.checkAuth} />
     <Route path="/user/point" component={Point} onEnter={utils.checkAuth} />
+    <Route path="/user/coin" component={XiaoluCoin} onEnter={utils.checkAuth} />
     <Route path="/user/coupons" component={CouponList} onEnter={utils.checkAuth} />
     <Route path="/user/wallet" component={CashoutList} onEnter={utils.checkAuth} />
     <Route path="/user/wallet/cashout" component={Cashout} onEnter={utils.checkAuth} />
