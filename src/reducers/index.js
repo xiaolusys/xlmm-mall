@@ -11,6 +11,7 @@ import examReducer from './examReducer';
 import summerMatReducer from './summerMatReducer';
 import complaintsReducer from './complaintsReducer';
 import pointLogReducer from './pointLogReducer';
+import coinLogReducer from './coinLogReducer';
 import courseReducer from './courseReducer';
 import favoriteReducer from './favoriteReducer';
 import notificationReducer from './notificationReducer';
@@ -82,6 +83,7 @@ const rootReducer = combineReducers({
   password: createReducer(passwordAction.name),
   point: createReducer(pointAction.name),
   pointLog: pointLogReducer,
+  coinLog: coinLogReducer,
   complaintCommit: createReducer(complaintCommitAction.name),
   complaintHistory: complaintsReducer,
   portal: createReducer(portalAction.name),
