@@ -181,21 +181,21 @@ export default class Recharge extends Component {
     const skus = productDetails.data.sku_info;
 
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0)) {
-      if (!mamaInfo.data[0].is_buyable) {
+      /* if (!mamaInfo.data[0].is_buyable) {
         Toast.show('目前只开放直接向小鹿购券妈妈充值功能，您不能直接向小鹿购券，暂时无法直接充值；全面充值功能即将开放，敬请等待！');
-      } else {
-        if (this.state.selectId) {
-          // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
-          // 精品券默认是在app上支付
-          if (utils.detector.isApp()) {
-            this.props.fetchBuyNowPayInfo(this.state.selectId, 1, 'app');
-          } else {
-            this.props.fetchBuyNowPayInfo(this.state.selectId, 1, 'wap');
-          }
-          this.setState({ chargeEnable: false });
+      }*/
+
+      if (this.state.selectId) {
+        // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
+        // 精品券默认是在app上支付
+        if (utils.detector.isApp()) {
+          this.props.fetchBuyNowPayInfo(this.state.selectId, 1, 'app');
         } else {
-          Toast.show('请选择一个充值选项');
+          this.props.fetchBuyNowPayInfo(this.state.selectId, 1, 'wap');
         }
+        this.setState({ chargeEnable: false });
+      } else {
+        Toast.show('请选择一个充值选项');
       }
     }
   }
