@@ -493,7 +493,9 @@ export default class BuyCoupon extends Component {
           </div>
         </div>
         <div>
-          <p className="col-xs-offset-1">规则说明：本精品优惠券仅限专业版精英小鹿妈妈购买及流通使用。精品券可以加入购物车与其它精品券组合购买，不能与普通商品组合购买。</p>
+          <p className="col-xs-offset-1 font-xs">规则说明：本精品优惠券仅限专业版精英妈妈购买及流通使用。精品券可以加入购物车与其它精品券组合购买，不能与普通商品组合购买。
+          <span className="font-red">购买精品券不是购买真实商品，不会发货，流转精品券或兑换订单可以获得佣金收益。</span>
+          </p>
         </div>
         <BottomBar className="clearfix" size="medium">
             <div className="col-xs-2 no-padding shop-cart">
