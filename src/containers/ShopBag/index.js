@@ -186,7 +186,7 @@ export class ShopBag extends Component {
               {_.isEmpty(shopBag.data) ? null : shopBag.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
-                    <a href={item.item_weburl} className="col-xs-4 no-padding">
+                    <a className="col-xs-4 no-padding">
                       <img src={item.pic_path + constants.image.square} />
                     </a>
                     <div className="col-xs-8">
@@ -221,7 +221,7 @@ export class ShopBag extends Component {
               {_.isEmpty(shopBagHistory.data) ? null : shopBagHistory.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
-                    <a href={item.item_weburl} className="col-xs-4 no-padding">
+                    <a className="col-xs-4 no-padding">
                       <img src={item.pic_path + constants.image.square} />
                     </a>
                     <div className="col-xs-8">
