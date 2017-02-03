@@ -501,24 +501,23 @@ export default class Detail extends Component {
       <div>
         <div className="product-info bottom-border bg-white">
           <div className="row no-margin">
-            <p className="col-xs-8 no-padding font-md">{info.name.substring(0, 26)}</p>
-            <div className="col-xs-4 no-padding icon-favorite" onClick={this.onFavoriteBtnClick}>
+            <p className="col-xs-12 no-padding font-md">{info.name}</p>
+          </div>
+          <div className="row no-margin">
+            <p className="col-xs-8 no-padding">
+              <span className="font-32">{'￥' + info.lowest_agent_price}</span>
+              <span className="font-grey">/</span>
+              <span className="font-xs font-grey-light text-line-through">{'￥' + info.lowest_std_sale_price}</span>
+            </p>
+            <div className="col-xs-2 no-padding icon-favorite margin-top-xs" onClick={this.onFavoriteBtnClick}>
               <If condition={favoriteStatus}>
                 <i className="col-xs-3 icon-favorite-yes font-lg text-left"></i>
               </If>
               <If condition={!favoriteStatus}>
                 <i className="col-xs-3 icon-favorite-no font-lg text-left"></i>
               </If>
-              <p className="no-margin margin-left-xxs text-center">{favoriteStatus ? '取消收藏' : '收藏'}</p>
             </div>
-          </div>
-          <div className="row no-margin">
-            <p className="col-xs-6 no-padding">
-              <span className="font-32">{'￥' + info.lowest_agent_price}</span>
-              <span className="font-grey">/</span>
-              <span className="font-xs font-grey-light text-line-through">{'￥' + info.lowest_std_sale_price}</span>
-            </p>
-            <p className="col-xs-6 no-padding margin-top-xs text-right">
+            <p className="col-xs-2 no-padding margin-top-xs text-right">
               {info.item_marks.map((tag, index) => { return (<span key={index} className="tag">{tag}</span>); })}
             </p>
           </div>
