@@ -106,13 +106,13 @@ export class ShopBag extends Component {
     // 购买精品券需要做积分检查, associate can change restrict
     if (Number(this.state.type) === 6) {
       if (this.state.eliteLevel !== 'Associate') {
-        if (score < constants.minBuyScore && goodsNum < 5) {
+        if (Number(this.state.xiaolucoin) === 0 && (score < constants.minBuyScore) && (goodsNum < 5)) {
           Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
           return;
         }
       } else if (this.state.eliteLevel === 'Associate') {
         if (constants.restrictAssociateBuyScore) {
-          if (score < constants.minBuyScore && goodsNum < 5) {
+          if (Number(this.state.xiaolucoin) === 0 && (score < constants.minBuyScore) && (goodsNum < 5)) {
             Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
             return;
           }
