@@ -76,7 +76,7 @@ export class ShopBag extends Component {
         if (this.state.applyNum + 1 === shopBag.data.length) {
           Toast.show('申请精品券成功');
           // window.location.href = window.location.origin + '/tran_coupon/html/trancoupon.html';
-          this.context.router.push('/mama/inoutcoupon');
+          this.context.router.replace('/mama/inoutcoupon');
         }
         this.setState({ applyNum: this.state.applyNum + 1 });
     }
