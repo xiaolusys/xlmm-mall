@@ -52,7 +52,8 @@ export class ShopBag extends Component {
     const type = this.props.location.query.type ? this.props.location.query.type : 0;
     const buyable = this.props.location.query.is_buyable ? this.props.location.query.is_buyable : 1;
     const level = this.props.location.query.elite_level ? this.props.location.query.elite_level : '';
-    this.setState({ type: type, isBuyable: buyable, eliteLevel: level });
+    const xiaolucoin = this.props.location.query.xiaolucoin ? this.props.location.query.xiaolucoin : 0;
+    this.setState({ type: type, isBuyable: buyable, eliteLevel: level, xiaolucoin: xiaolucoin });
 
     this.props.fetchShopBag(type);
     this.props.fetchShopBagHistory();
@@ -144,6 +145,40 @@ export class ShopBag extends Component {
         this.props.applyNegotiableCoupons(item.item_id, item.num);
       });
     }
+  }
+
+  onXiaolucoinBuyClick = (e) => {
+    const { shopBag } = this.props.shopBag;
+    const cartIds = [];
+    const isBuyable = this.state.isBuyable;
+    let score = 0;
+    let goodsNum = 0;
+    _.each(shopBag.data, (item) => {
+      cartIds.push(item.id);
+      score += item.num * item.elite_score;
+      goodsNum += item.num;
+    });
+
+    const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + encodeURIComponent(cartIds.join(',')) + '&type=' + this.state.type;
+      /* 20170203 temp add, delte after ios version release
+      if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
+        const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
+        if (appVersion >= 20161214) {
+          plugins.invoke({
+            method: 'jumpToNativeLocation',
+            data: { target_url: jumpUrl },
+          });
+          return;
+        }
+      }
+      if (utils.detector.isIOS() && utils.detector.appVersion() >= 221) {
+        plugins.invoke({
+          method: 'jumpToNativeLocation',
+          data: { target_url: jumpUrl },
+        });
+        return;
+      }*/
+      window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
   }
 
   onUpdateQuantityClick = (e) => {
@@ -245,7 +280,16 @@ export class ShopBag extends Component {
               <span className="font-xs">应付款金额</span>
               <span className="font-lg font-orange">{'￥' + this.totalPrice()}</span>
             </p>
-            <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{Number(this.state.isBuyable) ? '购买' : '申请'}</button>
+            <If condition={Number(this.state.isBuyable) === 1}>
+              <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{'购买'}</button>
+            </If>
+            <If condition={Number(this.state.isBuyable) === 0 && Number(this.state.xiaolucoin) === 0}>
+              <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{'申请'}</button>
+            </If>
+            <If condition={Number(this.state.isBuyable) === 0 && Number(this.state.xiaolucoin) === 1}>
+              <button className="button button-energized col-xs-5 col-xs-offset-1" type="button" onClick={this.onXiaolucoinBuyClick}>{'小鹿币购买'}</button>
+              <button className="button button-energized col-xs-4 col-xs-offset-1" type="button" onClick={this.onBuyNowClick}>{'申请'}</button>
+            </If>
           </BottomBar>
         </If>
       </div>
