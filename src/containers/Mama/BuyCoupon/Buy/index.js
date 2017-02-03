@@ -379,7 +379,8 @@ export default class BuyCoupon extends Component {
   onShopbagClick = (e) => {
     const { mamaInfo } = this.props;
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged' && (mamaInfo.data[0].is_elite_mama)) {
-      this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0') + '&type=6' + '&elite_level=' + mamaInfo.data[0].elite_level);
+      this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0')
+        + '&type=6' + '&elite_level=' + mamaInfo.data[0].elite_level + '&xiaolucoin=' + ((mamaInfo.success && mamaInfo.data && Number(mamaInfo.data[0].xiaolucoin_cash) > 0) ? '1' : '0'));
     } else {
       Toast.show('您还不是小鹿精英妈妈，无法申请或购买精品券。请关注小鹿美美公众号或联系客服了解更多信息。');
     }
