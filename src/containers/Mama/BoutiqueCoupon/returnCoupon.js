@@ -82,7 +82,7 @@ export default class ReturnBoutiqueCoupon extends Component {
         }
       }
       if (!nextProps.coupons.applyReturn.success) {
-        Toast.show('申请失败 ');
+        Toast.show('网络错误申请失败 ');
         this.setState({ returnEnable: true });
       }
     }
