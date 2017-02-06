@@ -95,6 +95,7 @@ import {
   InOutCoupon,
   RecruitMama,
   Recharge,
+  MamaRebate,
 } from 'containers/Mama';
 
 import {
@@ -173,6 +174,7 @@ export default (
     <Route path="/mama/inoutcoupon" component={InOutCoupon} />
     <Route path="/mama/recruit" component={RecruitMama} />
     <Route path="/recharge" component={Recharge} />
+    <Route path="/mama/rebate" component={MamaRebate} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>

@@ -115,7 +115,7 @@ export default class BoutiqueExchg extends Component {
           this.context.router.push('/mama/exchgorder');
           break;
         case '7':
-          this.context.router.push('/mama/recruit');
+          this.context.router.push('/mama/rebate');
           break;
         case '8':
           if (utils.detector.isApp()) {
@@ -298,7 +298,7 @@ export default class BoutiqueExchg extends Component {
               <div className="icon-xiaolu" />
             </div>
             <div className="col-xs-9" >
-              <p className=" ">招募妈妈</p>
+              <p className=" ">返点</p>
             </div>
           </div>
           <div className="col-xs-6 info-cat no-padding" data-id={8} onClick={this.onInfoClick}>
