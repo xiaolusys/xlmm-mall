@@ -79,17 +79,6 @@ export default class MamaTeamMember extends Component {
     this.context.router.goBack();
   }
 
-  onInfoClick = (e) => {
-    const { id } = e.currentTarget.dataset;
-      switch (id) {
-        case '2':
-          this.context.router.push('/mama/teammember');
-          break;
-        default:
-      }
-    e.preventDefault();
-  }
-
   onJumpClick = (e) => {
     // window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
     this.context.router.push('/mama/inoutcoupon');
@@ -107,7 +96,7 @@ export default class MamaTeamMember extends Component {
   renderMember = (member, index) => {
 
     return (
-      <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} onClick={this.onProductClick}>
+      <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
         <div className="col-xs-3 member-img-div no-padding no-margin">
           <Image className="member-img no-padding no-margin" src={member.thumbnail} quality={70} />
         </div>
