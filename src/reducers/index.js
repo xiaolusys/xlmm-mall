@@ -71,6 +71,7 @@ import * as mamaShopSharingAction from 'actions/mama/shopSharing';
 import * as administratorInfoAction from 'actions/mama/administratorInfo';
 import * as ninepicAction from 'actions/mama/ninepic';
 import * as recruitAction from 'actions/mama/recruit';
+import * as rebateAction from 'actions/mama/rebate';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -141,6 +142,7 @@ const rootReducer = combineReducers({
   boutiqueCoupon: mamaBoutiqueCouponReducer,
   mamaCommission: mamaCommissionReducer,
   recruit: createReducer(recruitAction.name),
+  rebate: createReducer(rebateAction.name),
   searchProduct: productSearchReducer,
 });
 

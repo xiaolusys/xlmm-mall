@@ -11,24 +11,26 @@ import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
 import * as mamaBaseInfoAction from 'actions/mama/mamaDetailInfo';
+import * as mamaRebateAction from 'actions/mama/rebate';
 
-import './index.scss';
+import './rebate.scss';
 
-const actionCreators = _.extend(mamaBaseInfoAction);
+const actionCreators = _.extend(mamaBaseInfoAction, mamaRebateAction);
 
 @connect(
   state => ({
     mamaBaseInfo: state.mamaDetailInfo,
+    rebate: state.rebate,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class MamaTeamMember extends Component {
+export default class MamaRebate extends Component {
   static propTypes = {
     children: React.PropTypes.array,
     dispatch: React.PropTypes.func,
-    mamaBaseInfo: React.PropTypes.any,
+    rebate: React.PropTypes.any,
     fetchMamaFortune: React.PropTypes.func,
-    fetchMamaTeamMember: React.PropTypes.func,
+    fetchMamaRebate: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -48,8 +50,8 @@ export default class MamaTeamMember extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchMamaFortune();
-    this.props.fetchMamaTeamMember();
+    // this.props.fetchMamaFortune();
+    this.props.fetchMamaRebate();
   }
 
   componentDidMount() {
@@ -79,12 +81,6 @@ export default class MamaTeamMember extends Component {
     this.context.router.goBack();
   }
 
-  onJumpClick = (e) => {
-    // window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
-    this.context.router.push('/mama/inoutcoupon');
-    e.preventDefault();
-  }
-
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -96,47 +92,42 @@ export default class MamaTeamMember extends Component {
   renderMember = (member, index) => {
 
     return (
-      <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
+      <li key={index} className="col-xs-12 member-item bottom-border" data-index={index}>
         <div className="col-xs-3 member-img-div no-padding no-margin">
-          <Image className="member-img no-padding no-margin" src={member.thumbnail} quality={70} />
+          <Image className="member-img no-padding no-margin" src={member.mama.thumbnail} quality={70} />
         </div>
         <div className="col-xs-3 no-padding no-margin member-name">
-          <p className="text-center font-xs no-margin">{member.nick.length <= 10 ? member.nick : member.nick.substring(0, 9)}</p>
-          <p className="text-center font-xs no-margin">{'ID:' + member.mama_id}</p>
+          <p className="text-center font-xs no-margin">{member.mama.nick.length <= 10 ? member.mama.nick : member.mama.nick.substring(0, 9)}</p>
+          <p className="text-center font-xs no-margin">{'ID:' + member.mama.mama_id}</p>
         </div>
         <div className="col-xs-3 no-padding no-margin member-mobile">
-          <p className="text-left font-xs no-margin">{member.mobile}</p>
+          <p className="text-left font-xs no-margin">{}</p>
         </div>
         <div className="col-xs-3 member-score no-padding no-margin">
-          <p className="text-center font-xs no-margin">{member.elite_score + '积分' }</p>
+          <p className="text-center font-xs no-margin">{member.budeget_detail_cash + '元' }</p>
         </div>
       </li>
     );
   }
 
   render() {
-    const { mamaFortune, mamaTeamMember } = this.props.mamaBaseInfo;
+    const rebate = this.props.rebate;
     return (
-      <div className="teammember-container no-padding">
-        <Header title="我的精品团队" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
+      <div className="rebate-container no-padding">
+        <Header title="返点精英妈妈" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="my-level bottom-border">
-          <div className="col-xs-3">
-            <img className="my-thumbnail" src ={(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.extra_info.thumbnail : ''} />
-          </div>
-          <div className="col-xs-9">
-            <p className="my-mama-id">{'我的ID:' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : '')}</p>
-          </div>
+          <p className="my-mama-id margin-left-xxs">{'上月获得返点精英妈妈如下'}</p>
         </div>
-        <div className="team-members bg-white">
-          <If condition={mamaTeamMember.success && mamaTeamMember.data && mamaTeamMember.data.length > 0}>
+        <div className="rebate-members bg-white">
+          <If condition={rebate.success && rebate.data && rebate.data.results.length > 0}>
             <ul>
-            {mamaTeamMember.data.map((item, index) => this.renderMember(item, index))
+            {rebate.data.results.map((item, index) => this.renderMember(item, index))
             }
             </ul>
           </If>
-          <If condition={mamaTeamMember.success && mamaTeamMember.data && mamaTeamMember.data.length === 0}>
+          <If condition={rebate.success && rebate.data && rebate.data.results.length === 0}>
             <div className="no-team-members bg-white">
-              <p className="font-blue font-xs" onClick={this.onJumpClick} >您的精英团队还没有成员加入，团队越大收益越高，赶紧去招募吧>>></p>
+              <p className="font-blue font-xs" onClick={this.onJumpClick} >上月没有精英团队获得返点，赶紧加油吧></p>
             </div>
           </If>
         </div>
