@@ -10,12 +10,11 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
-import * as mamaBaseInfoAction from 'actions/mama/mamaDetailInfo';
 import * as mamaRebateAction from 'actions/mama/rebate';
 
 import './rebate.scss';
 
-const actionCreators = _.extend(mamaBaseInfoAction, mamaRebateAction);
+const actionCreators = _.extend(mamaRebateAction);
 
 @connect(
   state => ({
@@ -29,7 +28,6 @@ export default class MamaRebate extends Component {
     children: React.PropTypes.array,
     dispatch: React.PropTypes.func,
     rebate: React.PropTypes.any,
-    fetchMamaFortune: React.PropTypes.func,
     fetchMamaRebate: React.PropTypes.func,
   };
 
@@ -50,7 +48,6 @@ export default class MamaRebate extends Component {
   }
 
   componentWillMount() {
-    // this.props.fetchMamaFortune();
     this.props.fetchMamaRebate();
   }
 
@@ -59,13 +56,13 @@ export default class MamaRebate extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaFortune, mamaTeamMember } = this.props.mamaBaseInfo;
+    const rebate = this.props.rebate;
 
-    if (mamaFortune.isLoading || mamaTeamMember.isLoading) {
+    if (rebate.isLoading) {
       utils.ui.loadingSpinner.show();
     }
 
-    if (!nextProps.mamaBaseInfo.mamaFortune.isLoading || !nextProps.mamaBaseInfo.mamaTeamMember.isLoading) {
+    if (!nextProps.rebate.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
   }
