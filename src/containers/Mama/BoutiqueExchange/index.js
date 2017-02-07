@@ -163,7 +163,7 @@ getRebateInfo = () => {
     const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
     if (mamaTranCouponProfile.success && mamaTranCouponProfile.data) {
       if (Number(mamaTranCouponProfile.data.to_rebate_score) > 0 && Number(mamaTranCouponProfile.data.rebate_money) === 0) {
-        return '还差' + mamaTranCouponProfile.data.to_rebate_score + '积分晋级副总裁获得返点。';
+        return '还差' + mamaTranCouponProfile.data.to_rebate_score + '积分晋级合伙人获得返点。';
       } else if (Number(mamaTranCouponProfile.data.to_rebate_score) === 0 && Number(mamaTranCouponProfile.data.rebate_money) > 0) {
         return '本月截止今日可获得返点' + mamaTranCouponProfile.data.rebate_money;
       }
