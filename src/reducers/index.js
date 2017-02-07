@@ -23,6 +23,7 @@ import mamaDetailInfoReducer from './mamaDetailInfoReducer';
 import mamaBoutiqueCouponReducer from './boutiqueCouponReducer';
 import mamaCommissionReducer from './commissionListReducer';
 import productSearchReducer from './productSearchReducer';
+import rebateReducer from './rebateReducer';
 import * as faqCategoriesAction from 'actions/faq/faqcategories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -71,7 +72,6 @@ import * as mamaShopSharingAction from 'actions/mama/shopSharing';
 import * as administratorInfoAction from 'actions/mama/administratorInfo';
 import * as ninepicAction from 'actions/mama/ninepic';
 import * as recruitAction from 'actions/mama/recruit';
-import * as rebateAction from 'actions/mama/rebate';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -142,7 +142,7 @@ const rootReducer = combineReducers({
   boutiqueCoupon: mamaBoutiqueCouponReducer,
   mamaCommission: mamaCommissionReducer,
   recruit: createReducer(recruitAction.name),
-  rebate: createReducer(rebateAction.name),
+  rebate: rebateReducer,
   searchProduct: productSearchReducer,
 });
 
