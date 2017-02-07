@@ -50,7 +50,7 @@ export default class Success extends Component {
   componentWillMount() {
     const { params } = this.props;
     this.props.fetchWechatSign();
-    this.props.fetchShareRedpacket(params.tid);
+    // this.props.fetchShareRedpacket(params.tid);
   }
 
   componentWillReceiveProps(nextProps) {
