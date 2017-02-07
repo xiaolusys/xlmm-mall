@@ -152,7 +152,7 @@ export default class Charge extends Component {
       mm_linkid: mama_id,
       uuid: mamaOrder.uuid,
       total_fee: mamaOrder.payinfos[id].total_payment,
-      success_url: `/mall/mama/open/succeed?mamaId=${mamaInfo.data.id}`,
+      success_url: `/mall/mama/open/succeed?mamaId=${mamaInfo.mamaInfo.data[0].id}`,
       cancel_url: '/mall/mama/open/failed',
     });
   }

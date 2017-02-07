@@ -273,7 +273,8 @@ export class Home extends Component {
   }
 
   render() {
-    const { portal, product, children, mamaInfo } = this.props;
+    const { portal, product, children } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const activities = portal.data.activitys || [];
     const categories = portal.data.categorys || [];
     const posters = portal.data.posters || [];

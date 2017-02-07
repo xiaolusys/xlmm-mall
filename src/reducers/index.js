@@ -24,6 +24,7 @@ import mamaBoutiqueCouponReducer from './boutiqueCouponReducer';
 import mamaCommissionReducer from './commissionListReducer';
 import productSearchReducer from './productSearchReducer';
 import rebateReducer from './rebateReducer';
+import mamaInfoReducer from './mamaInfoReducer';
 import * as faqCategoriesAction from 'actions/faq/faqcategories';
 import * as questionsAction from 'actions/faq/questions';
 import * as profileAction from 'actions/user/profile';
@@ -62,7 +63,6 @@ import * as topTenAction from 'actions/activity/topTen';
 import * as summerMatAction from 'actions/activity/summerMat';
 import * as invitedAction from 'actions/mama/invited';
 import * as inviteSharingAction from 'actions/mama/inviteSharing';
-import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaOrderAction from 'actions/mama/mamaOrder';
 import * as mamaChargeAction from 'actions/mama/mamaCharge';
 import * as mamaActivityAction from 'actions/mama/activity';
@@ -125,7 +125,7 @@ const rootReducer = combineReducers({
   invited: createReducer(invitedAction.name),
   inviteSharing: createReducer(inviteSharingAction.name),
   mamaDetailInfo: mamaDetailInfoReducer,
-  mamaInfo: createReducer(mamaInfoAction.name),
+  mamaInfo: mamaInfoReducer,
   mamaOrder: createReducer(mamaOrderAction.name),
   mamaCharge: createReducer(mamaChargeAction.name),
   mamaActivity: createReducer(mamaActivityAction.name),

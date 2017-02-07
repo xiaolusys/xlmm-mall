@@ -56,7 +56,6 @@ export default class Recharge extends Component {
     resetAddProductToShopBag: React.PropTypes.func,
     fetchBuyNowPayInfo: React.PropTypes.func,
     buyNowCommitOrder: React.PropTypes.func,
-    saveMamaInfo: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
@@ -89,7 +88,8 @@ export default class Recharge extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, productDetails, payInfo, order, coupons, wechatSign } = nextProps;
+    const { productDetails, payInfo, order, coupons, wechatSign } = nextProps;
+    const mamaInfo = nextProps.mamaInfo.mamaInfo;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
@@ -176,7 +176,8 @@ export default class Recharge extends Component {
   }
 
   onChargeClick = (e) => {
-    const { productDetails, mamaInfo } = this.props;
+    const { productDetails } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
@@ -201,7 +202,8 @@ export default class Recharge extends Component {
   }
 
   onPayTypeClick = (e) => {
-    const { payInfo, mamaInfo } = this.props;
+    const { payInfo } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const { paytype } = e.currentTarget.dataset;
     const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
     const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
@@ -288,7 +290,8 @@ export default class Recharge extends Component {
   }
 
   render() {
-    const { mamaInfo, shopBag } = this.props;
+    const { shopBag } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const imgSrc = (this.state.productDetail && this.state.productDetail.detail_content) ? this.state.productDetail.detail_content.head_img : '';
     const payInfo = this.payInfo();
     const sku = this.state.sku ? this.state.sku : null;

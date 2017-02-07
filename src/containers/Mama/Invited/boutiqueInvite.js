@@ -84,12 +84,14 @@ export default class BoutiqueInvite extends Component {
 
   componentWillMount() {
     const { mama_id } = this.props.location.query;
-    const num = this.props.location.query.num ? this.props.location.query.num : 3;
+    const num = this.props.location.query.num ? this.props.location.query.num : 365;
     let index = 0;
-    if (Number(num) === 5) {
-      index = 0;
-    } else if (Number(num) === 3) {
-      index = 1;
+    if (Number(num) === 216) {
+      index = 216;
+      this.props.fetchProductDetails(25115);
+    } else if (Number(num) === 365) {
+      index = 365;
+      this.props.fetchProductDetails(25408);
     }
     this.setState({ index: index });
 
@@ -97,7 +99,6 @@ export default class BoutiqueInvite extends Component {
       mama_id: mama_id,
     });
     this.props.fetchMamaInfo();
-    this.props.fetchProductDetails(25115);
     this.props.fetchWechatSign();
   }
 
@@ -109,21 +110,21 @@ export default class BoutiqueInvite extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (wechatSign && wechatSign.success && wechatSign.data && mamaInfo.success && mamaInfo.data) {
+    if (wechatSign && wechatSign.success && wechatSign.data && mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data) {
       utils.wechat.config(wechatSign);
       const shareInfo = {
         success: true,
         data: {
           title: '邀请您加入精品汇',
           desc: '组建团队，成就梦想，给您准备优质产品和流量支持',
-          share_link: 'https://m.xiaolumeimei.com/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?mama_id=' + mamaInfo.data[0].id,
+          share_link: 'https://m.xiaolumeimei.com/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?mama_id=' + mamaInfo.mamaInfo.data[0].id,
           share_img: 'http://7xogkj.com2.z0.glb.qiniucdn.com/222-ohmydeer.png?imageMogr2/thumbnail/60/format/png',
         },
       };
       utils.wechat.configShareContent(shareInfo);
     }
 
-    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
+    if (mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data && mamaInfo.mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
       for (let i = 0; i < productDetails.data.sku_info.length; i++) {
         this.setState({ sku: productDetails.data.sku_info[0] });
       }
@@ -207,30 +208,35 @@ export default class BoutiqueInvite extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
-    if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0)) {
-      if (mamaInfo.data[0].is_elite_mama) {
-        Toast.show('您已经是精英妈妈了，不能再次购买新人券，如需购券，请进入我的微店操作！');
-      } else {
+    if (mamaInfo && mamaInfo.mamaInfo.data && (mamaInfo.mamaInfo.data.length > 0)) {
+      // if (mamaInfo.mamaInfo.data[0].is_elite_mama) {
+      //   Toast.show('您已经是精英妈妈了，不能再次购买新人券，如需购券，请进入我的微店操作！');
+      // } else {
         if (this.state.sku) {
           // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
           // 精品券默认是在app上支付
-          if (utils.detector.isApp()) {
-            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[this.state.index].sku_id, 1, 'app');
+          if (this.state.index === 216) {
+            if (utils.detector.isApp()) {
+              this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[1].sku_id, 1, 'app');
+            } else {
+              this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[1].sku_id, 1, 'wap');
+            }
           } else {
-            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[this.state.index].sku_id, 1, 'wap');
+            // 2017-2-8 fisrt onshelf one mix products
+            this.props.fetchBuyNowPayInfo(productDetails.data.sku_info[1].sku_items[0].sku_id, 1, 'wap');
           }
           this.setState({ chargeEnable: false });
         } else {
           Toast.show('商品信息获取不全');
         }
-      }
+      // }
     }
   }
 
   onPayTypeClick = (e) => {
     const { payInfo, mamaInfo } = this.props;
     const { paytype } = e.currentTarget.dataset;
-    const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
+    const mmLinkId = mamaInfo.mamaInfo.data ? mamaInfo.mamaInfo.data[0].id : 0;
     const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
 
     console.log(referalMamaid);
@@ -284,32 +290,32 @@ export default class BoutiqueInvite extends Component {
     let payInfo = {};
     if (this.props.payInfo.success && (!_.isEmpty(this.props.payInfo.data))) {
       payInfo = this.props.payInfo.data;
-      payInfo.channels = [];
-      if (utils.detector.isApp()) {
-        payInfo.channels.push({
-          id: 'wx',
-          icon: 'icon-wechat-pay icon-wechat-green',
-          name: '微信支付',
-        });
+      // payInfo.channels = [];
+      // if (utils.detector.isApp()) {
+      //   payInfo.channels.push({
+      //     id: 'wx',
+      //     icon: 'icon-wechat-pay icon-wechat-green',
+      //     name: '微信支付',
+      //   });
 
-        payInfo.channels.push({
-          id: 'alipay',
-          icon: 'icon-alipay-square icon-alipay-blue',
-          name: '支付宝',
-        });
-      } else {
-        payInfo.channels.push({
-          id: 'wx_pub',
-          icon: 'icon-wechat-pay icon-wechat-green',
-          name: '微信支付',
-        });
+      //   payInfo.channels.push({
+      //     id: 'alipay',
+      //     icon: 'icon-alipay-square icon-alipay-blue',
+      //     name: '支付宝',
+      //   });
+      // } else {
+      //   payInfo.channels.push({
+      //     id: 'wx_pub',
+      //     icon: 'icon-wechat-pay icon-wechat-green',
+      //     name: '微信支付',
+      //   });
 
-        payInfo.channels.push({
-          id: 'alipay_wap',
-          icon: 'icon-alipay-square icon-alipay-blue',
-          name: '支付宝',
-        });
-      }
+      //   payInfo.channels.push({
+      //     id: 'alipay_wap',
+      //     icon: 'icon-alipay-square icon-alipay-blue',
+      //     name: '支付宝',
+      //   });
+      // }
     }
     return payInfo;
   }
@@ -337,7 +343,7 @@ export default class BoutiqueInvite extends Component {
   }
 
   render() {
-    const { mamaInfo, shopBag } = this.props;
+    const { shopBag } = this.props;
     const imgSrc = (this.state.productDetail && this.state.productDetail.detail_content) ? this.state.productDetail.detail_content.head_img : '';
     const payInfo = this.payInfo();
     const sku = this.state.sku ? this.state.sku : null;
@@ -348,17 +354,23 @@ export default class BoutiqueInvite extends Component {
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg boutique-invite">
         <Header trasparent={trasparentHeader} title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="invite-imgs">
+        <If condition={this.state.index === 216}>
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_01.png'} quality={70} />
-          <If condition={this.state.index === 0}>
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_02.png'} quality={70} />
-          </If>
-          <If condition={this.state.index === 1}>
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_02_2.png'} quality={70} />
-          </If>
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_03.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_04.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_05.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_06.jpg'} quality={70} />
+        </If>
+        <If condition={this.state.index === 365}>
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_01.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_02.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_03.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_04.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_05.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_06.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_07.png'} quality={70} />
+        </If>
         </div>
         <BottomBar className="clearfix" size="medium">
             <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAdministratorClick} disabled={disabled}>

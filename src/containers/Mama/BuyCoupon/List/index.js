@@ -111,7 +111,7 @@ export default class TranCouponList extends Component {
   }
 
   renderProduct = (product, index) => {
-    const { mamaInfo } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const productDetails = product;
     const imgSrc = (productDetails && productDetails.detail_content) ? productDetails.detail_content.head_img : '';
     let sku = null;
@@ -165,7 +165,8 @@ export default class TranCouponList extends Component {
   }
 
   render() {
-    const { productDetails, mamaInfo, search } = this.props;
+    const { productDetails, search } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const trasparentHeader = false;
 
     return (
