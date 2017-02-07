@@ -159,6 +159,19 @@ export default class BoutiqueExchg extends Component {
     return levelName;
   }
 
+getRebateInfo = () => {
+    const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
+    if (mamaTranCouponProfile.success && mamaTranCouponProfile.data) {
+      if (Number(mamaTranCouponProfile.data.to_rebate_score) > 0 && Number(mamaTranCouponProfile.data.rebate_money) === 0) {
+        return '还差' + mamaTranCouponProfile.data.to_rebate_score + '积分晋级副总裁获得返点。';
+      } else if (Number(mamaTranCouponProfile.data.to_rebate_score) === 0 && Number(mamaTranCouponProfile.data.rebate_money) > 0) {
+        return '本月截止今日可获得返点' + mamaTranCouponProfile.data.rebate_money;
+      }
+      return '';
+    }
+    return '';
+  }
+
  enterEliteIntroduce = (e) => {
     this.context.router.push('/mama/elitemama');
   }
@@ -176,6 +189,7 @@ export default class BoutiqueExchg extends Component {
     const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
     let hasHeader = true;
     const level = this.getLevelName(mamaTranCouponProfile.data.elite_level);
+    const rebateInfo = this.getRebateInfo();
     // temp code
     if (utils.detector.isApp() && utils.detector.isIOS()) {
       if (utils.detector.appVersion() <= 223) {
@@ -200,7 +214,7 @@ export default class BoutiqueExchg extends Component {
             <span className="font-orange">{mamaTranCouponProfile.data.xiaolucoin_cash}</span>
             <span>{',积分:'}</span>
             <span className="font-orange">{mamaTranCouponProfile.data.elite_score}</span>
-            <span>{',还差' + mamaTranCouponProfile.data.upgrade_score + '积分升级。'}</span>
+            <span>{',还差' + mamaTranCouponProfile.data.upgrade_score + '积分升级。' + rebateInfo}</span>
           </div>
           <div className="elite-score-p">
             <span>{'您现有'}</span>
