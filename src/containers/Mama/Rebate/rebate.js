@@ -56,13 +56,13 @@ export default class MamaRebate extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const rebate = this.props.rebate;
+    const { myRebate } = this.props.rebate;
 
-    if (rebate.isLoading) {
+    if (myRebate.isLoading) {
       utils.ui.loadingSpinner.show();
     }
 
-    if (!nextProps.rebate.isLoading) {
+    if (!nextProps.rebate.myRebate.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
   }
@@ -108,10 +108,10 @@ export default class MamaRebate extends Component {
   }
 
   render() {
-    const rebate = this.props.rebate;
+    const rebate = this.props.rebate.myRebate;
     return (
       <div className="rebate-container no-padding">
-        <Header title="返点精英妈妈" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
+        <Header title="我的返点" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="my-level bottom-border">
           <p className="my-mama-id margin-left-xxs">{'上月获得返点精英妈妈如下'}</p>
         </div>
@@ -124,7 +124,7 @@ export default class MamaRebate extends Component {
           </If>
           <If condition={rebate.success && rebate.data && rebate.data.results.length === 0}>
             <div className="no-team-members bg-white">
-              <p className="font-blue font-xs" onClick={this.onJumpClick} >上月没有精英团队获得返点，赶紧加油吧></p>
+              <p className="font-blue font-xs" onClick={this.onJumpClick} >您没有获得返点记录，赶紧加油吧></p>
             </div>
           </If>
         </div>
