@@ -94,8 +94,7 @@ export default class MamaRebate extends Component {
           <Image className="member-img no-padding no-margin" src={member.mama.thumbnail} quality={70} />
         </div>
         <div className="col-xs-3 no-padding no-margin member-name">
-          <p className="text-center font-xs no-margin">{member.mama.nick.length <= 10 ? member.mama.nick : member.mama.nick.substring(0, 9)}</p>
-          <p className="text-center font-xs no-margin">{'ID:' + member.mama.mama_id}</p>
+          <p className="text-center font-xs no-margin">{member.budget_date.length > 0 ? member.budget_date.replace('T', ' ') : ''}</p>
         </div>
         <div className="col-xs-3 no-padding no-margin member-mobile">
           <p className="text-left font-xs no-margin">{}</p>
