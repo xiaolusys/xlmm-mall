@@ -223,7 +223,8 @@ export default class BoutiqueInvite extends Component {
             }
           } else {
             // 2017-2-8 fisrt onshelf one mix products
-            this.props.fetchBuyNowPayInfo(productDetails.data.sku_info[1].sku_items[0].sku_id, 1, 'wap');
+            // this.props.fetchBuyNowPayInfo(productDetails.data.sku_info[1].sku_items[0].sku_id, 1, 'wap');
+            this.context.router.push('/product/details/25408');
           }
           this.setState({ chargeEnable: false });
         } else {
