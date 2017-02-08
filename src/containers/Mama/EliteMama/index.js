@@ -49,7 +49,7 @@ export default class EliteMama extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo } = nextProps;
+    const mamaInfo = nextProps.mamaInfo.mamaInfo;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
@@ -78,7 +78,7 @@ export default class EliteMama extends Component {
 
   render() {
     const { topTab } = this.state;
-    const { mamaInfo } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const src = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
 
     return (

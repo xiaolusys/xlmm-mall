@@ -50,6 +50,13 @@ export const applyNegotiableCoupons = (productId, num) => {
   };
 };
 
+export const resetApplyNegotiableCoupons = () => {
+  const action = createAction(couponsNames.APPLY_NEGOTIABLE_COUPONS);
+  return (dispatch) => {
+    dispatch(action.reset());
+  };
+};
+
 export const fetchUnusedBoutiqueCoupons = () => {
   const action = createAction(couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS);
   return (dispatch) => {

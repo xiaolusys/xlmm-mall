@@ -63,7 +63,7 @@ export class Side extends Component {
               <p>{profile.user_budget ? profile.user_budget.budget_cash : 0}</p>
               <p>
                 <i className="icon-wallet"></i>
-                <span>零钱(元)</span>
+                <span className="font-xs">零钱(元)</span>
               </p>
             </Link>
           </div>
@@ -72,7 +72,7 @@ export class Side extends Component {
               <p>{profile.xiaolu_coin || 0}</p>
               <p>
                 <i className="icon-database"></i>
-                <span>小鹿币</span>
+                <span className="font-xs">小鹿币</span>
               </p>
             </Link>
           </div>
@@ -81,7 +81,7 @@ export class Side extends Component {
               <p>{profile.coupon_num || 0}</p>
               <p>
                 <i className="icon-coupon-o"></i>
-                <span>优惠券</span>
+                <span className="font-xs">优惠券</span>
               </p>
             </Link>
           </div>

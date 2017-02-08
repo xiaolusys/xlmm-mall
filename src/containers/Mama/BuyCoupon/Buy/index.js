@@ -55,6 +55,7 @@ export default class BuyCoupon extends Component {
     buyNowCommitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     applyNegotiableCoupons: React.PropTypes.func,
+    resetApplyNegotiableCoupons: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
     shopBag: React.PropTypes.object,
     order: React.PropTypes.object,
@@ -95,8 +96,8 @@ export default class BuyCoupon extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (nextProps.mamaInfo.error) {
-      switch (nextProps.mamaInfo.status) {
+    if (nextProps.mamaInfo.mamaInfo.error) {
+      switch (nextProps.mamaInfo.mamaInfo.status) {
         case 403:
           if (utils.detector.isApp()) {
             plugins.invoke({ method: 'jumpToNativeLogin' });
@@ -105,25 +106,25 @@ export default class BuyCoupon extends Component {
           this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
           return;
         case 500:
-          Toast.show(nextProps.mamaInfo.data.detail);
+          Toast.show(nextProps.mamaInfo.mamaInfo.data.detail);
           return;
         default:
-          Toast.show(nextProps.mamaInfo.data.detail);
+          Toast.show(nextProps.mamaInfo.mamaInfo.data.detail);
           return;
       }
     }
 
-    if (this.props.mamaInfo.isLoading && mamaInfo.success && mamaInfo.data && !(mamaInfo.data[0].charge_status === 'charged'
-        && (mamaInfo.data[0].is_elite_mama))) {
+    if (this.props.mamaInfo.mamaInfo.isLoading && mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data && !(mamaInfo.mamaInfo.data[0].charge_status === 'charged'
+        && (mamaInfo.mamaInfo.data[0].is_elite_mama))) {
         Toast.show('您还不是小鹿精英妈妈，无法申请或购买精品券。请关注小鹿美美公众号或联系客服了解更多信息。');
         this.context.router.replace('/mama/elitemama');
         return;
     }
 
-    if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
-      mmLinkId = mamaInfo.data[0].id;
+    if (mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data && mamaInfo.mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
+      mmLinkId = mamaInfo.mamaInfo.data[0].id;
       for (let i = 0; i < productDetails.data.sku_info.length; i++) {
-        if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
+        if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.mamaInfo.data[0].elite_level) >= 0) {
           this.setState({ sku: productDetails.data.sku_info[i] });
         }
       }
@@ -235,10 +236,12 @@ export default class BuyCoupon extends Component {
   componentWillUnmount() {
     this.props.resetAddProductToShopBag();
     this.props.resetProductDetails();
+    this.props.resetApplyNegotiableCoupons();
   }
 
   onChargeClick = (e) => {
-    const { productDetails, mamaInfo } = this.props;
+    const { productDetails } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
@@ -296,7 +299,8 @@ export default class BuyCoupon extends Component {
   }
 
   onPayTypeClick = (e) => {
-    const { payInfo, mamaInfo } = this.props;
+    const { payInfo } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const { paytype } = e.currentTarget.dataset;
     const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
 
@@ -377,7 +381,7 @@ export default class BuyCoupon extends Component {
   }
 
   onShopbagClick = (e) => {
-    const { mamaInfo } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged' && (mamaInfo.data[0].is_elite_mama)) {
       this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0')
         + '&type=6' + '&elite_level=' + mamaInfo.data[0].elite_level + '&xiaolucoin=' + ((mamaInfo.success && mamaInfo.data && Number(mamaInfo.data[0].xiaolucoin_cash) > 0) ? '1' : '0'));
@@ -458,7 +462,8 @@ export default class BuyCoupon extends Component {
   }
 
   render() {
-    const { mamaInfo, shopBag } = this.props;
+    const { shopBag } = this.props;
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     const imgSrc = (this.state.productDetail && this.state.productDetail.detail_content) ? this.state.productDetail.detail_content.head_img : '';
     const payInfo = this.payInfo();
     const sku = this.state.sku ? this.state.sku : null;

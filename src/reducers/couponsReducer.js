@@ -121,15 +121,22 @@ export default (state = initState, action = null) => {
       return success(state, action);
     case couponsAction.couponsNames.FETCH_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state);
+
     case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.REQUEST:
       return _.extend({}, state, {
         applynegotiable: { isLoading: true, data: state.applynegotiable.data, error: false, success: false },
       });
     case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.SUCCESS:
-      return success(state, action);
+      return _.extend({}, state, {
+        applynegotiable: { isLoading: false, data: action.payload, error: false, success: true },
+      });
     case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
         applynegotiable: { isLoading: false, data: action.payload, error: true, success: false },
+      });
+    case couponsAction.couponsNames.APPLY_NEGOTIABLE_COUPONS + '_' + actionTypes.RESET:
+      return _.extend({}, state, {
+        applynegotiable: { isLoading: false, data: {}, error: false, success: false },
       });
 
     case couponsAction.couponsNames.FETCH_UNUSED_BOTIQUE_COUPONS + '_' + actionTypes.REQUEST:

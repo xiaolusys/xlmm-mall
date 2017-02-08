@@ -29,6 +29,7 @@ export class ShopBag extends Component {
     fetchShopBag: React.PropTypes.func,
     fetchShopBagHistory: React.PropTypes.func,
     applyNegotiableCoupons: React.PropTypes.func,
+    resetApplyNegotiableCoupons: React.PropTypes.func,
     updateQuantity: React.PropTypes.func,
     rebuy: React.PropTypes.func,
     coupons: React.PropTypes.object,
@@ -84,6 +85,10 @@ export class ShopBag extends Component {
     if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code !== 0) {
         Toast.show(coupons.applynegotiable.data.info);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetApplyNegotiableCoupons();
   }
 
   onRebuyClick = (e) => {
