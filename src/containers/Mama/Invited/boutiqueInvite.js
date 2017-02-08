@@ -364,12 +364,13 @@ export default class BoutiqueInvite extends Component {
         </If>
         <If condition={this.state.index === 365}>
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_01.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_02.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_02_2.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_03.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_04.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_05.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_06.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_07.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_08.png'} quality={70} />
         </If>
         </div>
         <BottomBar className="clearfix" size="medium">
