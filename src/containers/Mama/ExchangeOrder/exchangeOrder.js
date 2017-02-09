@@ -169,18 +169,19 @@ export default class ExchangeOrder extends Component {
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
         <div className="col-xs-12 order-time no-padding">
-          <p className=" text-left no-padding">{member.date_field.replace(/T/, ' ')}</p>
+          <p className=" text-left no-padding">{member.date_field ? member.date_field.replace(/T/, ' ') : ''}</p>
         </div>
         <div className="col-xs-4 member-img-div no-padding">
           <img className="member-img" src={member.sku_img} />
         </div>
         <div className="col-xs-6">
           <div className="col-xs-12 no-padding">
+            <p className="text-left font-xs no-padding no-margin">{member.sku_name.substring(0, 9)}</p>
             <p className="text-left font-xs no-padding no-margin">{member.contributor_nick}</p>
             <p className="text-left font-xs no-padding no-margin">{member.status_display}</p>
           </div>
           <div className="col-xs-12 no-padding">
-            <p className=" text-left font-xs">{'需券' + member.num + '张' + '可兑' + (member.order_value / 100).toFixed(2) + '元'}</p>
+            <p className=" text-left font-xs">{'需券' + member.num + '张' + '可兑' + (member.order_value / 100).toFixed(1) + '元'}</p>
           </div>
         </div>
         <div className="col-xs-2">
@@ -195,18 +196,19 @@ export default class ExchangeOrder extends Component {
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
         <div className="col-xs-12 order-time no-padding">
-          <p className=" text-left no-padding">{member.date_field.replace(/T/, ' ')}</p>
+          <p className=" text-left no-padding">{member.date_field ? member.date_field.replace(/T/, ' ') : ''}</p>
         </div>
         <div className="col-xs-4 member-img-div no-padding">
           <img className="member-img" src={member.sku_img} />
         </div>
         <div className="col-xs-6">
           <div className="col-xs-12 no-padding">
+            <p className="text-left font-xs no-padding no-margin">{member.sku_name.substring(0, 9)}</p>
             <p className="text-left font-xs no-padding no-margin">{member.contributor_nick}</p>
             <p className="text-left font-xs no-padding no-margin">{member.status_display}</p>
           </div>
           <div className="col-xs-12 no-padding">
-            <p className=" text-left font-xs">{'用券' + member.num + '张' + '已兑' + (member.order_value / 100).toFixed(2) + '元'}</p>
+            <p className=" text-left font-xs">{'用券' + member.num + '张' + '已兑' + (member.order_value / 100).toFixed(1) + '元'}</p>
           </div>
         </div>
       </li>
