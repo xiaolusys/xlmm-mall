@@ -130,6 +130,9 @@ export default class BoutiqueExchg extends Component {
         case '9':
           this.context.router.push('/mama/teammember');
           break;
+        case '10':
+          window.location.href = '/mall/product/details/25408';
+          break;
         default:
       }
     e.preventDefault();
@@ -321,6 +324,14 @@ getRebateInfo = () => {
             </div>
             <div className="col-xs-9" >
               <p className=" ">每日推送</p>
+            </div>
+          </div>
+          <div className="col-xs-6 info-cat no-padding" data-id={10} onClick={this.onInfoClick}>
+            <div className="col-xs-3" >
+              <div className="icon-xiaolu" />
+            </div>
+            <div className="col-xs-9" >
+              <p className=" ">招募</p>
             </div>
           </div>
         </div>
