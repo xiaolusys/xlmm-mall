@@ -10,6 +10,7 @@ import { Input } from 'components/Input';
 import { Toast } from 'components/Toast';
 import { Popup } from 'components/Popup';
 import { BottomBar } from 'components/BottomBar';
+import { WechatPopup } from 'components/WechatPopup';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
 import * as constants from 'constants';
@@ -19,6 +20,7 @@ import * as shopBagAction from 'actions/shopBag';
 import * as payInfoAction from 'actions/order/payInfo';
 import * as commitOrderAction from 'actions/order/commit';
 import * as couponAction from 'actions/user/coupons';
+import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as plugins from 'plugins';
 
@@ -29,7 +31,7 @@ const payTypeIcons = {
   alipay: 'icon-alipay-square icon-alipay-blue',
 };
 
-const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction, wechatSignAction);
+const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction, inviteSharingAction, wechatSignAction);
 
 @connect(
   state => ({
@@ -39,6 +41,7 @@ const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, pa
     order: state.commitOrder,
     coupons: state.coupons,
     shopBag: state.shopBag,
+    inviteSharing: state.inviteSharing,
     wechatSign: state.wechatSign,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -57,6 +60,7 @@ export default class BoutiqueInvite extends Component {
     buyNowCommitOrder: React.PropTypes.func,
     saveMamaInfo: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
+    fetchInviteSharing: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
     shopBag: React.PropTypes.object,
@@ -64,6 +68,7 @@ export default class BoutiqueInvite extends Component {
     payInfo: React.PropTypes.object,
     coupons: React.PropTypes.object,
     productDetails: React.PropTypes.object,
+    inviteSharing: React.PropTypes.object,
     wechatSign: React.PropTypes.object,
   };
 
@@ -80,11 +85,13 @@ export default class BoutiqueInvite extends Component {
     payTypePopupActive: false,
     chargeEnable: true,
     index: 0,
+    popupActive: false,
   }
 
   componentWillMount() {
     const { mama_id } = this.props.location.query;
     const num = this.props.location.query.num ? this.props.location.query.num : 365;
+    const share = this.props.location.query.share ? Number(this.props.location.query.share) : 0;
     let index = 0;
     if (Number(num) === 216) {
       index = 216;
@@ -93,13 +100,14 @@ export default class BoutiqueInvite extends Component {
       index = 365;
       this.props.fetchProductDetails(25408);
     }
-    this.setState({ index: index });
+    this.setState({ index: index, share: share });
 
     this.props.saveMamaInfo({
       mama_id: mama_id,
     });
     this.props.fetchMamaInfo();
     this.props.fetchWechatSign();
+    this.props.fetchInviteSharing(38);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -283,6 +291,30 @@ export default class BoutiqueInvite extends Component {
     e.preventDefault();
   }
 
+  onShareClick = (e) => {
+    const shareInfo = this.props.inviteSharing.data || {};
+    if (utils.detector.isWechat()) {
+      this.setState({ popupActive: true });
+      return;
+    }
+
+    plugins.invoke({
+      method: 'callNativeUniShareFunc',
+      data: {
+        share_title: shareInfo.title,
+        share_to: '',
+        share_desc: shareInfo.active_dec,
+        share_icon: shareInfo.share_icon,
+        share_type: 'link',
+        link: shareInfo.share_link,
+      },
+    });
+  }
+
+  onCloseBtnClick = (e) => {
+    this.setState({ popupActive: false });
+  }
+
   togglePayTypePopupActive = () => {
       this.setState({ payTypePopupActive: false, chargeEnable: true });
   }
@@ -375,13 +407,20 @@ export default class BoutiqueInvite extends Component {
         </If>
         </div>
         <BottomBar className="clearfix" size="medium">
+          <If condition={this.state.share === 1}>
+            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onShareClick} disabled={disabled}>
+              {'分享此页面'}
+            </button>
+          </If>
+          <If condition={this.state.share === 0}>
             <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAdministratorClick} disabled={disabled}>
               {'咨询管理员'}
             </button>
-            <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
-              {'直接支付'}
-            </button>
-          </BottomBar>
+          </If>
+          <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
+            {'直接支付'}
+          </button>
+        </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className="row no-margin bottom-border">
             <i className="col-xs-1 no-padding icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
@@ -404,6 +443,7 @@ export default class BoutiqueInvite extends Component {
             )
           )}
         </Popup>
+        <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>
     );
   }
