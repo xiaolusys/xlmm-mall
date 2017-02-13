@@ -33,11 +33,11 @@ export class Coupon extends Component {
         <div className="coupon-right-top">
           <p className={'no-margin coupon-value'}>{'¥' + couponItem.value}</p>
           <div className="coupon-detail">
-            <p className="no-margin">{couponItem.title}</p>
-            <p className="no-margin">{'满' + couponItem.use_fee + '可用'}</p>
             <p className="no-margin">{couponItem.pros_desc}</p>
+            <p className="no-margin">{'满' + couponItem.use_fee + '可用'}</p>
           </div>
         </div>
+        <p className="no-margin coupon-title">{couponItem.title}</p>
         <p className="coupon-validity">
         <span>期限 </span>
         <span className="coupon-date">{couponItem.start_use_time.replace('T', ' ').substring(0, 16)} </span>
