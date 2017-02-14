@@ -55,6 +55,7 @@ export default class Recharge extends Component {
     resetProductDetails: React.PropTypes.func,
     resetAddProductToShopBag: React.PropTypes.func,
     fetchBuyNowPayInfo: React.PropTypes.func,
+    resetPayInfo: React.PropTypes.func,
     buyNowCommitOrder: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
@@ -80,6 +81,7 @@ export default class Recharge extends Component {
     payTypePopupActive: false,
     chargeEnable: true,
     index: 0,
+    useWallet: false,
   }
 
   componentWillMount() {
@@ -90,6 +92,8 @@ export default class Recharge extends Component {
   componentWillReceiveProps(nextProps) {
     const { productDetails, payInfo, order, coupons, wechatSign } = nextProps;
     const mamaInfo = nextProps.mamaInfo.mamaInfo;
+    const mmLinkId = (mamaInfo.data && mamaInfo.data.length > 0) ? mamaInfo.data[0].id : 0;
+    const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
@@ -97,13 +101,12 @@ export default class Recharge extends Component {
     }
 
     if (mamaInfo.success && mamaInfo.data && mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
-      for (let i = 0; i < productDetails.data.sku_info.length; i++) {
-        this.setState({ sku: productDetails.data.sku_info[0] });
-      }
+      this.setState({ sku: productDetails.data.sku_info[0] });
     }
 
     if (productDetails.success && productDetails.data && this.props.productDetails.isLoading) {
       this.setState({ productDetail: productDetails.data });
+      this.props.fetchBuyNowPayInfo(productDetails.data.sku_info[0].sku_items[0].sku_id, 1, 'wap');
     }
 
     // Add product resp
@@ -153,7 +156,28 @@ export default class Recharge extends Component {
       }
       // pop pay
       if (payInfo.success && !_.isEmpty(payInfo.data)) {
-        this.setState({ payTypePopupActive: true });
+        if (!this.state.chargeEnable) {
+          if (this.state.useWallet && payInfo.data.budget_cash >= (payInfo.data.total_fee)) {
+            this.props.buyNowCommitOrder({
+              uuid: payInfo.data.uuid,
+              item_id: payInfo.data.sku.product.id,
+              sku_id: payInfo.data.sku.id,
+              num: 1,
+              payment: payInfo.data.total_payment,
+              post_fee: payInfo.data.post_fee,
+              discount_fee: payInfo.data.discount_fee,
+              total_fee: payInfo.data.total_fee,
+              channel: 'budget',
+              mm_linkid: referalMamaid,
+              order_type: 4, // 对应后台的电子商品类型，不校验地址
+              pay_extras: this.getPayExtras(),
+            });
+            return;
+          }
+          this.setState({ payTypePopupActive: true });
+        } else {
+          this.setState({ budgetCash: payInfo.data.budget_cash });
+        }
       }
     }
 
@@ -180,6 +204,9 @@ export default class Recharge extends Component {
     const mamaInfo = this.props.mamaInfo.mamaInfo;
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
+    const payInfo = this.props.payInfo;
+    const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
+    const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
 
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0)) {
       /* if (!mamaInfo.data[0].is_buyable) {
@@ -189,11 +216,13 @@ export default class Recharge extends Component {
       if (this.state.selectId) {
         // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
         // 精品券默认是在app上支付
+        this.props.resetPayInfo();
         if (utils.detector.isApp()) {
           this.props.fetchBuyNowPayInfo(this.state.selectId, 1, 'app');
         } else {
           this.props.fetchBuyNowPayInfo(this.state.selectId, 1, 'wap');
         }
+
         this.setState({ chargeEnable: false });
       } else {
         Toast.show('请选择一个充值选项');
@@ -208,7 +237,6 @@ export default class Recharge extends Component {
     const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
     const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
 
-    console.log(referalMamaid);
     this.setState({ payTypePopupActive: false });
 
     if (mmLinkId === 0) {
@@ -241,6 +269,7 @@ export default class Recharge extends Component {
       channel: paytype,
       mm_linkid: referalMamaid,
       order_type: 4, // 对应后台的电子商品类型，不校验地址
+      pay_extras: this.getPayExtras(),
     });
 
     e.preventDefault();
@@ -251,8 +280,64 @@ export default class Recharge extends Component {
     e.preventDefault();
   }
 
+  getPayExtras = () => {
+    const self = this;
+    const { payInfo } = this.props;
+    const { useWallet } = this.state;
+    const payExtras = [];
+
+    _.each(payInfo.data.pay_extras, (extra) => {
+      console.log(extra.pid === 3, payInfo.data.total_fee);
+
+      if (extra.pid === 3 && useWallet && payInfo.data.budget_cash > 0 && self.getDisplayPrice(payInfo.data.total_fee) > 0) {
+        payExtras.push('pid:' + extra.pid + ':value:' + payInfo.data.budget_cash);
+      }
+      if (extra.pid === 3 && useWallet && payInfo.data.budget_cash >= (payInfo.data.total_fee)) {
+        payExtras.push('pid:' + extra.pid + ':budget:' + (payInfo.data.total_fee).toFixed(2));
+      }
+
+    });
+    return payExtras.join(','); // pid:1:value:2,pid:2:value:3:cunponid:2
+  }
+
+  getpPaymentPrice = (totalPrice) => {
+    const { payInfo } = this.props;
+    const { useWallet } = this.state;
+    const value = totalPrice || 0;
+
+    if (useWallet && payInfo.data.budget_cash >= (payInfo.data.total_fee)) {
+      return (payInfo.data.total_fee).toFixed(2);
+    }
+    return value.toFixed(2);
+  }
+
+  getDisplayPrice = (totalPrice) => {
+    const { payInfo } = this.props;
+    const { useWallet } = this.state;
+    let displayPrice = payInfo.data.total_fee || 0;
+
+    if (useWallet) {
+      if (totalPrice && payInfo.data.budget_cash >= payInfo.data.total_fee) {
+        displayPrice = 0;
+      }
+      if (totalPrice && payInfo.data.budget_cash < payInfo.data.total_fee) {
+        displayPrice = displayPrice - payInfo.data.budget_cash;
+      }
+    }
+
+    if (displayPrice < 0) {
+      displayPrice = 0;
+    }
+    return displayPrice.toFixed(2);
+  }
+
   handleChange = (e) => {
     this.setState({ selectId: e.target.value });
+    this.props.resetPayInfo();
+  }
+
+  handleUseWalletChange = (e) => {
+    this.setState({ useWallet: !this.state.useWallet });
   }
 
   togglePayTypePopupActive = () => {
@@ -297,6 +382,18 @@ export default class Recharge extends Component {
     const sku = this.state.sku ? this.state.sku : null;
     const trasparentHeader = false;
     const disabled = false;
+    let walletValue = '';
+
+    if (this.state.budgetCash) {
+      walletValue = this.state.budgetCash + '元 ';
+      if (this.state.useWallet && payInfo && (!_.isEmpty(payInfo))) {
+        if (this.state.budgetCash > payInfo.total_payment) {
+          walletValue += '使用' + payInfo.total_payment + '元 ';
+        } else {
+          walletValue += '使用' + this.state.budgetCash + '元 ';
+        }
+      }
+    }
 
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg recharge-info">
@@ -304,7 +401,7 @@ export default class Recharge extends Component {
         <div className="invite-imgs">
           <Image className="coupon-img" src={imgSrc} quality={70} />
         </div>
-        <div>
+        <div className="bottom-border">
           {sku && (sku.sku_items.length > 0) && sku.sku_items.map((item) =>
             (
               <div className="margin-left-sm margin-right-sm" key={item.sku_id} data-paytype={item.sku_id} >
@@ -315,6 +412,12 @@ export default class Recharge extends Component {
               </div>
             )
           )}
+        </div>
+        <div className="margin-left-sm margin-right-sm" >
+          <label className="text-center">
+          <Checkbox className="inline-block margin-top-xxs" value={1} checked = {this.state.useWallet} onChange={this.handleUseWalletChange} />
+          {' 小鹿余额' + walletValue}
+          </label>
         </div>
         <div>
           <p className="col-xs-offset-1 font-xs">购买条款说明：小鹿精品币仅限专业版精英妈妈充值及使用，充值越多越优惠。小鹿精品币能方便和自由的用来购买各种精品券，减少换券的烦恼。小鹿精品币不能退还，不能提现。购买即表明同意此条款。</p>
@@ -329,7 +432,7 @@ export default class Recharge extends Component {
             <i className="col-xs-1 no-padding icon-close font-orange" onClick={this.togglePayTypePopupActive}></i>
             <p className="col-xs-11 no-padding text-center">
               <span className="font-xs">应付款金额</span>
-              <span className="font-lg font-orange">{`￥${payInfo.total_payment && payInfo.total_payment.toFixed(2)}`}</span>
+              <span className="font-lg font-orange">{`￥${this.getDisplayPrice(payInfo.total_payment)}`}</span>
             </p>
           </div>
           {payInfo.channels && (payInfo.channels.length > 0) && payInfo.channels.map((channel) =>
