@@ -31,3 +31,10 @@ export const fetchBuyNowPayInfo = (skuid, num, device) => {
       });
   };
 };
+
+export const resetPayInfo = () => {
+  const action = createAction(name);
+  return (dispatch) => {
+    dispatch(action.reset());
+  };
+};
