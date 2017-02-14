@@ -92,7 +92,7 @@ export default class Recharge extends Component {
   componentWillReceiveProps(nextProps) {
     const { productDetails, payInfo, order, coupons, wechatSign } = nextProps;
     const mamaInfo = nextProps.mamaInfo.mamaInfo;
-    const mmLinkId = mamaInfo.data ? mamaInfo.data[0].id : 0;
+    const mmLinkId = (mamaInfo.data && mamaInfo.data.length > 0) ? mamaInfo.data[0].id : 0;
     const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
