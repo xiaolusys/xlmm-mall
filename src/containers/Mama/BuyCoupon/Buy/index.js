@@ -179,7 +179,6 @@ export default class BuyCoupon extends Component {
     const { shopBag } = nextProps.shopBag;
     if (shopBag.success && !_.isEmpty(shopBag.data) && this.props.shopBag.shopBag.isLoading && !this.state.chargeEnable) {
       const cartId = shopBag.data[0].id;
-      console.log(productDetails);
       if (productDetails.data && productDetails.data.detail_content && productDetails.data.detail_content.is_boutique) {
         // 特卖抢购商品直接进入支付页面
         if (utils.detector.isApp()) {
