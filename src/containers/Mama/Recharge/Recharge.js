@@ -416,7 +416,7 @@ export default class Recharge extends Component {
         <div className="margin-left-sm margin-right-sm" >
           <label className="text-center">
           <Checkbox className="inline-block margin-top-xxs" value={1} checked = {this.state.useWallet} onChange={this.handleUseWalletChange} />
-          {' 小鹿余额' + walletValue}
+          {' 小鹿零钱' + walletValue}
           </label>
         </div>
         <div>
