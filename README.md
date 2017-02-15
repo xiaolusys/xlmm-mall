@@ -24,6 +24,7 @@ _______________________
 - [redux-form](https://github.com/erikras/redux-form)
 - [karma](https://github.com/karma-runner/karma)
 - [mocha](https://github.com/mochajs/mocha)
+- [react-component-errors](https://www.npmjs.com/package/react-component-errors)
 
 ## Sublime Text Setup
 ### 1. Install package controll [https://packagecontrol.io/installation](https://packagecontrol.io/installation)
@@ -83,6 +84,7 @@ $ npm run build:production
 ```
 $ npm test
 ```
+
 
 ## Compontent Doc
 - [Carousel](/src/components/Carousel)
