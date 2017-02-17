@@ -198,7 +198,7 @@ export default class Apply extends Component {
     }
     let refundWay = {};
     if (order.data && order.data.extras) {
-      refundWay = _.where(order.data.extras.refund_choices, { refund_channel: refundChannel })[0];
+      refundWay = _.where(order.data.extras.refund_choices, { refund_channel: refundChannel })[0] || {};
     }
     return (
       <div className="refunds-apply">
