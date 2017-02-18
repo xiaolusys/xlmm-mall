@@ -126,7 +126,7 @@ export default class TranCouponList extends Component {
           </div>
           <div className="row no-margin">
             <p className="no-wrap">
-              <span className="font-xs">{'￥' + product.lowest_agent_price}</span>
+              <span className="font-xs">{'￥'}</span>
               <span className="font-grey">/</span>
               <span className="font-xs font-grey-light text-line-through">{'￥' + (product.lowest_std_sale_price)}</span>
               <span className="font-grey font-xs" style={{ paddingLeft: '8px' }}>{(product.elite_score) ? '积分' + product.elite_score : ''}</span>
