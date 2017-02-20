@@ -48,6 +48,9 @@ export default class List extends Component {
   }
 
   state = {
+    hasMore: true,
+    pageIndex: 0,
+    pageSize: 10,
     activeTab: 0,
     sticky: false,
   }
@@ -68,6 +71,12 @@ export default class List extends Component {
     const { coupons, coupon, verifyCoupon } = nextProps;
     const { query } = this.props.location;
     const state = this.state;
+    let count = 0;
+    let size = 0;
+    let data = null;
+    const { couponStatus } = constants;
+    const { available, used, unavailable, expired, negotiable } = nextProps.coupons;
+
     if (verifyCoupon.success && verifyCoupon.data) {
       if (verifyCoupon.data.coupon_message) {
         Toast.show(verifyCoupon.data.coupon_message);
@@ -80,6 +89,31 @@ export default class List extends Component {
     } else {
       utils.ui.loadingSpinner.hide();
     }
+
+    if (this.state.activeTab === couponStatus.available) {
+      if (available.success) {
+        data = available.data;
+      }
+    } else if (this.state.activeTab === couponStatus.negotiable) {
+      if (negotiable.success) {
+        data = negotiable.data;
+      }
+    } else if (this.state.activeTab === couponStatus.used) {
+      if (used.success) {
+        data = used.data;
+      }
+    } else if (this.state.activeTab === couponStatus.expired) {
+      if (expired.success) {
+        data = expired.data;
+      }
+    }
+
+    if (data) {
+      count = data.count;
+      size = data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
+      this.setState({ hasMore: count > size });
+    }
   }
 
   componentWillUnmount() {
@@ -88,7 +122,37 @@ export default class List extends Component {
 
   onScroll = (e) => {
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
     const tabsOffsetTop = utils.dom.offsetTop('.coupon-tabs');
+    const { pageSize, pageIndex, activeTab } = this.state;
+    const { couponStatus } = constants;
+    const { available, used, unavailable, expired, negotiable } = this.props.coupons;
+    let page = 1;
+    if (scrollTop === documentHeight - windowHeight) {
+      if (this.state.activeTab === couponStatus.available) {
+        if (available.success && available.data && available.data.next) {
+          page = this.getPage(available.data.next);
+          this.props.fetchCouponsByStatus(couponStatus.available, null, page);
+        }
+      } else if (this.state.activeTab === couponStatus.negotiable) {
+        if (negotiable.success && negotiable.data && negotiable.data.next) {
+          page = this.getPage(negotiable.data.next);
+          this.props.fetchCouponsByStatus(couponStatus.available, 8, page);
+        }
+      } else if (this.state.activeTab === couponStatus.used) {
+        if (used.success && used.data && used.data.next) {
+          page = this.getPage(used.data.next);
+          this.props.fetchCouponsByStatus(couponStatus.used, null, page);
+        }
+      } else if (this.state.activeTab === couponStatus.expired) {
+        if (expired.success && expired.data && expired.data.next) {
+          page = this.getPage(expired.data.next);
+          this.props.fetchCouponsByStatus(couponStatus.expired, null, page);
+        }
+      }
+    }
+
     if (scrollTop > tabsOffsetTop) {
       this.setState({ sticky: true });
     } else {
@@ -118,6 +182,7 @@ export default class List extends Component {
     const { id } = e.currentTarget;
     this.setState({
       activeTab: couponStatus[id],
+      pageIndex: 0,
     });
     e.preventDefault();
   }
@@ -144,6 +209,19 @@ export default class List extends Component {
     return coupons;
   }
 
+  getPage(nextUrl) {
+    let page = 1;
+    const parts = nextUrl.split(`&`);
+    if (parts.length > 0) {
+      for (let i = parts.length - 1; i >= 0; i--) {
+         if (parts[i].indexOf('page') >= 0) {
+            page = Number(parts[i].substring(parts[i].indexOf('=') + 1));
+         }
+      }
+    }
+    return page;
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -167,16 +245,16 @@ export default class List extends Component {
           <div className={'coupon-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
             <ul className="row no-margin">
               <li id="available" className={'col-xs-3' + (activeTab === couponStatus.available ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>未使用({available.data && available.data.results && available.data.results.length})</div>
+                <div>未使用({available.data && available.data.count ? available.data.count : 0})</div>
               </li>
               <li id="negotiable" className={'col-xs-3' + (activeTab === couponStatus.negotiable ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>精品券({negotiable.data && negotiable.data.results && negotiable.data.results.length})</div>
+                <div>精品券({negotiable.data && negotiable.data.count})</div>
               </li>
               <li id="used" className={'col-xs-3' + (activeTab === couponStatus.used ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>已使用({used.data && used.data.results && used.data.results.length})</div>
+                <div>已使用({used.data && used.data.count})</div>
               </li>
               <li id="expired" className={'col-xs-3' + (activeTab === couponStatus.expired ? ' active' : '')} onClick={this.onTabItemClick}>
-                <div>已过期({expired.data && expired.data.results && expired.data.results.length})</div>
+                <div>已过期({expired.data && expired.data.count})</div>
               </li>
             </ul>
           </div>

@@ -26,8 +26,7 @@ export const fetchCouponsByStatus = (status, couponType = null, page = 1) => {
     return axios.get(constants.baseEndpoint + 'usercoupon', { params: { page: page, coupon_type: couponType, status: status } })
       .then((resp) => {
         const data = resp.data;
-        data.status = status;
-        data.coupons = resp.data;
+        data.reqStatus = status;
         dispatch(action.success(data));
       })
       .catch((resp) => {

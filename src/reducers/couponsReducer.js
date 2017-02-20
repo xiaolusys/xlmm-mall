@@ -64,7 +64,7 @@ const success = (state, action) => {
   let payload = {};
   switch (action.type) {
     case couponsAction.couponsNames.FETCH_COUPONS_BY_STATUS + '_' + actionTypes.SUCCESS:
-      switch (action.payload.status) {
+      switch (action.payload.reqStatus) {
         case couponStatus.available:
           payload = action.payload;
           payload.results = _.chain(state.available.data.results || []).union(payload.results || []).unique('id').value();
