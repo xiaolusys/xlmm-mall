@@ -460,6 +460,31 @@ export default class BuyCoupon extends Component {
 
   }
 
+  getEliteLevelPrice = (detail) => {
+    const result = [];
+    if (detail && detail.sku_info.length === 5) {
+      for (let i = detail.sku_info.length - 1; i >= 0; i--) {
+        if (detail.sku_info[i].name.indexOf('Associate') >= 0) {
+          const item = { name: '经理', price: detail.sku_info[i].agent_price };
+          result[0] = item;
+        } else if (detail.sku_info[i].name.indexOf('Director') >= 0) {
+          const item = { name: '主管', price: detail.sku_info[i].agent_price };
+          result[1] = item;
+        } else if (detail.sku_info[i].name.indexOf('VP') >= 0) {
+          const item = { name: '副总裁', price: detail.sku_info[i].agent_price };
+          result[2] = item;
+        } else if (detail.sku_info[i].name.indexOf('Partner') >= 0) {
+          const item = { name: '合伙人', price: detail.sku_info[i].agent_price };
+          result[3] = item;
+        } else if (detail.sku_info[i].name.indexOf('SP') >= 0) {
+          const item = { name: '高级合伙人', price: detail.sku_info[i].agent_price };
+          result[4] = item;
+        }
+      }
+    }
+    return result;
+  }
+
   render() {
     const { shopBag } = this.props;
     const mamaInfo = this.props.mamaInfo.mamaInfo;
@@ -469,6 +494,8 @@ export default class BuyCoupon extends Component {
     const trasparentHeader = true;
     const disabled = false;
     let badge = 0;
+    const levelPrice = this.getEliteLevelPrice(this.state.productDetail);
+
     if (shopBag.shopBagQuantity.data) {
       badge = shopBag.shopBagQuantity.data.result;
     }
@@ -481,7 +508,7 @@ export default class BuyCoupon extends Component {
           <div className="row no-margin">
             <p className="col-xs-10 no-padding font-md">{(this.state.productDetail && this.state.productDetail.detail_content && sku) ? this.state.productDetail.detail_content.name + '/' + sku.name : '' }</p>
           </div>
-          <div className="row no-margin">
+          <div className="row no-margin ">
             <p className="no-padding">
               <span className="font-32">{'￥' + (sku ? sku.agent_price : '')}</span>
               <span className="font-grey">/</span>
@@ -489,6 +516,17 @@ export default class BuyCoupon extends Component {
               <span className="font-grey font-xs" style={{ paddingLeft: '8px' }}>{(sku) ? '积分' + sku.elite_score : ''}</span>
             </p>
           </div>
+          <If condition={levelPrice.length > 0}>
+          {levelPrice.map((item, index) => {
+            return (<div className="row no-margin" key={index}>
+              <div className="no-padding no-margin">
+                <p className="font-xs col-xs-6" style={{ paddingLeft: '8px' }}>{item.name}</p>
+                <p className="font-xs col-xs-6" >{item.price + '元'}</p>
+              </div>
+            </div>);
+            })
+          }
+          </If>
         </div>
         <div className="row coupon-num">
           <div className="text-center cart-quantity">
