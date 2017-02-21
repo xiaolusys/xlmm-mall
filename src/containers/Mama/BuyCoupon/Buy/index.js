@@ -401,6 +401,31 @@ export default class BuyCoupon extends Component {
     e.preventDefault();
   }
 
+  getEliteLevelPrice = (detail) => {
+    const result = [];
+    if (detail && detail.sku_info.length === 5) {
+      for (let i = detail.sku_info.length - 1; i >= 0; i--) {
+        if (detail.sku_info[i].name.indexOf('Associate') >= 0) {
+          const item = { name: '经理', price: detail.sku_info[i].agent_price };
+          result[0] = item;
+        } else if (detail.sku_info[i].name.indexOf('Director') >= 0) {
+          const item = { name: '主管', price: detail.sku_info[i].agent_price };
+          result[1] = item;
+        } else if (detail.sku_info[i].name.indexOf('VP') >= 0) {
+          const item = { name: '副总裁', price: detail.sku_info[i].agent_price };
+          result[2] = item;
+        } else if (detail.sku_info[i].name.indexOf('Partner') >= 0) {
+          const item = { name: '合伙人', price: detail.sku_info[i].agent_price };
+          result[3] = item;
+        } else if (detail.sku_info[i].name.indexOf('SP') >= 0) {
+          const item = { name: '高级合伙人', price: detail.sku_info[i].agent_price };
+          result[4] = item;
+        }
+      }
+    }
+    return result;
+  }
+
   togglePayTypePopupActive = () => {
       this.setState({ payTypePopupActive: false, chargeEnable: true });
   }
@@ -458,31 +483,6 @@ export default class BuyCoupon extends Component {
       });
     }
 
-  }
-
-  getEliteLevelPrice = (detail) => {
-    const result = [];
-    if (detail && detail.sku_info.length === 5) {
-      for (let i = detail.sku_info.length - 1; i >= 0; i--) {
-        if (detail.sku_info[i].name.indexOf('Associate') >= 0) {
-          const item = { name: '经理', price: detail.sku_info[i].agent_price };
-          result[0] = item;
-        } else if (detail.sku_info[i].name.indexOf('Director') >= 0) {
-          const item = { name: '主管', price: detail.sku_info[i].agent_price };
-          result[1] = item;
-        } else if (detail.sku_info[i].name.indexOf('VP') >= 0) {
-          const item = { name: '副总裁', price: detail.sku_info[i].agent_price };
-          result[2] = item;
-        } else if (detail.sku_info[i].name.indexOf('Partner') >= 0) {
-          const item = { name: '合伙人', price: detail.sku_info[i].agent_price };
-          result[3] = item;
-        } else if (detail.sku_info[i].name.indexOf('SP') >= 0) {
-          const item = { name: '高级合伙人', price: detail.sku_info[i].agent_price };
-          result[4] = item;
-        }
-      }
-    }
-    return result;
   }
 
   render() {
