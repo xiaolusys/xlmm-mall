@@ -1,3 +1,4 @@
+@import "../../../constants/common.scss";
 .mamainfo-container {
 
 	width: 100%;
@@ -42,6 +43,55 @@
 		}
 	}
 
+	.cat4 {
+
+		.makemoney-cat {
+			border: 1px solid $gray-color;
+			padding-top: 8px;
+			height: 56px;
+			font-size: 0.75em;
+			>p {
+				padding-top: 4px;
+			}
+			.mama-shop-icon{
+				background: url('./images/mamaeryaoqingColor.png') center center no-repeat;
+				background-size: 100%;
+				width: 24px;
+				height: 24px;
+				border: none;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.mama-push-icon{
+				background: url('./images/EverydayPushNormalColor.png') center center no-repeat;
+				background-size: 100%;
+				width: 24px;
+				height: 24px;
+				border: none;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.mama-select-icon{
+				background: url('./images/selectionShopNormalColor.png') center center no-repeat;
+				background-size: 100%;
+				width: 24px;
+				height: 24px;
+				border: none;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.mama-invite-icon{
+				background: url('./images/inviteShopNormalColor.png') center center no-repeat;
+				background-size: 100%;
+				width: 24px;
+				height: 24px;
+				border: none;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+	}
+
 	.cat22 {
 		margin-top: 16px;
 		background-color: #fff;
@@ -50,6 +100,7 @@
 			padding-top: 16px;
 			height: 80px;
 			font-size: 1em;
+			border: 1px solid #dadada;
 			> div {
 				height: 100%;
 				.mama-cash-icon{

@@ -94,6 +94,28 @@ export default class MyInfoTab extends Component {
     e.preventDefault();
   }
 
+  onMakemoneyClick = (e) => {
+    const { id } = e.currentTarget.dataset;
+    const { mamaFortune } = this.props.mamaBaseInfo;
+      switch (id) {
+        case '1':
+          this.context.router.push('/');
+          break;
+        case '2':
+          this.context.router.push('/mama/everydaypush?mm_linkid=' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : ''));
+          break;
+        case '3':
+          this.context.router.push('/mama/commission');
+          break;
+        case '4':
+          // this.context.router.push('/mama/invited');
+          window.location.href = '/mall/boutiqueinvite?num=365&share=1';
+          break;
+        default:
+      }
+    e.preventDefault();
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -117,35 +139,33 @@ export default class MyInfoTab extends Component {
             <div className="col-xs-1" >
               <div className="mama-diamonds-icon" />
             </div>
-            <p className="text-left">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_level_display : ''}</p>
+            <p className="text-left">{''}</p>
           </div>
           <div className="my-mama-level no-padding col-xs-3">
             <div className="col-xs-1" >
               <div className="mama-crown-icon" />
             </div>
-            <p className="text-left ">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.extra_info.agencylevel_display : 0}</p>
+            <p className="text-left ">{''}</p>
           </div>
         </div>
-        <div className="bottom-border cat22">
-          <div className="col-xs-6 info-cat" data-id={1} onClick={this.onInfoClick}>
-            <div className="col-xs-3" >
-              <div className="mama-cash-icon" />
+        <div className="bottom-border cat4">
+            <div className="col-xs-3 makemoney-cat" data-id={1} onClick={this.onMakemoneyClick}>
+              <div className="mama-shop-icon text-center" />
+              <p className=" text-center">分享店铺</p>
             </div>
-            <div className="col-xs-9" >
-              <p className=" ">我的提现</p>
-              <p className=" ">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.cash_value : ''}</p>
+            <div className="col-xs-3 makemoney-cat" data-id={2} onClick={this.onMakemoneyClick}>
+              <div className="mama-push-icon text-center" />
+              <p className=" text-center">每日推送</p>
+            </div>
+            <div className="col-xs-3 makemoney-cat" data-id={3} onClick={this.onMakemoneyClick}>
+              <div className="mama-select-icon text-center" />
+              <p className=" text-center">选品佣金</p>
+            </div>
+            <div className="col-xs-3 makemoney-cat" data-id={4} onClick={this.onMakemoneyClick}>
+              <div className="mama-invite-icon" />
+              <p className=" text-center">邀请开店</p>
             </div>
           </div>
-          <div className="col-xs-6 info-cat" data-id={2} onClick={this.onInfoClick}>
-            <div className="col-xs-3" >
-              <div className="mama-carryout-icon" />
-            </div>
-            <div className="col-xs-9" >
-              <p className=" ">累计收益</p>
-              <p className=" ">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.carry_value : ''}</p>
-            </div>
-          </div>
-        </div>
         <div className="bottom-border cat22">
           <div className="col-xs-6 info-cat left-border" data-id={3} onClick={this.onInfoClick}>
             <div className="col-xs-3" >
