@@ -81,6 +81,7 @@ export default class Commit extends Component {
     agreePurchaseTerms: true,
     isShowPurchaseTerms: false,
     couponNum: 1,
+    commitOrderEnable: true,
   }
 
   componentWillMount() {
@@ -126,6 +127,7 @@ export default class Commit extends Component {
       }
 
       if (order.data.code !== 0) {
+        this.setState({ commitOrderEnable: true });
         Toast.show(order.data.info);
       }
     }
@@ -149,7 +151,7 @@ export default class Commit extends Component {
     const { walletChecked, xiaoluCoinChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
     const mmLinkId = this.props.location.query.mmLinkId;
     const teambuyId = this.props.location.query.teambuyId;
-    console.log('commit');
+
     if (!address.data.id) {
       Toast.show('请填写收货地址！');
       return;
@@ -164,6 +166,8 @@ export default class Commit extends Component {
       this.context.router.push(`user/address/edit/${address.data.id}?is_bonded_goods=true`);
       return;
     }
+
+    this.setState({ commitOrderEnable: false });
 
     if ((walletChecked || xiaoluCoinChecked) && walletBalance >= payInfo.data.total_fee && _.isEmpty(coupon.data)) {
       this.props.commitOrder({
@@ -216,6 +220,8 @@ export default class Commit extends Component {
       });
       return;
     }
+
+    // 进入这里，说明需要进行微信支付宝支付，打开支付类型选择界面
     this.togglePayTypePopupActive();
     return;
   }
@@ -241,6 +247,7 @@ export default class Commit extends Component {
       teambuy_id: teambuyId,
       mm_linkid: mmLinkId,
     });
+    this.togglePayTypePopupActive();
     e.preventDefault();
   }
 
@@ -647,7 +654,7 @@ export default class Commit extends Component {
             <span className="font-xs">应付款金额</span>
             <span className="font-lg font-orange">{'￥' + this.getDisplayPrice(payInfo.data.total_payment)}</span>
           </p>
-          <button className="button button-energized col-xs-12" type="button" onClick={this.onCommitOrderClick}>购买</button>
+          <button className="button button-energized col-xs-12" type="button" onClick={this.onCommitOrderClick} disabled={!this.state.commitOrderEnable}>购买</button>
         </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
           <div className={`row no-margin bottom-border `}>
