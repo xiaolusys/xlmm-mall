@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
-import MakemoneyTab from './makemoney';
 import MyInfoTab from './myinfo';
 import BoutiqueExchg from '../BoutiqueExchange';
 
@@ -63,25 +62,12 @@ export default class MamaHome extends Component {
   onTabClick = (e) => {
     const { id, type } = e.currentTarget.dataset;
       switch (id) {
-        case 'makemoney':
-          this.setState({
-            topTab: id,
-          });
-
-          break;
         case 'boutique':
           this.setState({
             topTab: id,
 
           });
           // window.location.href = '/mall/mama/boutique';
-          break;
-        case 'forum':
-          this.setState({
-            topTab: id,
-
-          });
-          window.location.href = constants.forum.forumUrl;
           break;
         case 'myinfo':
           this.setState({
@@ -106,9 +92,6 @@ export default class MamaHome extends Component {
             <When condition={topTab === 'boutique'}>
               <BoutiqueExchg />
             </When>
-            <When condition={topTab === 'makemoney'}>
-              <MakemoneyTab />
-            </When>
             <When condition={topTab === 'myinfo'}>
               <MyInfoTab />
             </When>
@@ -117,17 +100,12 @@ export default class MamaHome extends Component {
           <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">
               <li key={2} data-id="boutique" onClick={this.onTabClick}>
-                <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'boutique' ? ' active' : '')}>
+                <p className={'col-xs-6 no-margin no-padding text-center' + (topTab === 'boutique' ? ' active' : '')}>
                   <span>精品汇</span>
                 </p>
               </li>
-              <li key={1} data-id="makemoney" onClick={this.onTabClick}>
-                <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'makemoney' ? ' active' : '')}>
-                  <span>我要赚钱</span>
-                </p>
-              </li>
               <li key={4} data-id="myinfo" onClick={this.onTabClick}>
-                <p className={'col-xs-4 no-margin no-padding text-center' + (topTab === 'myinfo' ? ' active' : '')}>
+                <p className={'col-xs-6 no-margin no-padding text-center' + (topTab === 'myinfo' ? ' active' : '')}>
                   <span>妈妈中心</span>
                 </p>
               </li>
