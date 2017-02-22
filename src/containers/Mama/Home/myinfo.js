@@ -139,13 +139,13 @@ export default class MyInfoTab extends Component {
             <div className="col-xs-1" >
               <div className="mama-diamonds-icon" />
             </div>
-            <p className="text-left">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_level_display : ''}</p>
+            <p className="text-left">{''}</p>
           </div>
           <div className="my-mama-level no-padding col-xs-3">
             <div className="col-xs-1" >
               <div className="mama-crown-icon" />
             </div>
-            <p className="text-left ">{(mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.extra_info.agencylevel_display : 0}</p>
+            <p className="text-left ">{''}</p>
           </div>
         </div>
         <div className="bottom-border cat4">
