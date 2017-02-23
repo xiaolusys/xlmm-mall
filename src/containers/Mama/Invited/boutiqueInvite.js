@@ -92,14 +92,9 @@ export default class BoutiqueInvite extends Component {
     const { mama_id } = this.props.location.query;
     const num = this.props.location.query.num ? this.props.location.query.num : 365;
     const share = this.props.location.query.share ? Number(this.props.location.query.share) : 0;
-    let index = 0;
-    if (Number(num) === 216) {
-      index = 216;
-      this.props.fetchProductDetails(25115);
-    } else if (Number(num) === 365) {
-      index = 365;
-      this.props.fetchProductDetails(25408);
-    }
+    const index = 365;
+
+    this.props.fetchProductDetails(25408);
     this.setState({ index: index, share: share });
 
     this.props.saveMamaInfo({
