@@ -92,6 +92,7 @@ import {
   ReturnBoutiqueCoupon,
   ReturnProgress,
   BoutiqueInvite,
+  BoutiqueInvite2,
   InOutCoupon,
   RecruitMama,
   Recharge,
@@ -152,6 +153,7 @@ export default (
     <Route path="/mama/open/failed" component={MamaOpeningFailed} />
     <Route path="/mama/invited" component={MamaInvited} />
     <Route path="/boutiqueinvite" component={BoutiqueInvite} />
+    <Route path="/boutiqueinvite2/:id" component={BoutiqueInvite2} />
     {activityRoutes}
     <Route path="/mama/home" component={MamaHome} />
     <Route path="/mama/university/home" component={MamaUniversityHome} />
