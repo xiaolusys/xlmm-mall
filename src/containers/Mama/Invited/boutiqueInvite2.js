@@ -638,10 +638,10 @@ export default class BoutiqueInvite2 extends Component {
             </If>
             {this.renderDetails(details.detail_content.content_imgs)}
             <div className="bg-white fill-referal">
-              <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">填写推荐人ID</div>
+              <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">填写推荐人小鹿妈妈ID</div>
               <div className="bottom-border mamaid-item">
                 <span className="col-xs-4 mamaid-title">推荐人ID:</span>
-                <input className="input-mmnum " type="number bottom-border" placeholder="请输入推荐人ID" value={this.state.mmLinkId} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
+                <input className="input-mmnum " type="number bottom-border" placeholder="请输入推荐人妈妈ID" value={this.state.mmLinkId} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
               </div>
               <div className="mama-info">
                 <div className="col-xs-3">
