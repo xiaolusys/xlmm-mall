@@ -82,6 +82,7 @@ export default class Commit extends Component {
     isShowPurchaseTerms: false,
     couponNum: 1,
     commitOrderEnable: true,
+    isAllVirtualProduct: false,
   }
 
   componentWillMount() {
@@ -140,6 +141,11 @@ export default class Commit extends Component {
     if (payInfo.error) {
       this.context.router.goBack();
     }
+    if (payInfo.success) {
+      const products = payInfo.data.cart_list || [];
+      const isAllVirtualProduct = this.checkAllVirtualProduct(products);
+      this.setState({ isAllVirtualProduct: isAllVirtualProduct });
+    }
   }
 
   componentWillUnmount() {
@@ -152,7 +158,7 @@ export default class Commit extends Component {
     const mmLinkId = this.props.location.query.mmLinkId;
     const teambuyId = this.props.location.query.teambuyId;
 
-    if (!address.data.id) {
+    if (!address.data.id && !this.state.isAllVirtualProduct) {
       Toast.show('请填写收货地址！');
       return;
     }
@@ -183,6 +189,7 @@ export default class Commit extends Component {
         pay_extras: this.getPayExtras(),
         teambuy_id: teambuyId,
         mm_linkid: mmLinkId,
+        order_type: (this.state.isAllVirtualProduct ? 4 : 0),
       });
       return;
     }
@@ -200,6 +207,7 @@ export default class Commit extends Component {
         pay_extras: this.getPayExtras(),
         teambuy_id: teambuyId,
         mm_linkid: mmLinkId,
+        order_type: (this.state.isAllVirtualProduct ? 4 : 0),
       });
       return;
     }
@@ -217,6 +225,7 @@ export default class Commit extends Component {
         pay_extras: this.getPayExtras(),
         teambuy_id: teambuyId,
         mm_linkid: mmLinkId,
+        order_type: (this.state.isAllVirtualProduct ? 4 : 0),
       });
       return;
     }
@@ -246,6 +255,7 @@ export default class Commit extends Component {
       pay_extras: this.getPayExtras(),
       teambuy_id: teambuyId,
       mm_linkid: mmLinkId,
+      order_type: (this.state.isAllVirtualProduct ? 4 : 0),
     });
     this.togglePayTypePopupActive();
     e.preventDefault();
