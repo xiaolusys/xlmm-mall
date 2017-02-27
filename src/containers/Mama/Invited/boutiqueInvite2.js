@@ -107,7 +107,7 @@ export default class BoutiqueInvite2 extends Component {
 
     this.props.fetchProductDetails(productId);
     this.props.fetchShopBagQuantity();
-    this.props.fetchInviteSharing(38);
+    this.props.fetchInviteSharing(26);
     if (utils.detector.isWechat()) {
       this.props.fetchWechatSign();
     }
