@@ -14,6 +14,10 @@ class Url {
     const href = window.location.href;
     return href.substring(0, href.indexOf('/mall/')) + '/mall/';
   }
+
+  parseParam2URIString(params) {
+    return Object.keys(params).map(key => (`${key}=${params[key] || ''}`)).join('&');
+  }
 }
 
 export default new Url();

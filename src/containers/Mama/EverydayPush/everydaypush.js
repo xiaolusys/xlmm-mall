@@ -54,10 +54,9 @@ export default class EverydayPushTab extends Component {
   }
 
   componentWillMount() {
-    const { mm_linkid } = this.props.location.query;
-
+    const { mm_linkid, id } = this.props.location.query;
     this.props.fetchWechatSign();
-    this.props.fetchNinePic('', '');
+    this.props.fetchNinePic({ id: id });
     if (!_.isEmpty(mm_linkid)) {
       this.props.fetchMamaQrcode(mm_linkid);
       this.interval = setInterval(this.tick, 2000);
@@ -181,7 +180,7 @@ export default class EverydayPushTab extends Component {
     const renderNinePics = [];
 
     if (ninepic && ninepic.success && ninepic.data.length > 0) {
-      for (let i = 0; i < this.state.page * this.state.pageSize; i++) {
+      for (let i = 0; i < ninepic.data.length; i++) {
         renderNinePics.push(ninepic.data[i]);
         if (renderNinePics[renderNinePics.length - 1].pic_arry && (renderNinePics[renderNinePics.length - 1].pic_arry.length > 1)
            && (this.props.mamaQrcode && this.props.mamaQrcode.success && !_.isEmpty(this.props.mamaQrcode.data.qrcode_link))) {
