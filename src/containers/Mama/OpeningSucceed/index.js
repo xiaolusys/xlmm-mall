@@ -96,7 +96,7 @@ export default class Succeed extends Component {
     );*/
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
-      <Header title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+      <Header title="欢迎您加入小鹿美美" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="">
           <Image className="qr-code" src={data.qr_img} quality={50}/>
         </div>
