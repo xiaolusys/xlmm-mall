@@ -121,6 +121,10 @@ export default class Commit extends Component {
 
       if (order.data.code === 0 && order.data.charge && order.data.charge.channel === 'budget') {
         if (order.data.charge.success) {
+          if (payInfo.success && payInfo.data.cart_list[0].model_id === 25514) {
+            window.location.href = '/mall/mama/open/succeed';
+            return;
+          }
           window.location.replace(order.data.success_url);
           return;
         }
@@ -464,6 +468,7 @@ export default class Commit extends Component {
   }
 
   pay = (data) => {
+    const payInfo = this.props.payInfo.data;
     this.togglePayTypePopupActive();
     if (utils.detector.isApp()) {
       plugins.invoke({
@@ -475,6 +480,10 @@ export default class Commit extends Component {
         if (result === 'success') {
           Toast.show('支付成功');
           // window.location.push(`${data.success_url}`);
+          if (payInfo && payInfo.cart_list[0].model_id === 25514) {
+            window.location.href = '/mall/mama/open/succeed';
+            return;
+          }
           window.location.href = `${data.success_url}`;
           return;
         }
