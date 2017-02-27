@@ -17,6 +17,7 @@ import * as shopBagAction from 'actions/shopBag';
 import * as shareAction from 'actions/share';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
+import * as inviteSharingAction from 'actions/mama/inviteSharing';
 import * as constants from 'constants';
 import * as utils from 'utils';
 import * as plugins from 'plugins';
@@ -24,7 +25,7 @@ import _ from 'underscore';
 
 import './boutiqueInvite2.scss';
 
-const actionCreators = _.extend(detailsAction, shopBagAction, shareAction, wechatSignAction, mamaInfoAction);
+const actionCreators = _.extend(detailsAction, shopBagAction, shareAction, wechatSignAction, mamaInfoAction, inviteSharingAction);
 const tabs = {
   details: 0,
   faq: 1,
@@ -40,6 +41,7 @@ const tabs = {
     share: state.share,
     wechatSign: state.wechatSign,
     mamaInfo: state.mamaInfo,
+    inviteSharing: state.inviteSharing,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -56,6 +58,7 @@ export default class BoutiqueInvite2 extends Component {
     shopBag: React.PropTypes.object,
     share: React.PropTypes.object,
     mamaInfo: React.PropTypes.object,
+    inviteSharing: React.PropTypes.object,
     fetchWechatSign: React.PropTypes.func,
     wechatSign: React.PropTypes.object,
     addProductToShopBag: React.PropTypes.func,
@@ -64,6 +67,7 @@ export default class BoutiqueInvite2 extends Component {
     fetchShopBagQuantity: React.PropTypes.func,
     fetchShareInfo: React.PropTypes.func,
     fetchMamaInfoById: React.PropTypes.func,
+    fetchInviteSharing: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -103,7 +107,7 @@ export default class BoutiqueInvite2 extends Component {
 
     this.props.fetchProductDetails(productId);
     this.props.fetchShopBagQuantity();
-    this.props.fetchShareInfo(constants.shareType.product, productId);
+    this.props.fetchInviteSharing(38);
     if (utils.detector.isWechat()) {
       this.props.fetchWechatSign();
     }
@@ -115,14 +119,27 @@ export default class BoutiqueInvite2 extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { inviteSharing, wechatSign } = nextProps;
     const { shopBag } = nextProps.shopBag;
     let cartId = '';
     if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
       utils.wechat.config(nextProps.wechatSign);
     }
-    if (!nextProps.share.isLoading && nextProps.share.success) {
-      utils.wechat.configShareContent(nextProps.share);
+
+    if (inviteSharing.success && !inviteSharing.isLoading
+      && (this.props.inviteSharing.isLoading)) {
+      const shareInfo = {
+        success: inviteSharing.success,
+        data: {
+          title: inviteSharing.data.title,
+          desc: inviteSharing.data.active_dec,
+          share_link: inviteSharing.data.share_link,
+          share_img: inviteSharing.data.share_icon,
+        },
+      };
+      utils.wechat.configShareContent(shareInfo);
     }
+
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
