@@ -80,4 +80,5 @@ export const transferTypes = [
   '充值',
   '用币买券',
   '退券换币',
+  '取消兑换',
 ];
