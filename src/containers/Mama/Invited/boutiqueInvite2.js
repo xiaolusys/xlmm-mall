@@ -98,6 +98,7 @@ export default class BoutiqueInvite2 extends Component {
     const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
     if (mmLinkId !== 0) {
       this.setState({ mmLinkId: mmLinkId });
+      this.props.fetchMamaInfoById(Number(mmLinkId));
     }
 
     this.props.fetchProductDetails(productId);
