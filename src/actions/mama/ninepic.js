@@ -11,7 +11,7 @@ const action = createAction(name);
 export const fetchNinePic = (params) => {
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(`${constants.baseEndpointV1}pmt/ninepic?{parseParam2URIString(params)}`)
+    return axios.get(`${constants.baseEndpointV1}pmt/ninepic?${parseParam2URIString(params)}`)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
