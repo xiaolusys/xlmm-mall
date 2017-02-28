@@ -10,6 +10,7 @@ import { BottomBar } from 'components/BottomBar';
 import { Popup } from 'components/Popup';
 import { Toast } from 'components/Toast';
 import { DownloadAppBanner } from 'components/DownloadAppBanner';
+import { WechatPopup } from 'components/WechatPopup';
 import { If } from 'jsx-control-statements';
 import classnames from 'classnames';
 import * as detailsAction from 'actions/product/details';
@@ -94,6 +95,7 @@ export default class BoutiqueInvite2 extends Component {
     skuId: 0,
     favoriteStatus: false,
     confirmAddBagDisable: false,
+    popupActive: false,
   }
 
   componentWillMount() {
@@ -398,6 +400,32 @@ export default class BoutiqueInvite2 extends Component {
     this.props.fetchMamaInfoById(Number(value.target.value));
   }
 
+  onShareClick = (e) => {
+    const shareInfo = this.props.inviteSharing.data || {};
+    if (utils.detector.isWechat()) {
+      this.setState({ popupActive: true });
+      return;
+    }
+
+    if (utils.detector.isApp()) {
+      plugins.invoke({
+        method: 'callNativeUniShareFunc',
+        data: {
+          share_title: shareInfo.title,
+          share_to: '',
+          share_desc: shareInfo.active_dec,
+          share_icon: shareInfo.share_icon,
+          share_type: 'link',
+          link: shareInfo.share_link,
+        },
+      });
+    }
+  }
+
+  onCloseBtnClick = (e) => {
+    this.setState({ popupActive: false });
+  }
+
   getProduct = (productId) => {
     const skus = this.props.details.sku_info;
     let product = {};
@@ -672,7 +700,10 @@ export default class BoutiqueInvite2 extends Component {
             </div>
           </div>
           <BottomBar className="clearfix" size="medium">
-              <button className="button button-energized col-xs-10 no-padding col-xs-offset-1" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
+            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" onClick={this.onShareClick}>
+              {'分享此页面'}
+            </button>
+              <button className="button button-energized col-xs-4 no-padding col-xs-offset-1" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
                 {'立即支付'}
               </button>
           </BottomBar>
@@ -694,6 +725,7 @@ export default class BoutiqueInvite2 extends Component {
               </BottomBar>
             </Popup>
           </If>
+          <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
         </If>
       </div>
     );
