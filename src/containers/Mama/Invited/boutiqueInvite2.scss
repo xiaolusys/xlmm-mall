@@ -128,14 +128,21 @@
   }
   .fill-referal {
     padding: 8px 0px;
+    height: 160px;
     .mamaid-item {
       .mamaid-title {
-        margin-top: 8px;
-        padding-left: 4px;
+        padding-top: 8px;
+        padding-left: 8px;
       }
       .input-mmnum {
-        padding: 8px;
+        padding: 4px;
         margin-bottom: 1px;
+      }
+      .mamaid-query {
+        .mamaid-query-p {
+          border: solid 1px orange;
+          margin-top: 8px;
+        }
       }
     }
     .mama-info {
