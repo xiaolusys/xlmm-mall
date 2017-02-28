@@ -97,12 +97,19 @@ export default class Succeed extends Component {
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding opening-shop-succeed">
       <Header title="欢迎您加入小鹿美美" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <div className="list-group">
+            <a href="#" className="list-group-item" >恭喜您成功加入小鹿全球精品连锁超市会员，<b>请关注小鹿美美公众号获得更多帮助信息。</b></a>
+            <a href="#" className="list-group-item">如果您推荐您的朋友成为会员，我们会有<b>30元现金红包奖励！</b>详情请查看下面的新手教程或咨询您的管理员。</a>
+          </div>
+        <div>
+        <a href="http://m.xiaolumeimei.com/mama_shop/html/intro_march.html" className="list-group-item" style={{ color: '#FF1493' }}>新手必读-小鹿新人赚钱技巧全知道>>></a>
+        </div>
         <div className="">
           <Image className="qr-code" src={data.qr_img} quality={50}/>
         </div>
         <div className="row no-margin">
-          <p className="col-xs-12 margin-top-xxs text-center">
-            长按屏幕几秒后点击识别二维码添加管理员，如果加管理员后5分钟没有响应，可以重新进入此页面加其它管理员
+          <p className="col-xs-12 margin-top-xxs">
+            长按屏幕几秒后点击识别二维码添加管理员，或者截屏保存此图片后用微信扫码此图片添加管理员。如果加管理员后5分钟没有响应，可以重新进入此页面加其它管理员。
           </p>
         </div>
       </div>
