@@ -121,7 +121,7 @@ export default class BoutiqueInvite2 extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { inviteSharing, wechatSign } = nextProps;
+    const { inviteSharing, wechatSign, mamaInfo } = nextProps;
     const { shopBag } = nextProps.shopBag;
     let cartId = '';
     if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
@@ -140,6 +140,10 @@ export default class BoutiqueInvite2 extends Component {
         },
       };
       utils.wechat.configShareContent(shareInfo);
+    }
+
+    if (mamaInfo.mamaInfo.error) {
+      Toast.show('获取推荐人妈妈信息失败，请确认填写的ID是否正确');
     }
 
     if (nextProps.isLoading) {
@@ -287,7 +291,7 @@ export default class BoutiqueInvite2 extends Component {
     const skus = details.sku_info;
     this.setState({ type: Number(type) });
 
-    if (this.state.mmLinkId === undefined || this.state.mmLinkId === 0) {
+    if (this.state.mmLinkId === undefined || this.state.mmLinkId === 0 || isNaN(this.state.mmLinkId)) {
       Toast.show('请填写推荐人ID');
       return;
     }
@@ -394,10 +398,18 @@ export default class BoutiqueInvite2 extends Component {
   onNumChange = (value) => {
     if (Number(value.target.value) === 0) {
       Toast.show('输入推荐人ID不能为0');
+      this.setState({ mmLinkId: '' });
+      return;
     }
 
     this.setState({ mmLinkId: Number(value.target.value) });
-    this.props.fetchMamaInfoById(Number(value.target.value));
+    // this.props.fetchMamaInfoById(Number(value.target.value));
+  }
+
+  onQueryMamaClick = () => {
+    if (!isNaN(this.state.mmLinkId)) {
+      this.props.fetchMamaInfoById(Number(this.state.mmLinkId));
+    }
   }
 
   onShareClick = (e) => {
@@ -573,7 +585,6 @@ export default class BoutiqueInvite2 extends Component {
     const { stickyTab, activeTab } = this.state;
     return (
       <div className="bg-white">
-        <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">信息说明</div>
         <div className="details">
           {images.map((image, index) => {
             return (<Image key={index} quality={90} className="col-xs-12 no-padding" thumbnail={640} src={image} />);
@@ -675,19 +686,16 @@ export default class BoutiqueInvite2 extends Component {
       <div className={`${prefixCls}`}>
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
-            {this.renderCarousel(details.detail_content.head_imgs)}
-            {this.renderProductInfo(details)}
-            <If condition={!_.isEmpty(details.comparison)}>
-              {details.comparison.tables.map((spec, tableIndex) => {
-                return self.renderProductSpec(spec.table, tableIndex);
-              })}
-            </If>
-            {this.renderDetails(details.detail_content.content_imgs)}
             <div className="bg-white fill-referal">
-              <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">填写推荐人小鹿妈妈ID</div>
-              <div className="bottom-border mamaid-item">
-                <span className="col-xs-4 mamaid-title">推荐人ID:</span>
-                <input className="input-mmnum " type="number bottom-border" placeholder="请输入推荐人妈妈ID" value={this.state.mmLinkId} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
+              <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">小鹿妈妈邀请您加入</div>
+              <div className="bottom-border mamaid-item col-xs-12 no-padding">
+                <div className="col-xs-3 mamaid-title font-xs">
+                <p >推荐人ID:</p>
+                </div>
+                <input className="input-mmnum col-xs-6" type="number" placeholder="请输入推荐人妈妈ID" value={this.state.mmLinkId} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
+                <div className="col-xs-3 mamaid-query">
+                <p className="mamaid-query-p font-orange font-xs text-center button-sm" onClick={this.onQueryMamaClick}>查询</p>
+                </div>
               </div>
               <div className="mama-info">
                 <div className="col-xs-3">
@@ -698,6 +706,12 @@ export default class BoutiqueInvite2 extends Component {
                 </div>
               </div>
             </div>
+            <If condition={!_.isEmpty(details.comparison)}>
+              {details.comparison.tables.map((spec, tableIndex) => {
+                return self.renderProductSpec(spec.table, tableIndex);
+              })}
+            </If>
+            {this.renderDetails(details.detail_content.content_imgs)}
           </div>
           <BottomBar className="clearfix" size="medium">
             <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" onClick={this.onShareClick}>
