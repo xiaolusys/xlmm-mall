@@ -16,7 +16,7 @@ class Url {
   }
 
   parseParam2URIString(params) {
-    return Object.keys(params).map(key => (`${key}=${params[key] || ''}`)).join('&');
+    return Object.keys(params).map(key => (`${key}=${encodeURIComponent(params[key] || '')}`)).join('&');
   }
 }
 
