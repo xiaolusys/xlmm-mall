@@ -684,6 +684,7 @@ export default class BoutiqueInvite2 extends Component {
 
     return (
       <div className={`${prefixCls}`}>
+        <Header title="邀请您加入小鹿" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <If condition={!_.isEmpty(details.detail_content)}>
           <div className="content">
             <div className="bg-white fill-referal">
