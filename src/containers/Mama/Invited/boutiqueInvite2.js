@@ -157,6 +157,9 @@ export default class BoutiqueInvite2 extends Component {
     }
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
+      if (nextProps.shopBag.addProduct.data.code === 6) {
+        this.context.router.push(`/shop/bag?mm_linkid=${this.state.mmLinkId}`);
+      }
     }
 
     if (nextProps.shopBag.addProduct.error) {
@@ -188,15 +191,15 @@ export default class BoutiqueInvite2 extends Component {
     if (shopBag.success && !_.isEmpty(shopBag.data) && this.props.shopBag.shopBag.isLoading) {
       cartId = shopBag.data[0].id;
         // 特卖抢购商品直接进入支付页面
-        if (utils.detector.isApp()) {
-          const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + cartId + '&type=' + shopBag.data[0].type;
-          plugins.invoke({
-            method: 'jumpToNativeLocation',
-            data: { target_url: jumpUrl },
-          });
-        } else {
-          window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${this.state.mmLinkId}`;
-        }
+        // if (utils.detector.isApp()) {
+        //   const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + cartId + '&type=' + shopBag.data[0].type;
+        //   plugins.invoke({
+        //     method: 'jumpToNativeLocation',
+        //     data: { target_url: jumpUrl },
+        //   });
+        // } else {
+      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${this.state.mmLinkId}`;
+        // }
     }
   }
 
