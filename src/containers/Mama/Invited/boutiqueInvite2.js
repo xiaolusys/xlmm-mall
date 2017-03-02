@@ -198,7 +198,7 @@ export default class BoutiqueInvite2 extends Component {
         //     data: { target_url: jumpUrl },
         //   });
         // } else {
-      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${this.state.mmLinkId}`;
+      window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mm_linkid=${this.state.mmLinkId}`;
         // }
     }
   }
