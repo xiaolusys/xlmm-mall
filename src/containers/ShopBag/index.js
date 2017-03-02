@@ -47,6 +47,7 @@ export class ShopBag extends Component {
   state = {
     isBuyable: 1,
     applyNum: 0,
+    mmLinkId: 0,
   }
 
   componentWillMount() {
@@ -54,7 +55,8 @@ export class ShopBag extends Component {
     const buyable = this.props.location.query.is_buyable ? this.props.location.query.is_buyable : 1;
     const level = this.props.location.query.elite_level ? this.props.location.query.elite_level : '';
     const xiaolucoin = this.props.location.query.xiaolucoin ? this.props.location.query.xiaolucoin : 0;
-    this.setState({ type: type, isBuyable: buyable, eliteLevel: level, xiaolucoin: xiaolucoin });
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
+    this.setState({ type: type, isBuyable: buyable, eliteLevel: level, xiaolucoin: xiaolucoin, mmLinkId: mmLinkId });
 
     this.props.fetchShopBag(type);
     this.props.fetchShopBagHistory();
@@ -144,7 +146,7 @@ export class ShopBag extends Component {
         });
         return;
       }
-      window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
+      window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(',')) + '&mm_linkid=' + this.state.mmLinkId;
     } else {
       _.each(shopBag.data, (item) => {
         this.props.applyNegotiableCoupons(item.item_id, item.num);
@@ -183,7 +185,7 @@ export class ShopBag extends Component {
         });
         return;
       }*/
-      window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(','));
+      window.location.href = '/mall/oc.html?cartIds=' + encodeURIComponent(cartIds.join(',')) + '&mm_linkid=' + this.state.mmLinkId;
   }
 
   onUpdateQuantityClick = (e) => {

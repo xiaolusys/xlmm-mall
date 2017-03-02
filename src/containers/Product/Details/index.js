@@ -114,7 +114,7 @@ export default class Detail extends Component {
     const { addFavorite, unFavorite } = nextProps.favorite;
     const { shopBag } = nextProps.shopBag;
     const teambuyId = this.props.location.query.teambuyId ? this.props.location.query.teambuyId : '';
-    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : '';
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
     let cartId = '';
     if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
       utils.wechat.config(nextProps.wechatSign);
@@ -211,7 +211,7 @@ export default class Detail extends Component {
     if (shopBag.success && !_.isEmpty(shopBag.data) && this.props.shopBag.shopBag.isLoading) {
       cartId = shopBag.data[0].id;
       if (Number(shopBag.data[0].type) === 3) {
-        window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mmLinkId=${mmLinkId}`;
+        window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`;
       } else if (nextProps.details && nextProps.details.detail_content && nextProps.details.detail_content.is_boutique) {
         // 特卖抢购商品直接进入支付页面
         if (utils.detector.isApp()) {
@@ -221,7 +221,7 @@ export default class Detail extends Component {
             data: { target_url: jumpUrl },
           });
         } else {
-          window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+          window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mm_linkid=${mmLinkId}`;
         }
       }
     }
