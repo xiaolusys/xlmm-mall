@@ -159,7 +159,7 @@ export default class Commit extends Component {
   onCommitOrderClick = (e) => {
     const { address, payInfo, coupon } = this.props;
     const { walletChecked, xiaoluCoinChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
-    const mmLinkId = this.props.location.query.mmLinkId;
+    const mmLinkId = this.props.location.query.mm_linkid;
     const teambuyId = this.props.location.query.teambuyId;
 
     if (!address.data.id && !this.state.isAllVirtualProduct) {
@@ -243,7 +243,7 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId } = this.state;
     const { paytype } = e.currentTarget.dataset;
-    const mmLinkId = this.props.location.query.mmLinkId;
+    const mmLinkId = this.props.location.query.mm_linkid;
     const teambuyId = this.props.location.query.teambuyId;
 
     this.props.commitOrder({
@@ -565,12 +565,12 @@ export default class Commit extends Component {
     const { pathname, query } = this.props.location;
     const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
                     + (query.teambuyId ? '&teambuyId=' + query.teambuyId : '')
-                    + (query.mmLinkId ? '&mmLinkId=' + query.mmLinkId : '')
+                    + (query.mm_linkid ? '&mm_linkid=' + query.mm_linkid : '')
                     + (query.couponId ? '&couponId=' + query.couponId : ''));
     const couponLink = '/order/selectcoupon?cartIds=' + query.cartIds + (products.length > 0 ? '&goodsnum=' + products[0].num : '')
                     + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
                     + (query.teambuyId ? '&teambuyId=' + query.teambuyId : '')
-                    + (query.mmLinkId ? '&mmLinkId=' + query.mmLinkId : '')
+                    + (query.mm_linkid ? '&mm_linkid=' + query.mm_linkid : '')
                     + (query.addressId ? '&addressId=' + query.addressId : ''));
     return (
       <div className={`${prefixCls}`}>
