@@ -102,7 +102,6 @@ export default class BoutiqueExchg extends Component {
           this.context.router.push('/recharge');
           break;
         case '3':
-          // window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
           this.context.router.push('/mama/inoutcoupon');
           break;
         case '4':
