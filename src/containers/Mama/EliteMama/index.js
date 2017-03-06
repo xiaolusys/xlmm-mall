@@ -56,10 +56,6 @@ export default class EliteMama extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (mamaInfo.success && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].is_elite_mama) {
-      // window.location.href = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
-    }
-
   }
 
   componentWillUnmount() {
@@ -79,7 +75,6 @@ export default class EliteMama extends Component {
   render() {
     const { topTab } = this.state;
     const mamaInfo = this.props.mamaInfo.mamaInfo;
-    const src = constants.baseUrl + '/tran_coupon/html/trancoupon.html';
 
     return (
       <div className="home-root">
