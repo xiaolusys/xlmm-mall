@@ -102,10 +102,12 @@ export default class BoutiqueInvite2 extends Component {
     const { params } = this.props;
     const productId = params.id.match(/(\d+)/)[0];
     const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
+    const wxPublic = this.props.location.query.wx_public ? Number(this.props.location.query.wx_public) : 0;
     if (mmLinkId !== 0) {
-      this.setState({ mmLinkId: mmLinkId });
       this.props.fetchMamaInfoById(Number(mmLinkId));
     }
+    this.setState({ mmLinkId: mmLinkId });
+    this.setState({ wxPublic: wxPublic });
 
     this.props.fetchProductDetails(productId);
     this.props.fetchShopBagQuantity();
@@ -293,8 +295,8 @@ export default class BoutiqueInvite2 extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = details.sku_info;
     this.setState({ type: Number(type) });
-
-    if (this.state.mmLinkId === undefined || this.state.mmLinkId === 0 || isNaN(this.state.mmLinkId)) {
+    console.log(this.state.wxPublic);
+    if ((this.state.wxPublic === 0) && (this.state.mmLinkId === undefined || this.state.mmLinkId === 0 || isNaN(this.state.mmLinkId))) {
       Toast.show('请填写推荐人ID');
       return;
     }
@@ -435,6 +437,11 @@ export default class BoutiqueInvite2 extends Component {
         },
       });
     }
+  }
+
+  onAdministratorClick = (e) => {
+    this.context.router.push('/mama/open/succeed');
+    e.preventDefault();
   }
 
   onCloseBtnClick = (e) => {
@@ -696,7 +703,7 @@ export default class BoutiqueInvite2 extends Component {
                 <div className="col-xs-3 mamaid-title font-xs">
                 <p >推荐人ID:</p>
                 </div>
-                <input className="input-mmnum col-xs-6" type="number" placeholder="请输入推荐人妈妈ID" value={this.state.mmLinkId} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
+                <input className="input-mmnum col-xs-6" type="number" placeholder="请输入推荐人妈妈ID" value={this.state.mmLinkId !== 0 ? this.state.mmLinkId : ''} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
                 <div className="col-xs-3 mamaid-query">
                 <p className="mamaid-query-p font-orange font-xs text-center button-sm" onClick={this.onQueryMamaClick}>查询</p>
                 </div>
@@ -718,12 +725,19 @@ export default class BoutiqueInvite2 extends Component {
             {this.renderDetails(details.detail_content.content_imgs)}
           </div>
           <BottomBar className="clearfix" size="medium">
+            <If condition={this.state.wxPublic === 0}>
             <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" onClick={this.onShareClick}>
               {'分享此页面'}
             </button>
-              <button className="button button-energized col-xs-4 no-padding col-xs-offset-1" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
-                {'立即支付'}
-              </button>
+            </If>
+            <If condition={this.state.wxPublic === 1}>
+            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" onClick={this.onAdministratorClick} disabled={disabled}>
+              {'咨询管理员'}
+            </button>
+            </If>
+            <button className="button button-energized col-xs-4 no-padding col-xs-offset-1" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
+              {'立即支付'}
+            </button>
           </BottomBar>
           <If condition={activeSkuPopup}>
             <Popup className={`${skuPopupPrefixCls}`} active={activeSkuPopup} onPopupOverlayClick={this.onPopupOverlayClick}>
