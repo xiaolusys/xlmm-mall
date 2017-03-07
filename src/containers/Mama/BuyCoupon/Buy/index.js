@@ -424,14 +424,16 @@ export default class BuyCoupon extends Component {
       }
     }
 
-    if (mamaInfo.data[0].elite_level.indexOf('Associate') >= 0) {
-      result = result.slice(0, 1);
-    } else if (mamaInfo.data[0].elite_level.indexOf('Director') >= 0) {
-      result = result.slice(0, 2);
-    } else if (mamaInfo.data[0].elite_level.indexOf('VP') >= 0) {
-      result = result.slice(0, 3);
-    } else if (mamaInfo.data[0].elite_level.indexOf('Partner') >= 0) {
-      result = result.slice(0, 4);
+    if (mamaInfo && mamaInfo.data) {
+      if (mamaInfo.data[0].elite_level.indexOf('Associate') >= 0) {
+        result = result.slice(0, 1);
+      } else if (mamaInfo.data[0].elite_level.indexOf('Director') >= 0) {
+        result = result.slice(0, 2);
+      } else if (mamaInfo.data[0].elite_level.indexOf('VP') >= 0) {
+        result = result.slice(0, 3);
+      } else if (mamaInfo.data[0].elite_level.indexOf('Partner') >= 0) {
+        result = result.slice(0, 4);
+      }
     }
     return result;
   }
