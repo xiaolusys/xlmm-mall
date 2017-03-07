@@ -8,6 +8,14 @@
     }
   }
 
+  .upgrade-score {
+    > li {
+      > div {
+        border: solid 1px #dadada;
+      }
+    }
+  }
+
   .shop-cart {
     > div {
       position: relative;
