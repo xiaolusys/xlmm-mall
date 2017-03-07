@@ -87,7 +87,7 @@ export default class ExchangeOrder extends Component {
       }
     }
 
-    if (exchangeOrder.isLoading) {
+    if (exchangeOrder.isLoading && !mamaCanExchgOrders.isLoading) {
       this.props.resetCanExchgOrders();
       this.props.fetchCanExchgOrders();
     }
