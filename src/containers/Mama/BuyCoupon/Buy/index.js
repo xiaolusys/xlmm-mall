@@ -401,7 +401,7 @@ export default class BuyCoupon extends Component {
   }
 
   getEliteLevelPrice = (detail) => {
-    const result = [];
+    let result = [];
     const mamaInfo = this.props.mamaInfo.mamaInfo;
     if (detail && detail.sku_info.length === 5) {
       for (let i = detail.sku_info.length - 1; i >= 0; i--) {
@@ -422,6 +422,16 @@ export default class BuyCoupon extends Component {
           result[4] = item;
         }
       }
+    }
+
+    if (mamaInfo.data[0].elite_level.indexOf('Associate') >= 0) {
+      result = result.slice(0, 1);
+    } else if (mamaInfo.data[0].elite_level.indexOf('Director') >= 0) {
+      result = result.slice(0, 2);
+    } else if (mamaInfo.data[0].elite_level.indexOf('VP') >= 0) {
+      result = result.slice(0, 3);
+    } else if (mamaInfo.data[0].elite_level.indexOf('Partner') >= 0) {
+      result = result.slice(0, 4);
     }
     return result;
   }
