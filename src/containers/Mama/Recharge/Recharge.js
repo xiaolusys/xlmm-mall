@@ -30,6 +30,14 @@ const payTypeIcons = {
   alipay: 'icon-alipay-square icon-alipay-blue',
 };
 
+const eliteMamaUpgradeScore = [
+  { level: '经理', score: 100 },
+  { level: '主管', score: 600 },
+  { level: '副总裁', score: 2000 },
+  { level: '合伙人', score: 6000 },
+  { level: '高级合伙人', score: 20000 },
+];
+
 const actionCreators = _.extend(mamaInfoAction, detailsAction, shopBagAction, payInfoAction, commitOrderAction, couponAction, wechatSignAction);
 
 @connect(
@@ -422,6 +430,16 @@ export default class Recharge extends Component {
         <div>
           <p className="col-xs-offset-1 font-xs">购买条款说明：小鹿精品币仅限专业版精英妈妈充值及使用，充值越多越优惠。小鹿精品币能方便和自由的用来购买各种精品券，减少换券的烦恼。小鹿精品币不能退还，不能提现。购买即表明同意此条款。</p>
         </div>
+        <ul className="bottom-border upgrade-score">
+          {eliteMamaUpgradeScore.map((item) =>
+            (
+              <li className="margin-left-sm margin-right-sm upgrade-score-d" key={item.level} >
+                <div className="text-center col-xs-6">{item.level}</div>
+                <div className="text-center col-xs-6">{item.score + '积分'}</div>
+              </li>
+            )
+          )}
+        </ul>
         <BottomBar className="clearfix" size="medium">
           <button className="button button-energized col-xs-10 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
             {'直接支付'}
