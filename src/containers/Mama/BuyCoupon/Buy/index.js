@@ -424,7 +424,7 @@ export default class BuyCoupon extends Component {
       }
     }
 
-    if (mamaInfo && mamaInfo.data) {
+    if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0)) {
       if (mamaInfo.data[0].elite_level.indexOf('Associate') >= 0) {
         result = result.slice(0, 1);
       } else if (mamaInfo.data[0].elite_level.indexOf('Director') >= 0) {
