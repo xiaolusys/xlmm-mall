@@ -133,13 +133,13 @@ export default class ExchangeOrder extends Component {
   }
 
   onExchgClick = (e) => {
-    const { templateid, num, order, status } = e.currentTarget.dataset;
+    const { templateid, num, order, status, modelid } = e.currentTarget.dataset;
     if (Number(status) !== 2) {
       Toast.show('订单还未发货，未到确认收益状态，还无法兑换');
       e.preventDefault();
       return;
     }
-    this.setState({ templateId: templateid });
+    this.setState({ templateId: templateid, exchgModelId: modelid });
     this.props.exchgOrder(order, templateid, num);
     e.preventDefault();
   }
@@ -150,10 +150,13 @@ export default class ExchangeOrder extends Component {
   }
 
   onAgreeBtnClick = (e) => {
-
     this.setState({ isShowDialog: false });
-    this.context.router.push('/trancoupon/list');
     e.preventDefault();
+    if (!isNaN(this.state.exchgModelId) && Number(this.state.exchgModelId) !== 0) {
+      this.context.router.push('/buycoupon?modelid=' + this.state.exchgModelId);
+    } else {
+      this.context.router.push('/trancoupon/list');
+    }
   }
 
   addScrollListener = () => {
@@ -185,7 +188,7 @@ export default class ExchangeOrder extends Component {
           </div>
         </div>
         <div className="col-xs-2">
-          <button className="button icon-yellow" onClick={this.onExchgClick} data-templateid={member.exchg_template_id} data-num={member.num} data-order={member.order_id} data-status={member.status}>兑换</button>
+          <button className="button icon-yellow" onClick={this.onExchgClick} data-templateid={member.exchg_template_id} data-modelid={member.exchg_model_id} data-num={member.num} data-order={member.order_id} data-status={member.status}>兑换</button>
         </div>
       </li>
     );
