@@ -402,6 +402,7 @@ export default class BuyCoupon extends Component {
 
   getEliteLevelPrice = (detail) => {
     const result = [];
+    const mamaInfo = this.props.mamaInfo.mamaInfo;
     if (detail && detail.sku_info.length === 5) {
       for (let i = detail.sku_info.length - 1; i >= 0; i--) {
         if (detail.sku_info[i].name.indexOf('Associate') >= 0) {
