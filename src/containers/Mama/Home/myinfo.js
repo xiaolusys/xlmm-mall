@@ -135,18 +135,6 @@ export default class MyInfoTab extends Component {
           <div className="col-xs-9">
             <p className="my-mama-id">{'ID:' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : '')}</p>
           </div>
-          <div className="my-mama-level no-padding col-xs-4">
-            <div className="col-xs-1" >
-              <div className="mama-diamonds-icon" />
-            </div>
-            <p className="text-left">{''}</p>
-          </div>
-          <div className="my-mama-level no-padding col-xs-3">
-            <div className="col-xs-1" >
-              <div className="mama-crown-icon" />
-            </div>
-            <p className="text-left ">{''}</p>
-          </div>
         </div>
         <div className="bottom-border cat4">
             <div className="col-xs-3 makemoney-cat" data-id={1} onClick={this.onMakemoneyClick}>

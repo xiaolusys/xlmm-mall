@@ -206,6 +206,10 @@ export default class TopTenModel2 extends Component {
     this.setState({ popupActive: false });
   }
 
+  onBackHomeClick = (e) => {
+    this.context.router.push('/mall');
+  }
+
   render() {
     const modelData = this.props.topTen.data || {};
     return (
@@ -294,7 +298,10 @@ export default class TopTenModel2 extends Component {
               })}
             </ul>
           </If>
-          <Image quality={50} className="col-xs-6 col-xs-offset-3 margin-top-md no-padding act-share" src={modelData.shareBtn} onClick={this.onShareBtnClick}/>
+          <div>
+            <p className="col-xs-4 col-xs-offset-1 margin-top-xs act-backhome text-center" onClick={this.onBackHomeClick}>回到主页</p>
+            <p className="col-xs-4 col-xs-offset-1 margin-top-xs act-share text-center" onClick={this.onShareBtnClick}>分享给好友</p>
+          </div>
         </div>
         <WechatPopup active={this.state.popupActive} onCloseBtnClick={this.onCloseBtnClick}/>
       </div>
