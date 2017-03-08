@@ -702,6 +702,7 @@ export default class Detail extends Component {
     if (!_.isEmpty(details.detail_content)) {
       disabled = (details.detail_content.sale_state === 'will' || details.detail_content.sale_state === 'off' || (details.detail_content.sale_state === 'on' && details.detail_content.is_sale_out)) && preview !== 'true';
     }
+
     return (
       <div className={`${prefixCls}`}>
         <If condition={!utils.detector.isApp()}>
