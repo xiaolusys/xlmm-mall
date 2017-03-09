@@ -188,7 +188,7 @@ export default class BuyCoupon extends Component {
             data: { target_url: jumpUrl },
           });
         } else {
-          window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mmLinkId=${mmLinkId}`;
+          window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&mm_linkid=${mmLinkId}`;
         }
       }
     }
@@ -264,32 +264,37 @@ export default class BuyCoupon extends Component {
 
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
         && (mamaInfo.data[0].is_elite_mama)) {
-      if (mamaInfo.data[0].is_buyable) {
-        if (this.state.sku) {
+      if (this.state.sku) {
           this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num, 6); // use vitual cart type
         } else {
           Toast.show('商品信息获取不全');
         }
-        /* 20170120 购券支付同意该到commit order页面，此处类似精品汇或团购直接购买，不经过购物车直接跳转
-          if (this.state.sku) {
-          // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
-          // 精品券默认是在app上支付
-          if (utils.detector.isApp()) {
-            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'app');
-          } else {
-            this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'wap');
-          }
-        } else {
-          Toast.show('商品信息获取不全');
-        }*/
-      } else {
-        // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
-        if (this.state.sku) {
-          this.props.applyNegotiableCoupons(this.state.sku.product_id, this.state.num);
-        } else {
-          Toast.show('商品信息获取不全');
-        }
-      }
+      // if (mamaInfo.data[0].is_buyable) {
+      //   if (this.state.sku) {
+      //     this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num, 6); // use vitual cart type
+      //   } else {
+      //     Toast.show('商品信息获取不全');
+      //   }
+      //    20170120 购券支付同意该到commit order页面，此处类似精品汇或团购直接购买，不经过购物车直接跳转
+      //     if (this.state.sku) {
+      //     // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
+      //     // 精品券默认是在app上支付
+      //     if (utils.detector.isApp()) {
+      //       this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'app');
+      //     } else {
+      //       this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'wap');
+      //     }
+      //   } else {
+      //     Toast.show('商品信息获取不全');
+      //   }
+      // } else {
+      //   // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
+      //   if (this.state.sku) {
+      //     this.props.applyNegotiableCoupons(this.state.sku.product_id, this.state.num);
+      //   } else {
+      //     Toast.show('商品信息获取不全');
+      //   }
+      // }
     } else {
       Toast.show('您还不是小鹿精英妈妈，无法申请或购买精品券。请关注小鹿美美公众号或联系客服了解更多信息。');
     }
@@ -565,7 +570,7 @@ export default class BuyCoupon extends Component {
               {'加入购券组合'}
             </button>
             <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
-              {(mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '直接支付' : '直接申请'}
+              {'直接支付'}
             </button>
           </BottomBar>
         <Popup active={this.state.payTypePopupActive} className="pay-type-popup">
