@@ -16,7 +16,13 @@
 		.tran-ul {
 			.member-item {
 				background-color: #fff;
-				height: 96px;
+				height: 128px;
+				.member-title-div {
+					margin-top: 4px;
+					.member-title {
+						padding-left: 12px;
+					}
+				}
 				.member-img-div {
 					height: 100%;
 					.member-img {
@@ -32,9 +38,9 @@
 				.member-detail {
 					height: 100%;
 					>div {
-						height: 33%;
+						height: 30%;
 						>p {
-							margin-top: 4px;
+							margin-top: 8px;
 						}
 						.return-btn {
 							background-color: #fff;
