@@ -160,7 +160,7 @@ export default class List extends Component {
             <ul className="cat-list-ul no-margin">
               <If condition= {categoryData && categoryData.length > 0}>
               { categoryData.map((item) => {
-                  return <li className={'cat-name no-margin bottom-border text-center' + (item.cid === selectCid ? ' active' : '')} key={item.cid} data-cid={item.cid} onClick={this.onTabItemClick}>{item.name}</li>;
+                  return <li className={'cat-name no-margin bottom-border text-center font-xs' + (item.cid === selectCid ? ' active' : '')} key={item.cid} data-cid={item.cid} onClick={this.onTabItemClick}>{item.name}</li>;
                 })
               }
               </If>
@@ -170,7 +170,7 @@ export default class List extends Component {
             <ul className="cat-pic-ul">
             <If condition= {secondCategory && (secondCategory.length > 0)}>
             {secondCategory.map((item) => {
-              return (<li className="cat-pic-p col-xs-4" key={item.cid}>
+              return (<li className="cat-pic-p col-xs-4 margin-top-xxs" key={item.cid}>
                       <Image className="cat-pic" src={item.cat_pic} data-cid={item.cid} data-name={item.name} onClick = {this.onItemClick} quality={90}/>
                       <p className="text-center">{item.name}</p>
                      </li>);
