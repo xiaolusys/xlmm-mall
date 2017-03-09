@@ -174,12 +174,14 @@ export default class ExchangeOrder extends Component {
         <div className="col-xs-12 order-time no-padding">
           <p className=" text-left no-padding">{member.date_field ? member.date_field.replace(/T/, ' ') : ''}</p>
         </div>
+        <div className="col-xs-12 order-time1 no-padding">
+          <p className="text-left font-xs no-padding no-margin">{member.sku_name.substring(0, 27)}</p>
+        </div>
         <div className="col-xs-4 member-img-div no-padding">
           <img className="member-img" src={member.sku_img} />
         </div>
         <div className="col-xs-6">
           <div className="col-xs-12 no-padding">
-            <p className="text-left font-xs no-padding no-margin">{member.sku_name.substring(0, 9)}</p>
             <p className="text-left font-xs no-padding no-margin">{member.contributor_nick}</p>
             <p className="text-left font-xs no-padding no-margin">{member.status_display}</p>
           </div>
@@ -201,12 +203,14 @@ export default class ExchangeOrder extends Component {
         <div className="col-xs-12 order-time no-padding">
           <p className=" text-left no-padding">{member.date_field ? member.date_field.replace(/T/, ' ') : ''}</p>
         </div>
+        <div className="col-xs-12 order-time1 no-padding">
+          <p className="text-left font-xs no-padding no-margin">{member.sku_name.substring(0, 27)}</p>
+        </div>
         <div className="col-xs-4 member-img-div no-padding">
           <img className="member-img" src={member.sku_img} />
         </div>
         <div className="col-xs-6">
           <div className="col-xs-12 no-padding">
-            <p className="text-left font-xs no-padding no-margin">{member.sku_name.substring(0, 9)}</p>
             <p className="text-left font-xs no-padding no-margin">{member.contributor_nick}</p>
             <p className="text-left font-xs no-padding no-margin">{member.status_display}</p>
           </div>
