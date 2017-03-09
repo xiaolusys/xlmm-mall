@@ -124,6 +124,7 @@ export default class MamaTeamMember extends Component {
           </div>
           <div className="col-xs-9">
             <p className="my-mama-id">{'我的ID:' + ((mamaFortune.success && mamaFortune.data.mama_fortune) ? mamaFortune.data.mama_fortune.mama_id : '')}</p>
+            <p className="my-team-num">{'团队人数:' + ((mamaTeamMember.success && mamaTeamMember.data) ? mamaTeamMember.data.length : '')}</p>
           </div>
         </div>
         <div className="team-members bg-white">

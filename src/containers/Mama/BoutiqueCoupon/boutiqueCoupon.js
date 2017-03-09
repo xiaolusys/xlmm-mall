@@ -145,6 +145,12 @@ export default class BoutiqueCoupon extends Component {
     e.preventDefault();
   }
 
+  imgClick = (e) => {
+    const { modelid } = e.currentTarget.dataset;
+    this.context.router.push('/buycoupon?modelid=' + modelid);
+    e.preventDefault();
+  }
+
   addScrollListener = () => {
     window.addEventListener('scroll', this.onScroll);
   }
@@ -157,8 +163,11 @@ export default class BoutiqueCoupon extends Component {
 
     return (
       <li key={index} className="col-xs-12 member-item bottom-border no-padding" data-index={index} >
+        <div className="col-xs-12 member-title-div font-xs">
+          {member.title.substring(0, 27)}
+        </div>
         <div className="col-xs-3 member-img-div no-padding">
-          <img className="col-xs-12 member-img no-padding" src={member.product_img} />
+          <img className="col-xs-12 member-img no-padding" src={member.product_img} data-modelid={member.product_model_id} onClick={this.imgClick} />
           <p className="col-xs-12 member-num text-center no-padding">{member.coupon_num + '张'}</p>
         </div>
         <div className="col-xs-9 member-detail no-padding">
