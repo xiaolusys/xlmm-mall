@@ -51,7 +51,7 @@ export class ShopBag extends Component {
   }
 
   componentWillMount() {
-    const type = this.props.location.query.type ? this.props.location.query.type : 0;
+    const type = this.props.location.query.type ? this.props.location.query.type : 5;
     const buyable = this.props.location.query.is_buyable ? this.props.location.query.is_buyable : 1;
     const level = this.props.location.query.elite_level ? this.props.location.query.elite_level : '';
     const xiaolucoin = this.props.location.query.xiaolucoin ? this.props.location.query.xiaolucoin : 0;
@@ -59,7 +59,7 @@ export class ShopBag extends Component {
     this.setState({ type: type, isBuyable: buyable, eliteLevel: level, xiaolucoin: xiaolucoin, mmLinkId: mmLinkId });
 
     this.props.fetchShopBag(type);
-    this.props.fetchShopBagHistory();
+    this.props.fetchShopBagHistory(type);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -94,7 +94,7 @@ export class ShopBag extends Component {
 
   onRebuyClick = (e) => {
     const { itemid, cartid, skuid } = e.currentTarget.dataset;
-    this.props.rebuy(itemid, skuid, cartid);
+    this.props.rebuy(itemid, skuid, cartid, this.state.type);
   }
 
   onBuyNowClick = (e) => {
@@ -151,6 +151,40 @@ export class ShopBag extends Component {
         this.props.applyNegotiableCoupons(item.item_id, item.num);
       });
     }
+  }
+
+  onApplyClick = (e) => {
+    const { shopBag } = this.props.shopBag;
+    const cartIds = [];
+    const isBuyable = Number(this.state.isBuyable);
+    let score = 0;
+    let goodsNum = 0;
+    _.each(shopBag.data, (item) => {
+      cartIds.push(item.id);
+      score += item.num * item.elite_score;
+      goodsNum += item.num;
+    });
+
+    // 购买精品券需要做积分检查, associate can change restrict
+    if (Number(this.state.type) === 6 && (isBuyable === 0)) {
+      if (this.state.eliteLevel !== 'Associate') {
+        if ((score < constants.minBuyScore) && (goodsNum < 5)) {
+          Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
+          return;
+        }
+      } else if (this.state.eliteLevel === 'Associate') {
+        if (constants.restrictAssociateBuyScore) {
+          if ((score < constants.minBuyScore) && (goodsNum < 5)) {
+            Toast.show('精品券购买个数不能小于5张或' + constants.minBuyScore + '积分，当前张数' + goodsNum + '张，当前积分' + score);
+            return;
+          }
+        }
+      }
+    }
+
+    _.each(shopBag.data, (item) => {
+      this.props.applyNegotiableCoupons(item.item_id, item.num);
+    });
   }
 
   onXiaolucoinBuyClick = (e) => {
@@ -289,12 +323,9 @@ export class ShopBag extends Component {
             <If condition={Number(this.state.isBuyable) === 1}>
               <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{'购买'}</button>
             </If>
-            <If condition={Number(this.state.isBuyable) === 0 && Number(this.state.xiaolucoin) === 0}>
-              <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{'申请'}</button>
-            </If>
-            <If condition={Number(this.state.isBuyable) === 0 && Number(this.state.xiaolucoin) === 1}>
-              <button className="button button-energized col-xs-5 col-xs-offset-1" type="button" onClick={this.onXiaolucoinBuyClick}>{'小鹿币购买'}</button>
-              <button className="button button-energized col-xs-4 col-xs-offset-1" type="button" onClick={this.onBuyNowClick}>{'申请'}</button>
+            <If condition={Number(this.state.isBuyable) === 0}>
+              <button className="button button-energized col-xs-5 col-xs-offset-1" type="button" onClick={this.onXiaolucoinBuyClick}>{'购买'}</button>
+              <button className="button button-energized col-xs-4 col-xs-offset-1" type="button" onClick={this.onApplyClick}>{'申请'}</button>
             </If>
           </BottomBar>
         </If>
