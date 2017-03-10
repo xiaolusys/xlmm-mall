@@ -11,6 +11,7 @@ export const boutiqueCouponNames = {
   VERIFY_RETURN_COUPON: 'VERIFY_RETURN_COUPON',
   FETCH_RETURN_COUPON_TO_ME: 'FETCH_RETURN_COUPON_TO_ME',
   FETCH_MY_RETURN_COUPON: 'FETCH_MY_RETURN_COUPON',
+  CANCEL_RETURN_TRANSFER_COUPON: 'CANCEL_RETURN_TRANSFER_COUPON',
   RETURN_FREEZE_COUPONS: 'RETURN_FREEZE_COUPONS',
   FETCH_MY_IN_COUPON: 'FETCH_MY_IN_COUPON',
   FETCH_MY_OUT_COUPON: 'FETCH_MY_OUT_COUPON',
@@ -162,6 +163,20 @@ export const resetMyReturnCoupon = () => {
   const action = createAction(boutiqueCouponNames.FETCH_MY_RETURN_COUPON);
   return (dispatch) => {
     dispatch(action.reset());
+  };
+};
+
+export const cancelReturnTransferCoupon = (id) => {
+  const action = createAction(boutiqueCouponNames.CANCEL_RETURN_TRANSFER_COUPON);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.post(constants.baseEndpoint + 'trancoupon/cancel_return_transfer_coupon', qs.stringify({ transfer_record_id: id }))
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
   };
 };
 
