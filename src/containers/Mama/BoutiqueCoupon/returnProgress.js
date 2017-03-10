@@ -13,6 +13,7 @@ import { Header } from 'components/Header';
 import { Timer } from 'components/Timer';
 import { Image } from 'components/Image';
 import { Dialog } from 'components/Dialog';
+import { Toast } from 'components/Toast';
 import * as boutiqueAction from 'actions/mama/boutiqueCoupon';
 import * as couponAction from 'actions/user/coupons';
 
@@ -38,6 +39,7 @@ export default class ReturnProgress extends Component {
     boutiqueCoupon: React.PropTypes.any,
     coupons: React.PropTypes.any,
     returnFreezeCoupons: React.PropTypes.func,
+    cancelReturnTransferCoupon: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -69,7 +71,7 @@ export default class ReturnProgress extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { verifyReturnCoupon, returnFreeze } = this.props.boutiqueCoupon;
+    const { verifyReturnCoupon, returnFreeze, cancelReturn } = this.props.boutiqueCoupon;
     let count = 0;
     let size = 0;
     let data = null;
@@ -90,7 +92,20 @@ export default class ReturnProgress extends Component {
       this.setState({ hasMore: count > size });
     }
 
-    if (verifyReturnCoupon.isLoading || returnFreeze.isLoading) {
+    if (verifyReturnCoupon.isLoading && !nextProps.boutiqueCoupon.verifyReturnCoupon.isLoading) {
+      Toast.show(nextProps.boutiqueCoupon.verifyReturnCoupon.data.info);
+    }
+    if (returnFreeze.isLoading && !nextProps.boutiqueCoupon.returnFreeze.isLoading) {
+      Toast.show(nextProps.boutiqueCoupon.returnFreeze.data.info);
+    }
+    if (cancelReturn.isLoading && !nextProps.boutiqueCoupon.cancelReturn.isLoading) {
+      Toast.show(nextProps.boutiqueCoupon.cancelReturn.data.info);
+    }
+
+    if ((verifyReturnCoupon.isLoading && !nextProps.boutiqueCoupon.verifyReturnCoupon.isLoading)
+      || (returnFreeze.isLoading && !nextProps.boutiqueCoupon.returnFreeze.isLoading)
+      || (cancelReturn.isLoading && !nextProps.boutiqueCoupon.cancelReturn.isLoading)
+      ) {
       if (this.state.activeTab === 'default') {
         this.props.resetMyReturnCoupon();
         this.props.fetchMyReturnCoupon(this.state.status, 1, this.state.pageSize);
@@ -163,6 +178,11 @@ export default class ReturnProgress extends Component {
     this.props.verifyReturnCoupon(id, 'agree');
   }
 
+  cancelReturnClick = (e) => {
+    const { id } = e.currentTarget.dataset;
+    this.props.cancelReturnTransferCoupon(id);
+  }
+
   confirmClick = (e) => {
     const { id } = e.currentTarget.dataset;
     // this.props.returnFreezeCoupons(id);
@@ -210,6 +230,9 @@ export default class ReturnProgress extends Component {
             </If>
             <If condition={member.transfer_status === 2 && this.state.activeTab === 'default'}>
               <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding no-margin" type="button" data-id={member.id} onClick={this.confirmClick} >确认已收钱</button>
+            </If>
+            <If condition={member.transfer_status === 1 && this.state.activeTab === 'default'}>
+              <button className="button button-sm button-light col-xs-4 font-xs return-btn no-padding no-margin" type="button" data-id={member.id} onClick={this.cancelReturnClick} >取消退券</button>
             </If>
           </div>
           <div className="col-xs-12 no-padding no-margin">

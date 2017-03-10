@@ -110,7 +110,7 @@ export default class BoutiqueInvite2 extends Component {
     this.setState({ wxPublic: wxPublic });
 
     this.props.fetchProductDetails(productId);
-    this.props.fetchShopBagQuantity();
+    this.props.fetchShopBagQuantity(0);
     this.props.fetchInviteSharing(26);
     if (utils.detector.isWechat()) {
       this.props.fetchWechatSign();
@@ -380,7 +380,7 @@ export default class BoutiqueInvite2 extends Component {
     if (details && details.detail_content.is_boutique) {
       this.props.addProductToShopBag(productId, skuId, num, 5);
     } else {
-      this.props.addProductToShopBag(productId, skuId, num);
+      this.props.addProductToShopBag(productId, skuId, num, 0);
     }
 
     e.preventDefault();

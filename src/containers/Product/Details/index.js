@@ -98,7 +98,7 @@ export default class Detail extends Component {
     const { params } = this.props;
     const productId = params.id.match(/(\d+)/)[0];
     this.props.fetchProductDetails(productId);
-    this.props.fetchShopBagQuantity();
+    this.props.fetchShopBagQuantity(5);
     this.props.fetchShareInfo(constants.shareType.product, productId);
     if (utils.detector.isWechat()) {
       this.props.fetchWechatSign();
@@ -403,7 +403,7 @@ export default class Detail extends Component {
     if (details && details.detail_content.is_boutique) {
       this.props.addProductToShopBag(productId, skuId, num, 5);
     } else {
-      this.props.addProductToShopBag(productId, skuId, num);
+      this.props.addProductToShopBag(productId, skuId, num, 0);
     }
 
     e.preventDefault();

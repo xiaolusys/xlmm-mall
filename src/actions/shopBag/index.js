@@ -13,13 +13,13 @@ export const names = {
 };
 
 /**
-* @type 商品类型；0：普通，3:团购, 5:优惠券订单,只能用优惠券购买，即精品汇商品
+* @type 商品类型；0：普通，3:团购, 5:精品汇商品, 6:精品券
 **/
-export const fetchShopBag = (type = 0) => {
+export const fetchShopBag = (type = 5) => {
   const action = createAction(names.FETCH_SHOP_BAG);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'carts', { params: { type: type || 0 } })
+    return axios.get(constants.baseEndpoint + 'carts', { params: { type: type || 5 } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -29,11 +29,11 @@ export const fetchShopBag = (type = 0) => {
   };
 };
 
-export const fetchShopBagHistory = () => {
+export const fetchShopBagHistory = (type = 5) => {
   const action = createAction(names.FETCH_SHOP_BAG_HISTORY);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'carts/show_carts_history')
+    return axios.get(constants.baseEndpoint + 'carts/show_carts_history', { params: { type: type || 5 } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -57,7 +57,7 @@ export const updateQuantity = (id, requestAction, type) => {
         dispatch(action.success(resp.data));
         if (resp.data.code === 0) {
           dispatch(fetchShopBag(type));
-          dispatch(fetchShopBagHistory());
+          dispatch(fetchShopBagHistory(type));
         }
       })
       .catch((resp) => {
@@ -66,7 +66,7 @@ export const updateQuantity = (id, requestAction, type) => {
   };
 };
 
-export const fetchShopBagQuantity = (type = 0) => {
+export const fetchShopBagQuantity = (type = 5) => {
   const action = createAction(names.FETCH_SHOP_BAG_QUANTITY);
   return (dispatch) => {
     dispatch(action.request());
@@ -80,15 +80,15 @@ export const fetchShopBagQuantity = (type = 0) => {
   };
 };
 
-export const rebuy = (itemId, skuId, cartId) => {
+export const rebuy = (itemId, skuId, cartId, type) => {
   const action = createAction(names.REBUY_HISTORY_PRODUCT);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'carts', qs.stringify({ item_id: itemId, sku_id: skuId, cart_id: cartId }))
+    return axios.post(constants.baseEndpoint + 'carts', qs.stringify({ item_id: itemId, sku_id: skuId, cart_id: cartId, type: type }))
       .then((resp) => {
         if (resp.data.code === 0) {
-          dispatch(fetchShopBag());
-          dispatch(fetchShopBagHistory());
+          dispatch(fetchShopBag(type));
+          dispatch(fetchShopBagHistory(type));
         }
         dispatch(action.success(resp.data));
       })
@@ -106,12 +106,7 @@ export const addProductToShopBag = (productId, skuId, num, type) => {
       .then((resp) => {
         dispatch(action.success(resp.data));
         if (resp.data.code === 0) {
-          // 券商品场景，使用单独的购物车，需要更新券购物车的数目，其它场景查普通购物车
-          if (type === 6) {
-            dispatch(fetchShopBagQuantity(type));
-          } else {
-            dispatch(fetchShopBagQuantity());
-          }
+          dispatch(fetchShopBagQuantity(type));
           dispatch(fetchShopBag(type));
         }
       })
