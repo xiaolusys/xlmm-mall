@@ -205,7 +205,7 @@ export default class BoutiqueCoupon extends Component {
     const { unusedBoutique, freezedBoutique } = this.props.coupons;
     const { activeTab, sticky } = this.state;
     let unusedNum = 0;
-    if (activeTab === 'default' && unusedBoutique.success && unusedBoutique.data && unusedBoutique.data.length > 0) {
+    if (unusedBoutique.success && unusedBoutique.data && unusedBoutique.data.length > 0) {
       for (let i = unusedBoutique.data.length - 1; i >= 0; i--) {
         unusedNum += unusedBoutique.data[i].coupon_num;
       }
