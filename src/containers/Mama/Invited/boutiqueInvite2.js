@@ -160,7 +160,7 @@ export default class BoutiqueInvite2 extends Component {
     if (nextProps.shopBag.addProduct.success && nextProps.shopBag.addProduct.data.info) {
       Toast.show(nextProps.shopBag.addProduct.data.info);
       if (nextProps.shopBag.addProduct.data.code === 6) {
-        this.context.router.push(`/shop/bag?mm_linkid=${this.state.mmLinkId}`);
+        this.context.router.push(`/shop/bag?type=0&mm_linkid=${this.state.mmLinkId}`);
       }
     }
 
