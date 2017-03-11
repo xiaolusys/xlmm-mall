@@ -503,20 +503,17 @@ export default class Detail extends Component {
           <div className="row no-margin">
             <p className="col-xs-12 no-padding font-md">{info.name}</p>
           </div>
+          <If condition={details.source_type > 1}>
+          <div className="row no-margin">
+            <p className="col-xs-12 no-padding font-xs font-grey-light">温馨提示:保税区和直邮根据海关要求需要提供身份证号码，保税区发货预计5到10个工作日到货，直邮预计10-20个工作日到货。</p>
+          </div>
+          </If>
           <div className="row no-margin">
             <p className="col-xs-8 no-padding">
               <span className="font-32">{'￥' + info.lowest_agent_price}</span>
               <span className="font-grey">/</span>
               <span className="font-xs font-grey-light text-line-through">{'￥' + info.lowest_std_sale_price}</span>
             </p>
-            <div className="col-xs-2 no-padding icon-favorite margin-top-xs" onClick={this.onFavoriteBtnClick}>
-              <If condition={favoriteStatus}>
-                <i className="col-xs-3 icon-favorite-yes font-lg text-left"></i>
-              </If>
-              <If condition={!favoriteStatus}>
-                <i className="col-xs-3 icon-favorite-no font-lg text-left"></i>
-              </If>
-            </div>
             <p className="col-xs-2 no-padding margin-top-xs text-right">
               {info.item_marks.map((tag, index) => { return (<span key={index} className="tag">{tag}</span>); })}
             </p>
