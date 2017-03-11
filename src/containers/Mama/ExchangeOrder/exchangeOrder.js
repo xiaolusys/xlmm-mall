@@ -171,10 +171,7 @@ export default class ExchangeOrder extends Component {
 
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
-        <div className="col-xs-12 order-time no-padding">
-          <p className=" text-left no-padding">{member.date_field ? member.date_field.replace(/T/, ' ') : ''}</p>
-        </div>
-        <div className="col-xs-12 order-time1 no-padding">
+        <div className="col-xs-12 order-time1 margin-top-xxs">
           <p className="text-left font-xs no-padding no-margin">{member.sku_name.substring(0, 27)}</p>
         </div>
         <div className="col-xs-4 member-img-div no-padding">
