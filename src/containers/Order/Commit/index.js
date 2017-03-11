@@ -495,21 +495,21 @@ export default class Commit extends Component {
 
   checkNeedIdentification = () => {
     const { address, payInfo } = this.props;
-    if (address.success && address.data && payInfo.success && payInfo.data) {
-      let isBondedGoods = false;
-      for (let i = 0; i < payInfo.data.cart_list.length; i++) {
-        if (payInfo.data.cart_list[i].is_bonded_goods) {
-          isBondedGoods = true;
-          break;
-        }
-      }
+    // if (address.success && address.data && payInfo.success && payInfo.data) {
+    //   let isBondedGoods = false;
+    //   for (let i = 0; i < payInfo.data.cart_list.length; i++) {
+    //     if (payInfo.data.cart_list[i].is_bonded_goods) {
+    //       isBondedGoods = true;
+    //       break;
+    //     }
+    //   }
 
-      if (isBondedGoods && _.isEmpty(address.data.identification_no)) {
-        return true;
-      }
-    }
+    //   if (isBondedGoods && _.isEmpty(address.data.identification_no)) {
+    //     return true;
+    //   }
+    // }
 
-    return false;
+    return payInfo && payInfo.data && payInfo.data.max_personalinfo_level > 1;
   }
 
   checkAllVirtualProduct = (products) => {
@@ -592,6 +592,11 @@ export default class Commit extends Component {
               <i className="col-xs-1 no-padding margin-top-xxs text-right icon-angle-right icon-grey"></i>
             </If>
           </div>
+          <If condition={payInfo && payInfo.data && payInfo.data.max_personalinfo_level > 1}>
+          <div className="col-xs-12 address-tips">
+            <p className="font-xs font-grey-light">温馨提示:保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。</p>
+          </div>
+          </If>
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
             <p className="col-xs-5 no-margin no-padding">物流配送</p>
             <div className="col-xs-7 no-padding" onClick={this.onShowLogisticsPopUpClick}>
