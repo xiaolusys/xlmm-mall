@@ -170,10 +170,14 @@ export default class Commit extends Component {
       Toast.show('请勾选购买条款！');
       return;
     }
+    if (!(payInfo && payInfo.success && payInfo.data)) {
+      Toast.show('支付信息获取失败，请刷新此页面！');
+      return;
+    }
 
     if (this.checkNeedIdentification()) {
       Toast.show('订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码。此信息加密保存，只用于此订单海关通关。请您点击收货地址进行修改');
-      this.context.router.push(`user/address/edit/${address.data.id}?is_bonded_goods=true`);
+      this.context.router.push(`user/address/edit/${address.data.id}?source_type=` + payInfo.data.max_personalinfo_level);
       return;
     }
 
@@ -560,10 +564,12 @@ export default class Commit extends Component {
     const isAllVirtualProduct = this.checkAllVirtualProduct(products);
     const channels = this.getChannel();
     const { pathname, query } = this.props.location;
-    const addressLink = '/user/address?next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
+    const addressLink = '/user/address?source_type=' + ((payInfo && payInfo.data) ? payInfo.data.max_personalinfo_level : 0)
+                    + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
                     + (query.teambuyId ? '&teambuyId=' + query.teambuyId : '')
                     + (query.mm_linkid ? '&mm_linkid=' + query.mm_linkid : '')
-                    + (query.couponId ? '&couponId=' + query.couponId : ''));
+                    + (query.couponId ? '&couponId=' + query.couponId : ''))
+                    ;
     const couponLink = '/order/selectcoupon?cartIds=' + query.cartIds + (products.length > 0 ? '&goodsnum=' + products[0].num : '')
                     + '&next=' + encodeURIComponent(pathname + '?cartIds=' + query.cartIds
                     + (query.teambuyId ? '&teambuyId=' + query.teambuyId : '')
@@ -591,7 +597,7 @@ export default class Commit extends Component {
           </div>
           <If condition={payInfo && payInfo.data && payInfo.data.max_personalinfo_level > 1}>
           <div className="col-xs-12 address-tips">
-            <p className="font-xs font-grey-light">温馨提示:保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。</p>
+            <p className="font-xs font-grey-light">温馨提示:保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。如需修改，请您点击收货地址进行编辑操作。</p>
           </div>
           </If>
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>

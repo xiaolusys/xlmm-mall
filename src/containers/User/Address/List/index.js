@@ -54,6 +54,7 @@ export default class List extends Component {
   render() {
     const props = this.props;
     const { children, isLoading, error } = this.props;
+    const { query } = this.props.location;
     const bindPhoneBtnCls = classnames({
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized text-center']: 1,
       // ['pressed']: this.state.submitBtnPressed,
@@ -83,7 +84,7 @@ export default class List extends Component {
                         <p className="font-xs text-left no-margin address-text">{address.receiver_state + address.receiver_city + address.receiver_district + address.receiver_address}</p>
                       </div>
                       <div className="col-xs-2 no-padding margin-top-xxs">
-                        <Link className="button button-sm button-light" to={'/user/address/edit/' + address.id}>编辑</Link>
+                        <Link className="button button-sm button-light" to={'/user/address/edit/' + address.id + (query.source_type ? '?source_type=' + query.source_type : '')}>编辑</Link>
                       </div>
                   </li>
                 );
