@@ -100,9 +100,7 @@ export default class Success extends Component {
           <div className="text-center padding-top-lg padding-bottom-lg">
             <i className="icon-order-succeed icon-6x icon-yellow"></i>
             <p className="font-xlg font-weight-600">支付成功!</p>
-            <If condition={!utils.detector.isApp()} >
-              <button className="button button-stable" type="button" onClick={this.onViewOrderBtnClick}>查看订单</button>
-            </If>
+            <button className="button button-stable" type="button" onClick={this.onViewOrderBtnClick}>查看订单</button>
           </div>
           <If condition={false}>
           <div className="redpacket-container text-center">
