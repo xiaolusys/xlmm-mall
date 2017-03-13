@@ -597,7 +597,7 @@ export default class Commit extends Component {
           </div>
           <If condition={payInfo && payInfo.data && payInfo.data.max_personalinfo_level > 1}>
           <div className="col-xs-12 address-tips">
-            <p className="font-xs font-grey-light">温馨提示:保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。</p>
+            <p className="font-xs font-grey-light">温馨提示:保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。如需修改，请您点击收货地址进行编辑操作。</p>
           </div>
           </If>
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
