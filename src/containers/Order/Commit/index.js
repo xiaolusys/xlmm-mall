@@ -495,21 +495,18 @@ export default class Commit extends Component {
 
   checkNeedIdentification = () => {
     const { address, payInfo } = this.props;
-    // if (address.success && address.data && payInfo.success && payInfo.data) {
-    //   let isBondedGoods = false;
-    //   for (let i = 0; i < payInfo.data.cart_list.length; i++) {
-    //     if (payInfo.data.cart_list[i].is_bonded_goods) {
-    //       isBondedGoods = true;
-    //       break;
-    //     }
-    //   }
+    if (address.success && address.data && payInfo.success && payInfo.data) {
+      let isBondedGoods = false;
+      if (payInfo && payInfo.data && payInfo.data.max_personalinfo_level > 1) {
+        isBondedGoods = true;
+      }
 
-    //   if (isBondedGoods && _.isEmpty(address.data.identification_no)) {
-    //     return true;
-    //   }
-    // }
+      if (isBondedGoods && _.isEmpty(address.data.identification_no)) {
+        return true;
+      }
+    }
 
-    return payInfo && payInfo.data && payInfo.data.max_personalinfo_level > 1;
+    return false;
   }
 
   checkAllVirtualProduct = (products) => {
