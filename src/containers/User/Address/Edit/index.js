@@ -221,7 +221,7 @@ export default class Edit extends Component {
 
   onSaveBntClick = (e) => {
     const id = Number(this.props.params.id);
-    const isBondedGoods = this.props.location.query ? this.props.location.query.is_bonded_goods : false;
+    const sourceType = this.props.location.query ? Number(this.props.location.query.source_type) : 0;
 
     if ((typeof(this.state.address.receiver_mobile) !== 'undefined') && this.state.address.receiver_mobile.length !== 11) {
       Toast.show('手机号长度不对，请修改！！！');
@@ -229,7 +229,7 @@ export default class Edit extends Component {
       return;
     }
 
-    if (isBondedGoods && (typeof(this.state.address.identification_no) !== 'undefined') && this.state.address.identification_no.length !== 18) {
+    if ((sourceType > 1) && (typeof(this.state.address.identification_no) !== 'undefined') && this.state.address.identification_no.length !== 18) {
       Toast.show('身份证号长度不对，请修改！！！');
       e.preventDefault();
       return;
@@ -304,7 +304,7 @@ export default class Edit extends Component {
       ['col-xs-10 col-xs-offset-1 margin-top-xs button button-energized']: 1,
       ['pressed']: this.state.nextBtnPressed,
     });
-    const isBondedGoods = this.props.location.query ? this.props.location.query.is_bonded_goods : false;
+    const sourceType = this.props.location.query ? Number(this.props.location.query.source_type) : false;
 
     return (
       <div>
@@ -330,7 +330,7 @@ export default class Edit extends Component {
             <span className="col-xs-4">详细地址</span>
             <input type="text" placeholder="请输入您的详细地址" name="address" value={address.receiver_address} onChange={this.onInpuChange}/>
           </div>
-          <If condition={ isBondedGoods }>
+          <If condition={ sourceType > 1 }>
             <div className="row no-margin bottom-border adddress-item">
               <span className="col-xs-4">身份证号码</span>
               <input type="text" placeholder="请输入收货人的身份证" name="identification" value={address.identification_no} onChange={this.onInpuChange}/>
