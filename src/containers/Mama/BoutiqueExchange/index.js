@@ -137,6 +137,12 @@ export default class BoutiqueExchg extends Component {
     e.preventDefault();
   }
 
+  onReloadClick = (e) => {
+    this.props.fetchMamaLeader();
+    this.props.fetchMamaTranCouponProfile();
+    e.preventDefault();
+  }
+
   getLevelName = (name) => {
     let levelName = '';
     switch (name) {
@@ -228,6 +234,16 @@ getRebateInfo = () => {
             <span>{'张券等待您审核！'}</span>
           </div>
         </div>
+        </If>
+        <If condition={mamaTranCouponProfile.error}>
+          <div className="elite-score-err bottom-border">
+            <div className="elite-score-p text-center">
+            <span>{'获取精品汇信息失败，请点击重试！'}</span>
+            </div>
+            <div className="elite-score-p text-center">
+              <button className="button" onClick={this.onReloadClick}>{'点击重新加载'}</button>
+            </div>
+          </div>
         </If>
         <If condition={mamaLeader.success && mamaLeader.data && (mamaLeader.data.code === 0)}>
         <div className="mama-leader no-padding bottom-border">
