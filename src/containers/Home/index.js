@@ -53,8 +53,18 @@ export class Home extends Component {
   componentWillMount() {
     const active = this.props.location.query.active;
     const mmLinkId = this.props.location.query.mm_linkid;
-
-    this.setState({ active: active, mmLinkId: mmLinkId });
+    const tab = this.props.location.query.tab;
+    let topTab = 'home';
+    if (tab) {
+      if (Number(tab) === 1) {
+        topTab = 'category';
+      } else if (Number(tab) === 2) {
+        topTab = 'shoppingcart';
+      } else if (Number(tab) === 3) {
+        topTab = 'myinfo';
+      }
+    }
+    this.setState({ active: active, mmLinkId: mmLinkId, topTab: topTab });
   }
 
   componentDidMount() {
@@ -70,10 +80,25 @@ export class Home extends Component {
 
   onTabClick = (e) => {
     const { id, type } = e.currentTarget.dataset;
-    this.setState({
-      topTab: id,
-    });
-
+    this.setState({ topTab: id });
+    let tab = 0;
+    switch (id) {
+      case 'home':
+        tab = 0;
+        break;
+      case 'category':
+        tab = 1;
+        break;
+      case 'shoppingcart':
+        tab = 2;
+        break;
+      case 'myinfo':
+        tab = 3;
+        break;
+      default:
+        break;
+    }
+    this.context.router.replace('?tab=' + tab);
     e.preventDefault();
   }
 

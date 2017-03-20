@@ -25,6 +25,7 @@ export class InputHeader extends Component {
     hide: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     onInputChange: React.PropTypes.func,
+    onInputClick: React.PropTypes.func,
   };
 
   static defaultProps = {
@@ -38,6 +39,8 @@ export class InputHeader extends Component {
     trasparent: false,
     onLeftBtnClick: _.noop,
     onRightBtnClick: _.noop,
+    onInputChange: _.noop,
+    onInputClick: _.noop,
   }
 
   constructor(props) {
@@ -45,7 +48,7 @@ export class InputHeader extends Component {
   }
 
   render() {
-    const { prefixCls, className, placeholder, onInputChange, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed, trasparent, hide } = this.props;
+    const { prefixCls, className, placeholder, onInputChange, onInputClick, leftIcon, rightIcon, leftText, rightText, dispatch, onLeftBtnClick, onRightBtnClick, leftBtnPressed, rightBtnPressed, trasparent, hide } = this.props;
     const headerCls = classnames({
       [`${prefixCls}-wrapper ${className}`]: true,
       [`${prefixCls}-trasparent`]: trasparent,
@@ -67,7 +70,7 @@ export class InputHeader extends Component {
         <If condition={!hide}>
           <header className="bar bar-header">
             <button className={leftBtnCls} onClick={onLeftBtnClick}>{leftText}</button>
-            <input className="title font-xs text-left" placeholder={placeholder} onChange={onInputChange}></input>
+            <input className="title font-xs text-left" placeholder={placeholder} onClick={onInputClick} onChange={onInputChange}></input>
             <button className={rightBtnCls} onClick={onRightBtnClick}>{rightText}</button>
           </header>
           <div className="has-header"></div>

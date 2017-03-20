@@ -1,5 +1,6 @@
 import * as constants from 'constants';
 import axios from 'axios';
+import qs from 'qs';
 import createAction from '../createAction';
 
 export const searchNames = {
@@ -29,7 +30,7 @@ export const resetSearchProduct = () => {
   };
 };
 
-export const fetchSearchProductHistory = (name) => {
+export const fetchSearchProductHistory = () => {
   const action = createAction(searchNames.SEARCH_HISTORY);
   return (dispatch) => {
     dispatch(action.request());
@@ -50,11 +51,11 @@ export const resetFetchSearchProductHistory = () => {
   };
 };
 
-export const clearSearchProductHistory = (name) => {
+export const clearSearchProductHistory = () => {
   const action = createAction(searchNames.CLEAR_SEARCH_HISTORY);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpoint + 'searchhistory/clear_search_history')
+    return axios.post(constants.baseEndpoint + 'searchhistory/clear_search_history', qs.stringify({ target: 'ModelProduct' }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
