@@ -31,7 +31,7 @@ import './index.scss';
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
-export default class List extends Component {
+export default class ProductCategory extends Component {
   static propTypes = {
     location: React.PropTypes.object,
     fetchProductCategories: React.PropTypes.func,
@@ -61,7 +61,10 @@ export default class List extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { cid, title } = this.props.location.query;
+    let { cid } = this.props.location.query;
+    if (!cid) {
+      cid = '1';
+    }
 
     if (nextProps.categories.success) {
       const selectCid = this.getFirstCategory(cid, nextProps.categories.data);
@@ -125,14 +128,16 @@ export default class List extends Component {
     const { categories } = this.props;
     const categoryData = categories.success ? (categories.data || []) : [];
     let secondCategory = [];
+
     if ((!cid) || (categoryData === [])) return secondCategory;
 
     categoryData.map((item) => {
       if (item.cid === cid && item.childs.length > 0) {
-          secondCategory = item.childs.concat();
+        secondCategory = item.childs[0].childs.concat();
       }
       return;
     });
+
     return secondCategory;
   }
 
@@ -146,11 +151,15 @@ export default class List extends Component {
 
   render() {
     const { categories } = this.props;
-    const { cid, title } = this.props.location.query;
+    let { title } = this.props.location.query;
     const categoryData = categories.success ? (categories.data || []) : [];
     const hasHeader = !utils.detector.isApp();
     const { activeTab, sticky, selectCid } = this.state;
     const secondCategory = this.getSecondCategory(selectCid);
+
+    if (!title) {
+      title = '分类';
+    }
 
     return (
       <div className="product-categories">
