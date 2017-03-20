@@ -9,7 +9,7 @@ import * as utils from 'utils';
 import * as constants from 'constants';
 import { If } from 'jsx-control-statements';
 import { Loader } from 'components/Loader';
-import { Header } from 'components/Header';
+import { InputHeader } from 'components/InputHeader';
 import { Timer } from 'components/Timer';
 import { Product } from 'components/Product';
 import { Image } from 'components/Image';
@@ -91,6 +91,14 @@ export default class ProductCategory extends Component {
     this.setState({ selectCid: cid });
   }
 
+  onLeftBtnClick = (e) => {
+    this.context.router.goBack();
+  }
+
+  onInputClick = (e) => {
+    this.context.router.push('/product/search');
+  }
+
   onScroll = (e) => {
     const { cid } = this.props.location.query;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
@@ -163,7 +171,7 @@ export default class ProductCategory extends Component {
 
     return (
       <div className="product-categories">
-        <Header title={title} leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goSmartBack} hide={utils.detector.isApp()}/>
+        <InputHeader placeholder=" 输入查询的商品" onInputClick={this.onInputClick} leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} />
         <div className=" row">
           <div className={'cat-list col-xs-3 '}>
             <ul className="cat-list-ul no-margin">
