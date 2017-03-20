@@ -1,33 +1,52 @@
-.shop-bag-container {
-  .shop-bag-list {
-    &.shop-bag-list-white-bg {
-      background: #fff;
-    }
-    li {
-      > a > img {
-        max-height: 100px;
-        max-width: 100px;
-        padding: 8px;
-        border-radius: 16px;
+.shop-bag-all  {
+  .shop-bag-container {
+    .shop-bag-list {
+      &.shop-bag-list-white-bg {
+        background: #fff;
       }
-      > div {
-        padding: 8px 0px;
-        > p {
-          margin: 8px 0px !important;
-          button {
-            margin-right: 8px;
+      li {
+        > a > img {
+          max-height: 100px;
+          max-width: 100px;
+          padding: 8px;
+          border-radius: 16px;
+        }
+        > div {
+          padding: 8px 0px;
+          > p {
+            margin: 8px 0px !important;
+            button {
+              margin-right: 8px;
+            }
           }
         }
       }
+      .cart-quantity {
+        > i {
+          padding: 8px;
+          font-size: 20px;
+        }
+        >span {
+          padding: 8px;
+        }
+      }
     }
-    .cart-quantity {
-      > i {
-        padding: 8px;
-        font-size: 20px;
-      }
-      >span {
-        padding: 8px;
-      }
+    
+  }
+  .bottom-btn1 {
+    background-color: #fff;
+    .has-bottom-bar1 {
+      margin-bottom: 43px;
+    }
+    .bottom-bar1 {
+      position: fixed;
+      bottom: 44px;
+      right: 0;
+      left: 0;
+      background-color: #fff;
+      height: 84px;
+      padding: 8px;
+      z-index: 10;
     }
   }
 }
