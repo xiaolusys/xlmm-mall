@@ -65,12 +65,6 @@ export default class SearchProduct extends Component {
       Toast.show(search.clearSearchHis.data.info);
     }
 
-    if (this.props.search.searchProduct.isLoading && !search.searchProduct.isLoading) {
-      if (search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count > 0)) {
-        
-      }
-    }
-
   }
 
   componentWillUnmount() {
@@ -156,8 +150,7 @@ export default class SearchProduct extends Component {
             </ul>
           </If>
           <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count > 0) && this.state.searchFlag}>
-          {search.searchProduct.data.results.map((item, index) => this.renderProduct(item, index))
-          }
+          {search.searchProduct.data.results.map((item, index) => this.renderProduct(item, index))}
           </If>
           <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count === 0) && this.state.searchFlag}>
             <div className="empty-search">

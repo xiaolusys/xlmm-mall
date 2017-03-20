@@ -44,7 +44,7 @@ export default class BoutiqueExchg extends Component {
   }
 
   state = {
-
+    retryNum: 0,
     sticky: false,
     hasMore: false,
 
@@ -67,6 +67,14 @@ export default class BoutiqueExchg extends Component {
       utils.ui.loadingSpinner.show();
     } else {
       utils.ui.loadingSpinner.hide();
+    }
+
+    if (!mamaTranCouponProfile.isLoading && this.props.boutiqueCoupon.mamaTranCouponProfile.isLoading && (this.state.retryNum < 3)) {
+      if (!(mamaTranCouponProfile.success && mamaTranCouponProfile.data)) {
+        this.props.fetchMamaLeader();
+        this.props.fetchMamaTranCouponProfile();
+        this.setState({ retryNum: (this.state.retryNum + 1) });
+      }
     }
   }
 
