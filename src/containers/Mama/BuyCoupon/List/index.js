@@ -171,7 +171,7 @@ export default class TranCouponList extends Component {
 
     return (
       <div className=" content-white-bg buycouponlist">
-        <InputHeader placeholder="输入查询的商品" onInputChange={this.onInputChange} leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="搜索" onRightBtnClick={this.onSearchClick} />
+        <InputHeader placeholder=" 输入查询的商品" onInputChange={this.onInputChange} leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="搜索" onRightBtnClick={this.onSearchClick} />
         <div>
         <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data && !this.state.searchFlag}>
           {productDetails.data.map((item, index) => this.renderProduct(item, index))
