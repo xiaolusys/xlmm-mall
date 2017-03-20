@@ -143,7 +143,7 @@ export default class SearchProduct extends Component {
             <ul className="his-search-result col-xs-12">
               {search.fetchSearchHis.data.results.map((item, index) => {
                 return (
-                  <li className="his-result-item text-center text col-xs-3" key={index} data-name={item.content} onClick={this.queryHis}>{item.content}</li> 
+                  <li className="his-result-item text-center text col-xs-3" key={index} data-name={item.content} onClick={this.queryHis}>{item.content}</li>
                   );
               })
             }
