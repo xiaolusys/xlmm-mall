@@ -236,7 +236,7 @@ getRebateInfo = () => {
         </div>
         </If>
         <If condition={mamaTranCouponProfile.error}>
-          <div className="elite-score-err bottom-border">
+          <div className="elite-score-err">
             <div className="elite-score-p text-center">
             <span>{'获取精品汇信息失败，请点击重试！'}</span>
             </div>

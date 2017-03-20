@@ -26,6 +26,7 @@ export class ShopBag extends Component {
   static propTypes = {
     location: React.PropTypes.object,
     shopBag: React.PropTypes.object,
+    // ishome: React.PropTypes.object,
     fetchShopBag: React.PropTypes.func,
     fetchShopBagHistory: React.PropTypes.func,
     applyNegotiableCoupons: React.PropTypes.func,
@@ -251,8 +252,9 @@ export class ShopBag extends Component {
 
   render() {
     const { shopBag, shopBagHistory } = this.props.shopBag;
+    // const { ishome } = this.props;
     return (
-      <div>
+      <div className="shop-bag-all">
         <Header title="购物车" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
         <div className="content shop-bag-container">
           <If condition={!_.isEmpty(shopBag.data)}>
@@ -313,7 +315,7 @@ export class ShopBag extends Component {
             </ul>
           </If>
         </div>
-        <If condition={!_.isEmpty(shopBag.data) && shopBag.success}>
+        <If condition={!_.isEmpty(shopBag.data) && shopBag.success && 0}>
           <BottomBar size="large">
             <p>
               <span className="font-xs">应付款金额</span>
@@ -327,6 +329,24 @@ export class ShopBag extends Component {
               <button className="button button-energized col-xs-4 col-xs-offset-1" type="button" onClick={this.onApplyClick}>{'申请'}</button>
             </If>
           </BottomBar>
+        </If>
+        <If condition={!_.isEmpty(shopBag.data) && shopBag.success}>
+          <div className="bottom-btn1">
+            <div className="has-bottom-bar1" ></div>
+            <div className="bottom-bar1 top-border text-center" >
+              <p>
+                <span className="font-xs">应付款金额</span>
+                <span className="font-lg font-orange">{'￥' + this.totalPrice()}</span>
+              </p>
+              <If condition={Number(this.state.isBuyable) === 1}>
+                <button className="button button-energized col-xs-12" type="button" onClick={this.onBuyNowClick}>{'购买'}</button>
+              </If>
+              <If condition={Number(this.state.isBuyable) === 0}>
+                <button className="button button-energized col-xs-5 col-xs-offset-1" type="button" onClick={this.onXiaolucoinBuyClick}>{'购买'}</button>
+                <button className="button button-energized col-xs-4 col-xs-offset-1" type="button" onClick={this.onApplyClick}>{'申请'}</button>
+              </If>
+            </div>
+          </div>
         </If>
       </div>
     );
