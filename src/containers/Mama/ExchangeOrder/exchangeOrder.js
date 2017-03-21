@@ -31,6 +31,7 @@ export default class ExchangeOrder extends Component {
     boutiqueCoupon: React.PropTypes.any,
     fetchCanExchgOrders: React.PropTypes.func,
     fetchExchangedOrders: React.PropTypes.func,
+    fetchWaitingExchgOrders: React.PropTypes.func,
     resetCanExchgOrders: React.PropTypes.func,
     exchgOrder: React.PropTypes.func,
   };
@@ -108,7 +109,10 @@ export default class ExchangeOrder extends Component {
     if (type === 'default') {
       this.props.resetCanExchgOrders();
       this.props.fetchCanExchgOrders();
-    } else {
+    } else if (type === 'waiting') {
+      this.props.resetCanExchgOrders();
+      this.props.fetchWaitingExchgOrders();
+    } else if (type === 'exchanged') {
       this.props.resetCanExchgOrders();
       this.props.fetchExchangedOrders();
     }
@@ -186,9 +190,11 @@ export default class ExchangeOrder extends Component {
             <p className=" text-left font-xs">{'需券' + member.num + '张' + '可兑' + (member.order_value / 100).toFixed(1) + '元'}</p>
           </div>
         </div>
+        <If condition={ this.state.activeTab === 'default'}>
         <div className="col-xs-2">
           <button className="button icon-yellow" onClick={this.onExchgClick} data-templateid={member.exchg_template_id} data-modelid={member.exchg_model_id} data-num={member.num} data-order={member.order_id} data-status={member.status}>兑换</button>
         </div>
+        </If>
       </li>
     );
   }
@@ -231,10 +237,13 @@ export default class ExchangeOrder extends Component {
         </div>
         <div className={'return-list-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + 'has-header' }>
             <ul className="row no-margin">
-              <li className={'col-xs-6' + (activeTab === 'default' ? ' active' : '')} data-type={'default'} onClick={this.onTabItemClick}>
+              <li className={'col-xs-4' + (activeTab === 'default' ? ' active' : '')} data-type={'default'} onClick={this.onTabItemClick}>
                 <div>可兑换</div>
               </li>
-              <li className={'col-xs-6' + (activeTab === 'exchanged' ? ' active' : '')} data-type={'exchanged'} onClick={this.onTabItemClick}>
+              <li className={'col-xs-4' + (activeTab === 'waiting' ? ' active' : '')} data-type={'waiting'} onClick={this.onTabItemClick}>
+                <div>待兑换</div>
+              </li>
+              <li className={'col-xs-4' + (activeTab === 'exchanged' ? ' active' : '')} data-type={'exchanged'} onClick={this.onTabItemClick}>
                 <div>已兑换</div>
               </li>
             </ul>
@@ -242,7 +251,7 @@ export default class ExchangeOrder extends Component {
         <div className="tran-coupons bg-white">
           <If condition={mamaCanExchgOrders.success && mamaCanExchgOrders.data && mamaCanExchgOrders.data.length > 0}>
             <ul className="bg-white">
-            <If condition={activeTab === 'default'}>
+            <If condition={activeTab === 'default' || activeTab === 'waiting'}>
             {mamaCanExchgOrders.data.map((item, index) => this.renderMember(item, index))
             }
             </If>
@@ -254,7 +263,7 @@ export default class ExchangeOrder extends Component {
           </If>
           <If condition={mamaCanExchgOrders.success && mamaCanExchgOrders.data && mamaCanExchgOrders.data.length === 0}>
             <div className="no-coupon-members bg-white">
-              <p className=" font-xs" >{'您没有' + (activeTab === 'default' ? '订单可以兑换' : '已兑换的订单') + '，赶紧去分享商品吧'}</p>
+              <p className=" font-xs" >{'您没有' + ((activeTab === 'default' || activeTab === 'waiting') ? '订单可以兑换' : '已兑换的订单') + '，赶紧去分享商品吧'}</p>
             </div>
           </If>
         </div>
