@@ -75,6 +75,24 @@ export class ShopBag extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
+    if (nextProps.shopBag.shopBag.error) {
+      switch (nextProps.shopBag.shopBag.status) {
+        case 403:
+          if (utils.detector.isApp()) {
+            plugins.invoke({ method: 'jumpToNativeLogin' });
+            return;
+          }
+          this.context.router.push(`/user/login?next=${encodeURIComponent(this.props.location.pathname + this.props.location.search)}`);
+          return;
+        case 500:
+          Toast.show(nextProps.shopBag.shopBag.data.detail);
+          break;
+        default:
+          Toast.show(nextProps.shopBag.shopBag.data.detail);
+          break;
+      }
+    }
+
     // apply coupon
     if (coupons.applynegotiable.success && !_.isEmpty(coupons.applynegotiable.data) && coupons.applynegotiable.data.code === 0) {
         if (this.state.applyNum + 1 === shopBag.data.length) {
@@ -259,7 +277,7 @@ export class ShopBag extends Component {
         <div className="content shop-bag-container">
           <If condition={!_.isEmpty(shopBag.data)}>
             <ul className="shop-bag-list shop-bag-list-white-bg">
-              {_.isEmpty(shopBag.data) ? null : shopBag.data.map((item) => {
+              {_.isEmpty(shopBag.data) || shopBag.error ? null : shopBag.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
                     <a className="col-xs-4 no-padding">
@@ -294,7 +312,7 @@ export class ShopBag extends Component {
           <If condition={!_.isEmpty(shopBagHistory.data)}>
             <p className="margin-top-sm margin-left-xs font-xs">可重新购买商品</p>
             <ul className="shop-bag-list top-border">
-              {_.isEmpty(shopBagHistory.data) ? null : shopBagHistory.data.map((item) => {
+              {_.isEmpty(shopBagHistory.data) || shopBagHistory.error ? null : shopBagHistory.data.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
                     <a className="col-xs-4 no-padding">

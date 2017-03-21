@@ -133,9 +133,9 @@ export default class HomeMyDetailInfo extends Component {
             </Link>
           </li>
           <li>
-            <Link to="/favorite/list">
-              <i className="icon-favorite-no icon-gold"></i>
-              <span>我的收藏</span>
+            <Link to="/mama/home">
+              <i className="icon-home icon-gold"></i>
+              <span>我的店铺</span>
             </Link>
           </li>
         </ul>
