@@ -158,7 +158,7 @@ export default (
     <Route path="/boutiqueinvite" component={BoutiqueInvite} />
     <Route path="/boutiqueinvite2/:id" component={BoutiqueInvite2} />
     {activityRoutes}
-    <Route path="/mama/home" component={MamaHome} />
+    <Route path="/mama/home" component={MamaHome} onEnter={utils.checkAuth} />
     <Route path="/mama/university/home" component={MamaUniversityHome} />
     <Route path="/mama/university/course/detail" component={MamaUniversityCourseDetail} />
     <Route path="/mama/notification/list" component={MamaNotificationList} onEnter={utils.checkAuth} />
