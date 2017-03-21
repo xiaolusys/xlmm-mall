@@ -62,6 +62,20 @@ export const fetchCanExchgOrders = () => {
   };
 };
 
+export const fetchWaitingExchgOrders = () => {
+  const action = createAction(boutiqueCouponNames.FETCH_CAN_EXCHG_ORDERS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(`${constants.baseEndpoint}mama/exchgorder/list_waiting_exchg_orders`)
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
 export const fetchExchangedOrders = () => {
   const action = createAction(boutiqueCouponNames.FETCH_CAN_EXCHG_ORDERS);
   return (dispatch) => {
