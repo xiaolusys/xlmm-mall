@@ -92,13 +92,15 @@ export default class Detail extends Component {
     skuId: 0,
     favoriteStatus: false,
     confirmAddBagDisable: false,
+    chargeEnable: true,
+    type: 5,
   }
 
   componentWillMount() {
     const { params } = this.props;
     const productId = params.id.match(/(\d+)/)[0];
     this.props.fetchProductDetails(productId);
-    this.props.fetchShopBagQuantity(5);
+    this.props.fetchShopBagQuantity(this.state.type);
     this.props.fetchShareInfo(constants.shareType.product, productId);
     if (utils.detector.isWechat()) {
       this.props.fetchWechatSign();
@@ -203,6 +205,13 @@ export default class Detail extends Component {
     if (!_.isEmpty(nextProps.details) && nextProps.details.custom_info) {
       this.setState({ favoriteStatus: nextProps.details.custom_info.is_favorite });
     }
+    if (nextProps.details && nextProps.details.detail_content) {
+      if (nextProps.details.detail_content.is_boutique) {
+        this.setState({ type: 5 });
+      } else {
+        this.setState({ type: 0 });
+      }
+    }
 
     if ((shopBag.success || shopBag.error) && this.props.shopBag.shopBag.isLoading) {
       this.setState({ confirmAddBagDisable: false });
@@ -212,7 +221,7 @@ export default class Detail extends Component {
       cartId = shopBag.data[0].id;
       if (Number(shopBag.data[0].type) === 3) {
         window.location.href = `/mall/oc.html?cartIds=${encodeURIComponent(cartId)}&teambuyId=${teambuyId}&mm_linkid=${mmLinkId}`;
-      } else if (nextProps.details && nextProps.details.detail_content && nextProps.details.detail_content.is_boutique) {
+      } else if (nextProps.details && nextProps.details.detail_content && !this.state.chargeEnable) {
         // 特卖抢购商品直接进入支付页面
         if (utils.detector.isApp()) {
           const jumpUrl = 'com.jimei.xlmm://app/v1/trades/purchase?cart_id=' + cartId + '&type=' + shopBag.data[0].type;
@@ -278,7 +287,7 @@ export default class Detail extends Component {
         callback: (resp) => {},
       });*/
     } else {
-      this.context.router.push('/shop/bag');
+      this.context.router.push('/shop/bag?type=' + this.state.type);
     }
     e.preventDefault();
   }
@@ -312,7 +321,7 @@ export default class Detail extends Component {
   }
 
   onPopupOverlayClick = (e) => {
-    this.setState({ activeSkuPopup: false });
+    this.setState({ activeSkuPopup: false, chargeEnable: true, confirmAddBagDisable: false });
     e.preventDefault();
   }
 
@@ -355,6 +364,37 @@ export default class Detail extends Component {
       productId: defaultSku.product_id,
       skuId: skuId,
       activeSkuPopup: true,
+    });
+    e.preventDefault();
+  }
+
+  onChargeClick = (e) => {
+    const { details } = this.props;
+    const skus = details.sku_info;
+
+    let defaultSku = {};
+    for (const skuIndex in skus) {
+      let sum = 0;
+      for (const itemIndex in skus[skuIndex].sku_items) {
+        sum += skus[skuIndex].sku_items[itemIndex].free_num;
+      }
+      if (sum > 0) {
+        defaultSku = skus[skuIndex];
+        break;
+      }
+    }
+    let skuId = 0;
+    for (const index in defaultSku.sku_items) {
+      if (defaultSku.sku_items[index].free_num > 0) {
+        skuId = defaultSku.sku_items[index].sku_id;
+        break;
+      }
+    }
+    this.setState({
+      productId: defaultSku.product_id,
+      skuId: skuId,
+      activeSkuPopup: true,
+      chargeEnable: false,
     });
     e.preventDefault();
   }
@@ -461,9 +501,9 @@ export default class Detail extends Component {
     if (detail.sale_state === 'on' && detail.is_sale_out) {
       return '已抢光';
     }
-    if (detail.is_boutique || detail.is_onsale) {
-      return '立即购买';
-    }
+    // if (detail.is_boutique || detail.is_onsale) {
+    //   return '立即购买';
+    // }
     return '加入购物车';
   }
 
@@ -731,9 +771,12 @@ export default class Detail extends Component {
               </div>
             </div>
             <If condition={!details.teambuy_info.teambuy}>
-              <button className="button button-energized col-xs-10 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
+              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
                 {this.getAddToShopBagBtnText(details.detail_content)}
               </button>
+              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={0} onClick={this.onChargeClick} disabled={disabled}>
+                  {`立即购买`}
+                </button>
             </If>
             <If condition={details.teambuy_info.teambuy}>
               <Choose>
