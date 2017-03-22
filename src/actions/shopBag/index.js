@@ -19,7 +19,7 @@ export const fetchShopBag = (type = 5) => {
   const action = createAction(names.FETCH_SHOP_BAG);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'carts', { params: { type: type || 5 } })
+    return axios.get(constants.baseEndpoint + 'carts', { params: { type: type } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
@@ -33,7 +33,7 @@ export const fetchShopBagHistory = (type = 5) => {
   const action = createAction(names.FETCH_SHOP_BAG_HISTORY);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'carts/show_carts_history', { params: { type: type || 5 } })
+    return axios.get(constants.baseEndpoint + 'carts/show_carts_history', { params: { type: type } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
