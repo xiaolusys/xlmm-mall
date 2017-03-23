@@ -256,6 +256,11 @@ export default class Detail extends Component {
     }
   }
 
+  onHomeClick = (e) => {
+    window.location.href = '/mall';
+    e.preventDefault();
+  }
+
   onShopbagClick = (e) => {
     if (utils.detector.isApp()) {
       const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart';
@@ -763,6 +768,11 @@ export default class Detail extends Component {
           </div>
           <BottomBar className="clearfix" size="medium">
             <div className="col-xs-2 no-padding shop-cart">
+              <div onClick={this.onHomeClick}>
+                <i className="icon-home icon-yellow"></i>
+              </div>
+            </div>
+            <div className="col-xs-2 no-padding shop-cart">
               <div onClick={this.onShopbagClick}>
                 <i className="icon-cart icon-yellow"></i>
                 <If condition={badge > 0}>
@@ -771,28 +781,28 @@ export default class Detail extends Component {
               </div>
             </div>
             <If condition={!details.teambuy_info.teambuy}>
-              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
+              <button className="button button-energized col-xs-3 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
                 {this.getAddToShopBagBtnText(details.detail_content)}
               </button>
-              <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={0} onClick={this.onChargeClick} disabled={disabled}>
+              <button className="button button-energized col-xs-3 col-xs-offset-1 no-padding" type="button" data-type={0} onClick={this.onChargeClick} disabled={disabled}>
                   {`立即购买`}
                 </button>
             </If>
             <If condition={details.teambuy_info.teambuy}>
               <Choose>
               <When condition={(details.detail_content.sale_state !== 'on' || details.detail_content.is_sale_out)}>
-                <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} disabled={disabled}>
+                <button className="button col-xs-3 no-padding font-orange" type="button" data-type={`单独购买`} disabled={disabled}>
                   {`商品已抢光`}
                 </button>
-                <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} disabled={disabled}>
+                <button className="button button-energized col-xs-3 col-xs-offset-1 no-padding" type="button" data-type={3} disabled={disabled}>
                   {`拼团已结束`}
                 </button>
               </When>
               <When condition={(details.detail_content.sale_state === 'on' && !details.detail_content.is_sale_out)}>
-                <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                <button className="button col-xs-3 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAddToShopBagClick} disabled={disabled}>
                   {`单独购¥${details.detail_content.lowest_agent_price}`}
                 </button>
-                <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={disabled}>
+                <button className="button button-energized col-xs-3 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onAddToShopBagClick} disabled={disabled}>
                   {`${details.teambuy_info.teambuy_person_num}人购¥${details.teambuy_info.teambuy_price}`}
                 </button>
               </When>

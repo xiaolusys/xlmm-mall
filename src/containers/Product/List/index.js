@@ -157,7 +157,6 @@ export default class List extends Component {
             })}
           </div>
           {product.isLoading ? <Loader/> : null}
-          <Favorite />
           <ShopBag />
           <BackTop />
         </div>
