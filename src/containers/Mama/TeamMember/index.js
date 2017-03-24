@@ -96,6 +96,7 @@ export default class MamaTeamMember extends Component {
 
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
+        <div className="col-xs-12">
         <div className="col-xs-3 member-img-div no-padding no-margin">
           <Image className="member-img no-padding no-margin" src={member.thumbnail} quality={70} />
         </div>
@@ -108,6 +109,10 @@ export default class MamaTeamMember extends Component {
         </div>
         <div className="col-xs-3 member-score no-padding no-margin">
           <p className="text-center font-xs no-margin">{member.elite_score + '积分' }</p>
+        </div>
+        </div>
+        <div className="col-xs-12 font-xs">
+        {'最近访问日期:' + (member.latest_visit ? member.latest_visit : '无')}
         </div>
       </li>
     );
