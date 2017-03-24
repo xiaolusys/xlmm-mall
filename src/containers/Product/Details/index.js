@@ -780,11 +780,16 @@ export default class Detail extends Component {
                 </If>
               </div>
             </div>
-            <If condition={!details.teambuy_info.teambuy}>
+            <If condition={!details.teambuy_info.teambuy && details.detail_content.is_boutique}>
               <button className="button button-energized col-xs-3 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
                 {this.getAddToShopBagBtnText(details.detail_content)}
               </button>
               <button className="button button-energized col-xs-3 col-xs-offset-1 no-padding" type="button" data-type={0} onClick={this.onChargeClick} disabled={disabled}>
+                  {`立即购买`}
+                </button>
+            </If>
+            <If condition={!details.teambuy_info.teambuy && !details.detail_content.is_boutique}>
+              <button className="button button-energized col-xs-8 no-padding" type="button" data-type={0} onClick={this.onChargeClick} disabled={disabled}>
                   {`立即购买`}
                 </button>
             </If>
