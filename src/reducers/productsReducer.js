@@ -20,7 +20,11 @@ export default (state = initState, action = null) => {
       return _.extend({}, state, { isLoading: true, error: false, success: false });
     case productAction.name + '_' + actionTypes.SUCCESS:
       payload = action.payload;
-      if (state.data.when === payload.when) {
+      if (state.data.when && state.data.when === payload.when) {
+        payload.results = _.chain(state.data.results || []).union(payload.results || []).unique('id').value();
+      }
+
+      if (!state.data.when || state.data.when === '' || state.data.when === undefined) {
         payload.results = _.chain(state.data.results || []).union(payload.results || []).unique('id').value();
       }
       return _.extend({}, state, { isLoading: false, data: payload, error: false, success: true });

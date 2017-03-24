@@ -27,3 +27,18 @@ export const resetProducts = () => {
     dispatch(action.reset());
   };
 };
+
+export const fetchVirtualProductDetails = (pageIndex, pageSize) => {
+  const action = createAction(name);
+  return (dispatch) => {
+    dispatch(action.request());
+    const params = { page: pageIndex, page_size: pageSize };
+    return axios.get(constants.baseEndpoint + 'modelproducts/electronic_goods', { params })
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};

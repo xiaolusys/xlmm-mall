@@ -9,11 +9,12 @@ export const searchNames = {
   CLEAR_SEARCH_HISTORY: 'CLEAR_SEARCH_HISTORY',
 };
 
-export const searchProduct = (name, type = 0) => {
+export const searchProduct = (name, type, pageIndex, pageSize) => {
   const action = createAction(searchNames.SEARCH_PRODUCT);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'modelproducts/search_by_name?name=' + name + '&product_type=' + type)
+    const params = { name: name, product_type: type, page: pageIndex, page_size: pageSize };
+    return axios.get(constants.baseEndpoint + 'modelproducts/search_by_name', { params })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
