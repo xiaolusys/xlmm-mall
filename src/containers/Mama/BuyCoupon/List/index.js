@@ -12,7 +12,7 @@ import { Popup } from 'components/Popup';
 import { If } from 'jsx-control-statements';
 import * as utils from 'utils';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
-import * as detailsAction from 'actions/product/details';
+import * as detailsAction from 'actions/home/product';
 import * as searchAction from 'actions/product/search';
 import * as plugins from 'plugins';
 
@@ -23,7 +23,7 @@ const actionCreators = _.extend(mamaInfoAction, detailsAction, searchAction);
 @connect(
   state => ({
     mamaInfo: state.mamaInfo,
-    productDetails: state.productDetails,
+    productDetails: state.products,
     search: state.searchProduct,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -51,12 +51,21 @@ export default class TranCouponList extends Component {
   }
 
   state = {
+    hasMore: true,
+    pageIndex: 0,
+    pageSize: 10,
+    sticky: false,
     searchFlag: false,
   }
 
   componentWillMount() {
-    this.props.fetchVirtualProductDetails();
+    const { pageIndex, pageSize } = this.state;
+    this.props.fetchVirtualProductDetails(pageIndex + 1, pageSize);
     this.props.fetchMamaInfo();
+  }
+
+  componentDidMount() {
+    this.addScrollListener();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,10 +77,31 @@ export default class TranCouponList extends Component {
       utils.ui.loadingSpinner.hide();
     }
 
+    let count = 0;
+    let size = 0;
+    let data = null;
+    if (this.state.searchFlag) {
+      if (search.searchProduct.success) {
+        data = search.searchProduct.data;
+      }
+    } else {
+      if (productDetails.success) {
+        data = productDetails.data;
+      }
+    }
+
+    if (data) {
+      count = data.count;
+      size = data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
+      this.setState({ hasMore: count > size });
+    }
+
   }
 
   componentWillUnmount() {
-
+    this.removeScrollListener();
+    this.setState({ pageIndex: 0 });
   }
 
   onProductClick = (e) => {
@@ -105,9 +135,41 @@ export default class TranCouponList extends Component {
   onSearchClick = (e) => {
     if (this.state.searchName && this.state.searchName.length > 0) {
       this.props.resetSearchProduct();
-      this.props.searchProduct(this.state.searchName, 1);
+      this.props.searchProduct(this.state.searchName, 1, 1, this.state.pageSize);
       this.setState({ searchFlag: true });
     }
+  }
+
+  onScroll = (e) => {
+    const { pageSize, pageIndex, searchFlag } = this.state;
+    const { fetchVirtualProductDetails, searchProduct } = this.props;
+    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    const documentHeight = utils.dom.documnetHeight();
+    const windowHeight = utils.dom.windowHeight();
+    const tabsOffsetTop = utils.dom.offsetTop('.buycoupon-container');
+
+    if (scrollTop === documentHeight - windowHeight && this.state.hasMore) {
+      if (this.state.searchFlag && !this.props.search.searchProduct.isLoading) {
+        this.props.searchProduct(this.state.searchName, 1, pageIndex + 1, pageSize);
+      }
+      if (!this.state.searchFlag && !this.props.productDetails.isLoading) {
+        this.props.fetchVirtualProductDetails(pageIndex + 1, pageSize);
+      }
+    }
+
+    // if (scrollTop > tabsOffsetTop) {
+    //   this.setState({ sticky: true });
+    // } else {
+    //   this.setState({ sticky: false });
+    // }
+  }
+
+  addScrollListener = () => {
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  removeScrollListener = () => {
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   renderProduct = (product, index) => {
@@ -118,7 +180,7 @@ export default class TranCouponList extends Component {
 
     if (this.state.searchFlag) {
       return (
-      <div key={index} className="col-xs-6 product-item bottom-border" data-index={index} data-modelid={product.id} onClick={this.onProductClick}>
+      <li key={index} className="col-xs-6 product-item bottom-border" data-index={index} data-modelid={product.id} onClick={this.onProductClick}>
         <Image className="coupon-img" src={product.head_img} quality={70} />
         <div className="product-info bg-white">
           <div className="row no-margin">
@@ -133,7 +195,7 @@ export default class TranCouponList extends Component {
             </p>
           </div>
         </div>
-      </div>
+      </li>
     );
     }
 
@@ -145,7 +207,7 @@ export default class TranCouponList extends Component {
     }
 
     return (
-      <div key={index} className="col-xs-6 product-item bottom-border" data-index={index} data-modelid={product.id} onClick={this.onProductClick}>
+      <li key={index} className="col-xs-6 product-item bottom-border" data-index={index} data-modelid={product.id} onClick={this.onProductClick}>
         <Image className="coupon-img" src={imgSrc} quality={70} />
         <div className="product-info bg-white">
           <div className="row no-margin">
@@ -160,7 +222,7 @@ export default class TranCouponList extends Component {
             </p>
           </div>
         </div>
-      </div>
+      </li>
     );
   }
 
@@ -168,24 +230,33 @@ export default class TranCouponList extends Component {
     const { productDetails, search } = this.props;
     const mamaInfo = this.props.mamaInfo.mamaInfo;
     const trasparentHeader = false;
+    const { sticky } = this.state;
 
     return (
       <div className=" content-white-bg buycouponlist">
         <InputHeader placeholder=" 输入查询的商品" onInputChange={this.onInputChange} leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick} rightText="搜索" onRightBtnClick={this.onSearchClick} />
-        <div>
-        <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data && !this.state.searchFlag}>
-          {productDetails.data.map((item, index) => this.renderProduct(item, index))
-          }
-        </If>
-        <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count > 0) && mamaInfo.success && mamaInfo.data && this.state.searchFlag}>
-          {search.searchProduct.data.results.map((item, index) => this.renderProduct(item, index))
-          }
-        </If>
-        <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count === 0) && this.state.searchFlag}>
-          <div className="empty-search">
-            <p>抱歉，商城没有您要查询的商品！</p>
+        <div className="content no-padding">
+          <div className={'buycoupon-container ' + (sticky ? 'sticky ' : '') }>
           </div>
-        </If>
+          <div className="return-list-p no-padding" >
+            <If condition={productDetails.success && productDetails.data && mamaInfo.success && mamaInfo.data && !this.state.searchFlag}>
+              <ul className="no-padding">
+              {productDetails.data.results.map((item, index) => this.renderProduct(item, index))
+              }
+              </ul>
+            </If>
+            <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count > 0) && mamaInfo.success && mamaInfo.data && this.state.searchFlag}>
+              <ul className="no-padding">
+              {search.searchProduct.data.results.map((item, index) => this.renderProduct(item, index))
+              }
+              </ul>
+            </If>
+          </div>
+          <If condition={search.searchProduct.success && search.searchProduct.data && (search.searchProduct.data.count === 0) && this.state.searchFlag}>
+              <div className="empty-search">
+                <p>抱歉，商城没有您要查询的商品！</p>
+              </div>
+            </If>
         </div>
       </div>
     );

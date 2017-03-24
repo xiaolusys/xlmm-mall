@@ -24,17 +24,3 @@ export const resetProductDetails = () => {
     dispatch(action.request());
   };
 };
-
-export const fetchVirtualProductDetails = () => {
-  const action = createAction(name);
-  return (dispatch) => {
-    dispatch(action.request());
-    return axios.get(constants.baseEndpoint + 'modelproducts/electronic_goods')
-      .then((resp) => {
-        dispatch(action.success(resp.data));
-      })
-      .catch((resp) => {
-        dispatch(action.failure(resp));
-      });
-  };
-};

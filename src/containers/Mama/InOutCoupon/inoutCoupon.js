@@ -312,11 +312,11 @@ export default class InOutCoupon extends Component {
             </ul>
           </div>
           <div className="return-list-p no-padding" >
-          <If condition={coupons.length > 0}>
-            <ul className="no-padding">
-            {coupons.map((item, index) => this.renderMember(item, index)) }
-            </ul>
-          </If>
+            <If condition={coupons.length > 0}>
+              <ul className="no-padding">
+              {coupons.map((item, index) => this.renderMember(item, index)) }
+              </ul>
+            </If>
           </div>
         </div>
         <Dialog active={this.state.isCancelShowDialog} title="小鹿提醒" content="您确定取消精品券申请么？点击同意确认。" onCancelBtnClick={this.onCancelBtnClick} onAgreeBtnClick={this.onAgreeBtnClick}/>
