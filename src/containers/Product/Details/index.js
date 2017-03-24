@@ -506,9 +506,9 @@ export default class Detail extends Component {
     if (detail.sale_state === 'on' && detail.is_sale_out) {
       return '已抢光';
     }
-    // if (detail.is_boutique || detail.is_onsale) {
-    //   return '立即购买';
-    // }
+    if (!detail.is_boutique) {
+      return '立即购买';
+    }
     return '加入购物车';
   }
 
@@ -790,7 +790,7 @@ export default class Detail extends Component {
             </If>
             <If condition={!details.teambuy_info.teambuy && !details.detail_content.is_boutique}>
               <button className="button button-energized col-xs-8 no-padding" type="button" data-type={0} onClick={this.onChargeClick} disabled={disabled}>
-                  {`立即购买`}
+                  {this.getAddToShopBagBtnText(details.detail_content)}
                 </button>
             </If>
             <If condition={details.teambuy_info.teambuy}>
