@@ -14,7 +14,7 @@ export default (state = initState, action = null) => {
   switch (action.type) {
     case productAction.name + '_' + actionTypes.REQUEST:
       payload = action.payload;
-      if (state.data.when !== payload.when) {
+      if (state.data.when && state.data.when !== payload.when) {
         return _.extend({}, { isLoading: true, data: {}, error: false, success: false });
       }
       return _.extend({}, state, { isLoading: true, error: false, success: false });
