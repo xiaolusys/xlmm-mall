@@ -1,39 +1,27 @@
-.buycouponlist {
+.buycoupon-list {
 
-  .buycoupon-container {
+  .product-list-tabs {
+    background-color: #fff;
+    &.sticky {
+      position: fixed;
+      top: 0px;
+      left: 0;
+      right: 0;
+      z-index: 9;
+      &.has-header {
+        top: 44px;
       }
-  .return-list-p {
-    .product-item{
-      background: url("../../../../components/Product/images/placeholder-vertical.png") center center no-repeat;
-      .coupon-img {
-        padding-top: 16px;
-        width: 100%;
-        clear: both; 
-        display: block;
-        margin: auto;
-      }
-
-      .coupon-num {
-        .cart-quantity {
-          display: block;
-          margin: auto;
-            > i {
-              padding: 16px;
-              font-size: 1.5em;
-            }
-            > span {
-              font-size: 1.5em;
-            }
+    }
+    > ul {
+      > li {
+        &.active {
+          color: #faac14;
+        }
+        > div {
+          padding: 8px 0px;
         }
       }
-
     }
   }
 
-  .empty-search {
-    height: 100%;
-    padding-top: 40px;
-    padding-left: 16px;
-    text-align: center;
-  }
 }

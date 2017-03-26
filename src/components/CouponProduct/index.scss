@@ -1,0 +1,47 @@
+.couponproduct {
+  margin-left: 4px;
+  margin-right: 4px;
+  background-color: #fff;
+  .product-picture {
+    min-height: 198px;
+    background: url("./../Product/images/placeholder-vertical.png") center center no-repeat;
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+  .product-info {
+    padding: 8px;
+    margin-bottom: 8px;
+    > p {
+      height: 22px;
+      line-height: 22px;
+      margin: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+  }
+  .product-tips {
+    position: absolute;
+    left: 4px;
+    top: 0;
+    right: 4px;
+    bottom: 68px;
+    > p {
+      position: absolute;
+      top: 30%;
+      left: 26%;
+      text-align: center;
+      line-height: 70px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.4);
+      height: 70px;
+      width: 70px;
+      border-radius: 70px;
+    }
+  }
+  .font-grey {
+    color: #a0a0a0 !important;
+  }
+}

@@ -29,12 +29,13 @@ import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaFocusAction from 'actions/mama/focus';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as shopSharingAction from 'actions/mama/shopSharing';
+import * as profileCreators from 'actions/user/profile';
 
 import logo from './images/logo.png';
 
 import './homepage.scss';
 
-const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction, shopSharingAction);
+const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction, shopSharingAction, profileCreators);
 const requestAction = {
   yesterday: 'yesterday',
   today: 'today',
@@ -87,6 +88,7 @@ export default class HomePage extends Component {
     shopSharing: React.PropTypes.object,
     profile: React.PropTypes.object,
     getLocationQuery: React.PropTypes.func,
+    fetchProfile: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -119,6 +121,7 @@ export default class HomePage extends Component {
     }
     this.props.fetchWechatSign();
     this.props.fetchShopSharing();
+    this.props.fetchProfile();
   }
 
   componentDidMount() {
