@@ -257,7 +257,16 @@ export default class Detail extends Component {
   }
 
   onHomeClick = (e) => {
-    window.location.href = '/mall';
+    if (utils.detector.isApp()) {
+      const jumpUrl = 'com.jimei.xlmm://app/v1/home';
+      plugins.invoke({
+        method: 'jumpToNativeLocation',
+        data: { target_url: jumpUrl },
+      });
+    } else {
+      // this.context.router.push('/');
+      window.location.href = '/';
+    }
     e.preventDefault();
   }
 
