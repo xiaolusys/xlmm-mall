@@ -777,17 +777,19 @@ export default class Detail extends Component {
           </div>
           <BottomBar className="clearfix" size="medium">
             <div className="col-xs-2 no-padding shop-cart">
-              <div onClick={this.onHomeClick}>
+              <div className="pic" onClick={this.onHomeClick}>
                 <i className="icon-home icon-yellow"></i>
               </div>
+              <div className="name font-xxs">主页</div>
             </div>
             <div className="col-xs-2 no-padding shop-cart">
-              <div onClick={this.onShopbagClick}>
+              <div className="pic" onClick={this.onShopbagClick}>
                 <i className="icon-cart icon-yellow"></i>
                 <If condition={badge > 0}>
                   <span className="shop-cart-badge no-wrap">{badge}</span>
                 </If>
               </div>
+              <div className="name font-xxs">购物车</div>
             </div>
             <If condition={!details.teambuy_info.teambuy && details.detail_content.is_boutique}>
               <button className="button button-energized col-xs-3 no-padding" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
