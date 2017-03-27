@@ -272,7 +272,7 @@ export default class Detail extends Component {
 
   onShopbagClick = (e) => {
     if (utils.detector.isApp()) {
-      const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart';
+      const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart?type=' + this.state.type;
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
         const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
         if (appVersion < 20161019 && appVersion >= 20160815) {
