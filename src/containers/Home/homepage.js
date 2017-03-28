@@ -24,18 +24,19 @@ import { BackTop } from 'components/BackTop';
 import { DownloadAppBanner } from 'components/DownloadAppBanner';
 import { Toast } from 'components/Toast';
 import * as portalAction from 'actions/home/portal';
-import * as productAction from 'actions/home/product';
 import * as mamaInfoAction from 'actions/mama/mamaInfo';
 import * as mamaFocusAction from 'actions/mama/focus';
 import * as wechatSignAction from 'actions/wechat/sign';
 import * as shopSharingAction from 'actions/mama/shopSharing';
 import * as profileCreators from 'actions/user/profile';
+import * as productsAction from 'actions/home/product';
+import { ProductList } from 'containers/Product';
 
 import logo from './images/logo.png';
 
 import './homepage.scss';
 
-const actionCreators = _.extend(portalAction, productAction, mamaInfoAction, mamaFocusAction, wechatSignAction, shopSharingAction, profileCreators);
+const actionCreators = _.extend(portalAction, mamaInfoAction, mamaFocusAction, wechatSignAction, shopSharingAction, profileCreators, productsAction);
 const requestAction = {
   yesterday: 'yesterday',
   today: 'today',
@@ -55,17 +56,12 @@ const tabs = {
       error: state.portal.error,
       success: state.portal.success,
     },
-    product: {
-      data: state.products.data,
-      isLoading: state.products.isLoading,
-      error: state.products.error,
-      success: state.products.success,
-    },
     mamaFocus: state.mamaFocus,
     mamaInfo: state.mamaInfo,
     wechatSign: state.wechatSign,
     shopSharing: state.shopSharing,
     profile: state.profile,
+    products: state.products,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -74,14 +70,12 @@ export default class HomePage extends Component {
     location: React.PropTypes.any,
     children: React.PropTypes.any,
     fetchPortal: React.PropTypes.func,
-    fetchProduct: React.PropTypes.func,
     fetchMamaInfoById: React.PropTypes.func,
     focusMamaById: React.PropTypes.func,
     resetFocusMama: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     fetchShopSharing: React.PropTypes.func,
     portal: React.PropTypes.any,
-    product: React.PropTypes.any,
     mamaFocus: React.PropTypes.any,
     mamaInfo: React.PropTypes.any,
     wechatSign: React.PropTypes.object,
@@ -89,6 +83,9 @@ export default class HomePage extends Component {
     profile: React.PropTypes.object,
     getLocationQuery: React.PropTypes.func,
     fetchProfile: React.PropTypes.func,
+    fetchProduct: React.PropTypes.func,
+    resetProducts: React.PropTypes.func,
+    products: React.PropTypes.any,
   };
 
   static contextTypes = {
@@ -105,17 +102,17 @@ export default class HomePage extends Component {
     hasMore: true,
     pageIndex: 0,
     pageSize: 20,
-    activeTab: tabs.today,
     sticky: false,
     wxConfig: true,
+    topTab: [],
+    activeTab: '精品活动',
+    index: 0,
   }
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    const { product } = this.props;
     const { active, mmLinkId } = this.props.location.query;
     this.props.fetchPortal();
-    this.props.fetchProduct(active || requestAction.today, pageIndex + 1, pageSize);
     if (mmLinkId) {
       this.props.fetchMamaInfoById(mmLinkId);
     }
@@ -129,8 +126,6 @@ export default class HomePage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let count = 0;
-    let size = 0;
     const mmLinkId = this.props.location.query.mm_linkid;
     if (nextProps.wechatSign.success && !nextProps.wechatSign.isLoading && this.state.wxConfig) {
       this.setState({ wxConfig: false });
@@ -150,12 +145,6 @@ export default class HomePage extends Component {
       utils.wechat.configShareContent(shareInfo);
     }
 
-    if (nextProps.product.success) {
-      count = nextProps.product.data.count;
-      size = nextProps.product.data.results.length;
-      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
-      this.setState({ hasMore: count > size });
-    }
     if (nextProps.mamaFocus.success) {
       Toast.show(nextProps.mamaFocus.data.info);
     }
@@ -171,6 +160,23 @@ export default class HomePage extends Component {
           Toast.show(nextProps.mamaFocus.data.detail);
           break;
       }
+    }
+    if (nextProps.portal.success) {
+      const topTab = [{ name: '精品活动', cid: 0 }];
+      for (let i = 0; i < nextProps.portal.data.categorys.length; i++) {
+        const tab = { name: nextProps.portal.data.categorys[i].name,
+                      cid: nextProps.portal.data.categorys[i].id };
+        topTab.push(tab);
+      }
+      this.setState({ topTab: topTab });
+    }
+    let count = 0;
+    let size = 0;
+    if (nextProps.products.success && !nextProps.products.isLoading) {
+      count = nextProps.products.data.count;
+      size = nextProps.products.data.results.length;
+      this.setState({ pageIndex: Math.round(size / this.state.pageSize) });
+      this.setState({ hasMore: count > size });
     }
   }
 
@@ -189,16 +195,6 @@ export default class HomePage extends Component {
     window.location.href = `/mall/product/details/${dataSet.modelid}`;
   }
 
-  onTabItemClick = (e) => {
-    this.setState({
-      activeTab: tabs[e.currentTarget.id],
-      pageIndex: 0,
-    });
-    const { pageSize, pageIndex } = this.state;
-    this.props.fetchProduct(requestAction[e.currentTarget.id], 1, pageSize);
-    this.context.router.replace(`/?active=${e.currentTarget.id}`);
-  }
-
   onOpenShopClick = (e) => {
     const mmLinkId = this.props.location.query.mm_linkid;
     const { protocol, host } = window.location;
@@ -215,27 +211,23 @@ export default class HomePage extends Component {
     e.preventDefault();
   }
 
+  onTabClick = (e) => {
+    const { index } = e.currentTarget.dataset;
+    const { pageIndex, pageSize } = this.state;
+    this.setState({ activeTab: this.state.topTab[index].name, index: index, pageIndex: 0 });
+    this.props.resetProducts();
+    this.props.fetchProduct('', 1, pageSize, this.state.topTab[index].cid);
+    e.preventDefault();
+  }
+
   onScroll = (e) => {
     const { pageSize, pageIndex, activeTab } = this.state;
-    const { fetchProduct, product } = this.props;
     const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
     const documentHeight = utils.dom.documnetHeight();
     const windowHeight = utils.dom.windowHeight();
-    const tabsOffsetTop = utils.dom.offsetTop('.home-tabs');
-    if (scrollTop === documentHeight - windowHeight && !this.props.product.isLoading && this.state.hasMore) {
-      switch (activeTab) {
-        case tabs.yesterday:
-          fetchProduct(requestAction.yesterday, pageIndex + 1, pageSize);
-          break;
-        case tabs.today:
-          fetchProduct(requestAction.today, pageIndex + 1, pageSize);
-          break;
-        case tabs.tomorrow:
-          fetchProduct(requestAction.tomorrow, pageIndex + 1, pageSize);
-          break;
-        default:
-          fetchProduct(requestAction.today, pageIndex + 1, pageSize);
-      }
+    const tabsOffsetTop = utils.dom.offsetTop('.home-div-toptabs');
+    if (scrollTop === documentHeight - windowHeight && !this.props.products.isLoading && this.state.hasMore) {
+      this.props.fetchProduct('', pageIndex + 1, pageSize, this.state.topTab[this.state.index].cid, activeTab === 'price' ? 'price' : '');
     }
     if (scrollTop > tabsOffsetTop) {
       this.setState({ sticky: true });
@@ -276,23 +268,23 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { portal, product, children } = this.props;
+    const { portal, children } = this.props;
     const mamaInfo = this.props.mamaInfo.mamaInfo;
     const activities = portal.data.activitys || [];
     const categories = portal.data.categorys || [];
     const posters = portal.data.posters || [];
     const brands = portal.data.promotion_brands || [];
-    const products = product.data.results || [];
     const { activeTab, sticky } = this.state;
     const mainCls = classnames({
       ['menu-active']: this.state.menuActive,
     });
     const hasHeader = !utils.detector.isApp();
+    const products = this.props.products.data.results || [];
 
     return (
       <div className={mainCls}>
         <Header title={logo} titleType="image" rightText="我的微店" onRightBtnClick={this.enterMamahome} hide={!hasHeader}/>
-        <div className="home-container">
+        <div className="homepage-container">
           <div className="content content-white-bg">
             <If condition={!_.isEmpty(mamaInfo && mamaInfo.data)}>
               <div className="row no-margin focus-container">
@@ -310,6 +302,20 @@ export default class HomePage extends Component {
                 </div>
               </div>
             </If>
+            <div className={'home-div-toptabs ' + (sticky ? 'sticky ' : '')}>
+              <ul className="row no-margin home-toptabs">
+                {this.state.topTab.map((item, index) => {
+                    return (
+                      <li key={index} className="home-toptab" data-index={index} onClick={this.onTabClick}>
+                        <p className={'no-margin no-padding text-center ' + (activeTab === item.name ? 'active' : '')}>
+                          <span>{item.name}</span>
+                        </p>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+            <If condition={ this.state.activeTab === '精品活动'}>
             <div className="home-poster">
               {portal.isLoading ? <Loader/> : null}
               <Carousel>
@@ -324,22 +330,6 @@ export default class HomePage extends Component {
                 })}
               </Carousel>
             </div>
-            <If condition={ portal.isLoading || !_.isEmpty(categories)}>
-              <div className="home-categories bottom-border">
-                {portal.isLoading ? <Loader/> : null}
-                <ul className="clearfix">
-                  {categories.map((item, index) => {
-                    return (
-                      <li className="col-xs-3" key={item.id}>
-                        <a href={`/mall/product/list?${item.cat_link.split('?')[1]}&title=${item.name}`}>
-                          <Image style={{ padding: '0px 20px 0px 20px' }} src={item.cat_img} quality={90}/>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </If>
             <If condition={ portal.isLoading || !_.isEmpty(activities)}>
               <div className="home-activities">
                 {portal.isLoading ? <Loader/> : null}
@@ -360,39 +350,21 @@ export default class HomePage extends Component {
               <div className="home-brands">
                 {portal.isLoading ? <Loader/> : null}
                 <ul className="row no-margin">
-                  {brands.map((brand) => {
-                    return (<Brand data={brand} />);
+                  {brands.map((brand, index) => {
+                    return (<Brand data={brand} key={index}/>);
                   })}
                 </ul>
               </div>
             </If>
-            <div className={'home-tabs text-center bottom-border ' + (sticky ? 'sticky ' : '') + (hasHeader ? 'has-header' : '')}>
-              <ul className="row no-margin">
-                <li id="yesterday" className={'col-xs-4' + (activeTab === tabs.yesterday ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <div>昨日热卖</div>
-                </li>
-                <li id="today" className={'col-xs-4' + (activeTab === tabs.today ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <div>今日特卖</div>
-                </li>
-                <li id="tomorrow" className={'col-xs-4' + (activeTab === tabs.tomorrow ? ' active' : '')} onClick={this.onTabItemClick}>
-                  <div>即将上新</div>
-                </li>
-              </ul>
-            </div>
-            <If condition={product.data.offshelf_deadline}>
-              <div className="col-xs-12 text-center">
-                <p className="countdown">
-                  <span className="font-grey-light margin-right-xxs">{'距本场' + (activeTab === tabs.tomorrow ? '开始' : '结束')}</span>
-                  <Timer endDateString={(activeTab === tabs.tomorrow ? product.data.onshelf_starttime : product.data.offshelf_deadline)} />
-                </p>
+            </If>
+            <If condition={ this.state.activeTab !== '精品活动' }>
+              <div className="product-list-p" >
+                <div className="margin-top-xxs" ></div>
+                {products.map((item) => {
+                  return <Product key={item.id} product={item} onItemClick = {this.onItemClick} />;
+                })}
               </div>
             </If>
-            <div className="home-products clearfix">
-              {products.map((item) => {
-                return <Product key={item.id} product={item} onItemClick = {this.onItemClick} />;
-              })}
-            </div>
-            {product.isLoading ? <Loader/> : null}
             <BackTop />
             <Footer />
           </div>
