@@ -10,6 +10,7 @@ import * as districtAction from 'actions/user/district';
 import { Header } from 'components/Header';
 import { Toast } from 'components/Toast';
 import { Switch } from 'components/Switch';
+import * as utils from 'utils';
 
 import './index.scss';
 
@@ -229,10 +230,22 @@ export default class Edit extends Component {
       return;
     }
 
-    if ((sourceType > 1) && (typeof(this.state.address.identification_no) !== 'undefined') && this.state.address.identification_no.length !== 18) {
-      Toast.show('身份证号长度不对，请修改！！！');
-      e.preventDefault();
-      return;
+    if (sourceType > 1) {
+      console.log(this.state.address.identification_no);
+      if (typeof(this.state.address.identification_no) === 'undefined') {
+        Toast.show('身份证号不能为空，请修改！！！');
+        return;
+      }
+      if (this.state.address.identification_no.length !== 18) {
+        Toast.show('身份证号长度不对，请修改！！！');
+        return;
+      }
+
+      const result = utils.identityCodeValid(this.state.address.identification_no);
+      if (!result.result) {
+        Toast.show(result.info);
+        return;
+      }
     }
 
     if (id === 0) {
@@ -336,7 +349,7 @@ export default class Edit extends Component {
               <input type="text" placeholder="请输入收货人的身份证" name="identification" value={address.identification_no} onChange={this.onInpuChange}/>
             </div>
             <div className="row no-margin bottom-border tips-item">
-              <span className="font-xs ">订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码。此信息加密保存，只用于此订单海关通关。</span>
+              <span className="font-xs font-red">温馨提示：订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码，身份证号码必须和收货人一致。此信息加密保存，只用于此订单海关通关。</span>
             </div>
           </If>
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
