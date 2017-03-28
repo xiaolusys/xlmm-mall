@@ -559,7 +559,7 @@ export default class Detail extends Component {
           </div>
           <If condition={details.source_type > 1}>
           <div className="row no-margin">
-            <p className="col-xs-12 no-padding font-xs font-grey-light">温馨提示:保税区和直邮根据海关要求需要提供身份证号码，保税区发货预计5到10个工作日到货，直邮预计10-20个工作日到货。</p>
+            <p className="col-xs-12 no-padding font-xs font-red">温馨提示:保税区和直邮根据海关要求需要提供收货人身份证号码，收货人和身份证必须保持一致，否则通关会失败。保税区发货预计5到10个工作日到货，直邮预计10-20个工作日到货。</p>
           </div>
           </If>
           <div className="row no-margin">
