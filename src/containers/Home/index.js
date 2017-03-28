@@ -72,6 +72,7 @@ export class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
   }
 
   componentWillUnmount() {
