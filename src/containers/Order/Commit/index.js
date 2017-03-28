@@ -176,7 +176,7 @@ export default class Commit extends Component {
     }
 
     if (this.checkNeedIdentification()) {
-      Toast.show('订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码。此信息加密保存，只用于此订单海关通关。请您点击收货地址进行修改');
+      Toast.show('订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码。此信息加密保存，只用于此订单海关通关。请您点击收货地址-修改-进行填写');
       this.context.router.push(`user/address/edit/${address.data.id}?source_type=` + payInfo.data.max_personalinfo_level);
       return;
     }
@@ -597,7 +597,7 @@ export default class Commit extends Component {
           </div>
           <If condition={payInfo && payInfo.data && payInfo.data.max_personalinfo_level > 1}>
           <div className="col-xs-12 address-tips">
-            <p className="font-xs font-grey-light">温馨提示:保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。如需修改，请您点击收货地址进行编辑操作。</p>
+            <p className="font-xs font-red">温馨提示:保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。如需修改，请您点击收货地址-编辑-进行填写。</p>
           </div>
           </If>
           <div className={`row no-margin bottom-border margin-top-xs ${prefixCls}-row`}>
