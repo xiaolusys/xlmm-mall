@@ -3,7 +3,7 @@ export default function identityCodeValid(inputcode) {
     let tip = '';
     let pass = true;
     let code = inputcode;
-    if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+    if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}[0-9xX]$/i.test(code)) {
         tip = '身份证号格式错误';
         pass = false;
     } else if (!city[code.substr(0, 2)]) {
@@ -27,7 +27,7 @@ export default function identityCodeValid(inputcode) {
                 sum += ai * wi;
             }
             const last = parity[sum % 11];
-            if (parity[sum % 11] !== code[17]) {
+            if (parity[sum % 11] !== code[17].toUpperCase()) {
                 tip = '身份证校验位错误';
                 pass = false;
             }

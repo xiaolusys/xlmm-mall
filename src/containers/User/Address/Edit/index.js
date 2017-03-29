@@ -179,7 +179,8 @@ export default class Edit extends Component {
         this.setState({ address: _.extend({}, this.state.address, { receiver_address: value }) });
         break;
       case 'identification':
-        this.setState({ address: _.extend({}, this.state.address, { identification_no: value }) });
+        const str = value.toUpperCase();
+        this.setState({ address: _.extend({}, this.state.address, { identification_no: str }) });
         break;
       default:
         break;
