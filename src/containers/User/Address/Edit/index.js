@@ -350,7 +350,7 @@ export default class Edit extends Component {
               <input type="text" placeholder="请输入收货人的身份证" name="identification" value={address.identification_no} onChange={this.onInpuChange}/>
             </div>
             <div className="row no-margin bottom-border tips-item">
-              <span className="font-xs font-red">温馨提示：订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码，身份证号码必须和收货人一致。此信息加密保存，只用于此订单海关通关。</span>
+              <span className="font-xs font-red">温馨提示：订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证号码，身份证号码对应姓名必须和收货人姓名一致。此信息加密保存，只用于此订单海关通关。</span>
             </div>
           </If>
           <div className="row no-margin bottom-border margin-top-xs adddress-item">
