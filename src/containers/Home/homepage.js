@@ -286,22 +286,6 @@ export default class HomePage extends Component {
         <Header title={logo} titleType="image" rightText="我的微店" onRightBtnClick={this.enterMamahome} hide={!hasHeader}/>
         <div className="homepage-container">
           <div className="content content-white-bg">
-            <If condition={!_.isEmpty(mamaInfo && mamaInfo.data)}>
-              <div className="row no-margin focus-container">
-                <div className="col-xs-2 no-padding">
-                  <img className="focus-img" src={`${mamaInfo.data.thumbnail}${constants.image.square}`} />
-                </div>
-                <div className="col-xs-4 no-padding">
-                  <p className="no-margin margin-top-xs no-wrap">{`${mamaInfo.data.nick}`}</p>
-                </div>
-                <div className="col-xs-3 no-padding">
-                  <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onOpenShopClick}>我要开店</button>
-                </div>
-                <div className="padding-left-xs">
-                  <button className="button button-energized button-sm" style={{ height: '32px', margin: '8px 0px' }} type="button" onClick={this.onFocusClick}>+关注</button>
-                </div>
-              </div>
-            </If>
             <div className={'home-div-toptabs ' + (sticky ? 'sticky ' : '')}>
               <ul className="row no-margin home-toptabs">
                 {this.state.topTab.map((item, index) => {
