@@ -262,6 +262,10 @@ export default class HomePage extends Component {
       Toast.show('您还不是小鹿妈妈，请关注小鹿美美公众号了解更多信息');
       return;
     }
+    if (profile && profile.success && (profile.data.xiaolumm.status !== 'effect')) {
+      Toast.show('您的小鹿妈妈账号异常，请关注小鹿美美公众号联系客服');
+      return;
+    }
     if (profile && (!profile.success || profile.error)) {
       Toast.show('您还没有登录，请登录后进入');
       return;
