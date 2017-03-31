@@ -97,11 +97,11 @@ export const resetCanExchgOrders = () => {
   };
 };
 
-export const exchgOrder = (orderId, templateId, num) => {
+export const exchgOrder = (orderId, templateId, num, exchgPayment) => {
   const action = createAction(boutiqueCouponNames.EXCHG_ORDER);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(`${constants.baseEndpoint}mama/exchgorder/start_exchange`, qs.stringify({ order_id: orderId, exchg_template_id: templateId, coupon_num: num }))
+    return axios.post(`${constants.baseEndpoint}mama/exchgorder/start_exchange`, qs.stringify({ order_id: orderId, exchg_template_id: templateId, coupon_num: num, exchg_payment: exchgPayment }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

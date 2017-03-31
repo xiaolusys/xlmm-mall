@@ -252,7 +252,8 @@ export default class HomePage extends Component {
 
   enterMamahome = () => {
     const { profile } = this.props;
-    if (profile && profile.success && profile.data.xiaolumm && profile.data.xiaolumm.id > 0) {
+    if (profile && profile.success && profile.data.xiaolumm
+      && profile.data.xiaolumm.id > 0 && profile.data.xiaolumm.status === 'effect') {
       // this.context.router.push('/mama/home');
       window.location.href = '/mall/mama/home';
       return;

@@ -137,14 +137,14 @@ export default class ExchangeOrder extends Component {
   }
 
   onExchgClick = (e) => {
-    const { templateid, num, order, status, modelid } = e.currentTarget.dataset;
+    const { templateid, num, order, status, modelid, exchgPayment } = e.currentTarget.dataset;
     if (Number(status) !== 2) {
       Toast.show('订单还未发货，未到确认收益状态，还无法兑换');
       e.preventDefault();
       return;
     }
     this.setState({ templateId: templateid, exchgModelId: modelid });
-    this.props.exchgOrder(order, templateid, num);
+    this.props.exchgOrder(order, templateid, num, exchgPayment);
     e.preventDefault();
   }
 
@@ -172,7 +172,6 @@ export default class ExchangeOrder extends Component {
   }
 
   renderMember = (member, index) => {
-
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
         <div className="col-xs-12 order-time1 margin-top-xxs">
@@ -192,7 +191,7 @@ export default class ExchangeOrder extends Component {
         </div>
         <If condition={ this.state.activeTab === 'default'}>
         <div className="col-xs-2">
-          <button className="button icon-yellow" onClick={this.onExchgClick} data-templateid={member.exchg_template_id} data-modelid={member.exchg_model_id} data-num={member.num} data-order={member.order_id} data-status={member.status}>兑换</button>
+          <button className="button icon-yellow" onClick={this.onExchgClick} data-templateid={member.exchg_template_id} data-modelid={member.exchg_model_id} data-num={member.num} data-order={member.order_id} data-status={member.status} data-exchgPayment={member.exchg_payment}>兑换</button>
         </div>
         </If>
       </li>
