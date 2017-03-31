@@ -112,7 +112,7 @@ export default class MamaRebate extends Component {
       <div className="rebate-container no-padding">
         <Header title="我的返点" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="my-level bottom-border">
-          <p className="my-mama-id margin-left-xxs">{'上月获得返点精英妈妈如下'}</p>
+          <p className="my-mama-id margin-left-xxs">{'获得返点如下'}</p>
         </div>
         <div className="rebate-members bg-white">
           <If condition={rebate.success && rebate.data && rebate.data.results.length > 0}>
