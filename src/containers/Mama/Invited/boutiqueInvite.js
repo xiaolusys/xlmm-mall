@@ -399,12 +399,11 @@ export default class BoutiqueInvite extends Component {
         </div>
         <div className="invite-imgs">
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_01.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_02_4.png'} quality={70} />
+          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_02_5.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_03.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_04.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_05.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_06.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_07_2.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_08.png'} quality={70} />
         </div>
         <BottomBar className="clearfix" size="medium">
