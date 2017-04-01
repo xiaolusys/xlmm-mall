@@ -109,7 +109,7 @@ export default class MyInfoTab extends Component {
           break;
         case '4':
           // this.context.router.push('/mama/invited');
-          window.location.href = '/mall/boutiqueinvite2/25514';
+          window.location.href = '/mall/boutiqueinvite';
           break;
         default:
       }

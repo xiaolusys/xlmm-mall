@@ -138,7 +138,7 @@ export default class BoutiqueExchg extends Component {
           this.context.router.push('/mama/teammember');
           break;
         case '10':
-          window.location.href = '/mall/boutiqueinvite2/25514';
+          window.location.href = '/mall/boutiqueinvite';
           break;
         default:
       }
