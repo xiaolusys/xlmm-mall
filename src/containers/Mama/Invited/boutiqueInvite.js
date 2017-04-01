@@ -60,6 +60,7 @@ export default class BoutiqueInvite extends Component {
     buyNowCommitOrder: React.PropTypes.func,
     saveMamaInfo: React.PropTypes.func,
     fetchMamaInfo: React.PropTypes.func,
+    fetchMamaInfoById: React.PropTypes.func,
     fetchInviteSharing: React.PropTypes.func,
     fetchWechatSign: React.PropTypes.func,
     mamaInfo: React.PropTypes.any,
@@ -89,45 +90,50 @@ export default class BoutiqueInvite extends Component {
   }
 
   componentWillMount() {
-    const { mama_id } = this.props.location.query;
-    const num = this.props.location.query.num ? this.props.location.query.num : 365;
-    const share = this.props.location.query.share ? Number(this.props.location.query.share) : 0;
-    const index = 365;
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
+    const wxPublic = this.props.location.query.wx_public ? Number(this.props.location.query.wx_public) : 0;
+    if (mmLinkId !== 0) {
+      this.props.fetchMamaInfoById(Number(mmLinkId));
+    }
+    this.setState({ mmLinkId: mmLinkId });
+    this.setState({ wxPublic: wxPublic });
 
-    this.props.fetchProductDetails(25408);
-    this.setState({ index: index, share: share });
-
-    this.props.saveMamaInfo({
-      mama_id: mama_id,
-    });
-    this.props.fetchMamaInfo();
+    this.props.fetchProductDetails(25339);
     this.props.fetchWechatSign();
-    this.props.fetchInviteSharing(38);
+    this.props.fetchInviteSharing(26);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mamaInfo, productDetails, payInfo, order, coupons, wechatSign } = nextProps;
+    const { mamaInfo, productDetails, payInfo, order, coupons, wechatSign, inviteSharing } = nextProps;
     if (nextProps.isLoading) {
       utils.ui.loadingSpinner.show();
     } else if (!nextProps.isLoading) {
       utils.ui.loadingSpinner.hide();
     }
 
-    if (wechatSign && wechatSign.success && wechatSign.data && mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data) {
-      utils.wechat.config(wechatSign);
+    if (!nextProps.wechatSign.isLoading && nextProps.wechatSign.success) {
+      utils.wechat.config(nextProps.wechatSign);
+    }
+
+    if (inviteSharing.success && !inviteSharing.isLoading
+      && (this.props.inviteSharing.isLoading)) {
       const shareInfo = {
-        success: true,
+        success: inviteSharing.success,
         data: {
-          title: '来小鹿美美精品汇，轻松赚，无压力',
-          desc: '小鹿美美，把您的闲余时间变成财富。帮助您组建团队，成就梦想，给您准备优质产品和流量支持！',
-          share_link: 'https://m.xiaolumeimei.com/rest/v1/users/weixin_login/?next=/mall/boutiqueinvite?mama_id=' + mamaInfo.mamaInfo.data[0].id,
-          share_img: 'http://7xogkj.com2.z0.glb.qiniucdn.com/222-ohmydeer.png?imageMogr2/thumbnail/60/format/png',
+          title: inviteSharing.data.title,
+          desc: inviteSharing.data.active_dec,
+          share_link: inviteSharing.data.share_link,
+          share_img: inviteSharing.data.share_icon,
         },
       };
       utils.wechat.configShareContent(shareInfo);
     }
 
-    if (mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data && mamaInfo.mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
+    if (mamaInfo.mamaInfo.error) {
+      Toast.show('获取推荐人妈妈信息失败，请确认填写的ID是否正确');
+    }
+
+    if (productDetails.success && productDetails.data) {
       for (let i = 0; i < productDetails.data.sku_info.length; i++) {
         this.setState({ sku: productDetails.data.sku_info[0] });
       }
@@ -211,47 +217,20 @@ export default class BoutiqueInvite extends Component {
     const { type } = e.currentTarget.dataset;
     const skus = productDetails.data.sku_info;
 
-    if (mamaInfo && mamaInfo.mamaInfo.data && (mamaInfo.mamaInfo.data.length > 0)) {
-      if (mamaInfo.mamaInfo.data[0].is_elite_mama) {
-        Toast.show('您已经是精英妈妈了，不能再次购买新人券，如需购券，请进入我的微店操作！');
-      } else {
-        if (this.state.sku) {
-          // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
-          // 精品券默认是在app上支付
-          if (this.state.index === 216) {
-            if (utils.detector.isApp()) {
-              this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[1].sku_id, 1, 'app');
-            } else {
-              this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[1].sku_id, 1, 'wap');
-            }
-          } else {
-            // 2017-2-8 fisrt onshelf one mix products
-            // this.props.fetchBuyNowPayInfo(productDetails.data.sku_info[1].sku_items[0].sku_id, 1, 'wap');
-            this.context.router.push('/product/details/25408');
-          }
-          this.setState({ chargeEnable: false });
-        } else {
-          Toast.show('商品信息获取不全');
-        }
-      } // end mamainfo
+    if (utils.detector.isApp()) {
+      Toast.show('只能在微信环境购买，请在微信点击小鹿妈妈分享的链接购买');
+      return;
     }
+    this.props.fetchBuyNowPayInfo(297999, 1, 'wap');
+    this.setState({ chargeEnable: false });
+
   }
 
   onPayTypeClick = (e) => {
     const { payInfo, mamaInfo } = this.props;
     const { paytype } = e.currentTarget.dataset;
-    const mmLinkId = mamaInfo.mamaInfo.data ? mamaInfo.mamaInfo.data[0].id : 0;
-    const referalMamaid = this.props.location.query.mama_id ? this.props.location.query.mama_id : mmLinkId;
 
-    console.log(referalMamaid);
     this.setState({ payTypePopupActive: false });
-
-    if (mmLinkId === 0) {
-      Toast.show('小鹿妈妈信息获取不全，请重进此页面！！');
-      e.preventDefault();
-      return;
-    }
-
     /* this.props.commitOrder({
       uuid: payInfo.data.uuid,
       cart_ids: payInfo.data.cart_ids,
@@ -274,11 +253,28 @@ export default class BoutiqueInvite extends Component {
       discount_fee: payInfo.data.discount_fee,
       total_fee: payInfo.data.total_fee,
       channel: paytype,
-      mm_linkid: referalMamaid,
+      mm_linkid: this.state.mmLinkId,
       order_type: 4, // 对应后台的电子商品类型，不校验地址
     });
 
     e.preventDefault();
+  }
+
+  onNumChange = (value) => {
+    if (Number(value.target.value) === 0) {
+      Toast.show('输入推荐人ID不能为0');
+      this.setState({ mmLinkId: '' });
+      return;
+    }
+
+    this.setState({ mmLinkId: Number(value.target.value) });
+    // this.props.fetchMamaInfoById(Number(value.target.value));
+  }
+
+  onQueryMamaClick = () => {
+    if (!isNaN(this.state.mmLinkId)) {
+      this.props.fetchMamaInfoById(Number(this.state.mmLinkId));
+    }
   }
 
   onAdministratorClick = (e) => {
@@ -371,7 +367,7 @@ export default class BoutiqueInvite extends Component {
   }
 
   render() {
-    const { shopBag } = this.props;
+    const { shopBag, mamaInfo } = this.props;
     const imgSrc = (this.state.productDetail && this.state.productDetail.detail_content) ? this.state.productDetail.detail_content.head_img : '';
     const payInfo = this.payInfo();
     const sku = this.state.sku ? this.state.sku : null;
@@ -380,17 +376,28 @@ export default class BoutiqueInvite extends Component {
 
     return (
       <div className="col-xs-12 col-sm-8 col-sm-offset-2 no-padding content-white-bg boutique-invite">
-        <Header trasparent={trasparentHeader} title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <Header title="邀请您加入精品汇" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
+        <div className="bg-white fill-referal">
+          <div className="font-md font-weight-700 bottom-border padding-bottom-xxs padding-top-xxs padding-left-xxs">小鹿妈妈邀请您加入</div>
+          <div className="bottom-border mamaid-item col-xs-12 no-padding">
+            <div className="col-xs-3 mamaid-title font-xs">
+            <p >推荐人ID:</p>
+            </div>
+            <input className="input-mmnum col-xs-6" type="number" placeholder="请输入推荐人妈妈ID" value={this.state.mmLinkId !== 0 ? this.state.mmLinkId : ''} required pattern="[1-9][0-9]*$" onChange={this.onNumChange} />
+            <div className="col-xs-3 mamaid-query">
+            <p className="mamaid-query-p font-orange font-xs text-center button-sm" onClick={this.onQueryMamaClick}>查询</p>
+            </div>
+          </div>
+          <div className="mama-info">
+            <div className="col-xs-3">
+              <img className="my-thumbnail" src ={(mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data) ? mamaInfo.mamaInfo.data.thumbnail : ''} />
+            </div>
+            <div className="col-xs-9">
+              <p className="my-mama-id">{'昵称:' + ((mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data) ? mamaInfo.mamaInfo.data.nick : '')}</p>
+            </div>
+          </div>
+        </div>
         <div className="invite-imgs">
-        <If condition={this.state.index === 216}>
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_01.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_02_2.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_03.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_04.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_05.png'} quality={70} />
-          <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/boutique_06.jpg'} quality={70} />
-        </If>
-        <If condition={this.state.index === 365}>
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_01.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_02_4.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_03.png'} quality={70} />
@@ -399,19 +406,18 @@ export default class BoutiqueInvite extends Component {
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_06.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_07_2.png'} quality={70} />
           <Image className="coupon-img" src={constants.image.imageUrl + '/mall/mama/invite/365boutique_08.png'} quality={70} />
-        </If>
         </div>
         <BottomBar className="clearfix" size="medium">
-          <If condition={this.state.share === 1}>
-            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onShareClick} disabled={disabled}>
+          <If condition={this.state.wxPublic === 0}>
+            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" onClick={this.onShareClick}>
               {'分享此页面'}
             </button>
-          </If>
-          <If condition={this.state.share === 0}>
-            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" data-type={`单独购买`} onClick={this.onAdministratorClick} disabled={disabled}>
+            </If>
+            <If condition={this.state.wxPublic === 1}>
+            <button className="button col-xs-4 col-xs-offset-1 no-padding font-orange" type="button" onClick={this.onAdministratorClick} disabled={disabled}>
               {'咨询管理员'}
             </button>
-          </If>
+            </If>
           <button className="button button-energized col-xs-4 col-xs-offset-1 no-padding" type="button" data-type={3} onClick={this.onChargeClick} disabled={!this.state.chargeEnable}>
             {'直接支付'}
           </button>
