@@ -412,12 +412,14 @@ export default class Recharge extends Component {
         <div className="bottom-border">
           {sku && (sku.sku_items.length > 0) && sku.sku_items.map((item) =>
             (
+              <If condition={ item.sku_id !== 297999 }>
               <div className="margin-left-sm margin-right-sm" key={item.sku_id} data-paytype={item.sku_id} >
                 <label className="text-center">
                 <Checkbox className="inline-block margin-top-xxs" value={item.sku_id} checked = {this.state.selectId === item.sku_id} onChange={this.handleChange} />
                 {' ' + item.name + ' ' + item.agent_price + '元 '}
                 </label>
               </div>
+              </If>
             )
           )}
         </div>
