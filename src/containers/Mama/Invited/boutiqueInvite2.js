@@ -694,7 +694,10 @@ export default class BoutiqueInvite2 extends Component {
       badge = shopBag.shopBagQuantity.data.result;
     }
     const { preview } = this.props.location.query;
-    const disabled = false;
+    let disabled = false;
+    if (!_.isEmpty(details.detail_content)) {
+      disabled = (details.detail_content.sale_state === 'will' || details.detail_content.sale_state === 'off' || (details.detail_content.sale_state === 'on' && details.detail_content.is_sale_out));
+    }
 
     return (
       <div className={`${prefixCls}`}>
@@ -740,7 +743,7 @@ export default class BoutiqueInvite2 extends Component {
             </button>
             </If>
             <button className="button button-energized col-xs-4 no-padding col-xs-offset-1" type="button" data-type={0} onClick={this.onAddToShopBagClick} disabled={disabled}>
-              {'立即支付'}
+              {this.getAddToShopBagBtnText(details.detail_content)}
             </button>
           </BottomBar>
           <If condition={activeSkuPopup}>
