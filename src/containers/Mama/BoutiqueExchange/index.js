@@ -71,9 +71,11 @@ export default class BoutiqueExchg extends Component {
 
     if (!mamaTranCouponProfile.isLoading && this.props.boutiqueCoupon.mamaTranCouponProfile.isLoading && (this.state.retryNum < 3)) {
       if (!(mamaTranCouponProfile.success && mamaTranCouponProfile.data)) {
-        this.props.fetchMamaLeader();
-        this.props.fetchMamaTranCouponProfile();
-        this.setState({ retryNum: (this.state.retryNum + 1) });
+        _.delay(() => {
+          this.props.fetchMamaLeader();
+          this.props.fetchMamaTranCouponProfile();
+          this.setState({ retryNum: (this.state.retryNum + 1) });
+        }, 2000);
       }
     }
   }
