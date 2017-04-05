@@ -263,7 +263,7 @@ export default class BuyCoupon extends Component {
     }
 
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
-        && (mamaInfo.data[0].is_elite_mama)) {
+        && mamaInfo.data[0].status === 'effect' && (mamaInfo.data[0].is_elite_mama)) {
       if (this.state.sku) {
           this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num, 6); // use vitual cart type
         } else {
@@ -385,7 +385,7 @@ export default class BuyCoupon extends Component {
 
   onShopbagClick = (e) => {
     const mamaInfo = this.props.mamaInfo.mamaInfo;
-    if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged' && (mamaInfo.data[0].is_elite_mama)) {
+    if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged' && mamaInfo.data[0].status === 'effect' && (mamaInfo.data[0].is_elite_mama)) {
       this.context.router.push('/shop/bag?is_buyable=' + ((mamaInfo.success && mamaInfo.data && mamaInfo.data[0].is_buyable) ? '1' : '0')
         + '&type=6' + '&elite_level=' + mamaInfo.data[0].elite_level + '&xiaolucoin=' + ((mamaInfo.success && mamaInfo.data && Number(mamaInfo.data[0].xiaolucoin_cash) > 0) ? '1' : '0'));
     } else {
