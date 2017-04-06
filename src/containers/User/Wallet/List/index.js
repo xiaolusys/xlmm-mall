@@ -73,8 +73,8 @@ export default class List extends Component {
   }
 
   onCashoutClick = (e) => {
-    const { cash, nick } = this.props.location.query;
-    window.location.href = `/mall/user/wallet/cashout/?cash=${cash}&nick=${nick}`;
+    const { cash, nick, isPartner } = this.props.location.query;
+    window.location.href = `/mall/user/wallet/cashout/?cash=${cash}&nick=${nick}&isPartner=${isPartner}`;
     e.preventDefault();
   }
 

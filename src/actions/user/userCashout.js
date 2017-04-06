@@ -32,11 +32,11 @@ export const resetCashoutList = () => {
   };
 };
 
-export const cashout = (amount, verifyCode) => {
+export const cashout = (amount, verifyCode, channel, name) => {
   const action = createAction(names.CASHOUT);
   return (dispatch) => {
     dispatch(action.request());
-    return axios.post(constants.baseEndpointV1 + 'users/budget_cash_out', qs.stringify({ cashout_amount: amount, verify_code: verifyCode }))
+    return axios.post(constants.baseEndpointV1 + 'users/budget_cash_out', qs.stringify({ cashout_amount: amount, verify_code: verifyCode, channel: channel, name: name }))
       .then((resp) => {
         dispatch(action.success(resp.data));
       })
