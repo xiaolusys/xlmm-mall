@@ -45,6 +45,7 @@ export default class Cashout extends Component {
 
   state = {
     cashoutValue: '',
+    cashoutName: '',
     checked: false,
     getVerifyCodeBtnDisabled: false,
     submitBtnDisabled: false,
@@ -87,7 +88,7 @@ export default class Cashout extends Component {
   }
 
   onCheckboxChange = (e) => {
-    const { cash } = this.props.location.query;
+    const { cash, isPartner } = this.props.location.query;
     this.setState({ checked: !this.state.checked });
     if (this.state.checked) {
       this.setState({ cashoutValue: '' });
@@ -95,8 +96,10 @@ export default class Cashout extends Component {
       return;
     }
     if (cash > 0) {
-      if (Math.round(cash * 100) > 20000) {
+      if (Math.round(cash * 100) > 20000 && Number(isPartner) === 0) {
         this.setState({ cashoutValue: 200 });
+      } else if (Math.round(cash * 100) > 250000 && Number(isPartner) === 1) {
+        this.setState({ cashoutValue: 2500 });
       } else {
         this.setState({ cashoutValue: cash });
       }
@@ -106,12 +109,17 @@ export default class Cashout extends Component {
 
   onCashoutValueChange = (e) => {
     const { cash } = this.props.location.query;
-    console.log(e.target);
     if (cash <= 0 || (Math.round(e.target.value * 100) > Math.round(cash * 100))) {
       Toast.show('零钱金额不足，不能满足您输入的提现金额');
     } else {
       this.setState({ cashoutValue: e.target.value });
     }
+    e.preventDefault();
+  }
+
+  onCashoutNameChange = (e) => {
+    console.log(e.target.value);
+    this.setState({ cashoutName: e.target.value });
     e.preventDefault();
   }
 
@@ -132,15 +140,20 @@ export default class Cashout extends Component {
   }
 
   onSubmitBtnClick = (e) => {
-    const { cashoutValue, verifyCode } = this.state;
-    if (!verifyCode || (cashoutValue === '') || (cashoutValue <= 0) || (cashoutValue > 200)) {
+    const { cashoutValue, verifyCode, cashoutName } = this.state;
+    let channel = 'wx';
+    if (!verifyCode || (cashoutValue === '') || (cashoutValue <= 0)) {
       Toast.show('金额或验证码为空，请重新输入！！！');
       return;
     }
 
+    if (cashoutValue > 200) {
+      channel = 'wx_transfer';
+    }
+
     this.setState({ submitBtnDisabled: true });
-    console.log('cash ' + cashoutValue + ' ' + verifyCode);
-    this.props.cashout(cashoutValue, verifyCode);
+    console.log('cash ' + cashoutValue + ' ' + verifyCode, channel, cashoutName);
+    this.props.cashout(cashoutValue, verifyCode, channel, cashoutName);
   }
 
   onVerifyCodeChange = (e) => {
@@ -168,7 +181,7 @@ export default class Cashout extends Component {
   }
 
   render() {
-    const { cash, nick } = this.props.location.query;
+    const { cash, nick, isPartner } = this.props.location.query;
     const hasHeader = !utils.detector.isApp();
     const { cashoutPolicy } = this.props.userCashout;
 
@@ -184,8 +197,15 @@ export default class Cashout extends Component {
             <p className=" col-xs-4 font-xs">金额（元）:</p>
             <input className="col-xs-6 font-xs cash-input" type="number" placeholder="请输入提现金额" onChange={this.onCashoutValueChange} value={this.state.cashoutValue}></input>
           </div>
-          <div className={'cash-nick row'}>
-            <p className=" col-xs-6 font-xs">提现至微信红包</p>
+          <If condition={Number(isPartner) > 0 && this.state.cashoutValue >= 200 }>
+            <div className={'cash row bottom-border'}>
+              <p className=" col-xs-4 font-xs">收款人:</p>
+              <input className="col-xs-7 font-xs cash-input" placeholder="请输入微信绑定的银行卡所有人的姓名" onChange={this.onCashoutNameChange} value={this.state.cashoutName}></input>
+            </div>
+          </If>
+          <div className={'cash-nick'}>
+            <i className="pull-left icon-1x icon-wechat-pay font-green"></i>
+            <p className=" col-xs-5 font-xs">提现至微信红包</p>
             <p className=" col-xs-offset-2 col-xs-4 font-xs">{nick}</p>
           </div>
           <div className="row no-margin password-box bottom-border">
@@ -194,6 +214,9 @@ export default class Cashout extends Component {
           </div>
           <div className={'cash-message'}>
             <p className=" font-xs">{cashoutPolicy.data.message}</p>
+            <If condition={Number(isPartner) > 0}>
+              <p className=" font-xs font-red">{'合伙人可以使用大额提现功能一次提现超过200元，输入您想提现的金额即可，审核通过后金额由微信直接转入微信-我的钱包账户。大额提现微信必须绑定银行卡并且填写的提现收款人和银行卡所有人姓名一致。'}</p>
+            </If>
           </div>
           <div className="row no-margin">
             <button className="col-xs-10 col-xs-offset-1 margin-top-xs button button-energized" type="button" onClick={this.onSubmitBtnClick} disabled={this.state.submitBtnDisabled}>提交</button>

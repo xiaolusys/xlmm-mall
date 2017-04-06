@@ -40,6 +40,10 @@ export default class HomeMyDetailInfo extends Component {
 
   render() {
     const { profile } = this.props;
+    let isPartner = 0;
+    if (profile && profile.xiaolumm && profile.xiaolumm.last_renew_type >= 90 && profile.xiaolumm.elite_score >= 6000) {
+      isPartner = 1;
+    }
     return (
       <div className="mydetailinfo-container">
         <div className="row no-margin">
@@ -59,7 +63,7 @@ export default class HomeMyDetailInfo extends Component {
         </div>
         <div className="row no-margin account-summary bottom-border text-center">
           <div className="col-xs-4">
-            <Link to={'/user/wallet?cash=' + (profile.user_budget ? profile.user_budget.budget_cash : 0) + '&nick=' + profile.nick}>
+            <Link to={'/user/wallet?cash=' + (profile.user_budget ? profile.user_budget.budget_cash : 0) + '&nick=' + profile.nick + '&isPartner=' + isPartner}>
               <p>{profile.user_budget ? profile.user_budget.budget_cash : 0}</p>
               <p>
                 <i className="icon-wallet"></i>
