@@ -63,7 +63,7 @@ export default class Cashout extends Component {
     if (this.props.userCashout.cashout.isLoading) {
       this.setState({ submitBtnDisabled: false });
       if (nextProps.userCashout.cashout.success && nextProps.userCashout.cashout.data.code === 0) {
-        Toast.show('提现成功');
+        Toast.show('提现申请成功');
         this.context.router.goBack();
       }
 
@@ -108,17 +108,24 @@ export default class Cashout extends Component {
   }
 
   onCashoutValueChange = (e) => {
-    const { cash } = this.props.location.query;
+    const { cash, isPartner } = this.props.location.query;
     if (cash <= 0 || (Math.round(e.target.value * 100) > Math.round(cash * 100))) {
       Toast.show('零钱金额不足，不能满足您输入的提现金额');
     } else {
-      this.setState({ cashoutValue: e.target.value });
+      if (Math.round(e.target.value * 100) > 20000 && Number(isPartner) === 0) {
+        this.setState({ cashoutValue: 200 });
+        Toast.show('您的提现金额超过每次最大提现金额200，自动变为200');
+      } else if (Math.round(e.target.value * 100) > 250000 && Number(isPartner) === 1) {
+        this.setState({ cashoutValue: 2500 });
+        Toast.show('您的提现金额超过每次最大提现金额2500，自动变为2500');
+      } else {
+        this.setState({ cashoutValue: e.target.value });
+      }
     }
     e.preventDefault();
   }
 
   onCashoutNameChange = (e) => {
-    console.log(e.target.value);
     this.setState({ cashoutName: e.target.value });
     e.preventDefault();
   }
@@ -197,7 +204,7 @@ export default class Cashout extends Component {
             <p className=" col-xs-4 font-xs">金额（元）:</p>
             <input className="col-xs-6 font-xs cash-input" type="number" placeholder="请输入提现金额" onChange={this.onCashoutValueChange} value={this.state.cashoutValue}></input>
           </div>
-          <If condition={Number(isPartner) > 0 && this.state.cashoutValue >= 200 }>
+          <If condition={Number(isPartner) > 0 && this.state.cashoutValue > 200 }>
             <div className={'cash row bottom-border'}>
               <p className=" col-xs-4 font-xs">收款人:</p>
               <input className="col-xs-7 font-xs cash-input" placeholder="请输入微信绑定的银行卡所有人的姓名" onChange={this.onCashoutNameChange} value={this.state.cashoutName}></input>
@@ -215,7 +222,7 @@ export default class Cashout extends Component {
           <div className={'cash-message'}>
             <p className=" font-xs">{cashoutPolicy.data.message}</p>
             <If condition={Number(isPartner) > 0}>
-              <p className=" font-xs font-red">{'合伙人可以使用大额提现功能一次提现超过200元，输入您想提现的金额即可，审核通过后金额由微信直接转入微信-我的钱包账户。大额提现微信必须绑定银行卡并且填写的提现收款人和银行卡所有人姓名一致。'}</p>
+              <p className=" font-xs font-red">{'合伙人可以使用大额提现功能一次提现不超过2500元，审核通过后金额由微信直接转入微信-我的钱包账户。大额提现微信必须绑定银行卡并且填写的提现收款人和银行卡所有人姓名一致。'}</p>
             </If>
           </div>
           <div className="row no-margin">
