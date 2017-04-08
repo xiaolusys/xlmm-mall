@@ -148,6 +148,7 @@ export default class Cashout extends Component {
 
   onSubmitBtnClick = (e) => {
     const { cashoutValue, verifyCode, cashoutName } = this.state;
+    const { isPartner } = this.props.location.query;
     let channel = 'wx';
     if (!verifyCode || (cashoutValue === '') || (cashoutValue <= 0)) {
       Toast.show('金额或验证码为空，请重新输入！！！');
@@ -156,6 +157,11 @@ export default class Cashout extends Component {
 
     if (cashoutValue > 200) {
       channel = 'wx_transfer';
+    }
+
+    if (Number(isPartner) === 1 && (cashoutName === '' || cashoutName === undefined)) {
+      Toast.show('大额提现时收款人姓名不能为空，必须要跟微信绑定银行卡所有人姓名一致，请重新输入！！！');
+      return;
     }
 
     this.setState({ submitBtnDisabled: true });
