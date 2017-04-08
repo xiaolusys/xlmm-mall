@@ -8,6 +8,7 @@ export const actionNames = {
   FETCH_MAMA_WEBVIEW_CONFIG: 'FETCH_MAMA_WEBVIEW_CONFIG',
   FETCH_MAMA_LEADER: 'FETCH_MAMA_LEADER',
   FETCH_TEAM_MEMBER: 'FETCH_TEAM_MEMBER',
+  FETCH_ELITE_SCORE_LOG: 'FETCH_ELITE_SCORE_LOG',
 };
 
 export const fetchMamaFortune = () => {
@@ -57,6 +58,20 @@ export const fetchMamaTeamMember = () => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(`${constants.baseEndpointV1}pmt/xlmm/get_elite_team_members`)
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchMamaEliteScoreLog = (pageIndex, pageSize) => {
+  const action = createAction(actionNames.FETCH_ELITE_SCORE_LOG);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(`${constants.baseEndpoint}mama/elite_score`, { params: { page: pageIndex, page_size: pageSize } })
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

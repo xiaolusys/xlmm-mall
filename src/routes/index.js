@@ -99,6 +99,7 @@ import {
   RecruitMama,
   Recharge,
   MamaRebate,
+  EliteScoreLogList,
 } from 'containers/Mama';
 
 import {
@@ -180,6 +181,7 @@ export default (
     <Route path="/mama/recruit" component={RecruitMama} />
     <Route path="/recharge" component={Recharge} />
     <Route path="/mama/rebate" component={MamaRebate} />
+    <Route path="/mama/scorelog" component={EliteScoreLogList} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route status={404} path="*" component={Home} />
   </Route>

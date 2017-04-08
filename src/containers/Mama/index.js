@@ -27,3 +27,4 @@ export InOutCoupon from './InOutCoupon/inoutCoupon';
 export RecruitMama from './Invited/recruitmama';
 export Recharge from './Recharge/Recharge';
 export MamaRebate from './Rebate/rebate';
+export EliteScoreLogList from './ScoreLog/ScoreLog';
