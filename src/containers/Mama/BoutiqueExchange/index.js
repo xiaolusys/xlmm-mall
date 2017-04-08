@@ -142,6 +142,9 @@ export default class BoutiqueExchg extends Component {
         case '10':
           window.location.href = '/mall/boutiqueinvite';
           break;
+        case '11':
+          this.context.router.push('/mama/scorelog');
+          break;
         default:
       }
     e.preventDefault();

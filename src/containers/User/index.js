@@ -15,3 +15,4 @@ export CashoutDetail from './Wallet/Detail';
 export Cashout from './Wallet/Cashout';
 export CashoutResult from './Wallet/CashoutResult';
 export XiaoluCoin from './Coin/xiaolucoin';
+export EliteScoreLogList from './ScoreLog';
