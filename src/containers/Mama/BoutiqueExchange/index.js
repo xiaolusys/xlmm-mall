@@ -104,6 +104,7 @@ export default class BoutiqueExchg extends Component {
 
   onInfoClick = (e) => {
     const { id } = e.currentTarget.dataset;
+    const { mamaTranCouponProfile } = this.props.boutiqueCoupon;
       switch (id) {
         case '1':
           this.context.router.push('/mama/boutiquecoupon');
@@ -143,7 +144,7 @@ export default class BoutiqueExchg extends Component {
           window.location.href = '/mall/boutiqueinvite';
           break;
         case '11':
-          this.context.router.push('/mama/scorelog');
+          this.context.router.push('/mama/scorelog?score=' + mamaTranCouponProfile.data.elite_score);
           break;
         default:
       }
@@ -360,6 +361,14 @@ getRebateInfo = () => {
             </div>
             <div className="col-xs-9" >
               <p className=" ">招募</p>
+            </div>
+          </div>
+          <div className="col-xs-6 info-cat no-padding" data-id={11} onClick={this.onInfoClick}>
+            <div className="col-xs-3" >
+              <div className="icon-xiaolu" />
+            </div>
+            <div className="col-xs-9" >
+              <p className=" ">积分记录</p>
             </div>
           </div>
         </div>

@@ -98,8 +98,10 @@ export default (state = initState, action = null) => {
         mamaEliteScoreLog: { isLoading: true, data: state.mamaEliteScoreLog.data, error: false, success: false },
       });
     case mamaDetailInfoAction.actionNames.FETCH_ELITE_SCORE_LOG + '_' + actionTypes.SUCCESS:
+      const payload = action.payload;
+      payload.results = _.chain(state.mamaEliteScoreLog.data.results || []).union(payload.results || []).unique().value();
       return _.extend({}, state, {
-        mamaEliteScoreLog: { isLoading: false, data: action.payload, error: false, success: true },
+        mamaEliteScoreLog: { isLoading: false, data: payload, error: false, success: true },
       });
     case mamaDetailInfoAction.actionNames.FETCH_ELITE_SCORE_LOG + '_' + actionTypes.FAILURE:
       return _.extend({}, state, {
