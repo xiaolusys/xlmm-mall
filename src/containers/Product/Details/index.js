@@ -257,6 +257,8 @@ export default class Detail extends Component {
   }
 
   onHomeClick = (e) => {
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
+
     if (utils.detector.isApp()) {
       const jumpUrl = 'com.jimei.xlmm://app/v1/home';
       plugins.invoke({
@@ -265,12 +267,13 @@ export default class Detail extends Component {
       });
     } else {
       // this.context.router.push('/');
-      window.location.href = '/';
+      window.location.href = `/?mm_linkid=${mmLinkId}`;
     }
     e.preventDefault();
   }
 
   onShopbagClick = (e) => {
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
     if (utils.detector.isApp()) {
       const jumpUrl = 'com.jimei.xlmm://app/v1/shopping_cart?type=' + this.state.type;
       if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
@@ -301,7 +304,7 @@ export default class Detail extends Component {
         callback: (resp) => {},
       });*/
     } else {
-      this.context.router.push('/shop/bag?type=' + this.state.type);
+      this.context.router.push('/shop/bag?type=' + this.state.type + '&mm_linkid=' + mmLinkId);
     }
     e.preventDefault();
   }

@@ -174,7 +174,7 @@ export default class TopTenModel2 extends Component {
       return;
     }
 
-    window.location.href = `/mall/product/details/${modelId}&mm_linkid=${mmLinkId}`;
+    window.location.href = `/mall/product/details/${modelId}?mm_linkid=${mmLinkId}`;
   }
 
   onShareBtnClick = (e) => {

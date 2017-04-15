@@ -125,10 +125,10 @@ export default class Commit extends Component {
             window.location.href = '/mall/mama/open/succeed';
             return;
           }
-          window.location.replace(order.data.success_url);
-          return;
+          // window.location.replace(order.data.success_url);
+          // return;
         }
-        window.location.replace(order.data.fail_url);
+        // window.location.replace(order.data.fail_url);
       }
 
       if (order.data.code !== 0) {
@@ -159,8 +159,12 @@ export default class Commit extends Component {
   onCommitOrderClick = (e) => {
     const { address, payInfo, coupon } = this.props;
     const { walletChecked, xiaoluCoinChecked, walletBalance, walletPayType, logisticsCompanyId, agreePurchaseTerms } = this.state;
-    const mmLinkId = this.props.location.query.mm_linkid;
+    let mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
     const teambuyId = this.props.location.query.teambuyId;
+    const cookieMamaLinkId = utils.cookie.getCookie('mm_linkid');
+    if (Number(mmLinkId) === 0 && cookieMamaLinkId && Number(cookieMamaLinkId) > 0) {
+      mmLinkId = cookieMamaLinkId;
+    }
 
     if (!address.data.id && !this.state.isAllVirtualProduct) {
       Toast.show('请填写收货地址！');
@@ -247,8 +251,12 @@ export default class Commit extends Component {
     const { address, payInfo } = this.props;
     const { walletChecked, walletBalance, walletPayType, logisticsCompanyId } = this.state;
     const { paytype } = e.currentTarget.dataset;
-    const mmLinkId = this.props.location.query.mm_linkid;
+    let mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
     const teambuyId = this.props.location.query.teambuyId;
+    const cookieMamaLinkId = utils.cookie.getCookie('mm_linkid');
+    if (Number(mmLinkId) === 0 && cookieMamaLinkId && Number(cookieMamaLinkId) > 0) {
+      mmLinkId = cookieMamaLinkId;
+    }
 
     this.props.commitOrder({
       uuid: payInfo.data.uuid,
