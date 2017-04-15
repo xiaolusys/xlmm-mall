@@ -149,6 +149,7 @@ export default class TopTenModel2 extends Component {
     const dataSet = e.currentTarget.dataset;
     const modelId = Number(dataSet.modelid);
     const appUrl = 'com.jimei.xlmm://app/v1/products/modelist?model_id=' + modelId;
+    const mmLinkId = this.props.location.query.mm_linkid ? this.props.location.query.mm_linkid : 0;
 
     if (utils.detector.isAndroid() && typeof window.AndroidBridge !== 'undefined') {
       const appVersion = Number(window.AndroidBridge.appVersion()) || 0;
@@ -173,7 +174,7 @@ export default class TopTenModel2 extends Component {
       return;
     }
 
-    window.location.href = `/mall/product/details/${modelId}`;
+    window.location.href = `/mall/product/details/${modelId}&mm_linkid=${mmLinkId}`;
   }
 
   onShareBtnClick = (e) => {
