@@ -111,7 +111,7 @@ export default class HomePage extends Component {
 
   componentWillMount() {
     const { pageIndex, pageSize } = this.state;
-    const { active, mmLinkId } = this.props.location.query;
+    const mmLinkId = this.props.location.query.mm_linkid;
     this.props.fetchPortal();
     if (mmLinkId) {
       this.props.fetchMamaInfoById(mmLinkId);

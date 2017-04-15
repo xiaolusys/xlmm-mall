@@ -14,11 +14,11 @@ export class App extends Component {
 
   componentWillMount() {
     const { query } = this.props.location;
-    const mmLinkId = query.mm_linkid || '';
+    const mmLinkId = query.mm_linkid || 0;
     const uFrom = query.ufrom || '';
     const expires = new Date();
     expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
-    if (mmLinkId) {
+    if (mmLinkId && mmLinkId > 0) {
       window.document.cookie = `mm_linkid=${mmLinkId}; Path=/; expires=${expires.toGMTString()};`;
     }
     if (uFrom) {
