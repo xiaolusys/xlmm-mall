@@ -98,13 +98,13 @@ export default class EliteScoreLogList extends Component {
             <div className="cashout-info ">
               <div className="cashout-status col-xs-8 no-padding" >
                 <p>
-                  <span className="col-xs-offset-1 font-grey">{item.created.replace('T', ' ')}</span>
-                  <span className="cashout-status-span col-xs-offset-2 no-padding">{item.type}</span>
+                  <span className="col-xs-offset-1 font-grey font-xs">{item.created.replace('T', ' ')}</span>
+                  <span className="cashout-status-span col-xs-offset-1 no-padding font-xs">{item.type}</span>
                 </p>
-                <p className="col-xs-offset-1 no-padding">{item.desc}</p>
+                <p className="col-xs-offset-1 no-padding font-xs">{item.desc}</p>
               </div>
               <div className="cashout-desc col-xs-4 text-center">
-                  <p className="">{item.score + '积分'}</p>
+                  <p className="font-xs">{item.score + '积分'}</p>
               </div>
             </div>
           </div>
