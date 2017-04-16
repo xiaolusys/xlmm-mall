@@ -202,6 +202,7 @@ export default class Commit extends Component {
         teambuy_id: teambuyId,
         mm_linkid: mmLinkId,
         order_type: (this.state.isAllVirtualProduct ? 4 : 0),
+        orderUrl: this.props.location.pathname + this.props.location.search,
       });
       return;
     }
@@ -220,6 +221,7 @@ export default class Commit extends Component {
         teambuy_id: teambuyId,
         mm_linkid: mmLinkId,
         order_type: (this.state.isAllVirtualProduct ? 4 : 0),
+        orderUrl: this.props.location.pathname + this.props.location.search,
       });
       return;
     }
@@ -238,6 +240,7 @@ export default class Commit extends Component {
         teambuy_id: teambuyId,
         mm_linkid: mmLinkId,
         order_type: (this.state.isAllVirtualProduct ? 4 : 0),
+        orderUrl: this.props.location.pathname + this.props.location.search,
       });
       return;
     }
@@ -272,6 +275,7 @@ export default class Commit extends Component {
       teambuy_id: teambuyId,
       mm_linkid: mmLinkId,
       order_type: (this.state.isAllVirtualProduct ? 4 : 0),
+      orderUrl: this.props.location.pathname + this.props.location.search,
     });
     this.togglePayTypePopupActive();
     e.preventDefault();
