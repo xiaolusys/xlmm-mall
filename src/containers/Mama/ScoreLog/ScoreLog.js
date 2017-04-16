@@ -94,9 +94,9 @@ export default class EliteScoreLogList extends Component {
     return (
       list.map((item, index) => {
         return (
-          <div key={index} className="no-padding row bottom-border" data-index={index} onClick={this.onItemClick}>
+          <div key={index} className="no-padding bottom-border" data-index={index} onClick={this.onItemClick}>
             <div className="cashout-info ">
-              <div className="cashout-status row col-xs-8" >
+              <div className="cashout-status col-xs-8 no-padding" >
                 <p>
                   <span className="col-xs-offset-1 font-grey">{item.created.replace('T', ' ')}</span>
                   <span className="cashout-status-span col-xs-offset-2 no-padding">{item.type}</span>
@@ -121,7 +121,7 @@ export default class EliteScoreLogList extends Component {
     return (
       <div>
         <Header title="积分纪录" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
-          <div className="content scorelog-container">
+          <div className="content scorelog-container no-padding">
             <div className={'list-head text-center bottom-border ' + (hasHeader ? 'has-header' : '')}>
               <p className="cash">{query.score}</p>
               <p className="cash-prompt">积分 </p>
