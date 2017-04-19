@@ -251,19 +251,19 @@ export default class Progress extends Component {
       </div>*/
 
       <div key={product.model_id} className="row no-margin bottom-border product-info">
-              <div className="col-xs-6 no-padding">
-                <img src={product.head_imgs[0] + constants.image.square} />
-              </div>
-              <div className="col-xs-6 no-padding padding-top-xxs font-m product-info-txt">
-                <p className="row  no-wrap">{product.name}</p>
-                <p className="row  margin-top-xxxs">{'拼团价:￥' + product.team_price}</p>
-                <p className="row  margin-top-xxxs">
-                  <span className="">{'单购价:￥' + product.agent_price}</span>
-                  <span className="padding-left-xs font-blue font-xs" onClick={this.onProductDetailClick}>{'商品详情>>'}</span>
-                </p>
-                <p className="row spell-introduction font-blue font-xs"><Link to="/order/spell/rule">查看团购规则>></Link></p>
-              </div>
-            </div>
+        <div className="col-xs-6 no-padding">
+          <img src={product.head_imgs[0] + constants.image.square} />
+        </div>
+        <div className="col-xs-6 no-padding padding-top-xxs font-m product-info-txt">
+          <p className="row  no-wrap">{product.name}</p>
+          <p className="row  margin-top-xxxs">{'拼团价:￥' + product.team_price}</p>
+          <p className="row  margin-top-xxxs">
+            <span className="">{'单购价:￥' + product.agent_price}</span>
+            <span className="padding-left-xs font-blue font-xs" onClick={this.onProductDetailClick}>{'商品详情>>'}</span>
+          </p>
+          <p className="row spell-introduction font-blue font-xs"><Link to="/order/spell/rule">查看团购规则>></Link></p>
+        </div>
+      </div>
     );
   }
 

@@ -26,7 +26,7 @@ export class ShopBag extends Component {
   static propTypes = {
     location: React.PropTypes.object,
     shopBag: React.PropTypes.object,
-    // ishome: React.PropTypes.object,
+    ishome: React.PropTypes.object,
     fetchShopBag: React.PropTypes.func,
     fetchShopBagHistory: React.PropTypes.func,
     applyNegotiableCoupons: React.PropTypes.func,
@@ -270,7 +270,7 @@ export class ShopBag extends Component {
 
   render() {
     const { shopBag, shopBagHistory } = this.props.shopBag;
-    // const { ishome } = this.props;
+    const { ishome } = this.props;
     return (
       <div className="shop-bag-all">
         <Header title="购物车" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack} />
@@ -333,7 +333,7 @@ export class ShopBag extends Component {
             </ul>
           </If>
         </div>
-        <If condition={!_.isEmpty(shopBag.data) && shopBag.success && 0}>
+        <If condition={!_.isEmpty(shopBag.data) && shopBag.success && !ishome}>
           <BottomBar size="large">
             <p>
               <span className="font-xs">应付款金额</span>
@@ -348,7 +348,7 @@ export class ShopBag extends Component {
             </If>
           </BottomBar>
         </If>
-        <If condition={!_.isEmpty(shopBag.data) && shopBag.success}>
+        <If condition={!_.isEmpty(shopBag.data) && shopBag.success && ishome}>
           <div className="bottom-btn1">
             <div className="has-bottom-bar1" ></div>
             <div className="bottom-bar1 top-border text-center" >
