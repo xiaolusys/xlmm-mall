@@ -147,24 +147,16 @@ export class Home extends Component {
           <div className="row no-margin top-border base-tab">
             <ul className="row no-margin">
               <li key={1} data-id="home" onClick={this.onTabClick}>
-                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'home' ? ' active' : '')}>
-                  <span>首页</span>
-                </p>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'home' ? ' active' : '')}>首页</p>
               </li>
               <li key={2} data-id="category" onClick={this.onTabClick}>
-                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'category' ? ' active' : '')}>
-                  <span>分类</span>
-                </p>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'category' ? ' active' : '')}>分类</p>
               </li>
               <li key={3} data-id="shoppingcart" onClick={this.onTabClick}>
-                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'shoppingcart' ? ' active' : '')}>
-                  <span>购物车</span>
-                </p>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'shoppingcart' ? ' active' : '')}>购物车</p>
               </li>
               <li key={4} data-id="myinfo" onClick={this.onTabClick}>
-                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'myinfo' ? ' active' : '')}>
-                  <span>我的</span>
-                </p>
+                <p className={'col-xs-3 no-margin no-padding text-center' + (topTab === 'myinfo' ? ' active' : '')}>我的</p>
               </li>
             </ul>
           </div>
