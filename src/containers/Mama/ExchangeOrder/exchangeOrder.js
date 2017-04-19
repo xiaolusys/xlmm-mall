@@ -186,7 +186,7 @@ export default class ExchangeOrder extends Component {
             <p className="text-left font-xs no-padding no-margin">{member.status_display}</p>
           </div>
           <div className="col-xs-12 no-padding">
-            <p className=" text-left font-xs">{'需券' + member.num + '张' + '可兑' + (member.order_value / 100).toFixed(1) + '元'}</p>
+            <p className=" text-left font-xs">{'需券' + member.num + '张' + '可兑' + (member.exchg_payment / 100).toFixed(1) + '元'}</p>
           </div>
         </div>
         <If condition={ this.state.activeTab === 'default'}>
@@ -198,7 +198,7 @@ export default class ExchangeOrder extends Component {
     );
   }
 
-  renderExchgMember = (member, index) => {
+  renderExchgedMember = (member, index) => {
 
     return (
       <li key={index} className="col-xs-12 member-item bottom-border" data-index={index} >
@@ -217,7 +217,7 @@ export default class ExchangeOrder extends Component {
             <p className="text-left font-xs no-padding no-margin">{member.status_display}</p>
           </div>
           <div className="col-xs-12 no-padding">
-            <p className=" text-left font-xs">{'用券' + member.num + '张' + '已兑' + (member.order_value / 100).toFixed(1) + '元'}</p>
+            <p className=" text-left font-xs">{'用券' + member.num + '张' + '已兑换'}</p>
           </div>
         </div>
       </li>
@@ -255,7 +255,7 @@ export default class ExchangeOrder extends Component {
             }
             </If>
             <If condition={activeTab === 'exchanged'}>
-            {mamaCanExchgOrders.data.map((item, index) => this.renderExchgMember(item, index))
+            {mamaCanExchgOrders.data.map((item, index) => this.renderExchgedMember(item, index))
             }
             </If>
             </ul>
