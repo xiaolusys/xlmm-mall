@@ -5,12 +5,23 @@ node {
   }
   sh('docker run --rm -v "$PWD":/workspace -w /workspace node npm install')
   sh('docker run --rm -v "$PWD":/workspace -w /workspace node npm run build:production')
-  sh("docker build -t registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall-k8s .")
+  sh("docker build -t registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall-${env.BRANCH_NAME} .")
   withCredentials([usernamePassword(credentialsId: 'qiniu', passwordVariable: 'QINIU_SECRETKEY', usernameVariable: 'QINIU_ACCESSKEY')]) {
     def workspace = sh(script: "pwd", returnStdout: true).trim()
     sh("docker run --rm -v ${workspace}:/workspace -w /workspace busybox ./bin/qshell_linux_amd64 account ${env.QINIU_ACCESSKEY} ${env.QINIU_SECRETKEY}")
     sh("docker run --rm -v ${workspace}/dist:/var/www/mall -v ${workspace}:/workspace -w /workspace busybox ./bin/qshell_linux_amd64 qupload 2 config/qupload.conf")
   }
-  sh("docker push registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall-k8s")
+  sh("docker push registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall-${env.BRANCH_NAME}")
+
+  if (env.BRANCH_NAME == "master") {
+    stage('Deploy to nginx/ui-master:'){
+      build job: 'nginx/ui-master'
+    }
+  }
+  if (env.BRANCH_NAME == "staging") {
+    stage('Deploy to nginx/ui-staging:'){
+      build job: 'nginx/ui-staging'
+    }
+  }
 }
 
