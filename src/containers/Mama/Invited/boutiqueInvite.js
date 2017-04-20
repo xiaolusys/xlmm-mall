@@ -218,7 +218,7 @@ export default class BoutiqueInvite extends Component {
     const skus = productDetails.data.sku_info;
 
     if (utils.detector.isApp()) {
-      Toast.show('只能在微信环境购买，请在微信点击小鹿妈妈分享的链接购买');
+      Toast.show('只能在微信环境购买，请关注小鹿美美公众号并点击在公众号点击精品汇购买，或在微信点击小鹿妈妈分享的链接购买');
       return;
     }
     if ((this.state.mmLinkId === undefined || this.state.mmLinkId === 0 || isNaN(this.state.mmLinkId))) {
