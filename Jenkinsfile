@@ -7,8 +7,9 @@ node {
   sh('docker run --rm -v "$PWD":/workspace -w /workspace node npm run build:production')
   sh("docker build -t registry/aliyuncs.com/xiaolu-img/xiaolusys-ui:mall-k8s .")
   withCredentials([usernamePassword(credentialsId: 'qiniu', passwordVariable: 'QINIU_SECRETKEY', usernameVariable: 'QINIU_ACCESSKEY')]) {
-    sh("./bin/qshell_linux_amd64 account ${env.QINIU_ACCESSKEY} ${env.QINIU_SECRETKEY}")
-    sh("./bin/qshell_linux_amd64 qupload 2 config/qupload.conf")
+    def workspace = sh(script: "pwd", returnStdout: true).trim()
+    sh("docker run --rm -v ${workspace}:/workspace -w /workspace busybox ./bin/qshell_linux_amd64 account ${env.QINIU_ACCESSKEY} ${env.QINIU_SECRETKEY}")
+    sh("docker run --rm -v ${workspace}/dist:/var/www/mall -v ${workspace}:/workspace -w /workspace busybox ./bin/qshell_linux_amd64 qupload 2 config/qupload.conf")
   }
   sh("docker push registry.aliyuncs.com/xiaolu-img/xiaolusys-ui:mall-k8s")
 }
