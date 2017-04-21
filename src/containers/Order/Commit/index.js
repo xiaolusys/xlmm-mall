@@ -125,10 +125,10 @@ export default class Commit extends Component {
             window.location.href = '/mall/mama/open/succeed';
             return;
           }
-          // window.location.replace(order.data.success_url);
-          // return;
+          window.location.replace(order.data.success_url);
+          return;
         }
-        // window.location.replace(order.data.fail_url);
+        window.location.replace(order.data.fail_url);
       }
 
       if (order.data.code !== 0) {
