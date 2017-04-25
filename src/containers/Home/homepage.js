@@ -354,8 +354,8 @@ export default class HomePage extends Component {
                 })}
               </div>
             </If>
-            <BackTop />
             <Footer />
+            <div style={{ height: '44px' }}></div>
           </div>
         </div>
       </div>
