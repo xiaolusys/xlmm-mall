@@ -88,7 +88,7 @@ export default class ExchangeOrder extends Component {
       }
     }
 
-    if (exchangeOrder.isLoading && !mamaCanExchgOrders.isLoading) {
+    if (exchangeOrder.isLoading && !nextProps.boutiqueCoupon.exchangeOrder.isLoading && !mamaCanExchgOrders.isLoading) {
       this.props.resetCanExchgOrders();
       this.props.fetchCanExchgOrders();
     }
