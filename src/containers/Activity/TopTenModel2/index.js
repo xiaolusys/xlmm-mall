@@ -177,6 +177,12 @@ export default class TopTenModel2 extends Component {
     window.location.href = `/mall/product/details/${modelId}?mm_linkid=${mmLinkId}`;
   }
 
+  onTopicClick = (e) => {
+    const dataSet = e.currentTarget.dataset;
+    const jumpUrl = dataSet.jumpurl;
+    window.location.href = jumpUrl;
+  }
+
   onShareBtnClick = (e) => {
     const { shareActivity } = this.props;
     if (!(shareActivity.success && shareActivity.data)) {
@@ -233,10 +239,8 @@ export default class TopTenModel2 extends Component {
             <ul>
               {modelData.topics.map((item, index) => {
                 return (
-                  <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index}>
-                    <Link to="">
+                  <li className="col-xs-12 col-md-6 col-md-offset-3 no-padding margin-bottom-xs" key={index} data-jumpurl={item.jumpUrl} onClick={this.onTopicClick}>
                       <Image quality={50} className="col-xs-12 no-padding" src={item.pic} />
-                    </Link>
                   </li>
                 );
               })}
