@@ -96,21 +96,47 @@ export default class TranCouponList extends Component {
       if (!this.state.searchFlag && mamaInfo.data && mamaInfo.data.length > 0
           && nextProps.product.data.results && nextProps.product.data.results.length > 0) {
         let sku = null;
+        let name = '';
+        let agentPrice = 0;
+        let salePrice = 0;
+        let eliteScore = 0;
         for (let i = 0; i <= nextProps.product.data.results.length - 1; i++) {
           const productDetails = nextProps.product.data.results[i];
-          for (let j = 0; j < productDetails.sku_info.length; j++) {
-            if (productDetails.sku_info[j].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
-              sku = productDetails.sku_info[j];
-              break;
+          // 旧的券有5个product，新的只有1个product，5个sku
+          name = '';
+          agentPrice = 0;
+          salePrice = 0;
+          eliteScore = 0;
+          if (productDetails.sku_info.length === 5) {
+            for (let j = 0; j < productDetails.sku_info.length; j++) {
+              if (productDetails.sku_info[j].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
+                sku = productDetails.sku_info[j];
+                name = sku.name;
+                agentPrice = sku.agent_price;
+                salePrice = sku.std_sale_price;
+                eliteScore = sku.elite_score;
+                break;
+              }
+            }
+          } else if (productDetails.sku_info.length === 1 && productDetails.sku_info[0].sku_items.length === 5) {
+            eliteScore = productDetails.sku_info[0].elite_score;
+            for (let j = 0; j < productDetails.sku_info[0].sku_items.length; j++) {
+              if (productDetails.sku_info[0].sku_items[j].name.indexOf(mamaInfo.data[0].elite_level) >= 0) {
+                sku = productDetails.sku_info[0].sku_items[j];
+                name = sku.name;
+                agentPrice = sku.agent_price;
+                salePrice = sku.std_sale_price;
+                break;
+              }
             }
           }
           const item = {
             id: productDetails.id,
-            name: (productDetails.detail_content && sku) ? productDetails.detail_content.name + '/' + sku.name : '',
+            name: (productDetails.detail_content && sku) ? productDetails.detail_content.name + '/' + name : '',
             head_img: (productDetails && productDetails.detail_content) ? productDetails.detail_content.head_img : '',
-            agent_price: sku.agent_price,
-            lowest_std_sale_price: sku.std_sale_price,
-            elite_score: sku.elite_score,
+            agent_price: agentPrice,
+            lowest_std_sale_price: salePrice,
+            elite_score: eliteScore,
           };
           virtualProducts.push(item);
         }

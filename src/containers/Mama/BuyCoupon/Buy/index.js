@@ -123,9 +123,34 @@ export default class BuyCoupon extends Component {
 
     if (mamaInfo.mamaInfo.success && mamaInfo.mamaInfo.data && mamaInfo.mamaInfo.data[0].elite_level && productDetails.success && productDetails.data) {
       mmLinkId = mamaInfo.mamaInfo.data[0].id;
-      for (let i = 0; i < productDetails.data.sku_info.length; i++) {
-        if (productDetails.data.sku_info[i].name.indexOf(mamaInfo.mamaInfo.data[0].elite_level) >= 0) {
-          this.setState({ sku: productDetails.data.sku_info[i] });
+      let sku = {};
+      if (productDetails.data.sku_info.length === 5) {
+        for (let j = 0; j < productDetails.data.sku_info.length; j++) {
+          sku = {};
+          if (productDetails.data.sku_info[j].name.indexOf(mamaInfo.mamaInfo.data[0].elite_level) >= 0) {
+            sku = productDetails.data.sku_info[j];
+            this.setState({ name: sku.name,
+              agentPrice: sku.agent_price,
+              salePrice: sku.std_sale_price,
+              eliteScore: sku.elite_score,
+              productId: sku.product_id,
+              skuId: sku.sku_id });
+            break;
+          }
+        }
+      } else if (productDetails.data.sku_info.length === 1 && productDetails.data.sku_info[0].sku_items.length === 5) {
+        for (let j = 0; j < productDetails.data.sku_info[0].sku_items.length; j++) {
+          sku = {};
+          if (productDetails.data.sku_info[0].sku_items[j].name.indexOf(mamaInfo.mamaInfo.data[0].elite_level) >= 0) {
+            sku = productDetails.data.sku_info[0].sku_items[j];
+            this.setState({ name: sku.name,
+              agentPrice: sku.agent_price,
+              salePrice: sku.std_sale_price,
+              eliteScore: productDetails.data.sku_info[0].elite_score,
+              productId: productDetails.data.sku_info[0].product_id,
+              skuId: sku.sku_id });
+            break;
+          }
         }
       }
     }
@@ -241,7 +266,6 @@ export default class BuyCoupon extends Component {
     const { productDetails } = this.props;
     const mamaInfo = this.props.mamaInfo.mamaInfo;
     const { type } = e.currentTarget.dataset;
-    const skus = productDetails.data.sku_info;
 
     if (this.state.num <= 0) {
       Toast.show('对不起，输入的商品个数不对，请重新输入');
@@ -264,37 +288,11 @@ export default class BuyCoupon extends Component {
 
     if (mamaInfo && mamaInfo.data && (mamaInfo.data.length > 0) && mamaInfo.data[0].charge_status === 'charged'
         && mamaInfo.data[0].status === 'effect' && (mamaInfo.data[0].is_elite_mama)) {
-      if (this.state.sku) {
-          this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num, 6); // use vitual cart type
+      if (this.state.productId) {
+          this.props.addProductToShopBag(this.state.productId, this.state.skuId, this.state.num, 6); // use vitual cart type
         } else {
           Toast.show('商品信息获取不全');
         }
-      // if (mamaInfo.data[0].is_buyable) {
-      //   if (this.state.sku) {
-      //     this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num, 6); // use vitual cart type
-      //   } else {
-      //     Toast.show('商品信息获取不全');
-      //   }
-      //    20170120 购券支付同意该到commit order页面，此处类似精品汇或团购直接购买，不经过购物车直接跳转
-      //     if (this.state.sku) {
-      //     // this.props.addProductToShopBag(this.state.sku.product_id, this.state.sku.sku_items[0].sku_id, this.state.num);
-      //     // 精品券默认是在app上支付
-      //     if (utils.detector.isApp()) {
-      //       this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'app');
-      //     } else {
-      //       this.props.fetchBuyNowPayInfo(this.state.sku.sku_items[0].sku_id, this.state.num, 'wap');
-      //     }
-      //   } else {
-      //     Toast.show('商品信息获取不全');
-      //   }
-      // } else {
-      //   // Toast.show('对不起，只有专业版精英小鹿妈妈才能购买此精品券，请先加入精英妈妈！！');
-      //   if (this.state.sku) {
-      //     this.props.applyNegotiableCoupons(this.state.sku.product_id, this.state.num);
-      //   } else {
-      //     Toast.show('商品信息获取不全');
-      //   }
-      // }
     } else {
       Toast.show('您还不是小鹿精英妈妈，无法申请或购买精品券。请关注小鹿美美公众号或联系客服了解更多信息。');
     }
@@ -395,11 +393,11 @@ export default class BuyCoupon extends Component {
   }
 
   onAddToShopBagClick = (e) => {
-    const { sku, num } = this.state;
+    const { num } = this.state;
     const { type } = e.currentTarget.dataset;
 
-    if (sku) {
-      this.props.addProductToShopBag(sku.product_id, sku.sku_items[0].sku_id, num, 6); // use vitual cart type
+    if (this.state.productId) {
+      this.props.addProductToShopBag(this.state.productId, this.state.skuId, num, 6); // use vitual cart type
     }
 
     e.preventDefault();
@@ -424,6 +422,26 @@ export default class BuyCoupon extends Component {
           result[3] = item;
         } else if (detail.sku_info[i].name.indexOf('SP') >= 0) {
           const item = { name: '高级合伙人', price: detail.sku_info[i].agent_price };
+          result[4] = item;
+        }
+      }
+    } else if (detail && detail.sku_info.length === 1 && detail.sku_info[0].sku_items.length === 5) {
+      for (let i = detail.sku_info[0].sku_items.length - 1; i >= 0; i--) {
+        const sku = detail.sku_info[0].sku_items[i];
+        if (sku.name.indexOf('Associate') >= 0) {
+          const item = { name: '经理', price: sku.agent_price };
+          result[0] = item;
+        } else if (sku.name.indexOf('Director') >= 0) {
+          const item = { name: '主管', price: sku.agent_price };
+          result[1] = item;
+        } else if (sku.name.indexOf('VP') >= 0) {
+          const item = { name: '副总裁', price: sku.agent_price };
+          result[2] = item;
+        } else if (sku.name.indexOf('Partner') >= 0) {
+          const item = { name: '合伙人', price: sku.agent_price };
+          result[3] = item;
+        } else if (sku.name.indexOf('SP') >= 0) {
+          const item = { name: '高级合伙人', price: sku.agent_price };
           result[4] = item;
         }
       }
@@ -507,7 +525,7 @@ export default class BuyCoupon extends Component {
     const mamaInfo = this.props.mamaInfo.mamaInfo;
     const imgSrc = (this.state.productDetail && this.state.productDetail.detail_content) ? this.state.productDetail.detail_content.head_img : '';
     const payInfo = this.payInfo();
-    const sku = this.state.sku ? this.state.sku : null;
+    const { agentPrice, name, salePrice, eliteScore } = this.state;
     const trasparentHeader = true;
     const disabled = false;
     let badge = 0;
@@ -523,14 +541,14 @@ export default class BuyCoupon extends Component {
         <Image className="coupon-img" src={imgSrc} quality={70} />
         <div className="product-info bottom-border bg-white col-xs-offset-1">
           <div className="row no-margin">
-            <p className="col-xs-10 no-padding font-md">{(this.state.productDetail && this.state.productDetail.detail_content && sku) ? this.state.productDetail.detail_content.name + '/' + sku.name : '' }</p>
+            <p className="col-xs-10 no-padding font-md">{(this.state.productDetail && this.state.productDetail.detail_content && name) ? this.state.productDetail.detail_content.name + '/' + name : '' }</p>
           </div>
           <div className="row no-margin ">
             <p className="no-padding">
-              <span className="font-32">{'￥' + (sku ? sku.agent_price : '')}</span>
+              <span className="font-32">{'￥' + (agentPrice ? agentPrice : '')}</span>
               <span className="font-grey">/</span>
-              <span className="font-xs font-grey-light text-line-through">{'￥' + (sku ? sku.std_sale_price : '')}</span>
-              <span className="font-grey font-xs" style={{ paddingLeft: '8px' }}>{(sku) ? '积分' + sku.elite_score : ''}</span>
+              <span className="font-xs font-grey-light text-line-through">{'￥' + (salePrice ? salePrice : '')}</span>
+              <span className="font-grey font-xs" style={{ paddingLeft: '8px' }}>{(eliteScore) ? '积分' + eliteScore : ''}</span>
             </p>
           </div>
           <If condition={levelPrice.length > 0}>
