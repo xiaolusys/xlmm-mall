@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { Header } from 'components/Header';
 import { Loader } from 'components/Loader';
 import { Image } from 'components/Image';
-import MyInfoTab from './myinfo';
 import BoutiqueExchg from '../BoutiqueExchange';
 
 import './index.scss';
@@ -88,28 +87,7 @@ export default class MamaHome extends Component {
         <Header title="妈妈中心" leftIcon="icon-angle-left" onLeftBtnClick={this.onLeftBtnClick}/>
         <div className="content mamahome">
           <div className="mamahome-container">
-            <Choose>
-            <When condition={topTab === 'boutique'}>
-              <BoutiqueExchg />
-            </When>
-            <When condition={topTab === 'myinfo'}>
-              <MyInfoTab />
-            </When>
-            </Choose>
-          </div>
-          <div className="row no-margin top-border base-tab">
-            <ul className="row no-margin">
-              <li key={2} data-id="boutique" onClick={this.onTabClick}>
-                <p className={'col-xs-6 no-margin no-padding text-center' + (topTab === 'boutique' ? ' active' : '')}>
-                  <span>精品汇</span>
-                </p>
-              </li>
-              <li key={4} data-id="myinfo" onClick={this.onTabClick}>
-                <p className={'col-xs-6 no-margin no-padding text-center' + (topTab === 'myinfo' ? ' active' : '')}>
-                  <span>妈妈中心</span>
-                </p>
-              </li>
-            </ul>
+            <BoutiqueExchg />
           </div>
         </div>
       </div>
