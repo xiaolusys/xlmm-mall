@@ -134,7 +134,7 @@ export default class BuyCoupon extends Component {
               salePrice: sku.std_sale_price,
               eliteScore: sku.elite_score,
               productId: sku.product_id,
-              skuId: sku.sku_id });
+              skuId: sku.sku_items[0].sku_id });
             break;
           }
         }
