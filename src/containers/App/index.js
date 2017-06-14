@@ -17,7 +17,7 @@ export class App extends Component {
     const mmLinkId = query.mm_linkid || 0;
     const uFrom = query.ufrom || '';
     const expires = new Date();
-    expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
+    expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
     if (mmLinkId && Number(mmLinkId) > 0) {
       window.document.cookie = `mm_linkid=${mmLinkId}; Path=/; expires=${expires.toGMTString()};`;
     }

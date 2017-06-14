@@ -82,3 +82,11 @@ export const transferTypes = [
   '退券换币',
   '取消兑换',
 ];
+
+export const jimayOrderStatus = {
+  0: '申请成功，等待审核',
+  1: '审核成功,等待付款',
+  2: '付款成功，等待发货',
+  3: '包裹出仓，等待签收',
+  4: '签收成功，订单完成',
+};

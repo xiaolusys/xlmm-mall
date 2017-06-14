@@ -1,0 +1,67 @@
+.order-confirm {
+  .order-confirm-address {
+    background-color: #fff;
+    padding: 8px;
+    .margin-top-28 {
+      margin-top: 28px;
+    }
+  }
+  .order-confirm-product-list {
+    > div {
+      padding: 8px;
+    }
+    background-color: #fff;
+    img {
+      margin: 8px;
+      border-radius: 10px;
+      width: 60px;
+      overflow: hidden;
+      height: 60px;
+    }
+  }
+  .order-confirm-row {
+    padding:  16px;
+    background-color: #fff;
+    &.transparent {
+      background-color: transparent;
+    }
+    > p {
+      margin-bottom: 0px;
+    }
+  }
+  .address-tips {
+    padding: 8px;
+    background-color: #fff;
+    > p {
+      margin-bottom: 0px;
+    }
+  }
+  .pay-type-popup {
+    >.popup-content {
+      padding: 8px 0px 0px 0px;
+      .pay-type-item {
+        padding: 8px;
+      }
+    }
+  }
+  .logistics-companies {
+    > select {
+      -webkit-appearance: none;
+      border: none;
+      background-color: #fff;
+    }
+  }
+  .checkbox-wrapper {
+    padding-left: 15px;
+    padding-right: 0px !important;
+  }
+  .cart-quantity {
+    > i {
+      padding: 8px;
+      font-size: 20px;
+    }
+    >span {
+      padding: 8px;
+    }
+  }
+}

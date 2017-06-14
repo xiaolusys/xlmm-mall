@@ -106,6 +106,11 @@ import {
   FavoriteList,
 } from 'containers/Favorite';
 
+import {
+  JimayOrderApply,
+  JimayOrderList,
+} from 'containers/Jimay/Order';
+
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home} />
@@ -183,6 +188,8 @@ export default (
     <Route path="/mama/rebate" component={MamaRebate} />
     <Route path="/mama/scorelog" component={EliteScoreLogList} />
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
+    <Route path="/jimay/order" component={JimayOrderList} onEnter={utils.checkJimayAuth} />
+    <Route path="/jimay/order/create" component={JimayOrderApply} />
     <Route status={404} path="*" component={Home} />
   </Route>
 );

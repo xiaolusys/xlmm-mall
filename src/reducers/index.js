@@ -49,6 +49,7 @@ import * as shareAction from 'actions/share';
 import * as shareActivityAction from 'actions/share/activity';
 import * as refundsDetailAction from 'actions/refunds/detail';
 import * as commitOrderAction from 'actions/order/commit';
+import * as jimayOrderAction from 'actions/order/jimay';
 import * as payInfoAction from 'actions/order/payInfo';
 import * as expressAction from 'actions/order/express';
 import * as updateExpressAction from 'actions/order/updateExpress';
@@ -107,6 +108,9 @@ const rootReducer = combineReducers({
   refundsDetails: createReducer(refundsDetailAction.name),
   payInfo: createReducer(payInfoAction.name),
   commitOrder: createReducer(commitOrderAction.name),
+  jimayPayInfo: createReducer(jimayOrderAction.names.JIMAY_PAYINFO),
+  jimayOrder: createReducer(jimayOrderAction.names.APPLY_ORDER),
+  jimayOrderList: createReducer(jimayOrderAction.names.JIMAY_ORDERS),
   express: createReducer(expressAction.name),
   updateExpress: createReducer(updateExpressAction.name),
   expressInfo: createReducer(expressInfoAction.name),
