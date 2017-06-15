@@ -15,7 +15,7 @@ export const commitJimayOrder = (params) => {
     hitType: 'event',
     eventCategory: 'Pay',
     eventAction: 'Request',
-    eventLabel: constants.gaPayTypes[params.channel],
+    eventLabel: 'budget',
   });
   return (dispatch) => {
     dispatch(action.request());
@@ -31,12 +31,6 @@ export const commitJimayOrder = (params) => {
 
 export const fetchJimayOrders = (params) => {
   const action = createAction(names.JIMAY_ORDERS);
-  window.ga && window.ga('send', {
-    hitType: 'event',
-    eventCategory: 'Pay',
-    eventAction: 'Request',
-    eventLabel: constants.gaPayTypes[params.channel],
-  });
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'jimay/order', qs.stringify(params))
