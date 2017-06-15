@@ -108,7 +108,7 @@ export default class JimayOrderApply extends Component {
         this.setState({ commitOrderEnable: true });
         Toast.show(order.data.info);
       } else {
-        window.location.replace('/jimay/order');
+        window.location.replace('/mall/jimay/order');
         return;
       }
     }

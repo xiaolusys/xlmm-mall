@@ -93,8 +93,8 @@ export default class JimayOrderList extends Component {
                       <p className="no-wrap">{item.title}</p>
                       <p className="font-xs font-grey-light">{item.sku_name}</p>
                       <p>
-                        <span className="font-lg font-orange">{'￥' + item.payment}</span>
-                        <span className="font-grey-light">{'/￥' + item.total_fee}</span>
+                        <span className="font-lg font-orange">{'￥' + item.payment * 0.01}</span>
+                        <span className="font-grey-light">{'/￥' + item.total_fee * 0.01}</span>
                         <span className="font-md font-orange pull-right margin-right-xs">{constants.jimayOrderStatus[item.status]}</span>
                       </p>
                     </div>

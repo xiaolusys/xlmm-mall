@@ -25,15 +25,14 @@ export function checkJimayAuth(nextState, replace, next) {
     .then((resp) => {
       ui.loadingSpinner.hide();
       if (resp.data.extras && !resp.data.extras.valid_mobile) {
-        replace(`/user/profile/phone?next=${encodeURIComponent(nextState.location.pathname + nextState.location.search)}`);
-        console.log('replaced');
+        replace(`/user/profile/phone?next=/mall/jimay/order`);
       }
       next();
     })
     .catch((resp) => {
       ui.loadingSpinner.hide();
       if (resp.status === 403) {
-        window.location.replace(constants.baseEndpoint + `jimay/weixin_login/?next=${encodeURIComponent(nextState.location.pathname + nextState.location.search)}`);
+        window.location.replace(constants.baseEndpoint + `jimay/weixin_login/?next=/mall/jimay/order`);
       }
       next();
     });
