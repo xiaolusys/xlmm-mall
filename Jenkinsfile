@@ -6,6 +6,7 @@ node {
   cache(maxCacheSize: 250, caches: [
      [$class: 'ArbitraryFileCache', excludes: '', includes: '**/*', path: '${WORKSPACE}/node_modules']
   ]) {
+    sh('docker run --rm -v "$PWD":/workspace -w /workspace node npm config set dist-url https://nodejs.org/download/release/')
     sh('docker run --rm -v "$PWD":/workspace -w /workspace node npm install')
     sh('docker run --rm -v "$PWD":/workspace -w /workspace node npm run build:production')
   }
