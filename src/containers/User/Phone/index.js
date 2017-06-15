@@ -80,7 +80,12 @@ export default class Phone extends Component {
     }
 
     if (nextProps.success && nextProps.data.rcode === 0 && this.state.bindPhone) {
-      this.context.router.push('/user/profile');
+      const { next } = this.props.location.query;
+      if (next) {
+        window.location.replace(next);
+      } else {
+        this.context.router.push('/user/profile');
+      }
     }
   }
 

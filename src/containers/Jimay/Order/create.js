@@ -33,7 +33,6 @@ const payTypeIcons = {
 
 @connect(
   state => {
-    console.log('state1:', state);
     return {
       address: state.address,
       payInfo: state.jimayPayInfo,

@@ -48,7 +48,6 @@ export default class JimayOrderList extends Component {
 
   componentWillReceiveProps(nextProps) {
     const orders = nextProps.orders;
-    console.log('jimayOrders', orders);
     if (orders.success && orders.data.code > 0) {
       Toast.show(orders.data.info);
     }
@@ -66,7 +65,7 @@ export default class JimayOrderList extends Component {
   render() {
     const orders = this.props.orders || {};
     const results = _.isEmpty(orders) ? [] : orders.data.results;
-    console.log('results', results);
+    window.document.title = '己美医学－心怀大爱，助人助己，传播健康，传递责任.';
     return (
       <div className="shop-bag-all">
         <Header title="订货单列表" />
