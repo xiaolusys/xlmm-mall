@@ -33,7 +33,7 @@ export function checkJimayAuth(nextState, replace, next) {
     .catch((resp) => {
       ui.loadingSpinner.hide();
       if (resp.status === 403) {
-        replace(constants.baseEndpoint + `jimay/weixin_login/?next=${encodeURIComponent(nextState.location.pathname + nextState.location.search)}`);
+        window.location.replace(constants.baseEndpoint + `jimay/weixin_login/?next=${encodeURIComponent(nextState.location.pathname + nextState.location.search)}`);
       }
       next();
     });
