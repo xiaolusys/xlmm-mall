@@ -4,6 +4,7 @@ import qs from 'qs';
 import createAction from '../createAction';
 // 'COMMIT_ORDER',
 export const names = {
+  JIAMY_SHIPS: 'JIAMY_SHIPS',
   APPLY_ORDER: 'JIMAY_ORDER',
   JIMAY_ORDERS: 'JIMAY_ORDERS',
   JIMAY_PAYINFO: 'JIMAY_PAYINFO',
@@ -48,6 +49,20 @@ export const fetchJimayOrderApplyInfo = (device) => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'jimay/order/pay_info', { params: { device: device } })
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const fetchJimayAgentRelship = () => {
+  const action = createAction(names.JIAMY_SHIPS);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.get(constants.baseEndpoint + 'jimay/agent/relationship')
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

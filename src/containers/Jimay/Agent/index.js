@@ -1,0 +1,1 @@
+export JimayAgentRelShip from './relationship';

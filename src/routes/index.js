@@ -107,9 +107,10 @@ import {
 } from 'containers/Favorite';
 
 import {
+  JimayAgentRelShip,
   JimayOrderApply,
   JimayOrderList,
-} from 'containers/Jimay/Order';
+} from 'containers/Jimay';
 
 export default (
   <Route path="/" component={App}>
@@ -190,6 +191,7 @@ export default (
     <Route path="/favorite/list" component={FavoriteList} onEnter={utils.checkAuth} />
     <Route path="/jimay/order" component={JimayOrderList} onEnter={utils.checkJimayAuth} />
     <Route path="/jimay/order/create" component={JimayOrderApply} />
+    <Route path="/jimay/agent" component={JimayAgentRelShip} />
     <Route status={404} path="*" component={Home} />
   </Route>
 );

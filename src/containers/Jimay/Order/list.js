@@ -62,36 +62,52 @@ export default class JimayOrderList extends Component {
     // this.props.resetApplyNegotiableCoupons();
   }
 
+  onClickEnterAgentRelShip = (e) => {
+    this.context.router.push('/jimay/agent');
+  }
+
   render() {
     const orders = this.props.orders || {};
+    const purchaseEnable = _.isEmpty(orders) ? false : orders.data.is_purchase_enable;
+    console.log('data:', orders);
     const results = _.isEmpty(orders) ? [] : orders.data.results;
     window.document.title = '己美医学－心怀大爱，助人助己，传播健康，传递责任.';
     return (
       <div className="shop-bag-all">
-        <Header title="订货单列表" />
+        <Header title="订货单列表" rightText="我的关系" onRightBtnClick={this.onClickEnterAgentRelShip} />
         <div className="content shop-bag-container">
-          <If condition={_.isEmpty(results) && orders.success}>
+          <If condition={_.isEmpty(results) && orders.success }>
             <div className="text-center margin-top-lg">
               <i className="icon-bag icon-6x icon-grey"></i>
-              <p className="font-grey">你还没有任何订货记录，赶快下单试试吧!</p>
-              <Link className="button button-stable" to="/jimay/order/create">申请订货</Link>
+              <If condition={purchaseEnable}>
+                <p className="font-grey">你还没有任何订货记录，赶快下单试试吧!</p>
+                <Link className="button button-stable" to="/jimay/order/create">申请订货</Link>
+              </If>
+              <If condition={!purchaseEnable}>
+                <p className="font-grey">你当前的等级不能直接订货，请联系上级帮助申请!</p>
+                <Link className="button button-stable" to="/jimay/agent">联系导师订货</Link>
+              </If>
             </div>
           </If>
           <If condition={!_.isEmpty(results)}>
             <div className="text-center margin-top-lg">
-              <Link className="button button-stable" to="/jimay/order/create">申请订货</Link>
+              <If condition={purchaseEnable}>
+                <Link className="button button-stable" to="/jimay/order/create">申请订货</Link>
+              </If>
+              <If condition={!purchaseEnable}>
+                <Link className="button button-stable" to="/jimay/agent">联系导师订货</Link>
+              </If>
             </div>
             <p className="margin-top-sm margin-left-xs font-xs">订货记录</p>
             <ul className="shop-bag-list top-border">
               {_.isEmpty(results) || orders.error ? null : results.map((item) => {
                 return (
                   <li key={item.id} className="row no-margin bottom-border">
-                    <a className="col-xs-3 no-padding">
-                      <img src={item.pic_path + constants.image.square} />
+                    <a className="col-xs-3 no-padding ">
+                      <img className="content" src={item.pic_path + constants.image.square} />
                     </a>
                     <div className="col-xs-9 no-padding">
-                      <p className="no-wrap">{item.title}</p>
-                      <p className="font-xs font-grey-light">{item.sku_name}</p>
+                      <p>{item.title} <span className="font-italic font-grey">x {item.num}</span></p>
                       <p>
                         <span className="font-lg font-orange">{'￥' + item.payment * 0.01}</span>
                         <span className="font-grey-light">{'/￥' + item.total_fee * 0.01}</span>
