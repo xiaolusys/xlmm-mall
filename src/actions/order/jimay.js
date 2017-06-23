@@ -5,13 +5,13 @@ import createAction from '../createAction';
 // 'COMMIT_ORDER',
 export const names = {
   JIAMY_SHIPS: 'JIAMY_SHIPS',
-  APPLY_ORDER: 'JIMAY_ORDER',
+  JIMAY_ORDER: 'JIMAY_ORDER',
   JIMAY_ORDERS: 'JIMAY_ORDERS',
   JIMAY_PAYINFO: 'JIMAY_PAYINFO',
 };
 
 export const commitJimayOrder = (params) => {
-  const action = createAction(names.APPLY_ORDER);
+  const action = createAction(names.JIMAY_ORDER);
   window.ga && window.ga('send', {
     hitType: 'event',
     eventCategory: 'Pay',
@@ -63,6 +63,20 @@ export const fetchJimayAgentRelship = () => {
   return (dispatch) => {
     dispatch(action.request());
     return axios.get(constants.baseEndpoint + 'jimay/agent/relationship')
+      .then((resp) => {
+        dispatch(action.success(resp.data));
+      })
+      .catch((resp) => {
+        dispatch(action.failure(resp));
+      });
+  };
+};
+
+export const cancelJimayAgentOrder = (params) => {
+  const action = createAction(names.JIMAY_ORDER);
+  return (dispatch) => {
+    dispatch(action.request());
+    return axios.post(constants.baseEndpoint + `jimay/order/${params.id}/cancel`)
       .then((resp) => {
         dispatch(action.success(resp.data));
       })

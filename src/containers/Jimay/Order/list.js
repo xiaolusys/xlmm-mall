@@ -18,6 +18,7 @@ const actionCreators = _.extend({}, jimayOrdersAction);
 @connect(
   state => ({
     orders: state.jimayOrderList,
+    cancelOrder: state.jimayOrder,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
 )
@@ -28,6 +29,7 @@ export default class JimayOrderList extends Component {
     location: React.PropTypes.object,
     orders: React.PropTypes.object,
     fetchJimayOrders: React.PropTypes.func,
+    cancelJimayAgentOrder: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -47,7 +49,7 @@ export default class JimayOrderList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const orders = nextProps.orders;
+    const { orders, cancelOrder } = nextProps;
     if (orders.success && orders.data.code > 0) {
       Toast.show(orders.data.info);
     }
@@ -56,10 +58,22 @@ export default class JimayOrderList extends Component {
     } else {
       utils.ui.loadingSpinner.hide();
     }
+    if (cancelOrder.success && cancelOrder.data.code > 0) {
+      Toast.show(cancelOrder.data.info);
+    }
+    if (cancelOrder.success && cancelOrder.data.code === 0) {
+      window.location.replace(window.location);
+    }
   }
 
   componentWillUnmount() {
     // this.props.resetApplyNegotiableCoupons();
+  }
+
+  onClickCancelJimayAgentOrder = (e) => {
+    const { oid } = e.currentTarget.dataset;
+    this.props.cancelJimayAgentOrder({ id: oid });
+    e.preventDefault();
   }
 
   onClickEnterAgentRelShip = (e) => {
@@ -69,7 +83,6 @@ export default class JimayOrderList extends Component {
   render() {
     const orders = this.props.orders || {};
     const purchaseEnable = _.isEmpty(orders) ? false : orders.data.is_purchase_enable;
-    console.log('data:', orders);
     const results = _.isEmpty(orders) ? [] : orders.data.results;
     window.document.title = '己美医学－心怀大爱，助人助己，传播健康，传递责任.';
     return (
@@ -111,7 +124,12 @@ export default class JimayOrderList extends Component {
                       <p>
                         <span className="font-lg font-orange">{'￥' + item.payment * 0.01}</span>
                         <span className="font-grey-light">{'/￥' + item.total_fee * 0.01}</span>
-                        <span className="font-md font-orange pull-right margin-right-xs">{constants.jimayOrderStatus[item.status]}</span>
+                        <If condition={item.status === 0}>
+                          <button className="button button-stable button-sm pull-right margin-right-xs" data-oid={item.id} onClick={this.onClickCancelJimayAgentOrder} >审核中，点击取消</button>
+                        </If>
+                        <If condition={item.status !== 0}>
+                          <span className="font-md font-orange pull-right margin-right-xs">{constants.jimayOrderStatus[item.status]}</span>
+                        </If>
                       </p>
                     </div>
                   </li>

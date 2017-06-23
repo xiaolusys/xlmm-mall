@@ -56,12 +56,19 @@
     padding-right: 0px !important;
   }
   .cart-quantity {
+    max-width: 40%;
     > i {
       padding: 8px;
       font-size: 20px;
     }
     >span {
       padding: 8px;
+    }
+    > input {
+      width: 30%;
+      padding: 2px 4px;
+      border-radius: 10px;
+      border-bottom: 1px solid #dadada;
     }
   }
 }

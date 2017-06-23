@@ -110,7 +110,7 @@ const rootReducer = combineReducers({
   commitOrder: createReducer(commitOrderAction.name),
   jimayPayInfo: createReducer(jimayAgentAction.names.JIMAY_PAYINFO),
   jimayAgent: createReducer(jimayAgentAction.names.JIAMY_SHIPS),
-  jimayOrder: createReducer(jimayAgentAction.names.APPLY_ORDER),
+  jimayOrder: createReducer(jimayAgentAction.names.JIMAY_ORDER),
   jimayOrderList: createReducer(jimayAgentAction.names.JIMAY_ORDERS),
   express: createReducer(expressAction.name),
   updateExpress: createReducer(updateExpressAction.name),

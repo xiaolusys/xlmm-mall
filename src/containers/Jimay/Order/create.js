@@ -9,6 +9,7 @@ import { BottomBar } from 'components/BottomBar';
 import { Radio } from 'components/Radio';
 import { Checkbox } from 'components/Checkbox';
 import { Popup } from 'components/Popup';
+// import { Input } from 'components/Input';
 import { LogisticsPopup } from 'components/LogisticsPopup';
 import { Toast } from 'components/Toast';
 import classnames from 'classnames';
@@ -133,6 +134,13 @@ export default class JimayOrderApply extends Component {
     e.preventDefault();
   }
 
+  onOrderNumChange = (e) => {
+    console.log('value:', e.target.value);
+    this.setState({
+      order_num: parseInt(e.target.value, 0),
+    });
+  }
+
   onCommitOrderClick = (e) => {
     const { address, payInfo } = this.props;
 
@@ -209,11 +217,11 @@ export default class JimayOrderApply extends Component {
               <div className="col-xs-9 no-padding padding-top-xxs font-xs">
                 <p className="row no-margin no-wrap">{product.title}</p>
                 <p className="row no-margin margin-top-xxxs font-grey">{'规格: ' + product.sku_name}</p>
-                <p className="row no-margin margin-top-xxxs">
+                <p className="row no-margin margin-top-xxxs ">
                   <span className="">{'￥' + product.agent_price.toFixed(2)}</span>
                   <span className="pull-right cart-quantity">
                     <i className="icon-minus icon-yellow" data-action="minus" data-id={product.model_id} data-num={product.num} onClick={this.onUpdateQuantityClick}></i>
-                    <span>{this.state.order_num}</span>
+                    <input className="" type="number" value={this.state.order_num} onChange={this.onOrderNumChange}/>
                     <i className="icon-plus icon-yellow" data-action="plus" data-id={product.model_id} data-num={product.num} onClick={this.onUpdateQuantityClick}></i>
                   </span>
                 </p>
