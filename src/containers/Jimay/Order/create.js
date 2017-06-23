@@ -135,9 +135,13 @@ export default class JimayOrderApply extends Component {
   }
 
   onOrderNumChange = (e) => {
-    console.log('value:', e.target.value);
+    const orderNum = parseInt(e.target.value, 0);
+    if (orderNum <= 0) {
+      Toast.show('订货数量不能小于0');
+      return;
+    }
     this.setState({
-      order_num: parseInt(e.target.value, 0),
+      order_num: orderNum,
     });
   }
 
