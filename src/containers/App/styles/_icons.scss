@@ -136,74 +136,77 @@
   @if $filename == order {
     $char: "\E023";
   }
-  @if $filename == plus {
+  @if $filename == phone {
     $char: "\E024";
   }
-  @if $filename == qq-square {
+  @if $filename == plus {
     $char: "\E025";
   }
-  @if $filename == qq {
+  @if $filename == qq-square {
     $char: "\E026";
   }
-  @if $filename == qzone {
+  @if $filename == qq {
     $char: "\E027";
   }
-  @if $filename == refund-common {
+  @if $filename == qzone {
     $char: "\E028";
   }
-  @if $filename == refund-goods {
+  @if $filename == refund-common {
     $char: "\E029";
   }
-  @if $filename == refund-top-speed {
+  @if $filename == refund-goods {
     $char: "\E02A";
   }
-  @if $filename == seven-o {
+  @if $filename == refund-top-speed {
     $char: "\E02B";
   }
-  @if $filename == share {
+  @if $filename == seven-o {
     $char: "\E02C";
   }
-  @if $filename == shield {
+  @if $filename == share {
     $char: "\E02D";
   }
-  @if $filename == truck-o {
+  @if $filename == shield {
     $char: "\E02E";
   }
-  @if $filename == truck {
+  @if $filename == truck-o {
     $char: "\E02F";
   }
-  @if $filename == wallet-open {
+  @if $filename == truck {
     $char: "\E030";
   }
-  @if $filename == wallet {
+  @if $filename == wallet-open {
     $char: "\E031";
   }
-  @if $filename == warm {
+  @if $filename == wallet {
     $char: "\E032";
   }
-  @if $filename == wechat-o {
+  @if $filename == warm {
     $char: "\E033";
   }
-  @if $filename == wechat-pay {
+  @if $filename == wechat-o {
     $char: "\E034";
   }
-  @if $filename == wechat-snapshot {
+  @if $filename == wechat-pay {
     $char: "\E035";
   }
-  @if $filename == wechat-square {
+  @if $filename == wechat-snapshot {
     $char: "\E036";
   }
-  @if $filename == wechat {
+  @if $filename == wechat-square {
     $char: "\E037";
   }
-  @if $filename == weibo-square {
+  @if $filename == wechat {
     $char: "\E038";
   }
-  @if $filename == weibo {
+  @if $filename == weibo-square {
     $char: "\E039";
   }
-  @if $filename == xiaolu {
+  @if $filename == weibo {
     $char: "\E03A";
+  }
+  @if $filename == xiaolu {
+    $char: "\E03B";
   }
 
   @return $char;
@@ -324,6 +327,9 @@
 }
 .icon-order {
   @include icon(order);
+}
+.icon-phone {
+  @include icon(phone);
 }
 .icon-plus {
   @include icon(plus);

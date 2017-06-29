@@ -83,7 +83,7 @@ export default class JimayAgentRelShip extends Component {
                 <div className="col-xs-9 no-padding">
                   <p>
                     <span className="font-md font-grey">{ parentAgent.name }</span>
-                    <a href={ 'tel:' + parentAgent.mobile} className="font-md font-orange font-weight-600 margin-right-sm pull-right">{ parentAgent.mobile }</a>
+                    <a href={ 'tel:' + parentAgent.mobile} className="font-md font-orange font-weight-600 margin-right-lg pull-right">{ parentAgent.mobile }<i className="icon-phone"></i></a>
                   </p>
                 </div>
               </li>
@@ -105,7 +105,7 @@ export default class JimayAgentRelShip extends Component {
                     <div className="col-xs-9 no-padding">
                       <p>
                         <span className="font-md font-grey">{ item.name }</span>
-                        <a href={ 'tel:' + item.mobile} className="font-md font-orange font-weight-600 margin-right-sm pull-right">{ item.mobile }</a>
+                        <a href={ 'tel:' + item.mobile} className="font-md font-orange font-weight-600 margin-right-lg pull-right">{ item.mobile }<i className="icon-phone"></i></a>
                       </p>
                     </div>
                   </li>
