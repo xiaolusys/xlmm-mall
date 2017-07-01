@@ -115,7 +115,17 @@ export default class JimayOrderList extends Component {
             <ul className="shop-bag-list top-border">
               {_.isEmpty(results) || orders.error ? null : results.map((item) => {
                 return (
-                  <li key={item.id} className="row no-margin bottom-border">
+                  <li key={item.id} className="row no-margin bottom-border order-item">
+                    <div className="order-header clearfix">
+                      <p >
+                        <span className="margin-left-xs">订货号: </span>
+                        <span className="margin-right-xs font-yellow">{item.id}</span>
+                        <div className="pull-right margin-right-xs">
+                          <span>订货时间: </span>
+                          <span>{item.created.split('T')[0]}</span>
+                        </div>
+                      </p>
+                    </div>
                     <a className="col-xs-3 no-padding ">
                       <img className="content" src={item.pic_path + constants.image.square} />
                     </a>

@@ -72,3 +72,29 @@
     }
   }
 }
+.order-item {
+  margin-bottom: 16px;
+  width: 100%;
+  background-color: #fff;
+  > .order-header {
+    height: 20px;
+    line-height: 20px;
+    color: #4a4a4a;
+    font-size: 14px;
+    width: 100%;
+    padding: 0px 0px;
+    border-bottom: 1px solid #dadada;
+    p {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.shop-bag-all .shop-bag-container .shop-bag-list {
+  li > div {
+    padding: 0px 0px;
+    > p {
+      padding: 0px 0px;
+    }
+  }
+}
