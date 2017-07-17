@@ -63,6 +63,7 @@ export default class Edit extends Component {
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
     fetchAddress: React.PropTypes.func,
+    resetAddress: React.PropTypes.func,
     updateAddress: React.PropTypes.func,
     deleteAddress: React.PropTypes.func,
     fetchProvinces: React.PropTypes.func,
@@ -86,13 +87,15 @@ export default class Edit extends Component {
   state = {
     nextBtnDisabled: true,
     nextBtnPressed: false,
-    address: this.props.address.data,
+    address: {},
   }
 
   componentWillMount() {
     const id = Number(this.props.params.id);
+    this.props.resetAddress();
     if (id !== 0) {
       this.props.fetchAddress(id, true);
+      this.setState({ address: this.props.address.data });
     } else {
       this.props.fetchProvinces();
     }
@@ -232,7 +235,6 @@ export default class Edit extends Component {
     }
 
     if (sourceType > 1) {
-      console.log(this.state.address.identification_no);
       if (typeof(this.state.address.identification_no) === 'undefined') {
         Toast.show('身份证号不能为空，请修改！！！');
         return;
