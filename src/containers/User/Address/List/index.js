@@ -12,7 +12,7 @@ import './index.scss';
 
 @connect(
   state => ({
-    data: state.address.data,
+    data: state.address_list.data,
     isLoading: state.address.isLoading,
   }),
   dispatch => bindActionCreators(actionCreators, dispatch),
@@ -25,7 +25,7 @@ export default class List extends Component {
     dispatch: React.PropTypes.func,
     isLoading: React.PropTypes.bool,
     error: React.PropTypes.bool,
-    fetchAddress: React.PropTypes.func,
+    fetchAddressList: React.PropTypes.func,
   };
 
   static contextTypes = {
@@ -38,7 +38,7 @@ export default class List extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchAddress();
+    this.props.fetchAddressList();
   }
 
   onAdrressClick = (e) => {

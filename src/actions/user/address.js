@@ -5,14 +5,31 @@ import createAction from '../createAction';
 import * as provinceAction from 'actions/user/province';
 
 export const name = 'ADDRESS';
+export const addressListName = 'ADDRESS_LIST';
 
 const action = createAction(name);
 
-export const fetchAddress = (id, isEdit = false) => {
+export const fetchAddressList = (id, isEdit = false) => {
+  const innerAction = createAction(addressListName);
+  return (dispatch) => {
+    dispatch(innerAction.request());
+    return axios.get(constants.baseEndpointV1 + 'address')
+      .then((resp) => {
+        dispatch(innerAction.success(resp.data));
+        if (isEdit) {
+          dispatch(provinceAction.fetchProvinces(resp.data));
+        }
+      })
+      .catch((resp) => {
+        dispatch(innerAction.failure(resp));
+      });
+  };
+};
 
+export const fetchAddress = (id, isEdit = false) => {
   return (dispatch) => {
     dispatch(action.request());
-    return axios.get(constants.baseEndpointV1 + 'address' + (id ? '/' + id : ''))
+    return axios.get(constants.baseEndpointV1 + 'address' + '/' + id)
       .then((resp) => {
         dispatch(action.success(resp.data));
         if (isEdit) {

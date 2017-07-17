@@ -80,6 +80,7 @@ const rootReducer = combineReducers({
   questions: createReducer(questionsAction.name),
   profile: createReducer(profileAction.name),
   address: createReducer(addressAction.name),
+  address_list: createReducer(addressAction.addressListName),
   login: createReducer(loginAction.name),
   verifyCode: verifyCodeReducer,
   password: createReducer(passwordAction.name),
