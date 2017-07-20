@@ -27,6 +27,12 @@ export class App extends Component {
   }
 
   render() {
+    const { app } = this.props.location.query;
+    if (app === 'jimay') {
+      window.document.title = '己美医学－心怀大爱，助人助己，传播健康，传递责任.';
+    } else {
+      window.document.title = '小鹿美美 -　时尚，健康，美丽！';
+    }
     return (
       <div>
         {this.props.children}

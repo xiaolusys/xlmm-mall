@@ -84,10 +84,12 @@ export default class JimayOrderList extends Component {
     const orders = this.props.orders || {};
     const purchaseEnable = _.isEmpty(orders) ? false : orders.data.is_purchase_enable;
     const results = _.isEmpty(orders) ? [] : orders.data.results;
-    window.document.title = '己美医学－心怀大爱，助人助己，传播健康，传递责任.';
+    // window.document.title = '己美医学－心怀大爱，助人助己，传播健康，传递责任.';
     return (
       <div className="shop-bag-all">
-        <Header title="订货单列表" rightText="我的关系" onRightBtnClick={this.onClickEnterAgentRelShip} />
+        <Header title="订货单列表"
+          rightText="我的关系" onRightBtnClick={this.onClickEnterAgentRelShip}
+        />
         <div className="content shop-bag-container">
           <If condition={_.isEmpty(results) && orders.success }>
             <div className="text-center margin-top-lg">
@@ -126,21 +128,26 @@ export default class JimayOrderList extends Component {
                         </div>
                       </p>
                     </div>
-                    <a className="col-xs-3 no-padding ">
-                      <img className="content" src={item.pic_path + constants.image.square} />
-                    </a>
-                    <div className="col-xs-9 no-padding">
-                      <p>{item.title} <span className="font-italic font-grey">x {item.num}</span></p>
-                      <p>
-                        <span className="font-lg font-orange">{'￥' + item.payment * 0.01}</span>
-                        <span className="font-grey-light">{'/￥' + item.total_fee * 0.01}</span>
-                        <If condition={item.status === 0}>
-                          <button className="button button-stable button-sm pull-right margin-right-xs" data-oid={item.id} onClick={this.onClickCancelJimayAgentOrder} >审核中，点击取消</button>
-                        </If>
-                        <If condition={item.status !== 0}>
-                          <span className="font-md font-orange pull-right margin-right-xs">{constants.jimayOrderStatus[item.status]}</span>
-                        </If>
-                      </p>
+                    <div className="order-content clearfix">
+                      <a className="col-xs-3 no-padding ">
+                        <img className="content" src={item.pic_path + constants.image.square} />
+                      </a>
+                      <div className="col-xs-9 no-padding">
+                        <p>{item.title} <span className="font-italic font-grey">x {item.num}</span></p>
+                        <p>
+                          <span className="font-lg font-orange">{'￥' + item.payment * 0.01}</span>
+                          <span className="font-grey-light">{'/￥' + item.total_fee * 0.01}</span>
+                          <If condition={item.status === 0}>
+                            <button className="button button-stable button-sm pull-right margin-right-xs" data-oid={item.id} onClick={this.onClickCancelJimayAgentOrder} >审核中，点击取消</button>
+                          </If>
+                          <If condition={item.status !== 0}>
+                            <span className="font-md font-orange pull-right margin-right-xs">{constants.jimayOrderStatus[item.status]}</span>
+                          </If>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="order-bottom clearfix">
+                      <p><span className="font-xxs font-grey">{item.address.receiver_name}, {item.address.full_address}, {item.address.receiver_mobile}</span></p>
                     </div>
                   </li>
                 );

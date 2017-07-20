@@ -70,7 +70,6 @@ export const deleteAddress = (id) => {
 
 export const resetAddress = () => {
   return (dispatch) => {
-    console.log('reset');
     dispatch(action.reset());
   };
 };

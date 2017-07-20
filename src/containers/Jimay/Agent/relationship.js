@@ -48,7 +48,6 @@ export default class JimayAgentRelShip extends Component {
 
   componentWillReceiveProps(nextProps) {
     const agent = nextProps.agent;
-    console.log('jimay', agent);
     if (agent.success && agent.data.code > 0) {
       Toast.show(agent.data.info);
     }
@@ -63,13 +62,20 @@ export default class JimayAgentRelShip extends Component {
     // this.props.resetApplyNegotiableCoupons();
   }
 
+  onCLickChangeMobile = (e) => {
+    this.context.router.replace(`/user/profile/phone?next=/mall/jimay/order`);
+  }
+
   render() {
     const agent = this.props.agent || {};
     const parentAgent = _.isEmpty(agent.data) ? {} : agent.data.parent_agent;
     const subAgents = _.isEmpty(agent.data) ? {} : agent.data.sub_agents;
     return (
       <div className="jimay-agent">
-        <Header title="我的关系" leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}/>
+        <Header title="我的关系"
+          leftIcon="icon-angle-left" onLeftBtnClick={this.context.router.goBack}
+          rightText={ agent.data.mobile } onRightBtnClick={this.onCLickChangeMobile}
+        />
         <div className="jimay-agent-container">
           <If condition={!_.isEmpty(parentAgent)}>
             <p className="margin-top-lg margin-left-xs font-xs">我de推荐导师</p>
