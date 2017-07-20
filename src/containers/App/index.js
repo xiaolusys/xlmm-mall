@@ -16,6 +16,7 @@ export class App extends Component {
     const { query } = this.props.location;
     const mmLinkId = query.mm_linkid || 0;
     const uFrom = query.ufrom || '';
+    const app = query.app || '';
     const expires = new Date();
     expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
     if (mmLinkId && Number(mmLinkId) > 0) {
@@ -24,10 +25,13 @@ export class App extends Component {
     if (uFrom) {
       window.document.cookie = `ufrom=${uFrom}; Path=/; expires=${expires.toGMTString()};`;
     }
+    if (app) {
+      window.document.cookie = `app=${app}; Path=/; expires=${expires.toGMTString()};`;
+    }
   }
 
   render() {
-    const { app } = this.props.location.query;
+    const app = utils.cookie.getCookie('app');
     if (app === 'jimay') {
       window.document.title = '己美医学－心怀大爱，助人助己，传播健康，传递责任.';
     } else {
